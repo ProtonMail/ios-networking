@@ -1,0 +1,16 @@
+PODS:
+  - PMNetworking (1.0.0)
+
+DEPENDENCIES:
+  - PMNetworking (from `../`)
+
+EXTERNAL SOURCES:
+  PMNetworking:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  PMNetworking: 7c1717a5ae14cc5112c9972a94ae8f2399fc8b4d
+
+PODFILE CHECKSUM: dbddf1c5f31b09658c991d455b3fc780f1eecae8
+
+COCOAPODS: 1.8.4
