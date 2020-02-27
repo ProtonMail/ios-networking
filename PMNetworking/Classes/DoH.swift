@@ -43,6 +43,13 @@ struct DNSCache {
     let retry : Int
 }
 
+public enum DoHStatus {
+    case on
+    case off
+    case auto //mix don't know yet
+}
+
+
 public protocol DoHConfig {
     var apiHost : String { get }
     var defaultHost : String { get }
@@ -53,29 +60,35 @@ protocol DoHInterface {
 }
 
 open class DoH : DoHInterface {
+
+    public var status : DoHStatus = .on
     
     private var caches : [String: DNS] = [:]
     private var providers : [DoHProviderPublic] = []
     
     public func getHostUrl() -> String {
         let config = self as! DoHConfig
-        
-        if let found = self.cache(get: config.apiHost) {
-            print("Found from cache")
-            let newurl = URL(string: config.defaultHost)!
-            let host = newurl.host
-            let hostUrl = newurl.absoluteString.replacingOccurrences(of: host!, with: found.url)
-            return hostUrl
-        }
-        
-        //doing google for now. will add others
-        if let dns = Google().fetch(sync: config.apiHost) {
-            self.cache(set: config.apiHost, dns: dns)
-            let url = dns.url
-            let newurl = URL(string: config.defaultHost)!
-            let host = newurl.host
-            let hostUrl = newurl.absoluteString.replacingOccurrences(of: host!, with: url)
-            return hostUrl
+        switch status {
+        case .on, .auto:
+            if let found = self.cache(get: config.apiHost) {
+                print("Found from cache")
+                let newurl = URL(string: config.defaultHost)!
+                let host = newurl.host
+                let hostUrl = newurl.absoluteString.replacingOccurrences(of: host!, with: found.url)
+                return hostUrl
+            }
+            
+            //doing google for now. will add others
+            if let dns = Google().fetch(sync: config.apiHost) {
+                self.cache(set: config.apiHost, dns: dns)
+                let url = dns.url
+                let newurl = URL(string: config.defaultHost)!
+                let host = newurl.host
+                let hostUrl = newurl.absoluteString.replacingOccurrences(of: host!, with: url)
+                return hostUrl
+            }
+        case .off:
+            break
         }
         return config.defaultHost
     }
@@ -88,7 +101,6 @@ open class DoH : DoHInterface {
     }
     
     func cache(get host: String) -> DNS? {
-        
         guard let found = self.caches[host] else {
             return nil
         }
