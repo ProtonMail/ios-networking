@@ -61,7 +61,7 @@ protocol DoHInterface {
 
 open class DoH : DoHInterface {
 
-    public var status : DoHStatus = .on
+    public var status : DoHStatus = .off
     
     private var caches : [String: DNS] = [:]
     private var providers : [DoHProviderPublic] = []
