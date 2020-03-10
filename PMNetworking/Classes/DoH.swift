@@ -61,7 +61,7 @@ protocol DoHInterface {
 
 open class DoH : DoHInterface {
 
-    public var status : DoHStatus = .on
+    public var status : DoHStatus = .off
     
     private var caches : [String: [DNSCache]] = [:]
     private var providers : [DoHProviderPublic] = []
@@ -107,7 +107,7 @@ open class DoH : DoHInterface {
         let newurl = URL(string: config.defaultHost)!
         let host = newurl.host!
         let dns = DNS(url: host, ttl: 0)
-        let cache = DNSCache(primary: true, dns: dns, lastTimeout: 0, retry: -1)
+        let cache = DNSCache(primary: true, dns: dns, lastTimeout: 0, retry: 0)
         tmp.append(cache)
         self.caches[config.apiHost] = tmp
     }
@@ -138,7 +138,7 @@ open class DoH : DoHInterface {
             return found.first
         }
         
-        if first.retry > 1 && found.count > 1{
+        if first.retry > 0 && found.count > 1{
             if first.primary == false && first.retry >= 10 {
                 found.removeFirst()
             }
@@ -187,7 +187,7 @@ open class DoH : DoHInterface {
         let newurl = URL(string: config.defaultHost)!
         let host = newurl.host!
         let dns = DNS(url: host, ttl: 0)
-        let cache = DNSCache(primary: true, dns: dns, lastTimeout: 0, retry: -1)
+        let cache = DNSCache(primary: true, dns: dns, lastTimeout: 0, retry: 0)
         tmp.append(cache)
         self.caches[config.apiHost] = tmp
     }
