@@ -26,11 +26,9 @@ import Foundation
 
 struct RuntimeError: Error {
     let message: String
-
     init(_ message: String) {
         self.message = message
     }
-
     public var localizedDescription: String {
         return message
     }
@@ -39,8 +37,8 @@ struct RuntimeError: Error {
 struct DNSCache {
     let primary : Bool
     let dns : DNS
-    let lastTimeout : Date
-    let retry : Int
+    let lastTimeout : Double
+    var retry : Int
 }
 
 public enum DoHStatus {
@@ -57,14 +55,17 @@ public protocol DoHConfig {
 
 protocol DoHInterface {
     func getHostUrl() -> String
+    func handleError(host: String, error: Error?)
+    func clearAll()
 }
 
 open class DoH : DoHInterface {
 
-    public var status : DoHStatus = .off
+    public var status : DoHStatus = .on
     
-    private var caches : [String: DNS] = [:]
+    private var caches : [String: [DNSCache]] = [:]
     private var providers : [DoHProviderPublic] = []
+    internal var mutex = pthread_mutex_t()
     
     public func getHostUrl() -> String {
         let config = self as! DoHConfig
@@ -74,7 +75,7 @@ open class DoH : DoHInterface {
                 print("Found from cache")
                 let newurl = URL(string: config.defaultHost)!
                 let host = newurl.host
-                let hostUrl = newurl.absoluteString.replacingOccurrences(of: host!, with: found.url)
+                let hostUrl = newurl.absoluteString.replacingOccurrences(of: host!, with: found.dns.url)
                 return hostUrl
             }
             
@@ -94,31 +95,136 @@ open class DoH : DoHInterface {
     }
     
     public init() throws {
+        pthread_mutex_init(&mutex, nil)
         guard let config = self as? DoHConfig else {
             throw RuntimeError("Class didn't extend DoHConfig")
         }
-        print("")
+        
+        pthread_mutex_lock(&self.mutex)
+        defer { pthread_mutex_unlock(&self.mutex) }
+        
+        var tmp = self.caches[config.defaultHost] ?? []
+        let newurl = URL(string: config.defaultHost)!
+        let host = newurl.host!
+        let dns = DNS(url: host, ttl: 0)
+        let cache = DNSCache(primary: true, dns: dns, lastTimeout: 0, retry: -1)
+        tmp.append(cache)
+        self.caches[config.apiHost] = tmp
     }
     
-    func cache(get host: String) -> DNS? {
-        guard let found = self.caches[host] else {
+    func cache(get host: String) -> DNSCache? {
+        pthread_mutex_lock(&self.mutex)
+        defer { pthread_mutex_unlock(&self.mutex) }
+        
+        guard var found = self.caches[host] else {
             return nil
         }
-//        if (found.ttl <= Date().timeIntervalSince1970){
-//            //remove cache
-//            return nil
-//        }
-        return found
+        
+        guard let first = found.first else {
+            return nil
+        }
+        
+        if first.lastTimeout > 0 && first.lastTimeout <= Date().timeIntervalSince1970 {
+            if first.primary == false {
+                found.removeFirst()
+            }
+            found.sort { (left, right) -> Bool in
+                if left.retry > right.retry {
+                    return true
+                }
+                return false
+            }
+            self.caches[host] = found
+            return found.first
+        }
+        
+        if first.retry > 1 && found.count > 1{
+            if first.primary == false && first.retry >= 10 {
+                found.removeFirst()
+            }
+            found.sort { (left, right) -> Bool in
+                if left.retry > right.retry {
+                    return false
+                }
+                return true
+            }
+            
+            self.caches[host] = found
+            return found.first
+        }
+        
+        if first.primary {
+            if first.retry > 0 && found.count == 1 {
+                return nil
+            }
+        }
+        
+        return found.first
     }
+    
     func cache(set host: String, dns : DNS) {
-        self.caches[host] = dns
+        pthread_mutex_lock(&self.mutex)
+        defer { pthread_mutex_unlock(&self.mutex) }
+        
+        let timeout = Date().timeIntervalSince1970 + Double(dns.ttl) * 1000
+        let cache = DNSCache(primary: false, dns: dns, lastTimeout: timeout, retry: 0)
+        var tmp = self.caches[host] ?? []
+        tmp.append(cache)
+        self.caches[host] = tmp
     }
     
     func cache(clear host: String) {
         
     }
     
-    func clearAll() {
+    public func clearAll() {
+        
+        pthread_mutex_lock(&self.mutex)
+        defer { pthread_mutex_unlock(&self.mutex) }
+        
+        let config = self as! DoHConfig
+        var tmp : [DNSCache] = []
+        let newurl = URL(string: config.defaultHost)!
+        let host = newurl.host!
+        let dns = DNS(url: host, ttl: 0)
+        let cache = DNSCache(primary: true, dns: dns, lastTimeout: 0, retry: -1)
+        tmp.append(cache)
+        self.caches[config.apiHost] = tmp
+    }
+
+    public func handleError(host: String, error: Error?) {
+        guard let config = self as? DoHConfig else {
+            return
+        }
+        guard let error = error as? NSError else {
+            return
+        }
+        guard let newurl = URL(string: host) else {
+            return
+        }
+        guard let host = newurl.host else {
+            return
+        }
+        
+        let code = error.code
+        guard code == NSURLErrorTimedOut || code == NSURLErrorCannotConnectToHost else {
+            return
+        }
+        
+        pthread_mutex_lock(&self.mutex)
+        defer { pthread_mutex_unlock(&self.mutex) }
+        
+        guard var found = self.caches[config.apiHost] else {
+            return
+        }
+        
+        for i in 0 ..< found.count {
+            let item = found[i]
+            if item.dns.url == host {
+                found[i].retry += 1
+            }
+        }
+        self.caches[config.apiHost] = found
         
     }
 }
@@ -126,100 +232,3 @@ open class DoH : DoHInterface {
 protocol test {
     
 }
-
-//extension test {
-//    var cache = [String]()
-//}
-
-//
-//fileprivate init() {}
-//   fileprivate var cache = Dictionary<String,HTTPDNSResult>()
-//   fileprivate var DNS = HTTPDNSFactory().getDNSPod()
-//
-//   /// HTTPDNS sharedInstance
-//   public static let sharedInstance = HTTPDNS()
-//
-//   /**
-//    Switch HTTPDNS provider
-//
-//    - parameter provider: DNSPod or AliYun
-//    - parameter key:      provider key
-//    */
-//   open func switchProvider (_ provider:Provider, key:String!) {
-//       self.cleanCache()
-//       switch provider {
-//       case .dnsPod:
-//           DNS = HTTPDNSFactory().getDNSPod()
-//           break
-//       case .aliYun:
-//           DNS = HTTPDNSFactory().getAliYun(key)
-//           break
-//       case .google:
-//           DNS = HTTPDNSFactory().getGoogle()
-//           break
-//       }
-//   }
-//
-//   /**
-//    Get DNS record async
-//
-//    - parameter domain:   domain name
-//    - parameter callback: callback block with DNS record
-//    */
-//   open func getRecord(_ domain: String, callback: @escaping (_ result:HTTPDNSResult?) -> Void) {
-//       let res = getCacheResult(domain)
-//       if (res != nil) {
-//           return callback(res)
-//       }
-//       DNS.requsetRecord(domain, callback: { (res) -> Void in
-//           if let res = res {
-//               callback(self.setCache(domain, record: res))
-//           } else {
-//               return callback(nil)
-//           }
-//       })
-//   }
-//
-//   /**
-//    Get DNS record sync (if not exist in cache return nil)
-//
-//    - parameter domain: domain name
-//
-//    - returns: DSN record
-//    */
-//   open func getRecordSync(_ domain: String) -> HTTPDNSResult! {
-//       guard let res = getCacheResult(domain) else {
-//           guard let res = self.DNS.requsetRecordSync(domain) else {
-//               return nil
-//           }
-//           return self.setCache(domain, record: res)
-//       }
-//       return res
-//   }
-//
-//   /**
-//    Clean all DNS record cahce
-//    */
-//   open func cleanCache() {
-//       self.cache.removeAll()
-//   }
-//
-//   func setCache(_ domain: String, record: DNSRecord?) -> HTTPDNSResult? {
-//       guard let _record = record else { return nil }
-//       let timeout = Date().timeIntervalSince1970 + Double(_record.ttl) * 1000
-//       var res = HTTPDNSResult.init(ip: _record.ip, ips: _record.ips, timeout: timeout, cached: true)
-//       self.cache.updateValue(res, forKey:domain)
-//       res.cached = false
-//       return res
-//   }
-//
-//   func getCacheResult(_ domain: String) -> HTTPDNSResult! {
-//       guard let res = self.cache[domain] else {
-//           return nil
-//       }
-//       if (res.timeout <= Date().timeIntervalSince1970){
-//           self.cache.removeValue(forKey: domain)
-//           return nil
-//       }
-//       return res
-//   }
