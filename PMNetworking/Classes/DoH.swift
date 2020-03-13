@@ -207,7 +207,12 @@ open class DoH : DoHInterface {
         }
         
         let code = error.code
-        guard code == NSURLErrorTimedOut || code == NSURLErrorCannotConnectToHost else {
+        guard code == NSURLErrorTimedOut ||
+            code == NSURLErrorCannotConnectToHost ||
+            code == NSURLErrorCannotFindHost ||
+            code == -1200 ||
+            code == 451
+        else {
             return
         }
         
