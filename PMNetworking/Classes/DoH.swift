@@ -57,10 +57,11 @@ protocol DoHInterface {
     func getHostUrl() -> String
     func handleError(host: String, error: Error?)
     func clearAll()
+    func codeCheck(code: Int) -> Bool
 }
 
 open class DoH : DoHInterface {
-
+    
     public var status : DoHStatus = .off
     
     private var caches : [String: [DNSCache]] = [:]
@@ -191,7 +192,7 @@ open class DoH : DoHInterface {
         tmp.append(cache)
         self.caches[config.apiHost] = tmp
     }
-
+    
     public func handleError(host: String, error: Error?) {
         guard let config = self as? DoHConfig else {
             return
@@ -207,12 +208,8 @@ open class DoH : DoHInterface {
         }
         
         let code = error.code
-        guard code == NSURLErrorTimedOut ||
-            code == NSURLErrorCannotConnectToHost ||
-            code == NSURLErrorCannotFindHost ||
-            code == -1200 ||
-            code == 451
-        else {
+        
+        guard self.codeCheck(code: code) else {
             return
         }
         
@@ -232,6 +229,21 @@ open class DoH : DoHInterface {
         self.caches[config.apiHost] = found
         
     }
+    
+    public func codeCheck(code: Int) -> Bool {
+        guard code == NSURLErrorTimedOut ||
+            code == NSURLErrorCannotConnectToHost ||
+            code == NSURLErrorCannotFindHost ||
+            code == NSURLErrorDNSLookupFailed ||
+            code == -1200 ||
+            code == 451 ||
+            code == 310
+            else {
+                return false
+        }
+        
+        return true
+    }            
 }
 
 protocol test {
