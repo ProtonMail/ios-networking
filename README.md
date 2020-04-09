@@ -1,10 +1,5 @@
 # PMNetworking
 
-[![CI Status](https://img.shields.io/travis/zhj4478/PMNetworking.svg?style=flat)](https://travis-ci.org/zhj4478/PMNetworking)
-[![Version](https://img.shields.io/cocoapods/v/PMNetworking.svg?style=flat)](https://cocoapods.org/pods/PMNetworking)
-[![License](https://img.shields.io/cocoapods/l/PMNetworking.svg?style=flat)](https://cocoapods.org/pods/PMNetworking)
-[![Platform](https://img.shields.io/cocoapods/p/PMNetworking.svg?style=flat)](https://cocoapods.org/pods/PMNetworking)
-
 ## Example
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
@@ -26,4 +21,6 @@ zhj4478, feng@pm.me
 
 ## License
 
-PMNetworking is available under the MIT license. See the LICENSE file for more info.
+The code and data files in this distribution are licensed under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version. See <https://www.gnu.org/licenses/> for a copy of this license.
+
+See [LICENSE](LICENSE) file
