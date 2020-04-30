@@ -1,5 +1,5 @@
 framework module PMNetworking {
-  umbrella header "PMNetworking-umbrella.h"
+  umbrella header "PMNetworking-iOS-umbrella.h"
 
   export *
   module * { export * }

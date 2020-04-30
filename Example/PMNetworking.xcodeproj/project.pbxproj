@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A44E58B41A8DF362567C877 /* Pods_PMNetworking_Mac_ExampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EEC5A8E1D462CE3DA9C8407 /* Pods_PMNetworking_Mac_ExampleTests.framework */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
@@ -14,7 +15,15 @@
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		644DCA0FC7F3A16CE0C6105D /* Pods_PMNetworking_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DF16153C174C8E7C3352EA4 /* Pods_PMNetworking_Tests.framework */; };
+		751B8AE3245AB30B006A9195 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 751B8AE2245AB30B006A9195 /* AppDelegate.swift */; };
+		751B8AE5245AB30B006A9195 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 751B8AE4245AB30B006A9195 /* ViewController.swift */; };
+		751B8AE8245AB30B006A9195 /* PMNetworking_Mac_Example.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 751B8AE6245AB30B006A9195 /* PMNetworking_Mac_Example.xcdatamodeld */; };
+		751B8AEA245AB30E006A9195 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 751B8AE9245AB30E006A9195 /* Assets.xcassets */; };
+		751B8AED245AB30E006A9195 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 751B8AEB245AB30E006A9195 /* Main.storyboard */; };
+		751B8AF9245AB30F006A9195 /* PMNetworking_Mac_ExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 751B8AF8245AB30F006A9195 /* PMNetworking_Mac_ExampleTests.swift */; };
+		751B8B04245AB30F006A9195 /* PMNetworking_Mac_ExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 751B8B03245AB30F006A9195 /* PMNetworking_Mac_ExampleUITests.swift */; };
 		9947DFE42B957B0253B53876 /* Pods_PMNetworking_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20E5036CD6416E37BA34CD3C /* Pods_PMNetworking_Example.framework */; };
+		B33D5E8EB8AB117FF6C83FE6 /* Pods_PMNetworking_Mac_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 234AADC52CCA6701130DB864 /* Pods_PMNetworking_Mac_Example.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -25,15 +34,33 @@
 			remoteGlobalIDString = 607FACCF1AFB9204008FA782;
 			remoteInfo = PMNetworking;
 		};
+		751B8AF5245AB30F006A9195 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 607FACC81AFB9204008FA782 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 751B8ADF245AB30B006A9195;
+			remoteInfo = PMNetworking_Mac_Example;
+		};
+		751B8B00245AB30F006A9195 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 607FACC81AFB9204008FA782 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 751B8ADF245AB30B006A9195;
+			remoteInfo = PMNetworking_Mac_Example;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		10303C87F33BA30EB19FBBE6 /* Pods-PMNetworking_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PMNetworking_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-PMNetworking_Example/Pods-PMNetworking_Example.release.xcconfig"; sourceTree = "<group>"; };
 		189AB33FE018BA2765C5CDBB /* Pods-PMNetworking_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PMNetworking_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PMNetworking_Tests/Pods-PMNetworking_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		20E5036CD6416E37BA34CD3C /* Pods_PMNetworking_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PMNetworking_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		234AADC52CCA6701130DB864 /* Pods_PMNetworking_Mac_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PMNetworking_Mac_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2EEC5A8E1D462CE3DA9C8407 /* Pods_PMNetworking_Mac_ExampleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PMNetworking_Mac_ExampleTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		305C7A02011F3D0F5D57BB43 /* PMNetworking.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = PMNetworking.podspec; path = ../PMNetworking.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		32BC38CA33955F31D4A7EAEB /* Pods-PMNetworking_Mac_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PMNetworking_Mac_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PMNetworking_Mac_Example/Pods-PMNetworking_Mac_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		4DF16153C174C8E7C3352EA4 /* Pods_PMNetworking_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PMNetworking_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		550C7FA671F41D6229D5562C /* Pods-PMNetworking_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PMNetworking_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PMNetworking_Example/Pods-PMNetworking_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		5A1E4150006CB1BB488D8FA2 /* Pods-PMNetworking_Mac_ExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PMNetworking_Mac_ExampleTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PMNetworking_Mac_ExampleTests/Pods-PMNetworking_Mac_ExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* PMNetworking_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PMNetworking_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -45,8 +72,24 @@
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		62A2C11CE8EB7108DF10E98B /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		735C5859CAADC801A7FFE8A5 /* Pods-PMNetworking_Mac_ExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PMNetworking_Mac_ExampleTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PMNetworking_Mac_ExampleTests/Pods-PMNetworking_Mac_ExampleTests.release.xcconfig"; sourceTree = "<group>"; };
+		751B8AE0245AB30B006A9195 /* PMNetworking_Mac_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PMNetworking_Mac_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		751B8AE2245AB30B006A9195 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		751B8AE4245AB30B006A9195 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		751B8AE7245AB30B006A9195 /* PMNetworking_Mac_Example.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PMNetworking_Mac_Example.xcdatamodel; sourceTree = "<group>"; };
+		751B8AE9245AB30E006A9195 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		751B8AEC245AB30E006A9195 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		751B8AEE245AB30E006A9195 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		751B8AEF245AB30E006A9195 /* PMNetworking_Mac_Example.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PMNetworking_Mac_Example.entitlements; sourceTree = "<group>"; };
+		751B8AF4245AB30F006A9195 /* PMNetworking_Mac_ExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PMNetworking_Mac_ExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		751B8AF8245AB30F006A9195 /* PMNetworking_Mac_ExampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PMNetworking_Mac_ExampleTests.swift; sourceTree = "<group>"; };
+		751B8AFA245AB30F006A9195 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		751B8AFF245AB30F006A9195 /* PMNetworking_Mac_ExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PMNetworking_Mac_ExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		751B8B03245AB30F006A9195 /* PMNetworking_Mac_ExampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PMNetworking_Mac_ExampleUITests.swift; sourceTree = "<group>"; };
+		751B8B05245AB30F006A9195 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9CDB3D914026AC9F67D1C5BD /* Pods-PMNetworking_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PMNetworking_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PMNetworking_Tests/Pods-PMNetworking_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		BE824EBAF58160ED226A89FF /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		F4430F1ACEF17117F0F95A14 /* Pods-PMNetworking_Mac_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PMNetworking_Mac_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-PMNetworking_Mac_Example/Pods-PMNetworking_Mac_Example.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +109,29 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		751B8ADD245AB30B006A9195 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B33D5E8EB8AB117FF6C83FE6 /* Pods_PMNetworking_Mac_Example.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		751B8AF1245AB30F006A9195 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0A44E58B41A8DF362567C877 /* Pods_PMNetworking_Mac_ExampleTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		751B8AFC245AB30F006A9195 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -76,6 +142,10 @@
 				10303C87F33BA30EB19FBBE6 /* Pods-PMNetworking_Example.release.xcconfig */,
 				189AB33FE018BA2765C5CDBB /* Pods-PMNetworking_Tests.debug.xcconfig */,
 				9CDB3D914026AC9F67D1C5BD /* Pods-PMNetworking_Tests.release.xcconfig */,
+				32BC38CA33955F31D4A7EAEB /* Pods-PMNetworking_Mac_Example.debug.xcconfig */,
+				F4430F1ACEF17117F0F95A14 /* Pods-PMNetworking_Mac_Example.release.xcconfig */,
+				5A1E4150006CB1BB488D8FA2 /* Pods-PMNetworking_Mac_ExampleTests.debug.xcconfig */,
+				735C5859CAADC801A7FFE8A5 /* Pods-PMNetworking_Mac_ExampleTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -86,6 +156,9 @@
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				607FACD21AFB9204008FA782 /* Example for PMNetworking */,
 				607FACE81AFB9204008FA782 /* Tests */,
+				751B8AE1245AB30B006A9195 /* PMNetworking_Mac_Example */,
+				751B8AF7245AB30F006A9195 /* PMNetworking_Mac_ExampleTests */,
+				751B8B02245AB30F006A9195 /* PMNetworking_Mac_ExampleUITests */,
 				607FACD11AFB9204008FA782 /* Products */,
 				39B487A6593A977C49DAA37F /* Pods */,
 				8ED30BF9051827CABD9A96F4 /* Frameworks */,
@@ -97,6 +170,9 @@
 			children = (
 				607FACD01AFB9204008FA782 /* PMNetworking_Example.app */,
 				607FACE51AFB9204008FA782 /* PMNetworking_Tests.xctest */,
+				751B8AE0245AB30B006A9195 /* PMNetworking_Mac_Example.app */,
+				751B8AF4245AB30F006A9195 /* PMNetworking_Mac_ExampleTests.xctest */,
+				751B8AFF245AB30F006A9195 /* PMNetworking_Mac_ExampleUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -150,11 +226,45 @@
 			name = "Podspec Metadata";
 			sourceTree = "<group>";
 		};
+		751B8AE1245AB30B006A9195 /* PMNetworking_Mac_Example */ = {
+			isa = PBXGroup;
+			children = (
+				751B8AE2245AB30B006A9195 /* AppDelegate.swift */,
+				751B8AE4245AB30B006A9195 /* ViewController.swift */,
+				751B8AE9245AB30E006A9195 /* Assets.xcassets */,
+				751B8AEB245AB30E006A9195 /* Main.storyboard */,
+				751B8AEE245AB30E006A9195 /* Info.plist */,
+				751B8AEF245AB30E006A9195 /* PMNetworking_Mac_Example.entitlements */,
+				751B8AE6245AB30B006A9195 /* PMNetworking_Mac_Example.xcdatamodeld */,
+			);
+			path = PMNetworking_Mac_Example;
+			sourceTree = "<group>";
+		};
+		751B8AF7245AB30F006A9195 /* PMNetworking_Mac_ExampleTests */ = {
+			isa = PBXGroup;
+			children = (
+				751B8AF8245AB30F006A9195 /* PMNetworking_Mac_ExampleTests.swift */,
+				751B8AFA245AB30F006A9195 /* Info.plist */,
+			);
+			path = PMNetworking_Mac_ExampleTests;
+			sourceTree = "<group>";
+		};
+		751B8B02245AB30F006A9195 /* PMNetworking_Mac_ExampleUITests */ = {
+			isa = PBXGroup;
+			children = (
+				751B8B03245AB30F006A9195 /* PMNetworking_Mac_ExampleUITests.swift */,
+				751B8B05245AB30F006A9195 /* Info.plist */,
+			);
+			path = PMNetworking_Mac_ExampleUITests;
+			sourceTree = "<group>";
+		};
 		8ED30BF9051827CABD9A96F4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				20E5036CD6416E37BA34CD3C /* Pods_PMNetworking_Example.framework */,
 				4DF16153C174C8E7C3352EA4 /* Pods_PMNetworking_Tests.framework */,
+				234AADC52CCA6701130DB864 /* Pods_PMNetworking_Mac_Example.framework */,
+				2EEC5A8E1D462CE3DA9C8407 /* Pods_PMNetworking_Mac_ExampleTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -200,13 +310,69 @@
 			productReference = 607FACE51AFB9204008FA782 /* PMNetworking_Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		751B8ADF245AB30B006A9195 /* PMNetworking_Mac_Example */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 751B8B06245AB30F006A9195 /* Build configuration list for PBXNativeTarget "PMNetworking_Mac_Example" */;
+			buildPhases = (
+				89994891569C3D4D842BA252 /* [CP] Check Pods Manifest.lock */,
+				751B8ADC245AB30B006A9195 /* Sources */,
+				751B8ADD245AB30B006A9195 /* Frameworks */,
+				751B8ADE245AB30B006A9195 /* Resources */,
+				EBA4A1B143C7B4621404A3D5 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PMNetworking_Mac_Example;
+			productName = PMNetworking_Mac_Example;
+			productReference = 751B8AE0245AB30B006A9195 /* PMNetworking_Mac_Example.app */;
+			productType = "com.apple.product-type.application";
+		};
+		751B8AF3245AB30F006A9195 /* PMNetworking_Mac_ExampleTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 751B8B09245AB30F006A9195 /* Build configuration list for PBXNativeTarget "PMNetworking_Mac_ExampleTests" */;
+			buildPhases = (
+				A1DE9D4F9CED021F57ACA630 /* [CP] Check Pods Manifest.lock */,
+				751B8AF0245AB30F006A9195 /* Sources */,
+				751B8AF1245AB30F006A9195 /* Frameworks */,
+				751B8AF2245AB30F006A9195 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				751B8AF6245AB30F006A9195 /* PBXTargetDependency */,
+			);
+			name = PMNetworking_Mac_ExampleTests;
+			productName = PMNetworking_Mac_ExampleTests;
+			productReference = 751B8AF4245AB30F006A9195 /* PMNetworking_Mac_ExampleTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		751B8AFE245AB30F006A9195 /* PMNetworking_Mac_ExampleUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 751B8B0C245AB30F006A9195 /* Build configuration list for PBXNativeTarget "PMNetworking_Mac_ExampleUITests" */;
+			buildPhases = (
+				751B8AFB245AB30F006A9195 /* Sources */,
+				751B8AFC245AB30F006A9195 /* Frameworks */,
+				751B8AFD245AB30F006A9195 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				751B8B01245AB30F006A9195 /* PBXTargetDependency */,
+			);
+			name = PMNetworking_Mac_ExampleUITests;
+			productName = PMNetworking_Mac_ExampleUITests;
+			productReference = 751B8AFF245AB30F006A9195 /* PMNetworking_Mac_ExampleUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		607FACC81AFB9204008FA782 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0830;
+				LastSwiftUpdateCheck = 1140;
 				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = CocoaPods;
 				TargetAttributes = {
@@ -218,6 +384,23 @@
 						CreatedOnToolsVersion = 6.3.1;
 						LastSwiftMigration = 1130;
 						TestTargetID = 607FACCF1AFB9204008FA782;
+					};
+					751B8ADF245AB30B006A9195 = {
+						CreatedOnToolsVersion = 11.4.1;
+						DevelopmentTeam = 5XTT5SKHJ4;
+						ProvisioningStyle = Automatic;
+					};
+					751B8AF3245AB30F006A9195 = {
+						CreatedOnToolsVersion = 11.4.1;
+						DevelopmentTeam = 5XTT5SKHJ4;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 751B8ADF245AB30B006A9195;
+					};
+					751B8AFE245AB30F006A9195 = {
+						CreatedOnToolsVersion = 11.4.1;
+						DevelopmentTeam = 5XTT5SKHJ4;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 751B8ADF245AB30B006A9195;
 					};
 				};
 			};
@@ -236,6 +419,9 @@
 			targets = (
 				607FACCF1AFB9204008FA782 /* PMNetworking_Example */,
 				607FACE41AFB9204008FA782 /* PMNetworking_Tests */,
+				751B8ADF245AB30B006A9195 /* PMNetworking_Mac_Example */,
+				751B8AF3245AB30F006A9195 /* PMNetworking_Mac_ExampleTests */,
+				751B8AFE245AB30F006A9195 /* PMNetworking_Mac_ExampleUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -258,6 +444,29 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		751B8ADE245AB30B006A9195 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				751B8AEA245AB30E006A9195 /* Assets.xcassets in Resources */,
+				751B8AED245AB30E006A9195 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		751B8AF2245AB30F006A9195 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		751B8AFD245AB30F006A9195 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -268,7 +477,7 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-PMNetworking_Example/Pods-PMNetworking_Example-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/PMNetworking/PMNetworking.framework",
+				"${BUILT_PRODUCTS_DIR}/PMNetworking-iOS/PMNetworking.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -277,6 +486,50 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PMNetworking_Example/Pods-PMNetworking_Example-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		89994891569C3D4D842BA252 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-PMNetworking_Mac_Example-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A1DE9D4F9CED021F57ACA630 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-PMNetworking_Mac_ExampleTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C85A997EBB06B64B72064A31 /* [CP] Check Pods Manifest.lock */ = {
@@ -323,6 +576,24 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		EBA4A1B143C7B4621404A3D5 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PMNetworking_Mac_Example/Pods-PMNetworking_Mac_Example-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/PMNetworking-macOS/PMNetworking.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PMNetworking.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PMNetworking_Mac_Example/Pods-PMNetworking_Mac_Example-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -343,6 +614,32 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		751B8ADC245AB30B006A9195 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				751B8AE5245AB30B006A9195 /* ViewController.swift in Sources */,
+				751B8AE8245AB30B006A9195 /* PMNetworking_Mac_Example.xcdatamodeld in Sources */,
+				751B8AE3245AB30B006A9195 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		751B8AF0245AB30F006A9195 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				751B8AF9245AB30F006A9195 /* PMNetworking_Mac_ExampleTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		751B8AFB245AB30F006A9195 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				751B8B04245AB30F006A9195 /* PMNetworking_Mac_ExampleUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -350,6 +647,16 @@
 			isa = PBXTargetDependency;
 			target = 607FACCF1AFB9204008FA782 /* PMNetworking_Example */;
 			targetProxy = 607FACE61AFB9204008FA782 /* PBXContainerItemProxy */;
+		};
+		751B8AF6245AB30F006A9195 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 751B8ADF245AB30B006A9195 /* PMNetworking_Mac_Example */;
+			targetProxy = 751B8AF5245AB30F006A9195 /* PBXContainerItemProxy */;
+		};
+		751B8B01245AB30F006A9195 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 751B8ADF245AB30B006A9195 /* PMNetworking_Mac_Example */;
+			targetProxy = 751B8B00245AB30F006A9195 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -368,6 +675,14 @@
 				607FACDF1AFB9204008FA782 /* Base */,
 			);
 			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+		751B8AEB245AB30E006A9195 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				751B8AEC245AB30E006A9195 /* Base */,
+			);
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -490,6 +805,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -505,6 +821,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -548,6 +865,179 @@
 			};
 			name = Release;
 		};
+		751B8B07245AB30F006A9195 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 32BC38CA33955F31D4A7EAEB /* Pods-PMNetworking_Mac_Example.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = PMNetworking_Mac_Example/PMNetworking_Mac_Example.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 5XTT5SKHJ4;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = PMNetworking_Mac_Example/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.feng.tests.PMNetworking-Mac-Example";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		751B8B08245AB30F006A9195 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F4430F1ACEF17117F0F95A14 /* Pods-PMNetworking_Mac_Example.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = PMNetworking_Mac_Example/PMNetworking_Mac_Example.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 5XTT5SKHJ4;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = PMNetworking_Mac_Example/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.feng.tests.PMNetworking-Mac-Example";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		751B8B0A245AB30F006A9195 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5A1E4150006CB1BB488D8FA2 /* Pods-PMNetworking_Mac_ExampleTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 5XTT5SKHJ4;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = PMNetworking_Mac_ExampleTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.feng.tests.PMNetworking-Mac-ExampleTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PMNetworking_Mac_Example.app/Contents/MacOS/PMNetworking_Mac_Example";
+			};
+			name = Debug;
+		};
+		751B8B0B245AB30F006A9195 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 735C5859CAADC801A7FFE8A5 /* Pods-PMNetworking_Mac_ExampleTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 5XTT5SKHJ4;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = PMNetworking_Mac_ExampleTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.feng.tests.PMNetworking-Mac-ExampleTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PMNetworking_Mac_Example.app/Contents/MacOS/PMNetworking_Mac_Example";
+			};
+			name = Release;
+		};
+		751B8B0D245AB30F006A9195 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 5XTT5SKHJ4;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = PMNetworking_Mac_ExampleUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.feng.tests.PMNetworking-Mac-ExampleUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = PMNetworking_Mac_Example;
+			};
+			name = Debug;
+		};
+		751B8B0E245AB30F006A9195 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 5XTT5SKHJ4;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = PMNetworking_Mac_ExampleUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.feng.tests.PMNetworking-Mac-ExampleUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = PMNetworking_Mac_Example;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -578,7 +1068,47 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		751B8B06245AB30F006A9195 /* Build configuration list for PBXNativeTarget "PMNetworking_Mac_Example" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				751B8B07245AB30F006A9195 /* Debug */,
+				751B8B08245AB30F006A9195 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		751B8B09245AB30F006A9195 /* Build configuration list for PBXNativeTarget "PMNetworking_Mac_ExampleTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				751B8B0A245AB30F006A9195 /* Debug */,
+				751B8B0B245AB30F006A9195 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		751B8B0C245AB30F006A9195 /* Build configuration list for PBXNativeTarget "PMNetworking_Mac_ExampleUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				751B8B0D245AB30F006A9195 /* Debug */,
+				751B8B0E245AB30F006A9195 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		751B8AE6245AB30B006A9195 /* PMNetworking_Mac_Example.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				751B8AE7245AB30B006A9195 /* PMNetworking_Mac_Example.xcdatamodel */,
+			);
+			currentVersion = 751B8AE7245AB30B006A9195 /* PMNetworking_Mac_Example.xcdatamodel */;
+			path = PMNetworking_Mac_Example.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 607FACC81AFB9204008FA782 /* Project object */;
 }

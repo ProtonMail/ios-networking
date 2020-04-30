@@ -197,7 +197,7 @@ open class DoH : DoHInterface {
         guard let config = self as? DoHConfig else {
             return
         }
-        guard let error = error as? NSError else {
+        guard let error = error as NSError? else {
             return
         }
         guard let newurl = URL(string: host) else {
