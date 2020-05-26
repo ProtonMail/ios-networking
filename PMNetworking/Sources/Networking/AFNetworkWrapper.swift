@@ -8,30 +8,6 @@
 import Foundation
 import AFNetworking
 
-//
-/// implememtations wrapper
-/// AFNetworkingImpl
-/// AlamofireImpl
-/// also mocks
-//class AlamofireWarpper : NetworkLayer {
-//    func initSession() {
-//
-//    }
-//
-//    func hookupSSLPining() {
-//
-//    }
-//
-//    /// response for delevey data to the third party lib
-//    init() {
-//        //setup session manager
-//        //setup pining
-//        //etc
-//    }
-//
-//
-//}
-
 class AFNetworkWarpper: NetworkLayer {
     func initSession() {
         

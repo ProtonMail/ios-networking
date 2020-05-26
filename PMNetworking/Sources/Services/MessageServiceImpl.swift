@@ -18,15 +18,9 @@ class MessageServiceImpl: MessageService {
     func someFeature() -> String {
         //...prepare data
         //...
-    //    var apiClient = MessageFetchAPI(self.service)
+        //var apiClient = MessageFetchAPI(self.service)
         
-     //   apiClient.exec()/apiClient.ayncExec()
-        // ....
-        let result = self.service.exec(route: MessageAPI.Routes.checkUsername("tedst")) as? TestResponse
-        
-        
-
-      
+    
         return ""
     }
 }

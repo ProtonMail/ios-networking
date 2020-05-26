@@ -23,7 +23,7 @@
 
 import Foundation
 
-final class AuthCredential: NSObject, NSCoding {
+final public class AuthCredential: NSObject, NSCoding {
     internal init(sessionID: String, accessToken: String, refreshToken: String, expiration: Date, privateKey: String?, passwordKeySalt: String?) {
         self.sessionID = sessionID
         self.accessToken = accessToken
@@ -68,7 +68,7 @@ final class AuthCredential: NSObject, NSCoding {
     private(set) var passwordKeySalt : String?
     private(set) var mailboxpassword: String = ""
     
-    override var description: String {
+    public override var description: String {
         return """
         AccessToken: \(accessToken)
         RefreshToken: \(refreshToken)
@@ -108,7 +108,7 @@ final class AuthCredential: NSObject, NSCoding {
 //        self.expiration =  Date(timeIntervalSinceNow: res.expiresIn ?? 0)
 //    }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         guard
             let token = aDecoder.decodeObject(forKey: CoderKey.accessToken) as? String,
             let refreshToken = aDecoder.decodeObject(forKey: CoderKey.refreshToken) as? String,
@@ -148,7 +148,7 @@ final class AuthCredential: NSObject, NSCoding {
         return NSKeyedArchiver.archivedData(withRootObject: self)
     }
     
-    func encode(with aCoder: NSCoder) {
+    public func encode(with aCoder: NSCoder) {
         aCoder.encode(sessionID, forKey:  CoderKey.sessionID)
         aCoder.encode(accessToken, forKey: CoderKey.accessToken)
         aCoder.encode(refreshToken, forKey: CoderKey.refreshToken)

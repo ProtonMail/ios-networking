@@ -65,9 +65,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F3731557316FF01AD025B18947DA0C59"
-               BuildableName = "PMNetworking-iOS-Unit-Tests.xctest"
-               BlueprintName = "PMNetworking-iOS-Unit-Tests"
+               BlueprintIdentifier = "05C310BE940A39AA39EC1B1EE1C0A268"
+               BuildableName = "PMNetworking-Unit-Tests.xctest"
+               BlueprintName = "PMNetworking-Unit-Tests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
             </BuildableReference>
          </TestableReference>

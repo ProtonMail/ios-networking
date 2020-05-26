@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 /// http headers key
 struct HTTPHeader {
     static let apiVersion = "x-pm-apiversion"
@@ -157,7 +156,7 @@ class TestResponse : Response {
 typealias RequestComplete = (_ task: URLSessionDataTask?, _ response: Response) -> Void
 extension APIService {
     //init
-    func exec<T>(route: Route) -> T? where T : Response {
+    func exec<T>(route: Request) -> T? where T : Response {
         var ret_res : T? = nil
         var ret_error : NSError? = nil
         let sema = DispatchSemaphore(value: 0);
@@ -205,7 +204,7 @@ extension APIService {
         return ret_res
     }
     
-    func exec<T>(route: Route,
+    func exec<T>(route: Request,
                  complete: (_ task: URLSessionDataTask?, _ response: T) -> Void) {
         
     }

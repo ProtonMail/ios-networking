@@ -1,8 +1,8 @@
 {
-  "name": "PMNetworking",
+  "name": "PMAPIClient",
   "version": "1.0.0",
-  "summary": "A short description of PMNetworking.",
-  "description": "TODO: Add long description of the pod here.",
+  "summary": "A short description of PMAPIClient.",
+  "description": "api clients. comunicate layer with backend api",
   "homepage": "https://github.com/ProtonMail/ios-networking",
   "license": {
     "type": "GPLv3",
@@ -19,20 +19,15 @@
     "ios": "9.0",
     "osx": "10.10"
   },
-  "source_files": "PMNetworking/Sources/**/*",
+  "source_files": "PMNetworking/Sources/APIClient/**/*",
   "swift_versions": [
     "5.0"
   ],
-  "dependencies": {
-    "AFNetworking": [
-      "~> 4.0"
-    ]
-  },
   "testspecs": [
     {
       "name": "Tests",
       "test_type": "unit",
-      "source_files": "PMNetworking/Tests/**/*",
+      "source_files": "PMNetworking/Tests/*",
       "dependencies": {
         "OHHTTPStubs/Swift": [
 

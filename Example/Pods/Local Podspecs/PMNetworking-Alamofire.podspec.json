@@ -1,5 +1,5 @@
 {
-  "name": "PMNetworking",
+  "name": "PMNetworking-Alamofire",
   "version": "1.0.0",
   "summary": "A short description of PMNetworking.",
   "description": "TODO: Add long description of the pod here.",
@@ -32,7 +32,7 @@
     {
       "name": "Tests",
       "test_type": "unit",
-      "source_files": "PMNetworking/Tests/**/*",
+      "source_files": "PMNetworking/Tests/*",
       "dependencies": {
         "OHHTTPStubs/Swift": [
 

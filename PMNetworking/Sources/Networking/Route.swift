@@ -7,12 +7,21 @@
 
 import Foundation
 
+protocol Package {
+    /**
+     conver requset object to dictionary
+     
+     :returns: request dictionary
+     */
+    func toDictionary() -> [String: Any]?
+}
+
+
 
 //APIClient is the api client base
-protocol Route {
+protocol Request : Package {
     
     // those functions shdould be overrided
-    func dict() -> [String : Any]?
 //    func version() -> Int
 //    func headers() -> [String : Any]
 //    func isAuth() -> Bool
