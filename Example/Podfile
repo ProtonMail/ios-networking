@@ -1,7 +1,9 @@
+platform :ios, '9.0'
+
 use_frameworks!
 
 target 'PMNetworking_Example' do
-  pod 'PMNetworking', :path => '../'
+  pod 'PMNetworking', :path => '../', :testspecs => ['Tests']
 
   target 'PMNetworking_Tests' do
     inherit! :search_paths
@@ -15,7 +17,7 @@ end
 
 
 target 'PMNetworking_Mac_Example' do
-  pod 'PMNetworking', :path => '../'
+  pod 'PMNetworking', :testspecs => ['Tests'], :path => '../'
 
   target 'PMNetworking_Mac_ExampleTests' do
     inherit! :search_paths
