@@ -45,6 +45,7 @@ TODO: Add long description of the pod here.
   
   s.test_spec 'Tests' do |test_spec|
     test_spec.source_files = 'PMNetworking/Tests/**/*'
+    test_spec.requires_app_host = true
     test_spec.dependency 'OHHTTPStubs/Swift' # This dependency will only be linked with your tests.
   end
 end

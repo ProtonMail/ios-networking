@@ -25,13 +25,12 @@ import XCTest
 
 import OHHTTPStubs
 import AFNetworking
+import PMNetworking
 
 class NetworkTests: XCTestCase {
 
     override func setUp() {
-        
         HTTPStubs.setEnabled(true)
-        
         HTTPStubs.onStubActivation() { request, descriptor, response in
             // ...
         }
@@ -50,6 +49,8 @@ class NetworkTests: XCTestCase {
         
         let expectation1 = self.expectation(description: "Success completion block called")
         let url = URL(string: "https://www.example.com/1")!
+        
+        
         let manager = AFHTTPSessionManager()
         manager.get(url.absoluteString, parameters: nil, headers: nil, progress: nil, success: { (task, response) -> Void in
             XCTAssertEqual(response as? NSDictionary, [ "data": 1 ])
@@ -58,6 +59,7 @@ class NetworkTests: XCTestCase {
         }) { (task, error) -> Void in
             XCTFail("This shouldn't return an error")
         }
+        
         let expectation2 = self.expectation(description: "Success completion block called")
         manager.get(url.absoluteString, parameters: nil, headers: nil, progress: nil, success: { (task, response) -> Void in
             XCTAssertEqual(response as? NSDictionary, [ "data": 1 ])
@@ -78,4 +80,51 @@ class NetworkTests: XCTestCase {
         }
     }
 
+    class DoHMail : DoH, DoHConfig {
+        //defind your default host
+        var defaultHost: String = "https://test.protonmail.ch"
+        //defind your query host
+        var apiHost : String = "test.protonpro.xyz"
+        //singleton
+        static let `default` = try! DoHMail()
+        
+        override init() throws {
+            
+        }
+    }
+
+    func testUserAvailable() {
+        /*let sub = */stub(condition: isHost("test.protonmail.ch") && isMethodGET() && isPath("/users/available")) { request in
+            var dict = [String:Any]()
+            if let components = URLComponents(url: request.url!, resolvingAgainstBaseURL: false) {
+              if let queryItems = components.queryItems {
+                for item in queryItems {
+                  dict[item.name] = item.value!
+                }
+              }
+            }
+            let value = dict["Name"] as! String
+            if value == "ok" {
+                let body = "{ \"Code\": 1000 }".data(using: String.Encoding.utf8)!
+                let headers = [ "Content-Type" : "application/json;charset=utf-8"]
+                //            return HTTPStubsResponse(jsonObject: body, statusCode: 200, headers: headers)
+                return HTTPStubsResponse(data: body, statusCode: 200, headers: headers)
+            }
+            let dbody = "{ \"Code\": 1000 }".data(using: String.Encoding.utf8)!
+            return HTTPStubsResponse(data: dbody, statusCode: 400, headers: [:])
+        }
+        let expectation1 = self.expectation(description: "Success completion block called")
+        let checkName = UserAPI.Router.checkUsername("ok")
+        let api = PMAPIService(doh: DoHMail.default, sessionUID: "testSessionUID", userID: "testUserID")
+        api.exec(route: checkName) { (task, response) in
+            XCTAssertEqual(response.code, 1000)
+            expectation1.fulfill()
+        }
+
+        
+        self.waitForExpectations(timeout: 30) { (expectationError) -> Void in
+            XCTAssertNil(expectationError)
+        }
+        
+    }
 }

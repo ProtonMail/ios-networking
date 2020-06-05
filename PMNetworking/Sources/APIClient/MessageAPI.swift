@@ -48,22 +48,34 @@ class MessageAPI : APIClient {
     //Unlabel Messages [/messages/unlabel] [PUT]
     static let v_remove_label_from_message : Int = 3
 
-    enum Router: Request {
-        func toDictionary() -> [String : Any]? {
-            return nil
-        }
-        
-//        case checkUsername(String)
-//        var path: String {
-//            switch self {
-//            case .checkUsername(let username):
-//                return route + "/users/available/{username}"
-//            }
-//        }
-//        func dict() -> [String : Any]? {
+//    enum Router: Request {
+//        var version: Int
+//        
+//        var path: String
+//        
+//        var apiVersion: String
+//        
+//        var header: [String : Any]
+//        
+//        var parameters: [String : Any]?
+//        
+//        var method: HTTPMethod
+//        
+//        func toDictionary() -> [String : Any]? {
 //            return nil
 //        }
-    }
+//        
+////        case checkUsername(String)
+////        var path: String {
+////            switch self {
+////            case .checkUsername(let username):
+////                return route + "/users/available/{username}"
+////            }
+////        }
+////        func dict() -> [String : Any]? {
+////            return nil
+////        }
+//    }
 }
 
 
