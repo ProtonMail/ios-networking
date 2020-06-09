@@ -51,6 +51,30 @@
 		6EE482EF823C5090378A600998A120F9 /* AFAutoPurgingImageCache.h in Headers */ = {isa = PBXBuildFile; fileRef = D38669BCC90DC5A808D3196844D961AA /* AFAutoPurgingImageCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		718C197EA61CF92D5F2FE2F72E3C578B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D907F748C2A6F98122604089C060CB1 /* Foundation.framework */; };
 		722EC0191A173ECB2121618467D32DF4 /* AFNetworkActivityIndicatorManager.h in Headers */ = {isa = PBXBuildFile; fileRef = CAE93706270B04C1FBE98595E30AC5DD /* AFNetworkActivityIndicatorManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7571ED49248F2C7D004487D4 /* CreateNewCalendarRequestDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7571ED48248F2C7D004487D4 /* CreateNewCalendarRequestDecodable.swift */; };
+		7571ED4D248F2D08004487D4 /* CreateNewCalendarResponseDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7571ED4C248F2D08004487D4 /* CreateNewCalendarResponseDecodable.swift */; };
+		7571ED4F248F2D6E004487D4 /* CalendarDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7571ED4E248F2D6E004487D4 /* CalendarDecodable.swift */; };
+		7571ED51248F2DCC004487D4 /* MemberDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7571ED50248F2DCC004487D4 /* MemberDecodable.swift */; };
+		7571ED53248F2E0D004487D4 /* GetCalendarsResponseDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7571ED52248F2E0D004487D4 /* GetCalendarsResponseDecodable.swift */; };
+		7571ED55248F2F49004487D4 /* UpdateAnExistingCalendarRequestDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7571ED54248F2F49004487D4 /* UpdateAnExistingCalendarRequestDecodable.swift */; };
+		7571ED57248F2F8B004487D4 /* UpdateAnExistingCalendarResponseDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7571ED56248F2F8B004487D4 /* UpdateAnExistingCalendarResponseDecodable.swift */; };
+		7571ED59248F2FD6004487D4 /* DeleteASpecificCalendarResponseDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7571ED58248F2FD6004487D4 /* DeleteASpecificCalendarResponseDecodable.swift */; };
+		7571ED5B248F3019004487D4 /* GetCalendarBootstrapDataResponseDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7571ED5A248F3019004487D4 /* GetCalendarBootstrapDataResponseDecodable.swift */; };
+		7571ED5D248F3042004487D4 /* PassphraseDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7571ED5C248F3042004487D4 /* PassphraseDecodable.swift */; };
+		7571ED5F248F3062004487D4 /* MemberPassphraseDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7571ED5E248F3062004487D4 /* MemberPassphraseDecodable.swift */; };
+		7571ED61248F30B8004487D4 /* KeyDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7571ED60248F30B8004487D4 /* KeyDecodable.swift */; };
+		7571ED63248F311A004487D4 /* CalendarSettingsDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7571ED62248F311A004487D4 /* CalendarSettingsDecodable.swift */; };
+		7571ED67248F31CB004487D4 /* IndexesTheAlarmsForTheCurrentCalendarResponseDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7571ED66248F31CB004487D4 /* IndexesTheAlarmsForTheCurrentCalendarResponseDecodable.swift */; };
+		7571ED69248F31EA004487D4 /* AlarmDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7571ED68248F31EA004487D4 /* AlarmDecodable.swift */; };
+		7571ED6B248F3239004487D4 /* ShowAnAlarmByIDResponseDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7571ED6A248F3239004487D4 /* ShowAnAlarmByIDResponseDecodable.swift */; };
+		7571ED71248F32D7004487D4 /* CreateAnEventRequestDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7571ED70248F32D7004487D4 /* CreateAnEventRequestDecodable.swift */; };
+		7571ED73248F3302004487D4 /* EventContentDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7571ED72248F3302004487D4 /* EventContentDecodable.swift */; };
+		7571ED77248F33E3004487D4 /* AttendeeDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7571ED76248F33E3004487D4 /* AttendeeDecodable.swift */; };
+		7571ED79248F3415004487D4 /* CreateAnEventResponseDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7571ED78248F3415004487D4 /* CreateAnEventResponseDecodable.swift */; };
+		7571ED7B248F3449004487D4 /* EventDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7571ED7A248F3449004487D4 /* EventDecodable.swift */; };
+		7571ED7D248F35FF004487D4 /* CalendarUserSettingsDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7571ED7C248F35FF004487D4 /* CalendarUserSettingsDecodable.swift */; };
+		7571ED81248F367E004487D4 /* GetOrUpdateUserSettingsResponseDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7571ED80248F367E004487D4 /* GetOrUpdateUserSettingsResponseDecodable.swift */; };
+		7571ED83248F3DBC004487D4 /* GetATemplateResponseDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7571ED82248F3DBC004487D4 /* GetATemplateResponseDecodable.swift */; };
 		76536A816A576F08FADD3366A2E40094 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C0B572CDB59DBAEA53446C14BB49AB58 /* AFURLSessionManager.m */; };
 		7944054E746B5F3D99FC5CD722CC87A7 /* MessageAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66F80E5410F7BBCB690D9AC38D0A7AD /* MessageAPI.swift */; };
 		7E62048338670F8FA2B54370A752320B /* AFNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3D4869435377AF3EDCD5C978D7B2E2F /* AFNetworking.framework */; };
@@ -189,14 +213,14 @@
 		083DA7419D8859472E4DD2BE29791A72 /* Pods-PMNetworking_Mac_ExampleTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-PMNetworking_Mac_ExampleTests.modulemap"; sourceTree = "<group>"; };
 		09546DD89750C5D924C445D5B411173D /* Pods-PMNetworking_Example-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-PMNetworking_Example-frameworks.sh"; sourceTree = "<group>"; };
 		0A92AE30FE579997112DD42070C8B4E4 /* AFAutoPurgingImageCache.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFAutoPurgingImageCache.m; path = "UIKit+AFNetworking/AFAutoPurgingImageCache.m"; sourceTree = "<group>"; };
-		0F406417C7B54B51C9893A53781F1B90 /* Pods_PMNetworking_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_PMNetworking_Example.framework; path = "Pods-PMNetworking_Example.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0F406417C7B54B51C9893A53781F1B90 /* Pods_PMNetworking_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PMNetworking_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		104E8A9111D321B250B7817B4CEA5578 /* Service.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		1065C7685F2E096330190D3BE3D53CEC /* Pods-PMNetworking_Tests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-PMNetworking_Tests-acknowledgements.plist"; sourceTree = "<group>"; };
 		110A7654CBB78DB401D31C72C356662C /* UIButton+AFNetworking.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIButton+AFNetworking.h"; path = "UIKit+AFNetworking/UIButton+AFNetworking.h"; sourceTree = "<group>"; };
 		127E1BE1F554D7F0415E1AA5A7B2975D /* Pods-PMNetworking_Tests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-PMNetworking_Tests-Info.plist"; sourceTree = "<group>"; };
 		16D1455782E5CEEBC1252A25278C6A84 /* Pods-PMNetworking_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-PMNetworking_Tests-umbrella.h"; sourceTree = "<group>"; };
-		17E33041B314FA837A3CAEB9DF3CDE9F /* OHHTTPStubs.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = OHHTTPStubs.framework; path = OHHTTPStubs.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		1B630EF25E84C9DFEC7AFC87C5093FD0 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
+		17E33041B314FA837A3CAEB9DF3CDE9F /* OHHTTPStubs.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = OHHTTPStubs.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1B630EF25E84C9DFEC7AFC87C5093FD0 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		1C409B7203B1B341EC571FDBA5C39E41 /* AppHost-PMNetworking-Unit-Tests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = "AppHost-PMNetworking-Unit-Tests-Info.plist"; path = "Example/Pods/AppHost-PMNetworking-Unit-Tests/AppHost-PMNetworking-Unit-Tests-Info.plist"; sourceTree = "<group>"; };
 		1CFAC98327AF392417DB27304928F3D6 /* AFNetworking.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = AFNetworking.xcconfig; sourceTree = "<group>"; };
 		1D6B5C80672E704A9D31A302FCE4108B /* Pods-PMNetworking_Mac_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-PMNetworking_Mac_Example-umbrella.h"; sourceTree = "<group>"; };
@@ -238,16 +262,40 @@
 		663661958E8E8CC0687B8AE3C2C72EAC /* AFURLRequestSerialization.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFURLRequestSerialization.h; path = AFNetworking/AFURLRequestSerialization.h; sourceTree = "<group>"; };
 		6C63A32F2836C3CDACB5B610FBE30D48 /* NSURLRequest+HTTPBodyTesting.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSURLRequest+HTTPBodyTesting.m"; path = "Sources/OHHTTPStubs/NSURLRequest+HTTPBodyTesting.m"; sourceTree = "<group>"; };
 		746E8976F4D382515DB2468FE5F84220 /* Pods-PMNetworking_Mac_ExampleTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-PMNetworking_Mac_ExampleTests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		7571ED48248F2C7D004487D4 /* CreateNewCalendarRequestDecodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewCalendarRequestDecodable.swift; sourceTree = "<group>"; };
+		7571ED4C248F2D08004487D4 /* CreateNewCalendarResponseDecodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewCalendarResponseDecodable.swift; sourceTree = "<group>"; };
+		7571ED4E248F2D6E004487D4 /* CalendarDecodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDecodable.swift; sourceTree = "<group>"; };
+		7571ED50248F2DCC004487D4 /* MemberDecodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberDecodable.swift; sourceTree = "<group>"; };
+		7571ED52248F2E0D004487D4 /* GetCalendarsResponseDecodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCalendarsResponseDecodable.swift; sourceTree = "<group>"; };
+		7571ED54248F2F49004487D4 /* UpdateAnExistingCalendarRequestDecodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateAnExistingCalendarRequestDecodable.swift; sourceTree = "<group>"; };
+		7571ED56248F2F8B004487D4 /* UpdateAnExistingCalendarResponseDecodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateAnExistingCalendarResponseDecodable.swift; sourceTree = "<group>"; };
+		7571ED58248F2FD6004487D4 /* DeleteASpecificCalendarResponseDecodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteASpecificCalendarResponseDecodable.swift; sourceTree = "<group>"; };
+		7571ED5A248F3019004487D4 /* GetCalendarBootstrapDataResponseDecodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCalendarBootstrapDataResponseDecodable.swift; sourceTree = "<group>"; };
+		7571ED5C248F3042004487D4 /* PassphraseDecodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassphraseDecodable.swift; sourceTree = "<group>"; };
+		7571ED5E248F3062004487D4 /* MemberPassphraseDecodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberPassphraseDecodable.swift; sourceTree = "<group>"; };
+		7571ED60248F30B8004487D4 /* KeyDecodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyDecodable.swift; sourceTree = "<group>"; };
+		7571ED62248F311A004487D4 /* CalendarSettingsDecodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarSettingsDecodable.swift; sourceTree = "<group>"; };
+		7571ED66248F31CB004487D4 /* IndexesTheAlarmsForTheCurrentCalendarResponseDecodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexesTheAlarmsForTheCurrentCalendarResponseDecodable.swift; sourceTree = "<group>"; };
+		7571ED68248F31EA004487D4 /* AlarmDecodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmDecodable.swift; sourceTree = "<group>"; };
+		7571ED6A248F3239004487D4 /* ShowAnAlarmByIDResponseDecodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowAnAlarmByIDResponseDecodable.swift; sourceTree = "<group>"; };
+		7571ED70248F32D7004487D4 /* CreateAnEventRequestDecodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAnEventRequestDecodable.swift; sourceTree = "<group>"; };
+		7571ED72248F3302004487D4 /* EventContentDecodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventContentDecodable.swift; sourceTree = "<group>"; };
+		7571ED76248F33E3004487D4 /* AttendeeDecodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttendeeDecodable.swift; sourceTree = "<group>"; };
+		7571ED78248F3415004487D4 /* CreateAnEventResponseDecodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAnEventResponseDecodable.swift; sourceTree = "<group>"; };
+		7571ED7A248F3449004487D4 /* EventDecodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDecodable.swift; sourceTree = "<group>"; };
+		7571ED7C248F35FF004487D4 /* CalendarUserSettingsDecodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarUserSettingsDecodable.swift; sourceTree = "<group>"; };
+		7571ED80248F367E004487D4 /* GetOrUpdateUserSettingsResponseDecodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetOrUpdateUserSettingsResponseDecodable.swift; sourceTree = "<group>"; };
+		7571ED82248F3DBC004487D4 /* GetATemplateResponseDecodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetATemplateResponseDecodable.swift; sourceTree = "<group>"; };
 		76B52A5B3DA979A6DEB296C9B4673B9C /* OHHTTPStubs-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "OHHTTPStubs-dummy.m"; sourceTree = "<group>"; };
 		774B68703C08CC048606E75ED283DCD4 /* PMNetworking.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = PMNetworking.modulemap; sourceTree = "<group>"; };
-		77A0EFA2CFF361F72A2891458BF86EB6 /* PMNetworking.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = PMNetworking.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		77A0EFA2CFF361F72A2891458BF86EB6 /* PMNetworking.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = PMNetworking.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		77BD39BACF3DC4349717100AAD0092DC /* PMNetworking-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "PMNetworking-dummy.m"; sourceTree = "<group>"; };
 		791A20663BCBF854E69F8969EC28C5A7 /* Pods-PMNetworking_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-PMNetworking_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		7E021855672722120013B1CDAC868EAC /* AlamofireWrapper.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AlamofireWrapper.swift; sourceTree = "<group>"; };
 		80E4533364236015569BCB88AF644C60 /* HTTPStubsResponse.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = HTTPStubsResponse.h; path = Sources/OHHTTPStubs/include/HTTPStubsResponse.h; sourceTree = "<group>"; };
 		80F20FC847850575371B3F2F154D31F2 /* Pods-PMNetworking_Mac_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-PMNetworking_Mac_Example-dummy.m"; sourceTree = "<group>"; };
 		81559FDADECD211C2DA3B2A9BE7E79F3 /* Response.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
-		838AEA99C62F86F56DA13973503BE4BE /* PMNetworking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = PMNetworking.framework; path = PMNetworking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		838AEA99C62F86F56DA13973503BE4BE /* PMNetworking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PMNetworking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		875ADEC831D99F3A7F2E9059BD03278D /* AFSecurityPolicy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFSecurityPolicy.m; path = AFNetworking/AFSecurityPolicy.m; sourceTree = "<group>"; };
 		876CE6072A626C5BCEB8027FB4A50EE8 /* AFNetworkReachabilityManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFNetworkReachabilityManager.m; path = AFNetworking/AFNetworkReachabilityManager.m; sourceTree = "<group>"; };
 		8B54F149A0CD9D57C48AA4B704B05B2B /* Pods-PMNetworking_Mac_ExampleTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-PMNetworking_Mac_ExampleTests-acknowledgements.plist"; sourceTree = "<group>"; };
@@ -267,10 +315,10 @@
 		9BDA1B9DB2A6283D9F3F4705EF975E11 /* AppHost-PMNetworking-Unit-Tests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AppHost-PMNetworking-Unit-Tests.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BEE80079688270A9D24C6335AFFAA11 /* HTTPStubsMethodSwizzling.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = HTTPStubsMethodSwizzling.m; path = Sources/OHHTTPStubs/HTTPStubsMethodSwizzling.m; sourceTree = "<group>"; };
 		9C6292711F43B8740CBD834BF7090D3C /* NetworkLayer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NetworkLayer.swift; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A0D411997BD9E2EBF2096B7AAA151AF2 /* UIKit+AFNetworking.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIKit+AFNetworking.h"; path = "UIKit+AFNetworking/UIKit+AFNetworking.h"; sourceTree = "<group>"; };
 		A445D80D0318AD154EDF22D317BE2551 /* UIRefreshControl+AFNetworking.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIRefreshControl+AFNetworking.m"; path = "UIKit+AFNetworking/UIRefreshControl+AFNetworking.m"; sourceTree = "<group>"; };
-		A4FA15D44DF6BAC7550EDEED10862AA3 /* AFNetworking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = AFNetworking.framework; path = AFNetworking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A4FA15D44DF6BAC7550EDEED10862AA3 /* AFNetworking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AFNetworking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6312EF85D87239154CEA5D6837FE667 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = "Example/Pods/AppHost-PMNetworking-Unit-Tests/LaunchScreen.storyboard"; sourceTree = "<group>"; };
 		A8CC020A24E5C8A63C27471DC7C22FD5 /* UIProgressView+AFNetworking.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIProgressView+AFNetworking.h"; path = "UIKit+AFNetworking/UIProgressView+AFNetworking.h"; sourceTree = "<group>"; };
 		AAA865D90C1CB07E4F9D76A479005C29 /* UserServiceImpl.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = UserServiceImpl.swift; sourceTree = "<group>"; };
@@ -296,7 +344,7 @@
 		CAE93706270B04C1FBE98595E30AC5DD /* AFNetworkActivityIndicatorManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFNetworkActivityIndicatorManager.h; path = "UIKit+AFNetworking/AFNetworkActivityIndicatorManager.h"; sourceTree = "<group>"; };
 		CBCFE4F110C240BFF936B7E7A312B0EB /* OHHTTPStubs-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "OHHTTPStubs-umbrella.h"; sourceTree = "<group>"; };
 		CCE3285BA3487F6EB06C7C84C85CF955 /* HTTPStubsResponse.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = HTTPStubsResponse.m; path = Sources/OHHTTPStubs/HTTPStubsResponse.m; sourceTree = "<group>"; };
-		D117E249E220DE71F63E01807A40FE10 /* Pods_PMNetworking_Mac_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_PMNetworking_Mac_Example.framework; path = "Pods-PMNetworking_Mac_Example.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D117E249E220DE71F63E01807A40FE10 /* Pods_PMNetworking_Mac_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PMNetworking_Mac_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1E04ECAC30B1BA779E09CE07B1D90CE /* UIButton+AFNetworking.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIButton+AFNetworking.m"; path = "UIKit+AFNetworking/UIButton+AFNetworking.m"; sourceTree = "<group>"; };
 		D2CFE810B53D2BABB81B30F3224AE7D6 /* Pods-PMNetworking_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-PMNetworking_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
 		D38669BCC90DC5A808D3196844D961AA /* AFAutoPurgingImageCache.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFAutoPurgingImageCache.h; path = "UIKit+AFNetworking/AFAutoPurgingImageCache.h"; sourceTree = "<group>"; };
@@ -306,9 +354,9 @@
 		D58057B8D165281B9D0FBC3AB53F97EF /* Pods-PMNetworking_Mac_ExampleTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-PMNetworking_Mac_ExampleTests-umbrella.h"; sourceTree = "<group>"; };
 		D66F80E5410F7BBCB690D9AC38D0A7AD /* MessageAPI.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = MessageAPI.swift; sourceTree = "<group>"; };
 		D693F035AE7E8866E860C751A5809295 /* DoH.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DoH.swift; sourceTree = "<group>"; };
-		D7BE6804472C265DCAED56C68051C87E /* Pods_PMNetworking_Mac_ExampleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_PMNetworking_Mac_ExampleTests.framework; path = "Pods-PMNetworking_Mac_ExampleTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D7BE6804472C265DCAED56C68051C87E /* Pods_PMNetworking_Mac_ExampleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PMNetworking_Mac_ExampleTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7EBA3BDAB6431F0072D6F59DAA24556 /* Pods-PMNetworking_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-PMNetworking_Tests-dummy.m"; sourceTree = "<group>"; };
-		D7EBC46E7CC825FCDA5B4749DFF06F6D /* Pods_PMNetworking_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_PMNetworking_Tests.framework; path = "Pods-PMNetworking_Tests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D7EBC46E7CC825FCDA5B4749DFF06F6D /* Pods_PMNetworking_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PMNetworking_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC42470B894AD8A015CEE6B864DD0178 /* AFNetworking.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = AFNetworking.modulemap; sourceTree = "<group>"; };
 		DFC728C8ABE4A0054871B3D17E158C1D /* Pods-PMNetworking_Mac_Example-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-PMNetworking_Mac_Example-acknowledgements.plist"; sourceTree = "<group>"; };
 		E1A2EAA1C121954AF4BB57087B8DFE9D /* Pods-PMNetworking_Example-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-PMNetworking_Example-Info.plist"; sourceTree = "<group>"; };
@@ -539,6 +587,237 @@
 			name = NSURLSession;
 			sourceTree = "<group>";
 		};
+		7571ED44248F2B21004487D4 /* Decodable */ = {
+			isa = PBXGroup;
+			children = (
+				7571ED47248F2B50004487D4 /* Foundation */,
+				7571ED46248F2B48004487D4 /* Response */,
+				7571ED45248F2B3D004487D4 /* Request */,
+			);
+			path = Decodable;
+			sourceTree = "<group>";
+		};
+		7571ED45248F2B3D004487D4 /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				7571ED90248F3E33004487D4 /* Group Calendar settings */,
+				7571ED8E248F3E21004487D4 /* Group Reset */,
+				7571ED8C248F3E16004487D4 /* Group Passphrases */,
+				7571ED8A248F3E07004487D4 /* Group Members */,
+				7571ED87248F3DF7004487D4 /* Group Keys */,
+				7571ED85248F3DEA004487D4 /* Group Invitations */,
+				7571ED7F248F366E004487D4 /* Group User settings */,
+				7571ED6F248F3297004487D4 /* Group Events */,
+				7571ED6D248F327A004487D4 /* Group Attendees */,
+				7571ED65248F3198004487D4 /* Group Alarms */,
+				7571ED4A248F2CA7004487D4 /* Group Calendar */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
+		7571ED46248F2B48004487D4 /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				7571ED8F248F3E2E004487D4 /* Group Calendar settings */,
+				7571ED8D248F3E1E004487D4 /* Group Reset */,
+				7571ED8B248F3E11004487D4 /* Group Passphrases */,
+				7571ED88248F3DFF004487D4 /* Group Members */,
+				7571ED86248F3DF4004487D4 /* Group Keys */,
+				7571ED84248F3DE4004487D4 /* Group Invitations */,
+				7571ED7E248F3668004487D4 /* Group User settings */,
+				7571ED6E248F3291004487D4 /* Group Events */,
+				7571ED6C248F3272004487D4 /* Group Attendees */,
+				7571ED64248F318C004487D4 /* Group Alarms */,
+				7571ED4B248F2CF3004487D4 /* Group Calendar */,
+			);
+			path = Response;
+			sourceTree = "<group>";
+		};
+		7571ED47248F2B50004487D4 /* Foundation */ = {
+			isa = PBXGroup;
+			children = (
+				7571ED4E248F2D6E004487D4 /* CalendarDecodable.swift */,
+				7571ED50248F2DCC004487D4 /* MemberDecodable.swift */,
+				7571ED5C248F3042004487D4 /* PassphraseDecodable.swift */,
+				7571ED5E248F3062004487D4 /* MemberPassphraseDecodable.swift */,
+				7571ED60248F30B8004487D4 /* KeyDecodable.swift */,
+				7571ED62248F311A004487D4 /* CalendarSettingsDecodable.swift */,
+				7571ED7C248F35FF004487D4 /* CalendarUserSettingsDecodable.swift */,
+				7571ED68248F31EA004487D4 /* AlarmDecodable.swift */,
+				7571ED72248F3302004487D4 /* EventContentDecodable.swift */,
+				7571ED76248F33E3004487D4 /* AttendeeDecodable.swift */,
+				7571ED7A248F3449004487D4 /* EventDecodable.swift */,
+			);
+			path = Foundation;
+			sourceTree = "<group>";
+		};
+		7571ED4A248F2CA7004487D4 /* Group Calendar */ = {
+			isa = PBXGroup;
+			children = (
+				7571ED48248F2C7D004487D4 /* CreateNewCalendarRequestDecodable.swift */,
+				7571ED54248F2F49004487D4 /* UpdateAnExistingCalendarRequestDecodable.swift */,
+			);
+			path = "Group Calendar";
+			sourceTree = "<group>";
+		};
+		7571ED4B248F2CF3004487D4 /* Group Calendar */ = {
+			isa = PBXGroup;
+			children = (
+				7571ED4C248F2D08004487D4 /* CreateNewCalendarResponseDecodable.swift */,
+				7571ED52248F2E0D004487D4 /* GetCalendarsResponseDecodable.swift */,
+				7571ED56248F2F8B004487D4 /* UpdateAnExistingCalendarResponseDecodable.swift */,
+				7571ED58248F2FD6004487D4 /* DeleteASpecificCalendarResponseDecodable.swift */,
+				7571ED5A248F3019004487D4 /* GetCalendarBootstrapDataResponseDecodable.swift */,
+			);
+			path = "Group Calendar";
+			sourceTree = "<group>";
+		};
+		7571ED64248F318C004487D4 /* Group Alarms */ = {
+			isa = PBXGroup;
+			children = (
+				7571ED66248F31CB004487D4 /* IndexesTheAlarmsForTheCurrentCalendarResponseDecodable.swift */,
+				7571ED6A248F3239004487D4 /* ShowAnAlarmByIDResponseDecodable.swift */,
+			);
+			path = "Group Alarms";
+			sourceTree = "<group>";
+		};
+		7571ED65248F3198004487D4 /* Group Alarms */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Group Alarms";
+			sourceTree = "<group>";
+		};
+		7571ED6C248F3272004487D4 /* Group Attendees */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Group Attendees";
+			sourceTree = "<group>";
+		};
+		7571ED6D248F327A004487D4 /* Group Attendees */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Group Attendees";
+			sourceTree = "<group>";
+		};
+		7571ED6E248F3291004487D4 /* Group Events */ = {
+			isa = PBXGroup;
+			children = (
+				7571ED78248F3415004487D4 /* CreateAnEventResponseDecodable.swift */,
+			);
+			path = "Group Events";
+			sourceTree = "<group>";
+		};
+		7571ED6F248F3297004487D4 /* Group Events */ = {
+			isa = PBXGroup;
+			children = (
+				7571ED70248F32D7004487D4 /* CreateAnEventRequestDecodable.swift */,
+			);
+			path = "Group Events";
+			sourceTree = "<group>";
+		};
+		7571ED7E248F3668004487D4 /* Group User settings */ = {
+			isa = PBXGroup;
+			children = (
+				7571ED80248F367E004487D4 /* GetOrUpdateUserSettingsResponseDecodable.swift */,
+				7571ED82248F3DBC004487D4 /* GetATemplateResponseDecodable.swift */,
+			);
+			path = "Group User settings";
+			sourceTree = "<group>";
+		};
+		7571ED7F248F366E004487D4 /* Group User settings */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Group User settings";
+			sourceTree = "<group>";
+		};
+		7571ED84248F3DE4004487D4 /* Group Invitations */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Group Invitations";
+			sourceTree = "<group>";
+		};
+		7571ED85248F3DEA004487D4 /* Group Invitations */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Group Invitations";
+			sourceTree = "<group>";
+		};
+		7571ED86248F3DF4004487D4 /* Group Keys */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Group Keys";
+			sourceTree = "<group>";
+		};
+		7571ED87248F3DF7004487D4 /* Group Keys */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Group Keys";
+			sourceTree = "<group>";
+		};
+		7571ED88248F3DFF004487D4 /* Group Members */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Group Members";
+			sourceTree = "<group>";
+		};
+		7571ED8A248F3E07004487D4 /* Group Members */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Group Members";
+			sourceTree = "<group>";
+		};
+		7571ED8B248F3E11004487D4 /* Group Passphrases */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Group Passphrases";
+			sourceTree = "<group>";
+		};
+		7571ED8C248F3E16004487D4 /* Group Passphrases */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Group Passphrases";
+			sourceTree = "<group>";
+		};
+		7571ED8D248F3E1E004487D4 /* Group Reset */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Group Reset";
+			sourceTree = "<group>";
+		};
+		7571ED8E248F3E21004487D4 /* Group Reset */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Group Reset";
+			sourceTree = "<group>";
+		};
+		7571ED8F248F3E2E004487D4 /* Group Calendar settings */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Group Calendar settings";
+			sourceTree = "<group>";
+		};
+		7571ED90248F3E33004487D4 /* Group Calendar settings */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Group Calendar settings";
+			sourceTree = "<group>";
+		};
 		77EAA154C96D4079951CB56F83D4EC5A /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -575,7 +854,6 @@
 				2A9239F80713331A7EE31B8E535A1354 /* Support Files */,
 				06A905816627E49F826CD8F7462E76C9 /* Swift */,
 			);
-			name = OHHTTPStubs;
 			path = OHHTTPStubs;
 			sourceTree = "<group>";
 		};
@@ -789,7 +1067,6 @@
 				28E5F7142DB644E6EF2E79828848C38F /* Support Files */,
 				F12FD70314CE8680B7BBCDE8BCC225E1 /* UIKit */,
 			);
-			name = AFNetworking;
 			path = AFNetworking;
 			sourceTree = "<group>";
 		};
@@ -822,6 +1099,7 @@
 		F834905694FAC2D280886B274A2B7568 /* PMNetworking */ = {
 			isa = PBXGroup;
 			children = (
+				7571ED44248F2B21004487D4 /* Decodable */,
 				A3D18FF80F32F5403A1C9EA97A246AAD /* APIClient */,
 				B4D81DA442838CA603B0BCC47DC0BC72 /* AppHost-PMNetworking-Unit-Tests */,
 				C7C7DFEB27823A06EE41FD9633C7F362 /* Networking */,
@@ -1230,25 +1508,49 @@
 			buildActionMask = 2147483647;
 			files = (
 				2CBC3E4772A581557AB9ED4C8CE4B1DB /* AFNetworkWrapper.swift in Sources */,
+				7571ED5D248F3042004487D4 /* PassphraseDecodable.swift in Sources */,
 				0FF1F774995D38939008A3FC7B563E56 /* AlamofireWrapper.swift in Sources */,
+				7571ED7D248F35FF004487D4 /* CalendarUserSettingsDecodable.swift in Sources */,
 				5B15BF330493775954A8FD02FB2730D7 /* APIClient.swift in Sources */,
 				8074CD7736FED09DB7F4D3CDBD5868EC /* APIService.swift in Sources */,
+				7571ED4D248F2D08004487D4 /* CreateNewCalendarResponseDecodable.swift in Sources */,
+				7571ED5F248F3062004487D4 /* MemberPassphraseDecodable.swift in Sources */,
+				7571ED71248F32D7004487D4 /* CreateAnEventRequestDecodable.swift in Sources */,
+				7571ED79248F3415004487D4 /* CreateAnEventResponseDecodable.swift in Sources */,
+				7571ED67248F31CB004487D4 /* IndexesTheAlarmsForTheCurrentCalendarResponseDecodable.swift in Sources */,
+				7571ED83248F3DBC004487D4 /* GetATemplateResponseDecodable.swift in Sources */,
+				7571ED53248F2E0D004487D4 /* GetCalendarsResponseDecodable.swift in Sources */,
 				50E5283C1A226D3F648716C4EDAA2874 /* AuthCredential.swift in Sources */,
+				7571ED69248F31EA004487D4 /* AlarmDecodable.swift in Sources */,
+				7571ED57248F2F8B004487D4 /* UpdateAnExistingCalendarResponseDecodable.swift in Sources */,
 				04AF7B0D8B51FD2F7958A5A24A686AFD /* DNS.swift in Sources */,
+				7571ED59248F2FD6004487D4 /* DeleteASpecificCalendarResponseDecodable.swift in Sources */,
 				FB88473639593C0F6946CD3EBDF9F8EA /* DoH.swift in Sources */,
 				C560DF90EA67FDB8F513E16C2A0C215D /* DoHProvider.swift in Sources */,
+				7571ED6B248F3239004487D4 /* ShowAnAlarmByIDResponseDecodable.swift in Sources */,
 				D34DDFD339DBC68AACE77898C17EF4B5 /* DoHProviderGoogle.swift in Sources */,
 				D5919AE4B9FC04268ACDC65B37B3D4C6 /* DoHProviderQuad.swift in Sources */,
 				7944054E746B5F3D99FC5CD722CC87A7 /* MessageAPI.swift in Sources */,
+				7571ED7B248F3449004487D4 /* EventDecodable.swift in Sources */,
 				7FB0A2CD5DB53806BA5997255BBBEA83 /* MessageService.swift in Sources */,
 				066960048E22D414B0AC5010052A5778 /* MessageServiceImpl.swift in Sources */,
+				7571ED61248F30B8004487D4 /* KeyDecodable.swift in Sources */,
+				7571ED73248F3302004487D4 /* EventContentDecodable.swift in Sources */,
 				98D30F661A002A03EDF04BAACDCD2AA6 /* NetworkLayer.swift in Sources */,
 				E7856D6802FC211046CDF54FF61C1EFF /* PMNetworking-dummy.m in Sources */,
 				FD58412A5732697D4F4B1D6C6AAD78DA /* ProtonMailAPIService.swift in Sources */,
 				D7A78757C6F2758668D1EB67D749F879 /* Response.swift in Sources */,
+				7571ED5B248F3019004487D4 /* GetCalendarBootstrapDataResponseDecodable.swift in Sources */,
 				56AFBB6F128B8CBEFAE6F8473811B28F /* Route.swift in Sources */,
+				7571ED55248F2F49004487D4 /* UpdateAnExistingCalendarRequestDecodable.swift in Sources */,
+				7571ED63248F311A004487D4 /* CalendarSettingsDecodable.swift in Sources */,
 				15A8F067F078F75DBB5282D3F9E2F517 /* Service.swift in Sources */,
+				7571ED4F248F2D6E004487D4 /* CalendarDecodable.swift in Sources */,
+				7571ED77248F33E3004487D4 /* AttendeeDecodable.swift in Sources */,
+				7571ED51248F2DCC004487D4 /* MemberDecodable.swift in Sources */,
+				7571ED49248F2C7D004487D4 /* CreateNewCalendarRequestDecodable.swift in Sources */,
 				398F68FFA15FAE9780B135B636DDE415 /* UserAPI.swift in Sources */,
+				7571ED81248F367E004487D4 /* GetOrUpdateUserSettingsResponseDecodable.swift in Sources */,
 				565EA3C77DFE38EFB9BE5CA15C27FAB1 /* UserService.swift in Sources */,
 				EDF0E6650DEF13C18E651B13350E409B /* UserServiceImpl.swift in Sources */,
 			);
@@ -1881,8 +2183,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 5.0;
 				SYMROOT = "${SRCROOT}/../build";
 			};
