@@ -26,8 +26,6 @@ import Foundation
 import AFNetworking
 
 
-
-
 //This need move to a common framwork
 extension NSError {
     
@@ -659,7 +657,8 @@ public class PMAPIService : APIService {
                         print("in progress")
                     }, completionHandler: { (urlresponse, res, error) in
                         self.debugError(error)
-                        if let urlres = urlresponse as? HTTPURLResponse, let allheader = urlres.allHeaderFields as? [String : Any] {
+                        if let urlres = urlresponse as? HTTPURLResponse,
+                            let allheader = urlres.allHeaderFields as? [String : Any] {
                             //PMLog.D("\(allheader.json(prettyPrinted: true))")
                             if let strData = allheader["Date"] as? String {
                                 // create dateFormatter with UTC time format

@@ -39,12 +39,9 @@ TODO: Add long description of the pod here.
   # Default subspec that includes the most commonly-used components
   s.subspec 'Default' do |default|
     default.dependency 'PMCommon/Networking'
-    # default.dependency 'PMCommon/NSURLSession'
-    # default.dependency 'PMCommon/JSON'
-    # default.dependency 'PMCommon/OHPathHelpers'
+    default.dependency 'PMCommon/APIClient'
+    default.dependency 'PMCommon/Services'
   end
-  
-  
   
   # Optional subspecs
   s.subspec 'Networking' do |networking|
@@ -52,17 +49,21 @@ TODO: Add long description of the pod here.
     networking.dependency 'AFNetworking', '~> 4.0'
   end
 
-  # s.subspec 'JSON' do |json|
-  #   json.dependency 'OHHTTPStubs/Core'
-  #   json.source_files = "Sources/OHHTTPStubs/**/HTTPStubsResponse+JSON.{h,m}"
-  # end
+  s.subspec 'APIClient' do |apiclient|
+    apiclient.dependency 'PMCommon/Networking'
+    apiclient.source_files = 'PMNetworking/Sources/APIClient/**/*'
+  end
   
+  s.subspec 'Services' do |services|
+    services.dependency 'PMCommon/APIClient'
+    services.source_files = 'PMNetworking/Sources/Services/**/*'
+  end
   
   # s.resource_bundles = {
   #   'PMNetworking' => ['PMNetworking/Assets/*.png']
   # }
   
-  # s.public_header_files = 'Pod/Classes/**/*.h'
+  # s.public_header_files = 'Pod/Classes/**/*.h'å
   # s.frameworks = 'UIKit', 'MapKit'
   
   s.test_spec 'Tests' do |test_spec|

@@ -25,7 +25,7 @@ import XCTest
 
 import OHHTTPStubs
 import AFNetworking
-import PMNetworking
+import PMCommon
 
 class UserAPITests: XCTestCase {
     

@@ -41,6 +41,12 @@
       "dependencies": {
         "PMCommon/Networking": [
 
+        ],
+        "PMCommon/APIClient": [
+
+        ],
+        "PMCommon/Services": [
+
         ]
       }
     },
@@ -52,6 +58,24 @@
           "~> 4.0"
         ]
       }
+    },
+    {
+      "name": "APIClient",
+      "dependencies": {
+        "PMCommon/Networking": [
+
+        ]
+      },
+      "source_files": "PMNetworking/Sources/APIClient/**/*"
+    },
+    {
+      "name": "Services",
+      "dependencies": {
+        "PMCommon/APIClient": [
+
+        ]
+      },
+      "source_files": "PMNetworking/Sources/Services/**/*"
     }
   ],
   "swift_version": "5.0"

@@ -103,18 +103,6 @@ public class UserAPI : APIClient {
 //    static let v_send_verification_code : Int = 3
     
     public enum Router: Request {
-        public var version: Int {
-            return 3
-        }
-        
-        public func toDictionary() -> [String : Any]? {
-             return nil
-        }
-        
-        func dict() -> [String : Any]? {
-            return nil
-        }
-        
         case code(type: HumanVerificationToken.TokenType, receiver: String)
         case check(token: HumanVerificationToken)
         case checkUsername(String)

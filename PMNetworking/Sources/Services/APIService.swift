@@ -12,26 +12,6 @@ struct HTTPHeader {
     static let apiVersion = "x-pm-apiversion"
 }
 
-///
-public enum HTTPMethod {
-    case delete
-    case get
-    case post
-    case put
-    
-    func toString() -> String {
-        switch self {
-        case .delete:
-            return "DELETE"
-        case .get:
-            return "GET"
-        case .post:
-            return "POST"
-        case .put:
-            return "PUT"
-        }
-    }
-}
 
 ///
 protocol APIServerConfig  {
@@ -193,7 +173,7 @@ public extension APIService {
         }
         //TODO:: missing auth
         self.request(method: route.method, path: route.path,
-                     parameters: route.toDictionary(),
+                     parameters: route.parameters,
                      headers: [HTTPHeader.apiVersion: route.version],
                      authenticated: true,//route.getIsAuthFunction(),
             customAuthCredential: nil, //route.authCredential,
@@ -240,21 +220,11 @@ public extension APIService {
         
         
         self.request(method: route.method, path: route.path,
-                 parameters: route.toDictionary(),
-                 headers: [HTTPHeader.apiVersion: route.version],
-                 authenticated: true,//route.getIsAuthFunction(),
-        customAuthCredential: nil, //route.authCredential,
-        completion: completionWrapper)
-        
-//        api.request(method: self.method(),
-//                    path: self.path(),
-//                    parameters: self.toDictionary(),
-//                    headers: header,
-//                    authenticated: self.getIsAuthFunction(),
-//                    customAuthCredential: self.authCredential,
-//                    completion: completionWrapper)
-//
-        
+                     parameters: route.parameters,
+                     headers: [HTTPHeader.apiVersion: route.version],
+                     authenticated: true,//route.getIsAuthFunction(),
+            customAuthCredential: nil, //route.authCredential,
+            completion: completionWrapper)
     }
     
     

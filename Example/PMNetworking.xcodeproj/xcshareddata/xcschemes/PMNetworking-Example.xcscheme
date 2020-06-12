@@ -62,12 +62,22 @@
             </BuildableReference>
          </TestableReference>
          <TestableReference
-            skipped = "NO">
+            skipped = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "05C310BE940A39AA39EC1B1EE1C0A268"
                BuildableName = "PMNetworking-Unit-Tests.xctest"
                BlueprintName = "PMNetworking-Unit-Tests"
+               ReferencedContainer = "container:Pods/Pods.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "A8A24812D2CE43FD4F5042F19DF08A05"
+               BuildableName = "PMCommon-Unit-Tests.xctest"
+               BlueprintName = "PMCommon-Unit-Tests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
             </BuildableReference>
          </TestableReference>

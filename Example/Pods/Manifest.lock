@@ -29,10 +29,16 @@ PODS:
     - OHHTTPStubs/Default
   - PMCommon (0.1.0):
     - PMCommon/Default (= 0.1.0)
-  - PMCommon/Default (0.1.0):
+  - PMCommon/APIClient (0.1.0):
     - PMCommon/Networking
+  - PMCommon/Default (0.1.0):
+    - PMCommon/APIClient
+    - PMCommon/Networking
+    - PMCommon/Services
   - PMCommon/Networking (0.1.0):
     - AFNetworking (~> 4.0)
+  - PMCommon/Services (0.1.0):
+    - PMCommon/APIClient
   - PMCommon/Tests (0.1.0):
     - OHHTTPStubs/Swift
 
@@ -52,8 +58,8 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   AFNetworking: 7864c38297c79aaca1500c33288e429c3451fdce
   OHHTTPStubs: cb29d2a9d09a828ecb93349a2b0c64f99e0db89f
-  PMCommon: 5b6aefb6fb3a5fec9367f87fe6ffc3df32f43889
+  PMCommon: 82b79a8bafaac4f7befe8f414a2dc61978ccff79
 
-PODFILE CHECKSUM: 62cdd525b85397373344168c1fb0b48656bf1d2f
+PODFILE CHECKSUM: 8fe4b3d2563dece9588035fc18a9299f4a6de6cf
 
 COCOAPODS: 1.8.4

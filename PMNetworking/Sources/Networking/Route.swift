@@ -13,22 +13,49 @@ public protocol Package {
      
      :returns: request dictionary
      */
-    func toDictionary() -> [String: Any]?
+    var parameters: [String: Any]? { get }
 }
 
-
+///
+public enum HTTPMethod {
+    case delete
+    case get
+    case post
+    case put
+    
+    func toString() -> String {
+        switch self {
+        case .delete:
+            return "DELETE"
+        case .get:
+            return "GET"
+        case .post:
+            return "POST"
+        case .put:
+            return "PUT"
+        }
+    }
+}
 
 //APIClient is the api client base
 public protocol Request : Package {
-    
     // those functions shdould be overrided
     var version: Int { get }
     var path: String { get }
     var header: [String : Any]  { get }
-    var parameters: [String: Any]? { get }
     var method: HTTPMethod { get }
     
 //    func isAuth() -> Bool
+}
+
+
+fileprivate let v_default : Int = 3
+public extension Request {
+     var version: Int {
+        get {
+            return v_default
+        }
+    }
 }
 
 
