@@ -13,6 +13,12 @@ struct HTTPHeader {
 }
 
 
+//struct ErrorResponse: Codable {
+//    var code: Int
+//    var error: String
+//    var errorDescription: String
+//}
+
 ///
 protocol APIServerConfig  {
     //host name    xxx.xxxxxxx.com
@@ -226,6 +232,63 @@ public extension APIService {
             customAuthCredential: nil, //route.authCredential,
             completion: completionWrapper)
     }
+    
+    
+    func exec<T>(route: Request,
+                 complete: @escaping (_ task: URLSessionDataTask?, _ result: Result<T, Error>) -> Void) where T : Codable {
+        
+            // 1 make a request , 2 wait for the respons async 3. valid response 4. parse data into response 5. some data need save into database.
+            let completionWrapper: CompletionBlock = { task, res, error in
+                //                let realType = T.self
+                //                let apiRes = realType.init()
+                //                if error != nil {
+                //                    //TODO check error
+                //                    apiRes.ParseHttpError(error!, response: res)
+                //                    complete(task, apiRes)
+                //                    return
+                //                }
+                //
+                //                if res == nil {
+                //                    // TODO check res
+                //    //                apiRes.error = NSError.badResponse()
+                //                    complete(task, apiRes)
+                //                    return
+                //                }
+                //
+                //                var hasError = apiRes.ParseResponseError(res!)
+                //                if !hasError {
+                //                    hasError = !apiRes.ParseResponse(res!)
+                //                }
+                //                complete(task, apiRes)
+                //                let data = try! JSONEncoder().encode(res as! [String: Any])
+                //                let dictionary = try! JSONSerialization.jsonObject(with: data, options: .allowFragments) as! T
+                //                complete(task, dictionary)
+                //                return dictionary
+                
+                
+                ///TODO parse error first
+                
+                let decoder = JSONDecoder()
+                do {
+                    let data = try JSONSerialization.data(withJSONObject: res!, options: .prettyPrinted)
+                    let resObj = try decoder.decode(T.self, from: data)
+                    complete(task, .success(resObj))
+                } catch let err {
+                    complete(task, .failure(err))
+                }
+            }
+            
+            var header = route.header
+            header["x-pm-apiversion"] = route.version
+            
+            
+            self.request(method: route.method, path: route.path,
+                         parameters: route.parameters,
+                         headers: [HTTPHeader.apiVersion: route.version],
+                         authenticated: true,//route.getIsAuthFunction(),
+                customAuthCredential: nil, //route.authCredential,
+                completion: completionWrapper)
+        }
     
     
 //    func exec(content: URLRequestConvertible ) {

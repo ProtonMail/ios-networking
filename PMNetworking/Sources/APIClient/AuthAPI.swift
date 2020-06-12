@@ -47,61 +47,16 @@ public struct AuthAPI : APIClient {
     public enum Router: Request {
         
         case info(username: String)
-//        case check(token: HumanVerificationToken)
+        case modulus
 //        case checkUsername(String)
 //        case createUser(UserProperties)
-        
-        ///// Description
-        //final class AuthInfoRequest : ApiRequest<AuthInfoResponse> {
-        //
-        //    var username : String
-        //
-        //    /// inital
-        //    ///
-        //    /// - Parameters:
-        //    ///   - username: user name
-        //    ///   - authCredential: auto credential
-        //    init(username : String, authCredential: AuthCredential?) {
-        //        self.username = username
-        //
-        //        super.init()
-        //
-        //        self.authCredential = authCredential
-        //    }
-        //
-        //    override func toDictionary() -> [String : Any]? {
-        //        let out : [String : Any] = [
-        //            AuthKey.userName : username
-        //        ]
-        //        return out
-        //    }
-        //
-        //    override func method() -> HTTPMethod {
-        //        return .post
-        //    }
-        //
-        //    override func path() -> String {
-        //        return AuthAPI.path + "/info" + Constants.App.DEBUG_OPTION
-        //    }
-        //
-        //    override func getIsAuthFunction() -> Bool {
-        //        return false
-        //    }
-        //
-        //    override func apiVersion() -> Int {
-        //        return AuthAPI.v_auth_info
-        //    }
-        //}
-        
-//        func dict() -> [String : Any]? {
-//            return nil
-//        }
-        
         
         public var path: String {
             switch self {
             case .info:
                 return route + "/info"
+            case .modulus:
+                return route + "/modulus"
 //            case .check:
 //                return route + "/check"
 //            case .checkUsername(let username):
@@ -125,13 +80,14 @@ public struct AuthAPI : APIClient {
         public var method: HTTPMethod {
             switch self {
             case .info:
+                return .post
+            case .modulus:
                 return .get
 //            case .checkUsername:
 //                return .get
 //            case  .code, .createUser:
 //                return .post
 //            case .check:
-//                return .put
             }
         }
         
@@ -142,6 +98,8 @@ public struct AuthAPI : APIClient {
                     Key.userName : username
                 ]
                 return out
+            case .modulus:
+                return nil
 //            case .checkUsername:
 //                return nil
 //            case .code(let type, let receiver):
@@ -189,8 +147,8 @@ public struct AuthAPI : APIClient {
     }
 }
 
+
 final public class AuthInfoResponse : Response {
-    
     public var Modulus : String?
     public var ServerEphemeral : String?
     public var Version : Int = 0
@@ -198,58 +156,54 @@ final public class AuthInfoResponse : Response {
     public var SRPSession : String?
     
     override func ParseResponse(_ response: [String : Any]!) -> Bool {
-        
         self.Modulus         = response["Modulus"] as? String
         self.ServerEphemeral = response["ServerEphemeral"] as? String
         self.Version         = response["Version"] as? Int ?? 0
         self.Salt            = response["Salt"] as? String
         self.SRPSession      = response["SRPSession"] as? String
-        
+        return true
+    }
+}
+
+// use codable
+final public class AuthInfoRes : Codable {
+    public var Modulus : String?
+    public var ServerEphemeral : String?
+    public var Version : Int = 0
+    public var Salt : String?
+    public var SRPSession : String?
+    
+//    enum CodingKeys: String, CodingKey {
+//        case anyProperty
+//    }
+//    public init(from decoder: Decoder) throws {
+//        do {
+//            let container = try decoder.container(keyedBy: CodingKeys.self)
+//            if let stringProperty = try? container.decode(String.self, forKey: .anyProperty) {
+//                anyProperty = stringProperty
+//            } else if let intProperty = try? container.decode(Int.self, forKey: .anyProperty) {
+//                anyProperty = intProperty
+//            } else {
+//                throw DecodingError.dataCorrupted(DecodingError.Context(codingPath: container.codingPath, debugDescription: "Not a JSON"))
+//            }
+//        }
+//    }
+}
+
+final public class AuthModulusResponse : Response {
+    
+    public var Modulus : String?
+    public var ModulusID : String?
+    
+    override func ParseResponse(_ response: [String : Any]!) -> Bool {
+        self.Modulus = response["Modulus"] as? String
+        self.ModulusID = response["ModulusID"] as? String
         return true
     }
 }
 
 
 
-
-
-//
-//
-//final class AuthModulusRequest : ApiRequest<AuthModulusResponse> {
-//    init(authCredential: AuthCredential?) {
-//        super.init()
-//        self.authCredential = authCredential
-//    }
-//    override func method() -> HTTPMethod {
-//        return .get
-//    }
-//
-//    override func path() -> String {
-//        return AuthAPI.path + "/modulus" + Constants.App.DEBUG_OPTION
-//    }
-//
-//    override func getIsAuthFunction() -> Bool {
-//        return false
-//    }
-//
-//    override func apiVersion() -> Int {
-//        return AuthAPI.v_get_auth_modulus
-//    }
-//}
-//
-//final class AuthModulusResponse : ApiResponse {
-//
-//    var Modulus : String?
-//    var ModulusID : String?
-//
-//    override func ParseResponse(_ response: [String : Any]!) -> Bool {
-//        self.Modulus = response["Modulus"] as? String
-//        self.ModulusID = response["ModulusID"] as? String
-//        return true
-//    }
-//}
-//
-//
 //// MARK : Get messages part
 //final class AuthRequest : ApiRequest<AuthResponse> {
 //

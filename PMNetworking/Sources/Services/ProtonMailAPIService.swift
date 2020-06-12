@@ -621,8 +621,6 @@ public class PMAPIService : APIService {
                 let url = self.doh.getHostUrl() + path
                 
                 do {
-                    
-                    
                     let request = try self.sessionManager.requestSerializer.request(withMethod: method.toString(),
                                                                                     urlString: url,
                                                                                     parameters: parameters)
