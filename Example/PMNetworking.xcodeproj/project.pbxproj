@@ -50,6 +50,19 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		75E196EA249396CB00A31655 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		10303C87F33BA30EB19FBBE6 /* Pods-PMNetworking_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PMNetworking_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-PMNetworking_Example/Pods-PMNetworking_Example.release.xcconfig"; sourceTree = "<group>"; };
 		189AB33FE018BA2765C5CDBB /* Pods-PMNetworking_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PMNetworking_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PMNetworking_Tests/Pods-PMNetworking_Tests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -279,10 +292,12 @@
 			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "PMNetworking_Example" */;
 			buildPhases = (
 				E9FED9F3D124AF99FED080EA /* [CP] Check Pods Manifest.lock */,
+				1618AC1EAD1E3346F8673F9B /* [CP] Prepare Artifacts */,
 				607FACCC1AFB9204008FA782 /* Sources */,
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
 				1A38A049E57E46ECB6635180 /* [CP] Embed Pods Frameworks */,
+				75E196EA249396CB00A31655 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -317,6 +332,7 @@
 			buildConfigurationList = 751B8B06245AB30F006A9195 /* Build configuration list for PBXNativeTarget "PMNetworking_Mac_Example" */;
 			buildPhases = (
 				D76FE2AAEB040171E521C376 /* [CP] Check Pods Manifest.lock */,
+				7F85E92C7DCB1BA39834E2BC /* [CP] Prepare Artifacts */,
 				751B8ADC245AB30B006A9195 /* Sources */,
 				751B8ADD245AB30B006A9195 /* Frameworks */,
 				751B8ADE245AB30B006A9195 /* Resources */,
@@ -472,6 +488,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		1618AC1EAD1E3346F8673F9B /* [CP] Prepare Artifacts */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PMNetworking_Example/Pods-PMNetworking_Example-artifacts.sh",
+				"${PODS_ROOT}/PMCrypto/Crypto.xcframework",
+			);
+			name = "[CP] Prepare Artifacts";
+			outputPaths = (
+				"${BUILT_PRODUCTS_DIR}/cocoapods-artifacts-${CONFIGURATION}.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PMNetworking_Example/Pods-PMNetworking_Example-artifacts.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		1A38A049E57E46ECB6635180 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -479,6 +513,7 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-PMNetworking_Example/Pods-PMNetworking_Example-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/cocoapods-artifacts-${CONFIGURATION}.txt",
 				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
 				"${BUILT_PRODUCTS_DIR}/PMCommon/PMCommon.framework",
 			);
@@ -499,6 +534,7 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-PMNetworking_Mac_Example/Pods-PMNetworking_Mac_Example-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/cocoapods-artifacts-${CONFIGURATION}.txt",
 				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
 				"${BUILT_PRODUCTS_DIR}/PMCommon/PMCommon.framework",
 			);
@@ -510,6 +546,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PMNetworking_Mac_Example/Pods-PMNetworking_Mac_Example-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7F85E92C7DCB1BA39834E2BC /* [CP] Prepare Artifacts */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PMNetworking_Mac_Example/Pods-PMNetworking_Mac_Example-artifacts.sh",
+				"${PODS_ROOT}/PMCrypto/Crypto.xcframework",
+			);
+			name = "[CP] Prepare Artifacts";
+			outputPaths = (
+				"${BUILT_PRODUCTS_DIR}/cocoapods-artifacts-${CONFIGURATION}.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PMNetworking_Mac_Example/Pods-PMNetworking_Mac_Example-artifacts.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		AFBD0B82D002C2EDB1FEEE8E /* [CP] Check Pods Manifest.lock */ = {
@@ -742,7 +796,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -792,7 +846,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";

@@ -7,17 +7,6 @@
 //
 
 import Cocoa
-import PMNetworking
-
-
-class DoHMail : DoH, DoHConfig {
-    //defind your default host
-    var defaultHost: String = ""
-    //defind your query host
-    var apiHost : String = ""
-    //singleton
-    static let `default` = try! DoHMail()
-}
 
 
 
@@ -27,8 +16,8 @@ class ViewController: NSViewController {
         super.viewDidLoad()
 
 
-        let host = DoHMail.default.getHostUrl()        
-        print(host)
+        //let host = DoHMail.default.getHostUrl()
+        //print(host)
     }
 
     override var representedObject: Any? {

@@ -28,8 +28,8 @@ TODO: Add long description of the pod here.
   s.source           = { :git => 'git@gitlab.protontech.ch:apple/shared/pmnetworking.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
   
-  s.ios.deployment_target = '9.0'
-  s.osx.deployment_target  = '10.10'
+  s.ios.deployment_target = '10.0'
+  s.osx.deployment_target  = '10.12'
   
 #  s.source_files = 'PMNetworking/Sources/**/*'
   
@@ -41,6 +41,7 @@ TODO: Add long description of the pod here.
     default.dependency 'PMCommon/Networking'
     default.dependency 'PMCommon/APIClient'
     default.dependency 'PMCommon/Services'
+    default.dependency 'PMCommon/Authentication'
   end
   
   # Optional subspecs
@@ -59,6 +60,12 @@ TODO: Add long description of the pod here.
     services.source_files = 'PMNetworking/Sources/Services/**/*'
   end
   
+  s.subspec 'Authentication' do |authentication|
+    authentication.dependency 'PMCommon/APIClient'
+    authentication.dependency 'PMCrypto'
+    authentication.source_files = 'PMNetworking/Sources/Authentication/**/*'
+  end
+
   # s.resource_bundles = {
   #   'PMNetworking' => ['PMNetworking/Assets/*.png']
   # }

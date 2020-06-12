@@ -31,8 +31,12 @@ PODS:
     - PMCommon/Default (= 0.1.0)
   - PMCommon/APIClient (0.1.0):
     - PMCommon/Networking
+  - PMCommon/Authentication (0.1.0):
+    - PMCommon/APIClient
+    - PMCrypto
   - PMCommon/Default (0.1.0):
     - PMCommon/APIClient
+    - PMCommon/Authentication
     - PMCommon/Networking
     - PMCommon/Services
   - PMCommon/Networking (0.1.0):
@@ -41,10 +45,12 @@ PODS:
     - PMCommon/APIClient
   - PMCommon/Tests (0.1.0):
     - OHHTTPStubs/Swift
+  - PMCrypto (1.1.0)
 
 DEPENDENCIES:
   - PMCommon (from `../`)
   - PMCommon/Tests (from `../`)
+  - PMCrypto (from `https://gitlab.protontech.ch/apple/shared/pmcrypto.git`, tag `1.1.0`)
 
 SPEC REPOS:
   trunk:
@@ -54,12 +60,21 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   PMCommon:
     :path: "../"
+  PMCrypto:
+    :git: https://gitlab.protontech.ch/apple/shared/pmcrypto.git
+    :tag: 1.1.0
+
+CHECKOUT OPTIONS:
+  PMCrypto:
+    :git: https://gitlab.protontech.ch/apple/shared/pmcrypto.git
+    :tag: 1.1.0
 
 SPEC CHECKSUMS:
   AFNetworking: 7864c38297c79aaca1500c33288e429c3451fdce
   OHHTTPStubs: cb29d2a9d09a828ecb93349a2b0c64f99e0db89f
-  PMCommon: 82b79a8bafaac4f7befe8f414a2dc61978ccff79
+  PMCommon: 64cecec475267c909b259d0965db2415005c8e83
+  PMCrypto: 70361d6a49e834bfae377b3b4524c2b305fb95c4
 
-PODFILE CHECKSUM: 8fe4b3d2563dece9588035fc18a9299f4a6de6cf
+PODFILE CHECKSUM: 305229ae9e0241057b22bd40dcb8e92776ff648b
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.9.3

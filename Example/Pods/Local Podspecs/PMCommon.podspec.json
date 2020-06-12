@@ -16,8 +16,8 @@
     "tag": "0.1.0"
   },
   "platforms": {
-    "ios": "9.0",
-    "osx": "10.10"
+    "ios": "10.0",
+    "osx": "10.12"
   },
   "swift_versions": [
     "5.0"
@@ -46,6 +46,9 @@
 
         ],
         "PMCommon/Services": [
+
+        ],
+        "PMCommon/Authentication": [
 
         ]
       }
@@ -76,6 +79,18 @@
         ]
       },
       "source_files": "PMNetworking/Sources/Services/**/*"
+    },
+    {
+      "name": "Authentication",
+      "dependencies": {
+        "PMCommon/APIClient": [
+
+        ],
+        "PMCrypto": [
+
+        ]
+      },
+      "source_files": "PMNetworking/Sources/Authentication/**/*"
     }
   ],
   "swift_version": "5.0"

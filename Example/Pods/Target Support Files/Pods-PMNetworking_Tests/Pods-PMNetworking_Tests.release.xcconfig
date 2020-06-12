@@ -1,4 +1,4 @@
-FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/AFNetworking" "${PODS_CONFIGURATION_BUILD_DIR}/PMCommon"
+FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/AFNetworking" "${PODS_CONFIGURATION_BUILD_DIR}/PMCommon" "${PODS_ROOT}/PMCrypto" "${PODS_ROOT}/PMCrypto/Crypto.xcframework/ios-armv7_arm64" "${PODS_ROOT}/PMCrypto/Crypto.xcframework/ios-i386_x86_64-simulator" "${PODS_ROOT}/PMCrypto/Crypto.xcframework/ios-x86_64-maccatalyst"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
 HEADER_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/AFNetworking/AFNetworking.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/PMCommon/PMCommon.framework/Headers"
 OTHER_LDFLAGS = $(inherited) -framework "AFNetworking" -framework "PMCommon"
