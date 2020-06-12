@@ -27,30 +27,33 @@ PODS:
   - OHHTTPStubs/OHPathHelpers (9.0.0)
   - OHHTTPStubs/Swift (9.0.0):
     - OHHTTPStubs/Default
-  - PMNetworking (1.0.0):
+  - PMCommon (0.1.0):
+    - PMCommon/Default (= 0.1.0)
+  - PMCommon/Default (0.1.0):
+    - PMCommon/Networking
+  - PMCommon/Networking (0.1.0):
     - AFNetworking (~> 4.0)
-  - PMNetworking/Tests (1.0.0):
-    - AFNetworking (~> 4.0)
+  - PMCommon/Tests (0.1.0):
     - OHHTTPStubs/Swift
 
 DEPENDENCIES:
-  - PMNetworking (from `../`)
-  - PMNetworking/Tests (from `../`)
+  - PMCommon (from `../`)
+  - PMCommon/Tests (from `../`)
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  trunk:
     - AFNetworking
     - OHHTTPStubs
 
 EXTERNAL SOURCES:
-  PMNetworking:
+  PMCommon:
     :path: "../"
 
 SPEC CHECKSUMS:
   AFNetworking: 7864c38297c79aaca1500c33288e429c3451fdce
   OHHTTPStubs: cb29d2a9d09a828ecb93349a2b0c64f99e0db89f
-  PMNetworking: b57abf81abd2ebf8150fd4bb9b7c393d0a28b19a
+  PMCommon: 5b6aefb6fb3a5fec9367f87fe6ffc3df32f43889
 
-PODFILE CHECKSUM: 665107f1adb28c99dab44a9a110704eb337548c6
+PODFILE CHECKSUM: 62cdd525b85397373344168c1fb0b48656bf1d2f
 
 COCOAPODS: 1.8.4

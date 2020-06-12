@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double PMNetworkingVersionNumber;
-FOUNDATION_EXPORT const unsigned char PMNetworkingVersionString[];
+FOUNDATION_EXPORT double PMCommonVersionNumber;
+FOUNDATION_EXPORT const unsigned char PMCommonVersionString[];
 

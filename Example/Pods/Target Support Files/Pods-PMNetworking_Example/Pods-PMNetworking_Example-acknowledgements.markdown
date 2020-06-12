@@ -24,7 +24,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 
-## PMNetworking
+## PMCommon
 
                     GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007

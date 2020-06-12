@@ -1,4 +1,4 @@
-source 'https://github.com/CocoaPods/Specs.git'
+source 'https://cdn.cocoapods.org/'
 source 'git@gitlab.protontech.ch:proton/mobile/apple/podspecs.git'
 
 
@@ -8,7 +8,7 @@ use_frameworks!
 
 target 'PMNetworking_Example' do
 #  pod 'PMServices', :path => '../' #need to upload the framowrks to pravte pod
-  pod 'PMNetworking', :path => '../', :testspecs => ['Tests']
+  pod 'PMCommon', :path => '../', :testspecs => ['Tests']
 #  pod 'PMAPIClient', :path => '../', :testspecs => ['Tests']
 #  pod 'PMNetworking-Alamofire', :path => '../', :testspecs => ['Tests']
   
@@ -22,16 +22,16 @@ target 'PMNetworking_Example' do
   end
 end
 
-
-target 'PMNetworking_Mac_Example' do
-  pod 'PMNetworking', :testspecs => ['Tests'], :path => '../'
-
-  target 'PMNetworking_Mac_ExampleTests' do
-    inherit! :search_paths
-
-#    pod 'Quick', '~> 1.2.0'
-#    pod 'Nimble', '~> 7.0'
-#    pod 'FBSnapshotTestCase' , '~> 2.1.4'
-#    pod 'Nimble-Snapshots' , '~> 6.3.0'
-  end
-end
+#
+#target 'PMNetworking_Mac_Example' do
+#  pod 'PMNetworking', :testspecs => ['Tests'], :path => '../'
+#
+#  target 'PMNetworking_Mac_ExampleTests' do
+#    inherit! :search_paths
+#
+##    pod 'Quick', '~> 1.2.0'
+##    pod 'Nimble', '~> 7.0'
+##    pod 'FBSnapshotTestCase' , '~> 2.1.4'
+##    pod 'Nimble-Snapshots' , '~> 6.3.0'
+#  end
+#end
