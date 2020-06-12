@@ -156,4 +156,31 @@ class AuthAPITests: XCTestCase {
         }
         
     }
+    
+    
+    
+    
+    func testAuth() {
+        stub(condition: isHost("test.protonmail.ch") && isMethodPOST() && isPath("/auth")) { request in
+            let ok = "{ \"Code\": 1000,\"AccessToken\": \"abcDecryptedTokenAndNoSaltAndNoPrivateKey123\",\"ExpiresIn\": 360000,\"TokenType\": \"Bearer\",\"Scope\": \"full other_scopes\",\"UID\": \"6f3c4f52cf499c2066e6c5669a293177c1f43755\",\"UserID\":\"-Bpgivr5H2qGDRiUQ4-7gm5YLf215MEgZCdzOtLW5psxgB8oNc8OnoFRykab4Z23EGEW1ka3GtQPF9xwx9-VUA==\",\"RefreshToken\": \"aafe30367aa7dc09bf5c42d15a93e6c57270fe6f\",\"EventID\":\"ACXDmTaBub14w==\",\"ServerProof\": \"<base64_encoded_proof>\", \"PasswordMode\": 2, \"2FA\": { \"Enabled\" : 3, \"U2F\" : { \"Chwallenge\": \"a43lengthStringAndUnique\", \"RegisteredKeys\":[{ \"Versio\":\"U2F_V2\", \"KeyHandle\":\"<aKeyHandle>\" }] } } }"
+            let body = ok.data(using: String.Encoding.utf8)!
+            let headers = [ "Content-Type" : "application/json;charset=utf-8"]
+            return HTTPStubsResponse(data: body, statusCode: 200, headers: headers)
+        }
+
+        let api = PMAPIService(doh: DoHMail.default, sessionUID: "testSessionUID", userID: "testUserID")
+        let expectation1 = self.expectation(description: "Success completion block called")
+        let authOK = AuthAPI.Router.auth(username: "ok", ephemeral: "", proof: "", session: "")
+        api.exec(route: authOK) { (task, response: AuthResponse) in
+            XCTAssertEqual(response.code, 1000)
+//            XCTAssert(response.error == nil)
+//            XCTAssertTrue(response != nil)
+//            XCTAssertTrue(response.ModulusIDpublic == "Oq_JB_IkrOx5WlpxzlRPocN3_NhJ80V7DGav77eRtSDkOtLxW2jfI3nUpEqANGpboOyN-GuzEFXadlpxgVp7_g==")
+            expectation1.fulfill()
+        }
+        self.waitForExpectations(timeout: 30) { (expectationError) -> Void in
+            XCTAssertNil(expectationError)
+        }
+        
+    }
 }

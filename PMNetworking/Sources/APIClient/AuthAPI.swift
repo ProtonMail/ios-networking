@@ -48,8 +48,7 @@ public struct AuthAPI : APIClient {
         
         case info(username: String)
         case modulus
-//        case checkUsername(String)
-//        case createUser(UserProperties)
+        case auth(username: String, ephemeral:String, proof: String, session: String)
         
         public var path: String {
             switch self {
@@ -57,12 +56,8 @@ public struct AuthAPI : APIClient {
                 return route + "/info"
             case .modulus:
                 return route + "/modulus"
-//            case .check:
-//                return route + "/check"
-//            case .checkUsername(let username):
-//                return route + "/available?Name=" + username.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
-//            case .createUser:
-//                return route
+            case .auth:
+                return route
             }
         }
         
@@ -70,24 +65,12 @@ public struct AuthAPI : APIClient {
             return [:]
         }
         
-//        public var apiVersion: Int {
-//            switch self {
-//            case .code, .check, .checkUsername, .createUser:
-//                return v_user_default
-//            }
-//        }
-        
         public var method: HTTPMethod {
             switch self {
-            case .info:
+            case .info, .auth:
                 return .post
             case .modulus:
                 return .get
-//            case .checkUsername:
-//                return .get
-//            case  .code, .createUser:
-//                return .post
-//            case .check:
             }
         }
         
@@ -100,53 +83,71 @@ public struct AuthAPI : APIClient {
                 return out
             case .modulus:
                 return nil
-//            case .checkUsername:
-//                return nil
-//            case .code(let type, let receiver):
-//                let destinationType: String
-//                switch type {
-//                case .email:
-//                    destinationType = "Address"
-//                case .sms:
-//                    destinationType = "Phone"
-//                case .payment, .invite, .captcha:
-//                    fatalError("Wrong parameter used. Payment is not supported by code endpoint.")
-//                }
-//                return [
-//                    "Type": type.rawValue,
-//                    "Destination": [
-//                        destinationType: receiver
-//                    ]
-//                ]
-//            case .check(let token):
-//                return [
-//                    "Token": "\(token.fullValue)",
-//                    "TokenType": token.type.rawValue,
-//                    "Type": vpnType
-//                ]
-//            case .createUser(let userProperties):
-//                var params: [String: Any] = [
-//                    "Email": userProperties.email,
-//                    "Username": userProperties.username,
-//                    "Type": vpnType,
-//                    "Auth": [
-//                        "Version": 4,
-//                        "ModulusID": userProperties.modulusID,
-//                        "Salt": userProperties.salt,
-//                        "Verifier": userProperties.verifier
-//                    ]
-//                ]
-//                if let token = userProperties.appleToken {
-//                    params["Payload"] = [
-//                        "higgs-boson": token.base64EncodedString()
-//                    ]
-//                }
-//                return params
+            case .auth(let username, let ephemeral, let proof, let session):
+                let out : [String : Any] = [
+                    Key.userName : username,
+                    Key.ephemeral : ephemeral,
+                    Key.proof : proof,
+                    Key.session : session,
+                ]
+                return out
             }
         }
     }
 }
 
+
+// MARK : Response part
+final public class AuthResponse : Response {
+    
+    public var accessToken : String?
+    public var expiresIn : TimeInterval?
+    public var refreshToken : String?
+    public var sessionID : String?
+    public  var eventID : String?
+    
+    public var scope : String?
+    public var serverProof : String?
+    var resetToken : String?
+    var tokenType : String?
+    var passwordMode : Int = 0
+    
+    var userStatus : Int = 0
+    
+    /// The private key and salt will remove from auth response. need two sperate call to get them
+    var privateKey : String?
+    var keySalt : String?
+    
+    var twoFactor : Int = 0
+    
+//    var isEncryptedToken : Bool {
+//        return accessToken?.armored ?? false
+//    }
+    
+    override func ParseResponse(_ response: [String : Any]!) -> Bool {
+        self.sessionID = response["UID"] as? String //session id
+        self.accessToken = response["AccessToken"] as? String
+        self.expiresIn = response["ExpiresIn"] as? TimeInterval
+        self.scope = response["Scope"] as? String
+        self.eventID = response["EventID"] as? String
+        
+        self.serverProof = response["ServerProof"] as? String
+        self.resetToken = response["ResetToken"] as? String
+        self.tokenType = response["TokenType"] as? String
+        self.passwordMode = response["PasswordMode"] as? Int ?? 0
+        self.userStatus = response["UserStatus"] as? Int ?? 0
+        
+        self.privateKey = response["PrivateKey"] as? String
+        self.keySalt = response["KeySalt"] as? String
+        self.refreshToken = response["RefreshToken"] as? String
+        
+        if let twoFA = response["2FA"]  as? [String : Any] {
+            self.twoFactor = twoFA["Enabled"] as? Int ?? 0
+        }
+        
+        return true
+    }
+}
 
 final public class AuthInfoResponse : Response {
     public var Modulus : String?
@@ -202,63 +203,6 @@ final public class AuthModulusResponse : Response {
     }
 }
 
-
-
-//// MARK : Get messages part
-//final class AuthRequest : ApiRequest<AuthResponse> {
-//
-//    var username : String
-//    var clientEphemeral : String //base64
-//    var clientProof : String  //base64
-//    var srpSession : String  //hex
-//    var twoFactorCode : String?
-//
-//    //local verify only
-//    var serverProof : Data!
-//
-//    init(username : String, ephemeral:Data, proof:Data, session:String!, serverProof : Data!, code:String?) {
-//        self.username = username
-//        self.clientEphemeral = ephemeral.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
-//        self.clientProof = proof.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
-//        self.srpSession = session
-//        self.twoFactorCode = code
-//        self.serverProof = serverProof
-//    }
-//
-//    override func toDictionary() -> [String : Any]? {
-//        var out : [String : Any] = [
-//            AuthKey.userName : username,
-//
-//            AuthKey.ephemeral : clientEphemeral,
-//            AuthKey.proof : clientProof,
-//            AuthKey.session : srpSession,
-//        ]
-//
-//        if let code = self.twoFactorCode {
-//            out[AuthKey.twoFactor] = code
-//        }
-//        //PMLog.D(self.JSONStringify(out, prettyPrinted: true))
-//        return out
-//    }
-//
-//    override func method() -> HTTPMethod {
-//        return .post
-//    }
-//
-//    override func path() -> String {
-//        return AuthAPI.path + Constants.App.DEBUG_OPTION
-//    }
-//
-//    override func getIsAuthFunction() -> Bool {
-//        return false
-//    }
-//
-//    override func apiVersion() -> Int {
-//        return AuthAPI.v_auth
-//    }
-//}
-//
-//
 //final class TwoFARequest : ApiRequestNew<ApiResponse> {
 //
 //    var tfacode : String
@@ -361,58 +305,6 @@ final public class AuthModulusResponse : Response {
 //}
 //
 //
-//// MARK : Response part
-//final class AuthResponse : ApiResponse {
-//
-//    var accessToken : String?
-//    var expiresIn : TimeInterval?
-//    var refreshToken : String?
-//    var sessionID : String?
-//    var eventID : String?
-//
-//    var scope : String?
-//    var serverProof : String?
-//    var resetToken : String?
-//    var tokenType : String?
-//    var passwordMode : Int = 0
-//
-//    var userStatus : Int = 0
-//
-//    /// The private key and salt will remove from auth response. need two sperate call to get them
-//    var privateKey : String?
-//    var keySalt : String?
-//
-//    var twoFactor : Int = 0
-//
-//    var isEncryptedToken : Bool {
-//        return accessToken?.armored ?? false
-//    }
-//
-//    override func ParseResponse(_ response: [String : Any]!) -> Bool {
-//        self.sessionID = response["UID"] as? String //session id
-//        self.accessToken = response["AccessToken"] as? String
-//        self.expiresIn = response["ExpiresIn"] as? TimeInterval
-//        self.scope = response["Scope"] as? String
-//        self.eventID = response["EventID"] as? String
-//
-//        self.serverProof = response["ServerProof"] as? String
-//        self.resetToken = response["ResetToken"] as? String
-//        self.tokenType = response["TokenType"] as? String
-//        self.passwordMode = response["PasswordMode"] as? Int ?? 0
-//        self.userStatus = response["UserStatus"] as? Int ?? 0
-//
-//        self.privateKey = response["PrivateKey"] as? String
-//        self.keySalt = response["KeySalt"] as? String
-//        self.refreshToken = response["RefreshToken"] as? String
-//
-//        if let twoFA = response["2FA"]  as? [String : Any] {
-//            self.twoFactor = twoFA["Enabled"] as? Int ?? 0
-//        }
-//
-//        return true
-//    }
-//}
-
 
 
 //
