@@ -27,25 +27,17 @@ TODO: Add long description of the pod here.
   s.author           = { 'zhj4478' => 'feng@pm.me' }
   s.source           = { :git => 'https://github.com/ProtonMail/ios-networking.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
-  
+
   s.ios.deployment_target = '9.0'
   s.osx.deployment_target  = '10.10'
-  
-  s.source_files = 'PMNetworking/Sources/**/*'
-  
-  s.swift_versions = ['5.0']
+
+  s.source_files = 'PMNetworking/Classes/**/*'
   
   # s.resource_bundles = {
   #   'PMNetworking' => ['PMNetworking/Assets/*.png']
   # }
-  
+
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
-  s.dependency 'AFNetworking', '~> 4.0'
-  
-  s.test_spec 'Tests' do |test_spec|
-    test_spec.source_files = 'PMNetworking/Tests/**/*'
-    test_spec.requires_app_host = true
-    test_spec.dependency 'OHHTTPStubs/Swift' # This dependency will only be linked with your tests.
-  end
+  # s.dependency 'AFNetworking', '~> 2.3'
 end
