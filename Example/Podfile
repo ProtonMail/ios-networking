@@ -1,13 +1,8 @@
-platform :ios, '9.0'
-
 use_frameworks!
 
 target 'PMNetworking_Example' do
-#  pod 'PMServices', :path => '../' #need to upload the framowrks to pravte pod
-  pod 'PMNetworking', :path => '../', :testspecs => ['Tests']
-#  pod 'PMAPIClient', :path => '../', :testspecs => ['Tests']
-#  pod 'PMNetworking-Alamofire', :path => '../', :testspecs => ['Tests']
-  
+  pod 'PMNetworking', :path => '../'
+
   target 'PMNetworking_Tests' do
     inherit! :search_paths
 
@@ -20,7 +15,7 @@ end
 
 
 target 'PMNetworking_Mac_Example' do
-  pod 'PMNetworking', :testspecs => ['Tests'], :path => '../'
+  pod 'PMNetworking', :path => '../'
 
   target 'PMNetworking_Mac_ExampleTests' do
     inherit! :search_paths

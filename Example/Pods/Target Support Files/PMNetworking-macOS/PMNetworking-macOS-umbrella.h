@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double Pods_PMNetworking_Mac_ExampleVersionNumber;
-FOUNDATION_EXPORT const unsigned char Pods_PMNetworking_Mac_ExampleVersionString[];
+FOUNDATION_EXPORT double PMNetworkingVersionNumber;
+FOUNDATION_EXPORT const unsigned char PMNetworkingVersionString[];
 
