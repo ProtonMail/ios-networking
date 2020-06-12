@@ -1,16 +1,56 @@
 PODS:
-  - PMNetworking (1.0.0)
+  - AFNetworking (4.0.1):
+    - AFNetworking/NSURLSession (= 4.0.1)
+    - AFNetworking/Reachability (= 4.0.1)
+    - AFNetworking/Security (= 4.0.1)
+    - AFNetworking/Serialization (= 4.0.1)
+    - AFNetworking/UIKit (= 4.0.1)
+  - AFNetworking/NSURLSession (4.0.1):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (4.0.1)
+  - AFNetworking/Security (4.0.1)
+  - AFNetworking/Serialization (4.0.1)
+  - AFNetworking/UIKit (4.0.1):
+    - AFNetworking/NSURLSession
+  - OHHTTPStubs/Core (9.0.0)
+  - OHHTTPStubs/Default (9.0.0):
+    - OHHTTPStubs/Core
+    - OHHTTPStubs/JSON
+    - OHHTTPStubs/NSURLSession
+    - OHHTTPStubs/OHPathHelpers
+  - OHHTTPStubs/JSON (9.0.0):
+    - OHHTTPStubs/Core
+  - OHHTTPStubs/NSURLSession (9.0.0):
+    - OHHTTPStubs/Core
+  - OHHTTPStubs/OHPathHelpers (9.0.0)
+  - OHHTTPStubs/Swift (9.0.0):
+    - OHHTTPStubs/Default
+  - PMNetworking (1.0.0):
+    - AFNetworking (~> 4.0)
+  - PMNetworking/Tests (1.0.0):
+    - AFNetworking (~> 4.0)
+    - OHHTTPStubs/Swift
 
 DEPENDENCIES:
   - PMNetworking (from `../`)
+  - PMNetworking/Tests (from `../`)
+
+SPEC REPOS:
+  trunk:
+    - AFNetworking
+    - OHHTTPStubs
 
 EXTERNAL SOURCES:
   PMNetworking:
     :path: "../"
 
 SPEC CHECKSUMS:
-  PMNetworking: 54696647ab1a6cac500bab624733d5e08b7e7098
+  AFNetworking: 7864c38297c79aaca1500c33288e429c3451fdce
+  OHHTTPStubs: cb29d2a9d09a828ecb93349a2b0c64f99e0db89f
+  PMNetworking: b0678a3adeb5591507a870420eb3f172c85dde1c
 
-PODFILE CHECKSUM: c30b4db1d15acadd6623a9e6712c5c35b5c9190c
+PODFILE CHECKSUM: 663ff3f0bd6622e9dc3eb31b9e4c183be52e114c
 
 COCOAPODS: 1.8.4
