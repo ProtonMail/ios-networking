@@ -1,5 +1,5 @@
 source 'https://cdn.cocoapods.org/'
-source 'git@gitlab.protontech.ch:proton/mobile/apple/podspecs.git'
+#source 'git@gitlab.protontech.ch:proton/mobile/apple/podspecs.git'
 
 
 platform :ios, '10.0'
