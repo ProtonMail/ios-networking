@@ -114,6 +114,12 @@ public protocol APIServiceDelegate: class {
     //func relogin()
     //func humanverify()
     
+    func onChallenge()
+    
+    func onDohTroubleshot()
+    
+    func onHumanVerify()
+    
 }
 
 /// this is auth related delegate in background

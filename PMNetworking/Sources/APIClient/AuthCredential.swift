@@ -101,12 +101,12 @@ final public class AuthCredential: NSObject, NSCoding {
         self.expiration = expiration
     }
     
-//    required init(res : AuthResponse) {
-//        self.sessionID = res.sessionID ?? ""
-//        self.accessToken = res.accessToken ?? ""
-//        self.refreshToken = res.refreshToken ?? ""
-//        self.expiration =  Date(timeIntervalSinceNow: res.expiresIn ?? 0)
-//    }
+    required init(res : AuthResponse) {
+        self.sessionID = res.sessionID ?? ""
+        self.accessToken = res.accessToken ?? ""
+        self.refreshToken = res.refreshToken ?? ""
+        self.expiration =  Date(timeIntervalSinceNow: res.expiresIn ?? 0)
+    }
     
     required public init?(coder aDecoder: NSCoder) {
         guard
