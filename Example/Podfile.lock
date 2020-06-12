@@ -38,7 +38,7 @@ DEPENDENCIES:
   - PMNetworking/Tests (from `../`)
 
 SPEC REPOS:
-  trunk:
+  https://github.com/CocoaPods/Specs.git:
     - AFNetworking
     - OHHTTPStubs
 
@@ -51,6 +51,6 @@ SPEC CHECKSUMS:
   OHHTTPStubs: cb29d2a9d09a828ecb93349a2b0c64f99e0db89f
   PMNetworking: b57abf81abd2ebf8150fd4bb9b7c393d0a28b19a
 
-PODFILE CHECKSUM: 663ff3f0bd6622e9dc3eb31b9e4c183be52e114c
+PODFILE CHECKSUM: 665107f1adb28c99dab44a9a110704eb337548c6
 
 COCOAPODS: 1.8.4
