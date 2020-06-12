@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol Package {
+public protocol Package {
     /**
      conver requset object to dictionary
      
@@ -19,16 +19,16 @@ protocol Package {
 
 
 //APIClient is the api client base
-protocol Request : Package {
+public protocol Request : Package {
     
     // those functions shdould be overrided
-//    func version() -> Int
-//    func headers() -> [String : Any]
-//    func isAuth() -> Bool
-//    func path() -> String
-//    func method() -> HTTPMethod
-    //etc base functions
+    var version: Int { get }
+    var path: String { get }
+    var header: [String : Any]  { get }
+    var parameters: [String: Any]? { get }
+    var method: HTTPMethod { get }
     
+//    func isAuth() -> Bool
 }
 
 

@@ -10,11 +10,11 @@ import Foundation
 public class Response {
     required public init() {}
     
-    var code : Int! = 1000
-    var errorMessage : String?
+    public var code : Int! = 1000
+    public var errorMessage : String?
     var internetCode : Int? //only use when error happend.
     
-    var error : NSError?
+    public var error : NSError?
     
     func CheckHttpStatus() -> Bool {
         return code == 200 || code == 1000
@@ -27,7 +27,6 @@ public class Response {
     func ParseResponseError (_ response: [String : Any]) -> Bool {
         code = response["Code"] as? Int
         errorMessage = response["Error"] as? String
-        
         if code == nil {
             return false
         }

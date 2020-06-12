@@ -25,13 +25,79 @@ import Foundation
 //REMOVE the networking ref
 import AFNetworking
 
+
+
+
+//This need move to a common framwork
+extension NSError {
+    
+    convenience init(domain: String, code: Int, localizedDescription: String, localizedFailureReason: String? = nil, localizedRecoverySuggestion: String? = nil) {
+        var userInfo = [NSLocalizedDescriptionKey : localizedDescription]
+        
+        if let localizedFailureReason = localizedFailureReason {
+            userInfo[NSLocalizedFailureReasonErrorKey] = localizedFailureReason
+        }
+        
+        if let localizedRecoverySuggestion = localizedRecoverySuggestion {
+            userInfo[NSLocalizedRecoverySuggestionErrorKey] = localizedRecoverySuggestion
+        }
+        
+        self.init(domain: domain, code: code, userInfo: userInfo)
+    }
+    
+    class func protonMailError(_ code: Int, localizedDescription: String, localizedFailureReason: String? = nil, localizedRecoverySuggestion: String? = nil) -> NSError {
+        return NSError(domain: protonMailErrorDomain(), code: code, localizedDescription: localizedDescription, localizedFailureReason: localizedFailureReason, localizedRecoverySuggestion: localizedRecoverySuggestion)
+    }
+    
+    class func protonMailErrorDomain(_ subdomain: String? = nil) -> String {
+        var domain = Bundle.main.bundleIdentifier ?? "ch.protonmail"
+        
+        if let subdomain = subdomain {
+            domain += ".\(subdomain)"
+        }
+        return domain
+    }
+ 
+    func getCode() -> Int {
+        var defaultCode : Int = code;
+        if defaultCode == Int.max {
+            if let detail = self.userInfo["com.alamofire.serialization.response.error.response"] as? HTTPURLResponse {
+                defaultCode = detail.statusCode
+            }
+        }
+        return defaultCode
+    }
+
+    func isInternetError() -> Bool {
+        var isInternetIssue = false
+        if let _ = self.userInfo ["com.alamofire.serialization.response.error.response"] as? HTTPURLResponse {
+        } else {
+            //                        if(error?.code == -1001) {
+            //                            // request timed out
+            //                        }
+            if self.code == -1009 || self.code == -1004 || self.code == -1001 { //internet issue
+                isInternetIssue = true
+            }
+        }
+        return isInternetIssue
+    }
+    
+    
+}
+
+
+
+
+
 //Protonmail api serivce. all the network requestion must go with this.
-class PMAPIService : APIService {
+public class PMAPIService : APIService {
+
+    
     /// auth delegation
-    weak var authDelegate: AuthDelegate?
+    public weak var authDelegate: AuthDelegate?
     
     ///
-    var serviceDelegate: APIServiceDelegate?
+    public var serviceDelegate: APIServiceDelegate?
     
     /// synchronize lock
     private var mutex = pthread_mutex_t()
@@ -67,7 +133,7 @@ class PMAPIService : APIService {
     //    }
         
     // MARK: - Internal methods
-    required init(doh: DoH, sessionUID: String, userID: String) {
+    public required init(doh: DoH, sessionUID: String, userID: String) {
         // init lock
         pthread_mutex_init(&mutex, nil)
         self.doh = doh
@@ -91,21 +157,21 @@ class PMAPIService : APIService {
         sessionManager.securityPolicy.allowInvalidCertificates = false
         sessionManager.securityPolicy.validatesDomainName = false
         #if DEBUG
-        sessionManager.securityPolicy.allowInvalidCertificates = false
+        sessionManager.securityPolicy.allowInvalidCertificates = true
         #endif
         
-        sessionManager.setSessionDidReceiveAuthenticationChallenge { session, challenge, credential -> URLSession.AuthChallengeDisposition in
-            var dispositionToReturn: URLSession.AuthChallengeDisposition = .performDefaultHandling
-//            if let validator = TrustKitWrapper.current?.pinningValidator {
-//                validator.handle(challenge, completionHandler: { (disposition, credentialOut) in
-//                    credential?.pointee = credentialOut
-//                    dispositionToReturn = disposition
-//                })
-//            } else {
-//                assert(false, "TrustKit not initialized correctly")
-//            }
-            return dispositionToReturn
-        }
+//        sessionManager.setSessionDidReceiveAuthenticationChallenge { session, challenge, credential -> URLSession.AuthChallengeDisposition in
+//            var dispositionToReturn: URLSession.AuthChallengeDisposition = .performDefaultHandling
+////            if let validator = TrustKitWrapper.current?.pinningValidator {
+////                validator.handle(challenge, completionHandler: { (disposition, credentialOut) in
+////                    credential?.pointee = credentialOut
+////                    dispositionToReturn = disposition
+////                })
+////            } else {
+////                assert(false, "TrustKit not initialized correctly")
+////            }
+//            return dispositionToReturn
+//        }
     }
     
 //    static var unauthorized: APIService = {
@@ -228,7 +294,7 @@ class PMAPIService : APIService {
 //                            self.sessionDeleaget?.updateAuthCredential(credential)
 //                        }
 //                        DispatchQueue.main.async {
-//                            completion(newCredential?.accessToken, self.sessionUID, error)
+//             customAuthCredential               completion(newCredential?.accessToken, self.sessionUID, error)
 //                        }
 //                    }
 //                }
@@ -424,9 +490,20 @@ class PMAPIService : APIService {
 //    }
 //
 //
+    
+    public func request(method: HTTPMethod, path: String,
+                        parameters: Any?, headers: [String : Any]?,
+                        authenticated: Bool, customAuthCredential: AuthCredential?, completion: CompletionBlock?) {
+        
+        self.request(method: method, path: path, parameters: parameters,
+                     headers: headers, authenticated: false, authRetry: false, authRetryRemains: 10,
+                     customAuthCredential: nil, completion: completion)
+        
+    }
     //new requestion function
     func request(method: HTTPMethod,
-                 path: String, parameters: Any?,
+                 path: String,
+                 parameters: Any?,
                  headers: [String : Any]?,
                  authenticated: Bool = true,
                  authRetry: Bool = true,
@@ -476,19 +553,21 @@ class PMAPIService : APIService {
                             }
                         } else if let responseDict = response as? [String : Any], let responseCode = responseDict["Code"] as? Int {
                             let errorMessage = responseDict["Error"] as? String ?? ""
-//                            let displayError : NSError = NSError.protonMailError(responseCode,
-//                                                                                 localizedDescription: errorMessage,
-//                                                                                 localizedFailureReason: errorMessage,
-//                                                                                 localizedRecoverySuggestion: nil)
+                            let displayError : NSError = NSError.protonMailError(responseCode,
+                                                                                 localizedDescription: errorMessage,
+                                                                                 localizedFailureReason: errorMessage,
+                                                                                 localizedRecoverySuggestion: nil)
 //                            if responseCode.forceUpgrade {
 //                                // old check responseCode == 5001 || responseCode == 5002 || responseCode == 5003 || responseCode == 5004
 //                                // new logic will not log user out
-//                                NotificationCenter.default.post(name: .forceUpgrade, object: errorMessage)
+//                               // NotificationCenter.default.post(name: .forceUpgrade, object: errorMessage)
 //                                completion?(task, responseDict, displayError)
-//                            } else if responseCode == APIErrorCode.API_offline {
+//                            }
+//                            else if responseCode == APIErrorCode.API_offline {
 //                                completion?(task, responseDict, displayError)
-//                            } else {
-//                                completion?(task, responseDict, displayError)
+//                            }
+//                            else {
+                                completion?(task, responseDict, displayError)
 //                            }
                         } else {
                             completion?(task, nil, error)
@@ -501,10 +580,10 @@ class PMAPIService : APIService {
                             var error : NSError?
                             if responseCode != 1000 && responseCode != 1001 {
                                 let errorMessage = responseDictionary["Error"] as? String
-//                                error = NSError.protonMailError(responseCode,
-//                                                                localizedDescription: errorMessage ?? "",
-//                                                                localizedFailureReason: errorMessage,
-//                                                                localizedRecoverySuggestion: nil)
+                                error = NSError.protonMailError(responseCode,
+                                                                localizedDescription: errorMessage ?? "",
+                                                                localizedFailureReason: errorMessage,
+                                                                localizedRecoverySuggestion: nil)
                             }
 
                             if authenticated && responseCode == 401 {
@@ -574,8 +653,10 @@ class PMAPIService : APIService {
                     var task: URLSessionDataTask? = nil
                     task = self.sessionManager.dataTask(with: request as URLRequest, uploadProgress: { (progress) in
                         //TODO::add later
+                        
                     }, downloadProgress: { (progress) in
                         //TODO::add later
+                        print("in progress")
                     }, completionHandler: { (urlresponse, res, error) in
                         self.debugError(error)
                         if let urlres = urlresponse as? HTTPURLResponse, let allheader = urlres.allHeaderFields as? [String : Any] {

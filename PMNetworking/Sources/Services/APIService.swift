@@ -13,7 +13,7 @@ struct HTTPHeader {
 }
 
 ///
-enum HTTPMethod {
+public enum HTTPMethod {
     case delete
     case get
     case post
@@ -110,8 +110,8 @@ enum Server : APIServerConfig {
 //    case success(T)
 //}
 
-typealias CompletionBlock = (_ task: URLSessionDataTask?, _ response: [String : Any]?, _ error: NSError?) -> Void
-protocol API {
+public typealias CompletionBlock = (_ task: URLSessionDataTask?, _ response: [String : Any]?, _ error: NSError?) -> Void
+public protocol API {
     func request(method: HTTPMethod, path: String,
                  parameters: Any?, headers: [String : Any]?,
                  authenticated: Bool,
@@ -120,7 +120,7 @@ protocol API {
 }
 
 /// this is auth UI related
-protocol APIServiceDelegate: class {
+public protocol APIServiceDelegate: class {
     func onUpdate(serverTime: Int64)
     //func onError(error: NSError)
     //func isReachable() -> Bool
@@ -131,7 +131,7 @@ protocol APIServiceDelegate: class {
 }
 
 /// this is auth related delegate in background
-protocol AuthDelegate: class {
+public protocol AuthDelegate: class {
     func getToken(bySessionUID uid: String) -> AuthCredential?
     //func updateAuthCredential(_ credential: PMAuthentication.Credential)
     func onUpdate(auth: AuthCredential)
@@ -140,7 +140,7 @@ protocol AuthDelegate: class {
     func onRefresh()
 }
 
-protocol APIService {
+public protocol APIService : API {
     //var network : NetworkLayer {get}
     //var vpn : VPNInterface {get}
     //var doh:  DoH  {get}//depends on NetworkLayer. {get}
@@ -154,7 +154,7 @@ class TestResponse : Response {
 }
 
 typealias RequestComplete = (_ task: URLSessionDataTask?, _ response: Response) -> Void
-extension APIService {
+public extension APIService {
     //init
     func exec<T>(route: Request) -> T? where T : Response {
         var ret_res : T? = nil
@@ -192,20 +192,68 @@ extension APIService {
             ret_res = apiRes
         }
         //TODO:: missing auth
-        //        api.request(method: self.method(), path: self.path(),
-        //                    parameters: self.toDictionary(), headers: [HTTPHeader.apiVersion: self.apiVersion()],
-        //                    authenticated: self.getIsAuthFunction(), customAuthCredential: self.authCredential, completion: completionWrapper)
+        self.request(method: route.method, path: route.path,
+                     parameters: route.toDictionary(),
+                     headers: [HTTPHeader.apiVersion: route.version],
+                     authenticated: true,//route.getIsAuthFunction(),
+            customAuthCredential: nil, //route.authCredential,
+            completion: completionWrapper)
         
         //wait operations
         let _ = sema.wait(timeout: DispatchTime.distantFuture)
-        //        if let e = ret_error {
-        //            throw e
-        //        }
+//        if let e = ret_error {
+//            throw e
+//        }
         return ret_res
     }
     
     func exec<T>(route: Request,
-                 complete: (_ task: URLSessionDataTask?, _ response: T) -> Void) {
+                 complete: @escaping  (_ task: URLSessionDataTask?, _ response: T) -> Void) where T : Response {
+        
+        // 1 make a request , 2 wait for the respons async 3. valid response 4. parse data into response 5. some data need save into database.
+        let completionWrapper: CompletionBlock = { task, res, error in
+             let realType = T.self
+            let apiRes = realType.init()
+            if error != nil {
+                //TODO check error
+                apiRes.ParseHttpError(error!, response: res)
+                complete(task, apiRes)
+                return
+            }
+            
+            if res == nil {
+                // TODO check res
+//                apiRes.error = NSError.badResponse()
+                complete(task, apiRes)
+                return
+            }
+            
+            var hasError = apiRes.ParseResponseError(res!)
+            if !hasError {
+                hasError = !apiRes.ParseResponse(res!)
+            }
+            complete(task, apiRes)
+        }
+        
+        var header = route.header
+        header["x-pm-apiversion"] = route.version
+        
+        
+        self.request(method: route.method, path: route.path,
+                 parameters: route.toDictionary(),
+                 headers: [HTTPHeader.apiVersion: route.version],
+                 authenticated: true,//route.getIsAuthFunction(),
+        customAuthCredential: nil, //route.authCredential,
+        completion: completionWrapper)
+        
+//        api.request(method: self.method(),
+//                    path: self.path(),
+//                    parameters: self.toDictionary(),
+//                    headers: header,
+//                    authenticated: self.getIsAuthFunction(),
+//                    customAuthCredential: self.authCredential,
+//                    completion: completionWrapper)
+//
         
     }
     

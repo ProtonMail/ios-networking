@@ -77,7 +77,7 @@ public struct UserProperties {
 //Users API
 //Doc: https://github.com/ProtonMail/Slim-API/blob/develop/api-spec/pm_api_users.md
 
-class UserAPI : APIClient {
+public class UserAPI : APIClient {
     
     static let route : String = "/users"
     
@@ -102,8 +102,12 @@ class UserAPI : APIClient {
 //    /// Send a verification code [POST]
 //    static let v_send_verification_code : Int = 3
     
-    enum Router: Request {
-        func toDictionary() -> [String : Any]? {
+    public enum Router: Request {
+        public var version: Int {
+            return 3
+        }
+        
+        public func toDictionary() -> [String : Any]? {
              return nil
         }
         
@@ -116,7 +120,7 @@ class UserAPI : APIClient {
         case checkUsername(String)
         case createUser(UserProperties)
         
-        var path: String {
+        public var path: String {
             switch self {
             case .code:
                 return route + "/code"
@@ -129,14 +133,18 @@ class UserAPI : APIClient {
             }
         }
         
-        var version: Int {
+        public var header: [String : Any] {
+            return [:]
+        }
+        
+        public var apiVersion: Int {
             switch self {
             case .code, .check, .checkUsername, .createUser:
                 return v_user_default
             }
         }
         
-        var method: HTTPMethod {
+        public var method: HTTPMethod {
             switch self {
             case .checkUsername:
                 return .get
@@ -147,7 +155,7 @@ class UserAPI : APIClient {
             }
         }
         
-        var parameters: [String: Any]? {
+        public var parameters: [String: Any]? {
             switch self {
             case .checkUsername:
                 return nil
