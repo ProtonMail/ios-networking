@@ -23,7 +23,7 @@ public enum PasswordMode: Int, Codable {
     case one = 1, two = 2
 }
 
-public class GenericAuthenticator<SRP: SrpAuthProtocol, PROOF: SrpProofsProtocol>: NSObject {
+public class GenericAuthenticator<SRP: SrpAuthProtocol, PROOF: SrpProofsProtocol> {
     public typealias Completion = (Result<Status, Error>) -> Void
     
     public enum Status {
@@ -43,54 +43,67 @@ public class GenericAuthenticator<SRP: SrpAuthProtocol, PROOF: SrpProofsProtocol
         case notImplementedYet(String)
     }
     
-    public struct Configuration {
-        public init(trust: TrustChallenge?,
-                    scheme: String,
-                    host: String,
-                    apiPath: String,
-                    clientVersion: String)
-        {
-            self.trust = trust
-            self.scheme = scheme
-            self.host = host
-            self.apiPath = apiPath
-            self.clientVersion = clientVersion
-        }
-        
-        var trust: TrustChallenge?
-        var scheme: String
-        var host: String
-        var apiPath: String
-        var clientVersion: String
-    }
+//    public struct Configuration {
+//        public init(trust: TrustChallenge?,
+//                    scheme: String,
+//                    host: String,
+//                    apiPath: String,
+//                    clientVersion: String)
+//        {
+//            self.trust = trust
+//            self.scheme = scheme
+//            self.host = host
+//            self.apiPath = apiPath
+//            self.clientVersion = clientVersion
+//        }
+//
+//        var trust: TrustChallenge?
+//        var scheme: String
+//        var host: String
+//        var apiPath: String
+//        var clientVersion: String
+//    }
     
-    private weak var trustInterceptor: SessionDelegate? // weak because URLSession holds a strong reference to delegate
-    private lazy var session: URLSession = {
-        let config = URLSessionConfiguration.default
-        let delegate = SessionDelegate()
-        let session = URLSession(configuration: config, delegate: delegate, delegateQueue: nil)
-        self.trustInterceptor = delegate
-        return session
-    }()
+//    private weak var trustInterceptor: SessionDelegate? // weak because URLSession holds a strong reference to delegate
+//    private lazy var session: URLSession = {
+//        let config = URLSessionConfiguration.default
+//        let delegate = SessionDelegate()
+//        let session = URLSession(configuration: config, delegate: delegate, delegateQueue: nil)
+//        self.trustInterceptor = delegate
+//        return session
+//    }()
     
-    public convenience init(configuration: Configuration) {
-        self.init()
-        self.update(configuration: configuration)
-    }
+    
+    
+    
+//    public convenience init(api: APIService) {
+//        self.init()
+//        self.update(apiService: api)
+//    }
     
     // we do not want this to be ever used
-    override private init() { }
+//    override private init() { }
     
-    deinit {
-        self.session.finishTasksAndInvalidate()
+//    deinit {
+//        self.session.finishTasksAndInvalidate()
+//    }
+    public init() {
+        
     }
+    private var apiService : APIService!
     
-    public func update(configuration: Configuration) {
-        AuthService.trust = configuration.trust
-        AuthService.scheme = configuration.scheme
-        AuthService.host = configuration.host
-        AuthService.apiPath = configuration.apiPath
-        AuthService.clientVersion = configuration.clientVersion
+//    public override init() {
+//        super.init()
+//    }
+//    
+    public func update(apiService: APIService) {
+        self.apiService = apiService
+//        AuthService.trust = configuration.trust
+//        AuthService.scheme = configuration.scheme
+//        AuthService.host = configuration.host
+//        AuthService.apiPath = configuration.apiPath
+//        AuthService.clientVersion = configuration.clientVersion
+        
     }
     
     /// Clear login, when preiously unauthenticated
@@ -99,34 +112,21 @@ public class GenericAuthenticator<SRP: SrpAuthProtocol, PROOF: SrpProofsProtocol
                              completion: @escaping Completion)
     {
         // 1. auth info request
-        let authInfoEndpoint = AuthService.InfoEndpoint(username: username)
-        
-        self.session.dataTask(with: authInfoEndpoint.request) { responseData, response, networkingError in
-            guard networkingError == nil else {
-                return completion(.failure(networkingError!))
+        //let authInfoEndpoint = AuthService.InfoEndpoint(username: username)
+        let authInfoEndpoint = AuthAPI.Router.info(username: username)
+        self.apiService.exec(route: authInfoEndpoint) { (task, response: AuthInfoResponse) in
+            guard response.error == nil else {
+                return completion(.failure(response.error!))
             }
-            guard let responseData = responseData else {
-                return completion(.failure(Errors.emptyAuthInfoResponse))
-            }
-            
+                        
             // 2. build SRP things
             do {
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .decapitaliseFirstLetter
-                
-                // server error code
-                if let error = try? decoder.decode(ErrorResponse.self, from: responseData) {
-                    throw Errors.serverError(NSError(error))
-                }
-                
-                // server SRP
-                let response = try decoder.decode(AuthService.InfoEndpoint.Response.self, from: responseData)
                 guard let auth = SRP(response.version,
-                                         username: username,
-                                         password: password,
-                                         salt: response.salt,
-                                         signedModulus: response.modulus,
-                                         serverEphemeral: response.serverEphemeral) else
+                                     username: username,
+                                     password: password,
+                                     salt: response.salt,
+                                     signedModulus: response.modulus,
+                                     serverEphemeral: response.serverEphemeral) else
                 {
                     throw Errors.emptyServerSrpAuth
                 }
@@ -141,56 +141,54 @@ public class GenericAuthenticator<SRP: SrpAuthProtocol, PROOF: SrpProofsProtocol
                 }
                 
                 // 3. auth request
-                let authEndpoint = AuthService.AuthEndpoint(username: username,
-                                                     ephemeral: clientEphemeral,
-                                                     proof: clientProof,
-                                                     session: response.SRPSession,
-                                                     serverProof: expectedServerProof)
-                self.session.dataTask(with: authEndpoint.request) { responseData, response, networkingError in
-                    guard networkingError == nil else {
-                        return completion(.failure(networkingError!))
+                
+                let authEndpoint = AuthAPI.Router.auth(username: username,
+                                                       ephemeral: clientEphemeral.base64EncodedString(),
+                                                       proof: clientProof.base64EncodedString(),
+                                                       session: response.srpSession ?? "")
+                self.apiService.exec(route: authEndpoint) { (task, response: AuthResponse) in
+                    guard response.error == nil else {
+                        return completion(.failure(response.error!))
                     }
-                    guard let responseData = responseData else {
-                        return completion(.failure(Errors.emptyAuthResponse))
-                    }
-                    
-                    do {
-                        // server error code
-                        if let error = try? decoder.decode(ErrorResponse.self, from: responseData) {
-                            throw Errors.serverError(NSError(error))
-                        }
-                        
-                        // relevant response
-                        let response = try decoder.decode(AuthService.AuthEndpoint.Response.self, from: responseData)
-                        guard let serverProof = Data(base64Encoded: response.serverProof),
-                            expectedServerProof == serverProof else
-                        {
-                            throw Errors.wrongServerProof
-                        }
-                        
+     
+                    do {                        
                         // are we done yet or need 2FA?
-                        switch response._2FA.enabled {
-                        case .off:
-                            let credential = Credential(res: response)
-                            completion(.success(.newCredential(credential, response.passwordMode)))
-                        case .on:
-                            let context = (Credential(res: response), response.passwordMode)
+                        if response.twoFactor == 1 {
+                            let context = (Credential(res: response), PasswordMode(rawValue: response.passwordMode)!)
                             completion(.success(.ask2FA(context)))
-                        
-                        case .u2f, .otp:
-                            throw Errors.notImplementedYet("U2F not implemented yet")
+                        } else {
+                            let credential = Credential(res: response)
+                            completion(.success(.newCredential(credential, PasswordMode(rawValue: response.passwordMode)!)))
                         }
+//                        switch response.twoFactor {
+//                        case .off:
+//                            let credential = Credential(res: response)
+//                            completion(.success(.newCredential(credential, response.passwordMode)))
+//                        case .on:
+//                            let context = (Credential(res: response), response.passwordMode)
+//                            completion(.success(.ask2FA(context)))
+//
+//                        case .u2f, .otp:
+//                            throw Errors.notImplementedYet("U2F not implemented yet")
+//                        }
                         
                     } catch let parsingError {
                         completion(.failure(parsingError))
                     }
-                }.resume()
-                
+                }
             } catch let parsingError {
                 return completion(.failure(parsingError))
             }
-            
-        }.resume()
+        }
+        
+//        self.session.dataTask(with: authInfoEndpoint.request) { responseData, response, networkingError in
+//            guard networkingError == nil else {
+//                return completion(.failure(networkingError!))
+//            }
+//            guard let responseData = responseData else {
+//                return completion(.failure(Errors.emptyAuthInfoResponse))
+//            }
+//        }.resume()
     }
     
     /// Continue clear login flow with 2FA code
@@ -199,33 +197,33 @@ public class GenericAuthenticator<SRP: SrpAuthProtocol, PROOF: SrpProofsProtocol
                            completion: @escaping Completion)
     {
         let twoFAEndpoint = AuthService.TwoFAEndpoint(code: twoFactorCode, token: context.credential.accessToken, UID: context.credential.UID)
-        self.session.dataTask(with: twoFAEndpoint.request) { responseData, response, networkingError in
-            guard networkingError == nil else {
-                return completion(.failure(networkingError!))
-            }
-            guard let responseData = responseData else {
-                return completion(.failure(Errors.emptyAuthResponse))
-            }
-            
-            do {
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .decapitaliseFirstLetter
-                
-                // server error code
-                if let error = try? decoder.decode(ErrorResponse.self, from: responseData) {
-                    throw Errors.serverError(NSError(error))
-                }
-                
-                let response = try decoder.decode(AuthService.TwoFAEndpoint.Response.self, from: responseData)
-
-                var credential = context.credential
-                credential.updateScope(response.scope)
-                completion(.success(.newCredential(credential, context.passwordMode)))
-                
-            } catch let parsingError {
-                completion(.failure(parsingError))
-            }
-        }.resume()
+//        self.session.dataTask(with: twoFAEndpoint.request) { responseData, response, networkingError in
+//            guard networkingError == nil else {
+//                return completion(.failure(networkingError!))
+//            }
+//            guard let responseData = responseData else {
+//                return completion(.failure(Errors.emptyAuthResponse))
+//            }
+//
+//            do {
+//                let decoder = JSONDecoder()
+//                decoder.keyDecodingStrategy = .decapitaliseFirstLetter
+//
+//                // server error code
+//                if let error = try? decoder.decode(ErrorResponse.self, from: responseData) {
+//                    throw Errors.serverError(NSError(error))
+//                }
+//
+//                let response = try decoder.decode(AuthService.TwoFAEndpoint.Response.self, from: responseData)
+//
+//                var credential = context.credential
+//                credential.updateScope(response.scope)
+//                completion(.success(.newCredential(credential, context.passwordMode)))
+//
+//            } catch let parsingError {
+//                completion(.failure(parsingError))
+//            }
+//        }.resume()
     }
     
     // Refresh expired access token using refresh token
@@ -233,33 +231,33 @@ public class GenericAuthenticator<SRP: SrpAuthProtocol, PROOF: SrpProofsProtocol
                                   completion: @escaping Completion)
     {
         let refreshEndpoint = AuthService.RefreshEndpoint(refreshToken: oldCredential.refreshToken, UID: oldCredential.UID)
-        self.session.dataTask(with: refreshEndpoint.request) { responseData, response, networkingError in
-            guard networkingError == nil else {
-                return completion(.failure(networkingError!))
-            }
-            guard let responseData = responseData else {
-                return completion(.failure(Errors.emptyAuthResponse))
-            }
-            
-            do {
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .decapitaliseFirstLetter
-                
-                // server error code
-                if let error = try? decoder.decode(ErrorResponse.self, from: responseData) {
-                    throw Errors.serverError(NSError(error))
-                }
-                
-                let response = try decoder.decode(AuthService.RefreshEndpoint.Response.self, from: responseData)
-
-                // refresh endpoint does not return UID in the response, so we have to inject old one manually
-                let credential = Credential(res: response, UID: oldCredential.UID)
-                completion(.success(.updatedCredential(credential)))
-                
-            } catch let parsingError {
-                completion(.failure(parsingError))
-            }
-        }.resume()
+//        self.session.dataTask(with: refreshEndpoint.request) { responseData, response, networkingError in
+//            guard networkingError == nil else {
+//                return completion(.failure(networkingError!))
+//            }
+//            guard let responseData = responseData else {
+//                return completion(.failure(Errors.emptyAuthResponse))
+//            }
+//            
+//            do {
+//                let decoder = JSONDecoder()
+//                decoder.keyDecodingStrategy = .decapitaliseFirstLetter
+//                
+//                // server error code
+//                if let error = try? decoder.decode(ErrorResponse.self, from: responseData) {
+//                    throw Errors.serverError(NSError(error))
+//                }
+//                
+//                let response = try decoder.decode(AuthService.RefreshEndpoint.Response.self, from: responseData)
+//
+//                // refresh endpoint does not return UID in the response, so we have to inject old one manually
+//                let credential = Credential(res: response, UID: oldCredential.UID)
+//                completion(.success(.updatedCredential(credential)))
+//                
+//            } catch let parsingError {
+//                completion(.failure(parsingError))
+//            }
+//        }.resume()
     }
 }
 
@@ -267,15 +265,15 @@ public typealias TrustChallenge = (URLSession, URLAuthenticationChallenge, @esca
 public typealias URLSessionDelegateCompletion = (URLSession.AuthChallengeDisposition, URLCredential?) -> Void
 
 // Point to inject TrustKit
-class SessionDelegate: NSObject, URLSessionDelegate {
-    public func urlSession(_ session: URLSession,
-                           didReceive challenge: URLAuthenticationChallenge,
-                           completionHandler: @escaping URLSessionDelegateCompletion)
-    {
-        if let trust = AuthService.trust {
-            trust(session, challenge, completionHandler)
-        } else {
-            completionHandler(.performDefaultHandling, nil)
-        }
-    }
-}
+//class SessionDelegate: NSObject, URLSessionDelegate {
+//    public func urlSession(_ session: URLSession,
+//                           didReceive challenge: URLAuthenticationChallenge,
+//                           completionHandler: @escaping URLSessionDelegateCompletion)
+//    {
+//        if let trust = AuthService.trust {
+//            trust(session, challenge, completionHandler)
+//        } else {
+//            completionHandler(.performDefaultHandling, nil)
+//        }
+//    }
+//}

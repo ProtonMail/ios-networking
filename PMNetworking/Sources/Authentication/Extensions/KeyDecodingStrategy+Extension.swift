@@ -16,8 +16,7 @@ extension JSONDecoder.KeyDecodingStrategy {
             let lastKey = keys.last!
             if lastKey.intValue != nil {
                 return lastKey
-            }
-            
+            } 
             // let's hope server will not return unicode glyphs as JSON keys
             let originalKey: String = lastKey.stringValue
             if CharacterSet.decimalDigits.contains(originalKey.unicodeScalars.first!) {

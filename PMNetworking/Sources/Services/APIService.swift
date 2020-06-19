@@ -137,6 +137,8 @@ public protocol APIService : API {
     //var vpn : VPNInterface {get}
     //var doh:  DoH  {get}//depends on NetworkLayer. {get}
     //var queue : [Request] {get}
+    
+    
     var serviceDelegate: APIServiceDelegate? {get}
     var authDelegate : AuthDelegate? {get}
 }

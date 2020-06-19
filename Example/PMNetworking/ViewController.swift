@@ -8,7 +8,7 @@
 
 import UIKit
 import PMCommon
-
+import Crypto
 
 class DoHMail : DoH, DoHConfig {
     //defind your default host
@@ -21,8 +21,15 @@ class DoHMail : DoH, DoHConfig {
 
 
 class MainViewController: UIViewController {
+    
+    let apiService = PMAPIService(doh: DoHMail.default, sessionUID: "unittest100", userID: "unittest100")
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        apiService.authDelegate = self
+        apiService.serviceDelegate = self
+        
         // Do any additional setup after loading the view, typically from a nib.
     }
     override func didReceiveMemoryWarning() {
@@ -32,27 +39,30 @@ class MainViewController: UIViewController {
     
     @IBAction func testButton(_ sender: Any) {
         self.testFramework()
+
     }
     
     func testFramework() {
-
-        let authApi: Authenticator = {
-            let trust: TrustChallenge = { session, challenge, completion in
-//                if let validator = TrustKitWrapper.current?.pinningValidator {
-//                    validator.handle(challenge, completionHandler: completion)
-//                } else {
-//                    assert(false, "TrustKit was not initialized properly")
-                    completion(.performDefaultHandling, nil)
-//                }
-            }
-            
-            let configuration = Authenticator.Configuration(trust: trust,
-                                                            scheme: "https",
-                                                            host: "api.protonmail.ch",
-                                                            apiPath: "",
-                                                            clientVersion: "iOS_1.12.0")
-            return Authenticator(configuration: configuration)
-        }()
+        let authApi: Authenticator = Authenticator()
+        
+        
+//        let authApi: Authenticator = {
+//            let trust: TrustChallenge = { session, challenge, completion in
+////                if let validator = TrustKitWrapper.current?.pinningValidator {
+////                    validator.handle(challenge, completionHandler: completion)
+////                } else {
+////                    assert(false, "TrustKit was not initialized properly")
+//                    completion(.performDefaultHandling, nil)
+////                }
+//            }
+//
+////            let configuration = Authenticator.Configuration(trust: trust,
+////                                                            scheme: "https",
+////                                                            host: "api.protonmail.ch",
+////                                                            apiPath: "",
+////                                                            clientVersion: "iOS_1.12.0")
+//            return Authenticator(configuration: apiService)
+//        }()
         
         //let expectation1 = self.expectation(description: "Success completion block called")
         //let authOK = AuthAPI.Router.auth(username: "ok", ephemeral: "", proof: "", session: "")
@@ -108,9 +118,7 @@ class MainViewController: UIViewController {
     
     func testAccessToken() {
         //
-        let apiService = PMAPIService(doh: DoHMail.default, sessionUID: "unittest100", userID: "unittest100")
-        apiService.authDelegate = self
-        apiService.serviceDelegate = self
+        
         let request = UserAPI.Router.checkUsername("unittest100")
         
         apiService.exec(route: request) { (task, response) in
@@ -118,6 +126,15 @@ class MainViewController: UIViewController {
         }
         
         
+    }
+    
+    
+    func testHumanVerify() {
+        // setup the mock
+        
+        // make a fake call to trigger the human verify
+        
+        //
     }
     
 
@@ -163,6 +180,12 @@ extension MainViewController : APIServiceDelegate {
     }
     
     func onHumanVerify() {
-        
+        let bundle = Bundle(for: HumanCheckMenuViewController.self)
+        let storyboard = UIStoryboard.init(name: "HumanVerify", bundle: bundle)
+        guard let customViewController = storyboard.instantiateViewController(withIdentifier: "HumanCheckMenuViewController") as? HumanCheckMenuViewController else {
+            print("bad")
+            return
+        }
+        self.navigationController?.pushViewController(customViewController, animated: true)
     }
 }

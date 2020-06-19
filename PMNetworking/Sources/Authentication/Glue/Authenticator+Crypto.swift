@@ -10,7 +10,6 @@ import Foundation
 import Crypto
 
 /* IMPORTANT: this file adds explicit dependency on Crypto framework, do not add this file to SPM sources */
-
 public typealias Authenticator = GenericAuthenticator<Crypto.SrpAuth, Crypto.SrpProofs>
 
 extension SrpProofs: SrpProofsProtocol {}

@@ -98,18 +98,19 @@ public struct AuthAPI : APIClient {
 
 
 // MARK : Response part
-final public class AuthResponse : Response {
+final public class AuthResponse : Response, CredentialConvertible {
     
-    public var accessToken : String?
-    public var expiresIn : TimeInterval?
-    public var refreshToken : String?
+    
+//    public var accessToken : String?
+//    public var expiresIn : TimeInterval?
+//    public var refreshToken : String?
     public var sessionID : String?
     public  var eventID : String?
     
-    public var scope : String?
+//    public var scope : String?
     public var serverProof : String?
     var resetToken : String?
-    var tokenType : String?
+//    var tokenType : String?
     var passwordMode : Int = 0
     
     var userStatus : Int = 0
@@ -124,22 +125,33 @@ final public class AuthResponse : Response {
 //        return accessToken?.armored ?? false
 //    }
     
+    
+//    var code: Int
+    var accessToken: String = ""
+    var expiresIn: TimeInterval = 0.0
+    var tokenType: String = ""
+    var scope: Scope = ""
+    var refreshToken: String = ""
+    
+    
     override func ParseResponse(_ response: [String : Any]!) -> Bool {
+//        self.code = 1000
+        
         self.sessionID = response["UID"] as? String //session id
-        self.accessToken = response["AccessToken"] as? String
-        self.expiresIn = response["ExpiresIn"] as? TimeInterval
-        self.scope = response["Scope"] as? String
+        self.accessToken = response["AccessToken"] as? String ?? ""
+        self.expiresIn = response["ExpiresIn"] as? TimeInterval  ?? 0
+        self.scope = response["Scope"] as? String ?? ""
         self.eventID = response["EventID"] as? String
         
         self.serverProof = response["ServerProof"] as? String
-        self.resetToken = response["ResetToken"] as? String
-        self.tokenType = response["TokenType"] as? String
+        self.resetToken = response["ResetToken"] as? String ?? ""
+        self.tokenType = response["TokenType"] as? String ?? ""
         self.passwordMode = response["PasswordMode"] as? Int ?? 0
         self.userStatus = response["UserStatus"] as? Int ?? 0
         
         self.privateKey = response["PrivateKey"] as? String
         self.keySalt = response["KeySalt"] as? String
-        self.refreshToken = response["RefreshToken"] as? String
+        self.refreshToken = response["RefreshToken"] as? String  ?? ""
         
         if let twoFA = response["2FA"]  as? [String : Any] {
             self.twoFactor = twoFA["Enabled"] as? Int ?? 0
@@ -150,18 +162,18 @@ final public class AuthResponse : Response {
 }
 
 final public class AuthInfoResponse : Response {
-    public var Modulus : String?
-    public var ServerEphemeral : String?
-    public var Version : Int = 0
-    public var Salt : String?
-    public var SRPSession : String?
+    public var modulus : String?
+    public var serverEphemeral : String?
+    public var version : Int = 0
+    public var salt : String?
+    public var srpSession : String?
     
     override func ParseResponse(_ response: [String : Any]!) -> Bool {
-        self.Modulus         = response["Modulus"] as? String
-        self.ServerEphemeral = response["ServerEphemeral"] as? String
-        self.Version         = response["Version"] as? Int ?? 0
-        self.Salt            = response["Salt"] as? String
-        self.SRPSession      = response["SRPSession"] as? String
+        self.modulus         = response["Modulus"] as? String
+        self.serverEphemeral = response["ServerEphemeral"] as? String
+        self.version         = response["Version"] as? Int ?? 0
+        self.salt            = response["Salt"] as? String
+        self.srpSession      = response["SRPSession"] as? String
         return true
     }
 }

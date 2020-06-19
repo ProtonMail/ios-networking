@@ -42,6 +42,7 @@ TODO: Add long description of the pod here.
     default.dependency 'PMCommon/APIClient'
     default.dependency 'PMCommon/Services'
     default.dependency 'PMCommon/Authentication'
+    default.dependency 'PMCommon/HumanVerify'
   end
   
   # Optional subspecs
@@ -61,9 +62,20 @@ TODO: Add long description of the pod here.
   end
   
   s.subspec 'Authentication' do |authentication|
-    authentication.dependency 'PMCommon/APIClient'
+    authentication.dependency 'PMCommon/Services'
+#    authentication.dependency 'PMCommon/APIClient'
     authentication.dependency 'PMCrypto'
     authentication.source_files = 'PMNetworking/Sources/Authentication/**/*'
+  end
+
+  s.subspec 'HumanVerify' do |humanverify|
+    humanverify.dependency 'PMCommon/APIClient'
+    humanverify.source_files = 'PMNetworking/Sources/HumanVerify/**/*'
+    humanverify.resources = ['PMNetworking/Assets/HumanVerify.storyboard']
+
+#    humanverify.resource_bundles = {
+#        'HumanVerify' => ['PMNetworking/Assets/HumanVerify.storyboard']
+#    }
   end
 
   # s.resource_bundles = {

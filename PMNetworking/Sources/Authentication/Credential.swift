@@ -47,7 +47,7 @@ public struct Credential {
 protocol CredentialConvertible {
     typealias Scope = String
     
-    var code: Int { get }
+//    var code: Int { get }
     var accessToken: String { get }
     var expiresIn: TimeInterval { get }
     var tokenType: String { get }

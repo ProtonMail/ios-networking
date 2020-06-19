@@ -50,6 +50,9 @@
         ],
         "PMCommon/Authentication": [
 
+        ],
+        "PMCommon/HumanVerify": [
+
         ]
       }
     },
@@ -83,7 +86,7 @@
     {
       "name": "Authentication",
       "dependencies": {
-        "PMCommon/APIClient": [
+        "PMCommon/Services": [
 
         ],
         "PMCrypto": [
@@ -91,6 +94,18 @@
         ]
       },
       "source_files": "PMNetworking/Sources/Authentication/**/*"
+    },
+    {
+      "name": "HumanVerify",
+      "dependencies": {
+        "PMCommon/APIClient": [
+
+        ]
+      },
+      "source_files": "PMNetworking/Sources/HumanVerify/**/*",
+      "resources": [
+        "PMNetworking/Assets/HumanVerify.storyboard"
+      ]
     }
   ],
   "swift_version": "5.0"
