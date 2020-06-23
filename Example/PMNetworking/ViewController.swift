@@ -96,7 +96,7 @@ class MainViewController: UIViewController {
                 //                return completion(nil, .ask2FA, nil, context, nil, nil)
                 print("")
             case .success(.newCredential(let credential, let passwordMode)): // success without 2FA
-                self.authCredential = credential
+                self.authCredential = AuthCredential(credential)
                 
                 
                 self.testAccessToken()

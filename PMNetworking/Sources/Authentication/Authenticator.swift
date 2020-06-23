@@ -28,7 +28,7 @@ public class GenericAuthenticator<SRP: SrpAuthProtocol, PROOF: SrpProofsProtocol
     
     public enum Status {
         case ask2FA(TwoFactorContext)
-        case newCredential(AuthCredential, PasswordMode)
+        case newCredential(Credential, PasswordMode)
         case updatedCredential(Credential)
     }
     
@@ -169,9 +169,9 @@ public class GenericAuthenticator<SRP: SrpAuthProtocol, PROOF: SrpProofsProtocol
                             let context = (Credential(res: response), PasswordMode(rawValue: response.passwordMode)!)
                             completion(.success(.ask2FA(context)))
                         } else {
-//                            let credential = Credential(res: response)
+                            let credential = Credential(res: response)
                             
-                            let credential = AuthCredential(res: response)
+//                            let credential = AuthCredential(res: response)
                             completion(.success(.newCredential(credential, PasswordMode(rawValue: response.passwordMode)!)))
                         }
 //                        switch response.twoFactor {
@@ -291,3 +291,25 @@ public typealias URLSessionDelegateCompletion = (URLSession.AuthChallengeDisposi
 //        }
 //    }
 //}
+
+
+
+extension Credential {
+    public init(_ authCredential: AuthCredential) {
+        self.init(UID: authCredential.sessionID,
+                  accessToken: authCredential.accessToken,
+                  refreshToken: authCredential.refreshToken,
+                  expiration: authCredential.expiration,
+                  scope: [])
+    }
+}
+extension AuthCredential {
+    public convenience init(_ credential: Credential) {
+        self.init(sessionID: credential.UID,
+                  accessToken: credential.accessToken,
+                  refreshToken: credential.refreshToken,
+                  expiration: credential.expiration,
+                  privateKey: nil,
+                  passwordKeySalt: nil)
+    }
+}
