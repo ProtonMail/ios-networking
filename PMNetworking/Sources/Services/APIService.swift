@@ -13,6 +13,25 @@ struct HTTPHeader {
 }
 
 
+extension Bundle {
+    /// Returns the app version in a nice to read format
+    var appVersion: String {
+        return "\(majorVersion) (\(buildVersion))"
+    }
+    
+    /// Returns the build version of the app.
+    var buildVersion: String {
+        return infoDictionary?["CFBundleVersion"] as? String ?? "Unknown"
+    }
+    
+    /// Returns the major version of the app.
+    var majorVersion: String {
+        return infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
+    }
+}
+
+
+
 //struct ErrorResponse: Codable {
 //    var code: Int
 //    var error: String
@@ -119,7 +138,7 @@ public protocol APIServiceDelegate: class {
     func onDohTroubleshot()
     
     func onHumanVerify()
-    
+
 }
 
 /// this is auth related delegate in background
@@ -231,12 +250,10 @@ public extension APIService {
         
         var header = route.header
         header["x-pm-apiversion"] = route.version
-        
-        
         self.request(method: route.method, path: route.path,
                      parameters: route.parameters,
                      headers: [HTTPHeader.apiVersion: route.version],
-                     authenticated: true,//route.getIsAuthFunction(),
+                     authenticated: route.isAuth,
             customAuthCredential: nil, //route.authCredential,
             completion: completionWrapper)
     }
@@ -272,8 +289,6 @@ public extension APIService {
                 //                let dictionary = try! JSONSerialization.jsonObject(with: data, options: .allowFragments) as! T
                 //                complete(task, dictionary)
                 //                return dictionary
-                
-                
                 ///TODO parse error first
                 
                 let decoder = JSONDecoder()
@@ -288,8 +303,7 @@ public extension APIService {
             
             var header = route.header
             header["x-pm-apiversion"] = route.version
-            
-            
+        
             self.request(method: route.method, path: route.path,
                          parameters: route.parameters,
                          headers: [HTTPHeader.apiVersion: route.version],

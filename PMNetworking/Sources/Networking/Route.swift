@@ -45,7 +45,15 @@ public protocol Request : Package {
     var header: [String : Any]  { get }
     var method: HTTPMethod { get }
     
-//    func isAuth() -> Bool
+    var isAuth: Bool { get }
+}
+
+extension Request {
+    public var isAuth : Bool {
+        get {
+            return true
+        }
+    }
 }
 
 

@@ -62,10 +62,10 @@ TODO: Add long description of the pod here.
   end
   
   s.subspec 'Authentication' do |authentication|
-    authentication.dependency 'PMCommon/Services'
-#    authentication.dependency 'PMCommon/APIClient'
-    authentication.dependency 'PMCrypto'
-    authentication.source_files = 'PMNetworking/Sources/Authentication/**/*'
+      authentication.dependency 'PMCrypto'
+      authentication.dependency 'PMCommon/Services'
+      authentication.dependency 'PMCommon/APIClient'
+      authentication.source_files = 'PMNetworking/Sources/Authentication/**/*'
   end
 
   s.subspec 'HumanVerify' do |humanverify|

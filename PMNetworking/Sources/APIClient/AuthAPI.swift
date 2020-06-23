@@ -74,6 +74,10 @@ public struct AuthAPI : APIClient {
             }
         }
         
+        public var isAuth: Bool {
+            return false
+        }
+        
         public var parameters: [String: Any]? {
             switch self {
             case .info(let username):

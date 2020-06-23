@@ -101,10 +101,10 @@ public class PMAPIService : APIService {
     private var mutex = pthread_mutex_t()
     
     /// the user id
-    let userID : String
+    public var userID : String
     
     /// the session ID. this can be changed
-    var sessionUID : String
+    public var sessionUID : String
     
     /// doh with service config
     let doh : DoH
@@ -494,7 +494,7 @@ public class PMAPIService : APIService {
                         authenticated: Bool, customAuthCredential: AuthCredential?, completion: CompletionBlock?) {
         
         self.request(method: method, path: path, parameters: parameters,
-                     headers: headers, authenticated: false, authRetry: false, authRetryRemains: 10,
+                     headers: headers, authenticated: authenticated, authRetry: false, authRetryRemains: 10,
                      customAuthCredential: nil, completion: completion)
         
     }
@@ -636,15 +636,16 @@ public class PMAPIService : APIService {
                     }
                     
                     // move to delegte
-                    //                let appversion = "iOS_\(Bundle.main.majorVersion)"
-                    //                request.setValue("application/vnd.protonmail.v1+json", forHTTPHeaderField: "Accept")
-                    //                request.setValue(appversion, forHTTPHeaderField: "x-pm-appversion")
-                    //
-                    //                let clanguage = LanguageManager.currentLanguageEnum()
-                    //                request.setValue(clanguage.localeString, forHTTPHeaderField: "x-pm-locale")
-                    //                if let ua = UserAgent.default.ua {
-                    //                    request.setValue(ua, forHTTPHeaderField: "User-Agent")
-                    //                }
+                    let appversion = "iOS_\(Bundle.main.majorVersion)"
+                    request.setValue("application/vnd.protonmail.v1+json", forHTTPHeaderField: "Accept")
+                    request.setValue(appversion, forHTTPHeaderField: "x-pm-appversion")
+                    
+                    // todo
+//                    let clanguage = LanguageManager.currentLanguageEnum()
+//                    request.setValue(clanguage.localeString, forHTTPHeaderField: "x-pm-locale")
+//                    if let ua = UserAgent.default.ua {
+//                        request.setValue(ua, forHTTPHeaderField: "User-Agent")
+//                    }
                     
                     var task: URLSessionDataTask? = nil
                     task = self.sessionManager.dataTask(with: request as URLRequest, uploadProgress: { (progress) in

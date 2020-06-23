@@ -42,42 +42,32 @@ class MainViewController: UIViewController {
 
     }
     
+    var authCredential : AuthCredential? = nil
+    
     func testFramework() {
-        let authApi: Authenticator = Authenticator()
+
+        if self.authCredential != nil {
+            self.testAccessToken()
+            return
+        }
         
-        
-//        let authApi: Authenticator = {
-//            let trust: TrustChallenge = { session, challenge, completion in
-////                if let validator = TrustKitWrapper.current?.pinningValidator {
-////                    validator.handle(challenge, completionHandler: completion)
-////                } else {
-////                    assert(false, "TrustKit was not initialized properly")
-//                    completion(.performDefaultHandling, nil)
-////                }
-//            }
+        let authApi: Authenticator = {
+            let trust: TrustChallenge = { session, challenge, completion in
+                //                if let validator = TrustKitWrapper.current?.pinningValidator {
+                //                    validator.handle(challenge, completionHandler: completion)
+                //                } else {
+                //                    assert(false, "TrustKit was not initialized properly")
+                completion(.performDefaultHandling, nil)
+                //                }
+            }
 //
-////            let configuration = Authenticator.Configuration(trust: trust,
-////                                                            scheme: "https",
-////                                                            host: "api.protonmail.ch",
-////                                                            apiPath: "",
-////                                                            clientVersion: "iOS_1.12.0")
-//            return Authenticator(configuration: apiService)
-//        }()
-        
-        //let expectation1 = self.expectation(description: "Success completion block called")
-        //let authOK = AuthAPI.Router.auth(username: "ok", ephemeral: "", proof: "", session: "")
-        //api.exec(route: authOK) { (task, response: AuthResponse) in
-        //                    XCTAssertEqual(response.code, 1000)
-        //        //            XCTAssert(response.error == nil)
-        //        //            XCTAssertTrue(response != nil)
-        //        //            XCTAssertTrue(response.ModulusIDpublic == "Oq_JB_IkrOx5WlpxzlRPocN3_NhJ80V7DGav77eRtSDkOtLxW2jfI3nUpEqANGpboOyN-GuzEFXadlpxgVp7_g==")
-        //                    expectation1.fulfill()
-        //                }
-        //                self.waitForExpectations(timeout: 30) { (expectationError) -> Void in
-        //                    XCTAssertNil(expectationError)
-        //                }
-        
-        
+            let configuration = Authenticator.Configuration(trust: trust,
+                                                            scheme: "https",
+                                                            host: "api.protonmail.ch",
+                                                            apiPath: "",
+                                                            clientVersion: "iOS_1.12.0")
+            return Authenticator(api: apiService)
+        }()
         
         authApi.authenticate(username: "unittest100", password: "unittest100") { result in
             switch result {
@@ -106,7 +96,9 @@ class MainViewController: UIViewController {
                 //                return completion(nil, .ask2FA, nil, context, nil, nil)
                 print("")
             case .success(.newCredential(let credential, let passwordMode)): // success without 2FA
-//                let authCredential = AuthCredential(credential)
+                self.authCredential = credential
+                
+                
                 self.testAccessToken()
                 break
             case .success(.updatedCredential):
@@ -118,16 +110,20 @@ class MainViewController: UIViewController {
     
     func testAccessToken() {
         //
-        
-        let request = UserAPI.Router.checkUsername("unittest100")
-        
-        apiService.exec(route: request) { (task, response) in
-            
+//        let request = UserAPI.Router.checkUsername("unittest100")
+//        apiService.exec(route: request) { (task, response) in
+//            print(response.code)
+//        }
+//        let request2 = UserAPI.Router.checkUsername("sflkjaslkfjaslkdjf")
+//        apiService.exec(route: request2) { (task, response) in
+//            print(response.code)
+//        }
+//
+        let request3 = UserAPI.Router.userInfo
+        apiService.exec(route: request3) { (task, response: GetUserInfoResponse) in
+            print(response.code)
         }
-        
-        
     }
-    
     
     func testHumanVerify() {
         // setup the mock
@@ -143,7 +139,8 @@ class MainViewController: UIViewController {
 
 extension MainViewController : AuthDelegate {
     func getToken(bySessionUID uid: String) -> AuthCredential? {
-        return nil //get cached AuthCredential
+        return authCredential
+//        return nil //get cached AuthCredential
     }
     
     func onUpdate(auth: AuthCredential) {

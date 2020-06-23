@@ -32,6 +32,7 @@ PODS:
   - PMCommon/APIClient (0.1.0):
     - PMCommon/Networking
   - PMCommon/Authentication (0.1.0):
+    - PMCommon/APIClient
     - PMCommon/Services
     - PMCrypto
   - PMCommon/Default (0.1.0):
@@ -75,7 +76,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   AFNetworking: 7864c38297c79aaca1500c33288e429c3451fdce
   OHHTTPStubs: cb29d2a9d09a828ecb93349a2b0c64f99e0db89f
-  PMCommon: d1003ce1e0f0f1278476910d6438186ec56d027e
+  PMCommon: d2ef6be6bd0fab95e409a938783c1f067092525f
   PMCrypto: 70361d6a49e834bfae377b3b4524c2b305fb95c4
 
 PODFILE CHECKSUM: 1f70df18c7efc595cbc99defefd40066c6d3c1b0

@@ -23,12 +23,12 @@ public enum PasswordMode: Int, Codable {
     case one = 1, two = 2
 }
 
-public class GenericAuthenticator<SRP: SrpAuthProtocol, PROOF: SrpProofsProtocol> {
+public class GenericAuthenticator<SRP: SrpAuthProtocol, PROOF: SrpProofsProtocol>: NSObject {
     public typealias Completion = (Result<Status, Error>) -> Void
     
     public enum Status {
         case ask2FA(TwoFactorContext)
-        case newCredential(Credential, PasswordMode)
+        case newCredential(AuthCredential, PasswordMode)
         case updatedCredential(Credential)
     }
     
@@ -43,26 +43,26 @@ public class GenericAuthenticator<SRP: SrpAuthProtocol, PROOF: SrpProofsProtocol
         case notImplementedYet(String)
     }
     
-//    public struct Configuration {
-//        public init(trust: TrustChallenge?,
-//                    scheme: String,
-//                    host: String,
-//                    apiPath: String,
-//                    clientVersion: String)
-//        {
-//            self.trust = trust
-//            self.scheme = scheme
-//            self.host = host
-//            self.apiPath = apiPath
-//            self.clientVersion = clientVersion
-//        }
-//
-//        var trust: TrustChallenge?
-//        var scheme: String
-//        var host: String
-//        var apiPath: String
-//        var clientVersion: String
-//    }
+    public struct Configuration {
+        public init(trust: TrustChallenge?,
+                    scheme: String,
+                    host: String,
+                    apiPath: String,
+                    clientVersion: String)
+        {
+            self.trust = trust
+            self.scheme = scheme
+            self.host = host
+            self.apiPath = apiPath
+            self.clientVersion = clientVersion
+        }
+
+        var trust: TrustChallenge?
+        var scheme: String
+        var host: String
+        var apiPath: String
+        var clientVersion: String
+    }
     
 //    private weak var trustInterceptor: SessionDelegate? // weak because URLSession holds a strong reference to delegate
 //    private lazy var session: URLSession = {
@@ -80,30 +80,42 @@ public class GenericAuthenticator<SRP: SrpAuthProtocol, PROOF: SrpProofsProtocol
 //        self.init()
 //        self.update(apiService: api)
 //    }
+//    
+    public convenience init(api: APIService) {
+        self.init()
+//        self.update(configuration: configuration)
+        self.apiService = api
+    }
     
     // we do not want this to be ever used
-//    override private init() { }
+    override private init() { }
     
 //    deinit {
 //        self.session.finishTasksAndInvalidate()
 //    }
-    public init() {
-        
-    }
+    
     private var apiService : APIService!
     
 //    public override init() {
 //        super.init()
 //    }
 //    
-    public func update(apiService: APIService) {
-        self.apiService = apiService
-//        AuthService.trust = configuration.trust
-//        AuthService.scheme = configuration.scheme
-//        AuthService.host = configuration.host
-//        AuthService.apiPath = configuration.apiPath
-//        AuthService.clientVersion = configuration.clientVersion
-        
+//    public func update(apiService: APIService) {
+//        self.apiService = apiService
+////        AuthService.trust = configuration.trust
+////        AuthService.scheme = configuration.scheme
+////        AuthService.host = configuration.host
+////        AuthService.apiPath = configuration.apiPath
+////        AuthService.clientVersion = configuration.clientVersion
+//
+//    }
+
+    public func update(configuration: Configuration) {
+        AuthService.trust = configuration.trust
+        AuthService.scheme = configuration.scheme
+        AuthService.host = configuration.host
+        AuthService.apiPath = configuration.apiPath
+        AuthService.clientVersion = configuration.clientVersion
     }
     
     /// Clear login, when preiously unauthenticated
@@ -157,7 +169,9 @@ public class GenericAuthenticator<SRP: SrpAuthProtocol, PROOF: SrpProofsProtocol
                             let context = (Credential(res: response), PasswordMode(rawValue: response.passwordMode)!)
                             completion(.success(.ask2FA(context)))
                         } else {
-                            let credential = Credential(res: response)
+//                            let credential = Credential(res: response)
+                            
+                            let credential = AuthCredential(res: response)
                             completion(.success(.newCredential(credential, PasswordMode(rawValue: response.passwordMode)!)))
                         }
 //                        switch response.twoFactor {

@@ -86,10 +86,13 @@
     {
       "name": "Authentication",
       "dependencies": {
+        "PMCrypto": [
+
+        ],
         "PMCommon/Services": [
 
         ],
-        "PMCrypto": [
+        "PMCommon/APIClient": [
 
         ]
       },
