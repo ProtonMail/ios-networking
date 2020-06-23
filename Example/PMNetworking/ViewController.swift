@@ -22,7 +22,7 @@ class DoHMail : DoH, DoHConfig {
 
 class MainViewController: UIViewController {
     
-    let apiService = PMAPIService(doh: DoHMail.default, sessionUID: "unittest100", userID: "unittest100")
+    let apiService = PMAPIService(doh: DoHMail.default, sessionUID: "", userID: "")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -96,9 +96,7 @@ class MainViewController: UIViewController {
                 //                return completion(nil, .ask2FA, nil, context, nil, nil)
                 print("")
             case .success(.newCredential(let credential, let passwordMode)): // success without 2FA
-                self.authCredential = AuthCredential(credential)
-                
-                
+                self.authCredential = credential
                 self.testAccessToken()
                 break
             case .success(.updatedCredential):

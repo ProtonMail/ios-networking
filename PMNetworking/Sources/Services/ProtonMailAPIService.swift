@@ -301,7 +301,7 @@ public class PMAPIService : APIService {
             
             pthread_mutex_unlock(&self.mutex)
             // renew
-            completion(credential.accessToken, self.sessionUID, nil)
+            completion(credential.accessToken, self.sessionUID == "" ? credential.sessionID : self.sessionUID, nil)
         }
     }
 //

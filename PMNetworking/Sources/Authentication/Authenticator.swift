@@ -28,7 +28,7 @@ public class GenericAuthenticator<SRP: SrpAuthProtocol, PROOF: SrpProofsProtocol
     
     public enum Status {
         case ask2FA(TwoFactorContext)
-        case newCredential(Credential, PasswordMode)
+        case newCredential(AuthCredential, PasswordMode)
         case updatedCredential(Credential)
     }
     
@@ -169,9 +169,9 @@ public class GenericAuthenticator<SRP: SrpAuthProtocol, PROOF: SrpProofsProtocol
                             let context = (Credential(res: response), PasswordMode(rawValue: response.passwordMode)!)
                             completion(.success(.ask2FA(context)))
                         } else {
-                            let credential = Credential(res: response)
+//                            let credential = Credential(res: response)
                             
-//                            let credential = AuthCredential(res: response)
+                            let credential = AuthCredential(res: response)
                             completion(.success(.newCredential(credential, PasswordMode(rawValue: response.passwordMode)!)))
                         }
 //                        switch response.twoFactor {
