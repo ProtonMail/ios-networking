@@ -209,7 +209,7 @@ public class UserAPI : APIClient {
 public final class GetUserInfoResponse : Response {
     public var userInfo : UserInfo?
     
-    override func ParseResponse(_ response: [String : Any]!) -> Bool {
+    public override func ParseResponse(_ response: [String : Any]!) -> Bool {
         guard let res = response["User"] as? [String : Any] else {
             return false
         }

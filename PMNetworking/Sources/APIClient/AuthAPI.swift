@@ -138,7 +138,7 @@ final public class AuthResponse : Response, CredentialConvertible {
     var refreshToken: String = ""
     
     
-    override func ParseResponse(_ response: [String : Any]!) -> Bool {
+    public override func ParseResponse(_ response: [String : Any]!) -> Bool {
 //        self.code = 1000
         
         self.sessionID = response["UID"] as? String //session id
@@ -172,7 +172,7 @@ final public class AuthInfoResponse : Response {
     public var salt : String?
     public var srpSession : String?
     
-    override func ParseResponse(_ response: [String : Any]!) -> Bool {
+    public override func ParseResponse(_ response: [String : Any]!) -> Bool {
         self.modulus         = response["Modulus"] as? String
         self.serverEphemeral = response["ServerEphemeral"] as? String
         self.version         = response["Version"] as? Int ?? 0
@@ -212,7 +212,7 @@ final public class AuthModulusResponse : Response {
     public var Modulus : String?
     public var ModulusID : String?
     
-    override func ParseResponse(_ response: [String : Any]!) -> Bool {
+    public override func ParseResponse(_ response: [String : Any]!) -> Bool {
         self.Modulus = response["Modulus"] as? String
         self.ModulusID = response["ModulusID"] as? String
         return true

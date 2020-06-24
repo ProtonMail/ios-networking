@@ -185,7 +185,6 @@ public class GenericAuthenticator<SRP: SrpAuthProtocol, PROOF: SrpProofsProtocol
 //                        case .u2f, .otp:
 //                            throw Errors.notImplementedYet("U2F not implemented yet")
 //                        }
-                        
                     } catch let parsingError {
                         completion(.failure(parsingError))
                     }

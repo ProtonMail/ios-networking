@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class Response {
+open class Response {
     required public init() {}
     
     public var code : Int! = 1000
@@ -53,7 +53,7 @@ public class Response {
         self.error = error
     }
     
-    func ParseResponse (_ response: [String : Any]) -> Bool {
+    open func ParseResponse (_ response: [String : Any]) -> Bool {
         return true
     }
 }

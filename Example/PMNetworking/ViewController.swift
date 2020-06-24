@@ -53,14 +53,14 @@ class MainViewController: UIViewController {
         
         let authApi: Authenticator = {
             let trust: TrustChallenge = { session, challenge, completion in
-                //                if let validator = TrustKitWrapper.current?.pinningValidator {
-                //                    validator.handle(challenge, completionHandler: completion)
-                //                } else {
-                //                    assert(false, "TrustKit was not initialized properly")
+                //if let validator = TrustKitWrapper.current?.pinningValidator {
+                // validator.handle(challenge, completionHandler: completion)
+                //} else {
+                //assert(false, "TrustKit was not initialized properly")
                 completion(.performDefaultHandling, nil)
-                //                }
+                //}
             }
-//
+            
             let configuration = Authenticator.Configuration(trust: trust,
                                                             scheme: "https",
                                                             host: "api.protonmail.ch",
@@ -107,16 +107,14 @@ class MainViewController: UIViewController {
     }
     
     func testAccessToken() {
-        //
-//        let request = UserAPI.Router.checkUsername("unittest100")
-//        apiService.exec(route: request) { (task, response) in
-//            print(response.code)
-//        }
-//        let request2 = UserAPI.Router.checkUsername("sflkjaslkfjaslkdjf")
-//        apiService.exec(route: request2) { (task, response) in
-//            print(response.code)
-//        }
-//
+        //let request = UserAPI.Router.checkUsername("unittest100")
+        //apiService.exec(route: request) { (task, response) in
+        //  print(response.code)
+        //}
+        //let request2 = UserAPI.Router.checkUsername("sflkjaslkfjaslkdjf")
+        //apiService.exec(route: request2) { (task, response) in
+        //  print(response.code)
+        //}
         let request3 = UserAPI.Router.userInfo
         apiService.exec(route: request3) { (task, response: GetUserInfoResponse) in
             print(response.code)
@@ -125,20 +123,13 @@ class MainViewController: UIViewController {
     
     func testHumanVerify() {
         // setup the mock
-        
         // make a fake call to trigger the human verify
-        
-        //
     }
-    
-
 }
-
 
 extension MainViewController : AuthDelegate {
     func getToken(bySessionUID uid: String) -> AuthCredential? {
         return authCredential
-//        return nil //get cached AuthCredential
     }
     
     func onUpdate(auth: AuthCredential) {
@@ -156,8 +147,6 @@ extension MainViewController : AuthDelegate {
     func onRefresh() {
         
     }
-    
-
 }
 
 
