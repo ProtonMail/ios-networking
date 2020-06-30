@@ -22,6 +22,7 @@
 		751B8AED245AB30E006A9195 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 751B8AEB245AB30E006A9195 /* Main.storyboard */; };
 		751B8AF9245AB30F006A9195 /* PMNetworking_Mac_ExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 751B8AF8245AB30F006A9195 /* PMNetworking_Mac_ExampleTests.swift */; };
 		751B8B04245AB30F006A9195 /* PMNetworking_Mac_ExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 751B8B03245AB30F006A9195 /* PMNetworking_Mac_ExampleUITests.swift */; };
+		752CC08A24AB554800537C44 /* TrustKitConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752CC08924AB554800537C44 /* TrustKitConfiguration.swift */; };
 		9947DFE42B957B0253B53876 /* Pods_PMNetworking_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20E5036CD6416E37BA34CD3C /* Pods_PMNetworking_Example.framework */; };
 		A4CD296897B800C92E1DE33F /* Pods_PMNetworking_Mac_ExampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EEC5A8E1D462CE3DA9C8407 /* Pods_PMNetworking_Mac_ExampleTests.framework */; };
 /* End PBXBuildFile section */
@@ -99,6 +100,7 @@
 		751B8AFF245AB30F006A9195 /* PMNetworking_Mac_ExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PMNetworking_Mac_ExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		751B8B03245AB30F006A9195 /* PMNetworking_Mac_ExampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PMNetworking_Mac_ExampleUITests.swift; sourceTree = "<group>"; };
 		751B8B05245AB30F006A9195 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		752CC08924AB554800537C44 /* TrustKitConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrustKitConfiguration.swift; sourceTree = "<group>"; };
 		75E196E12493273900A31655 /* PMCommon.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = PMCommon.podspec; path = ../PMCommon.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9CDB3D914026AC9F67D1C5BD /* Pods-PMNetworking_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PMNetworking_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PMNetworking_Tests/Pods-PMNetworking_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		B987F72DF665314742E0A6B8 /* Pods-PMNetworking_Mac_ExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PMNetworking_Mac_ExampleTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PMNetworking_Mac_ExampleTests/Pods-PMNetworking_Mac_ExampleTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -200,6 +202,7 @@
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
+				752CC08924AB554800537C44 /* TrustKitConfiguration.swift */,
 			);
 			name = "Example for PMNetworking";
 			path = PMNetworking;
@@ -516,11 +519,13 @@
 				"${BUILT_PRODUCTS_DIR}/cocoapods-artifacts-${CONFIGURATION}.txt",
 				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
 				"${BUILT_PRODUCTS_DIR}/PMCommon/PMCommon.framework",
+				"${BUILT_PRODUCTS_DIR}/TrustKit/TrustKit.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PMCommon.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TrustKit.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -663,6 +668,7 @@
 			files = (
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+				752CC08A24AB554800537C44 /* TrustKitConfiguration.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

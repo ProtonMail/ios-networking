@@ -55,7 +55,7 @@ final public class AuthCredential: NSObject, NSCoding {
 //    static var none: AuthCredential = AuthCredential.init(res: AuthResponse() )
     
     // user session id, this change in every login
-    var sessionID: String
+    public var sessionID: String
     // plain text accessToken
     private(set) var accessToken: String
     // refresh token use to renew access token

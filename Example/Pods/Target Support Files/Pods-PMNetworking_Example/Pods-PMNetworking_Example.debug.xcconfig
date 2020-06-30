@@ -1,9 +1,9 @@
 ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES
-FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/AFNetworking" "${PODS_CONFIGURATION_BUILD_DIR}/PMCommon" "${PODS_ROOT}/PMCrypto" "${PODS_ROOT}/PMCrypto/Crypto.xcframework/ios-armv7_arm64" "${PODS_ROOT}/PMCrypto/Crypto.xcframework/ios-i386_x86_64-simulator" "${PODS_ROOT}/PMCrypto/Crypto.xcframework/ios-x86_64-maccatalyst"
+FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/AFNetworking" "${PODS_CONFIGURATION_BUILD_DIR}/PMCommon" "${PODS_CONFIGURATION_BUILD_DIR}/TrustKit" "${PODS_ROOT}/PMCrypto" "${PODS_ROOT}/PMCrypto/Crypto.xcframework/ios-armv7_arm64" "${PODS_ROOT}/PMCrypto/Crypto.xcframework/ios-i386_x86_64-simulator" "${PODS_ROOT}/PMCrypto/Crypto.xcframework/ios-x86_64-maccatalyst"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/AFNetworking/AFNetworking.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/PMCommon/PMCommon.framework/Headers"
+HEADER_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/AFNetworking/AFNetworking.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/PMCommon/PMCommon.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/TrustKit/TrustKit.framework/Headers"
 LD_RUNPATH_SEARCH_PATHS = $(inherited) '@executable_path/Frameworks' '@loader_path/Frameworks'
-OTHER_LDFLAGS = $(inherited) -framework "AFNetworking" -framework "Crypto" -framework "PMCommon"
+OTHER_LDFLAGS = $(inherited) -framework "AFNetworking" -framework "Crypto" -framework "Foundation" -framework "PMCommon" -framework "Security" -framework "TrustKit"
 OTHER_SWIFT_FLAGS = $(inherited) -D COCOAPODS
 PODS_BUILD_DIR = ${BUILD_DIR}
 PODS_CONFIGURATION_BUILD_DIR = ${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)

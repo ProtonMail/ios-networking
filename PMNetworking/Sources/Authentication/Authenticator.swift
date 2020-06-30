@@ -1,19 +1,36 @@
 //
-//  SignInManager.swift
+//  Authenticator.swift
 //  PMAuthentication
 //
-//  Created by Anatoly Rosencrantz on 19/02/2020.
-//  Copyright © 2020 ProtonMail. All rights reserved.
+//  Created on 19/02/2020.
 //
+//
+//  Copyright (c) 2019 Proton Technologies AG
+//
+//  This file is part of ProtonMail.
+//
+//  ProtonMail is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  ProtonMail is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with ProtonMail.  If not, see <https://www.gnu.org/licenses/>.
+
 
 import Foundation
 
-public protocol SrpAuthProtocol: class {
+public protocol SrpAuthProtocol: AnyObject {
     init?(_ version: Int, username: String?, password: String?, salt: String?, signedModulus: String?, serverEphemeral: String?)
     func generateProofs(of length: Int) throws -> AnyObject
 }
 
-public protocol SrpProofsProtocol: class {
+public protocol SrpProofsProtocol: AnyObject {
     var clientProof: Data? { get }
     var clientEphemeral: Data? { get }
     var expectedServerProof: Data? { get }
@@ -23,7 +40,7 @@ public enum PasswordMode: Int, Codable {
     case one = 1, two = 2
 }
 
-public class GenericAuthenticator<SRP: SrpAuthProtocol, PROOF: SrpProofsProtocol>: NSObject {
+public class GenericAuthenticator<SRP: SrpAuthProtocol, PROOF: SrpProofsProtocol> : NSObject {
     public typealias Completion = (Result<Status, Error>) -> Void
     
     public enum Status {
@@ -44,26 +61,22 @@ public class GenericAuthenticator<SRP: SrpAuthProtocol, PROOF: SrpProofsProtocol
     }
     
     public struct Configuration {
-        public init(trust: TrustChallenge?,
-                    scheme: String,
+        public init(scheme: String,
                     host: String,
                     apiPath: String,
                     clientVersion: String)
         {
-            self.trust = trust
             self.scheme = scheme
             self.host = host
             self.apiPath = apiPath
             self.clientVersion = clientVersion
         }
-
-        var trust: TrustChallenge?
         var scheme: String
         var host: String
         var apiPath: String
         var clientVersion: String
     }
-    
+//
 //    private weak var trustInterceptor: SessionDelegate? // weak because URLSession holds a strong reference to delegate
 //    private lazy var session: URLSession = {
 //        let config = URLSessionConfiguration.default
@@ -72,29 +85,30 @@ public class GenericAuthenticator<SRP: SrpAuthProtocol, PROOF: SrpProofsProtocol
 //        self.trustInterceptor = delegate
 //        return session
 //    }()
-    
-    
-    
-    
 //    public convenience init(api: APIService) {
 //        self.init()
 //        self.update(apiService: api)
 //    }
-//    
-    public convenience init(api: APIService) {
-        self.init()
-//        self.update(configuration: configuration)
+    
+    public init(api: APIService) {
         self.apiService = api
+        super.init()
     }
+//    
+//    public required init(api: APIService) {
+//        self.init()
+////        self.update(configuration: configuration)
+//        self.apiService = api
+//    }
     
     // we do not want this to be ever used
-    override private init() { }
+    override public init() { }
     
 //    deinit {
 //        self.session.finishTasksAndInvalidate()
 //    }
     
-    private var apiService : APIService!
+    public var apiService : APIService!
     
 //    public override init() {
 //        super.init()
@@ -110,14 +124,14 @@ public class GenericAuthenticator<SRP: SrpAuthProtocol, PROOF: SrpProofsProtocol
 //
 //    }
 
-    public func update(configuration: Configuration) {
-        AuthService.trust = configuration.trust
-        AuthService.scheme = configuration.scheme
-        AuthService.host = configuration.host
-        AuthService.apiPath = configuration.apiPath
-        AuthService.clientVersion = configuration.clientVersion
-    }
-    
+//    public func update(configuration: Configuration) {
+//        AuthService.trust = configuration.trust
+//        AuthService.scheme = configuration.scheme
+//        AuthService.host = configuration.host
+//        AuthService.apiPath = configuration.apiPath
+//        AuthService.clientVersion = configuration.clientVersion
+//    }
+//    
     /// Clear login, when preiously unauthenticated
     public func authenticate(username: String,
                              password: String,
@@ -167,11 +181,11 @@ public class GenericAuthenticator<SRP: SrpAuthProtocol, PROOF: SrpProofsProtocol
                         // are we done yet or need 2FA?
                         if response.twoFactor == 1 {
                             let context = (Credential(res: response), PasswordMode(rawValue: response.passwordMode)!)
+                            //self.apiService.setSessionUID(uid: credential.sessionID)
                             completion(.success(.ask2FA(context)))
                         } else {
-//                            let credential = Credential(res: response)
-                            
                             let credential = AuthCredential(res: response)
+                            self.apiService.setSessionUID(uid: credential.sessionID)
                             completion(.success(.newCredential(credential, PasswordMode(rawValue: response.passwordMode)!)))
                         }
 //                        switch response.twoFactor {

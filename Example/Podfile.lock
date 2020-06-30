@@ -50,16 +50,19 @@ PODS:
   - PMCommon/Tests (0.1.0):
     - OHHTTPStubs/Swift
   - PMCrypto (1.1.0)
+  - TrustKit (1.6.2)
 
 DEPENDENCIES:
   - PMCommon (from `../`)
   - PMCommon/Tests (from `../`)
   - PMCrypto (from `https://gitlab.protontech.ch/apple/shared/pmcrypto.git`, tag `1.1.0`)
+  - TrustKit (= 1.6.2)
 
 SPEC REPOS:
   trunk:
     - AFNetworking
     - OHHTTPStubs
+    - TrustKit
 
 EXTERNAL SOURCES:
   PMCommon:
@@ -78,7 +81,8 @@ SPEC CHECKSUMS:
   OHHTTPStubs: cb29d2a9d09a828ecb93349a2b0c64f99e0db89f
   PMCommon: d2ef6be6bd0fab95e409a938783c1f067092525f
   PMCrypto: 70361d6a49e834bfae377b3b4524c2b305fb95c4
+  TrustKit: 0a64b37d31518f16e344ceaf27e129dde624ce75
 
-PODFILE CHECKSUM: 1f70df18c7efc595cbc99defefd40066c6d3c1b0
+PODFILE CHECKSUM: 72a1a134718c119d522bcd559e401eb752674cc7
 
 COCOAPODS: 1.9.3
