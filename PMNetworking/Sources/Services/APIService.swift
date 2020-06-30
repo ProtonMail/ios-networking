@@ -312,11 +312,15 @@ public extension APIService {
                 //                return dictionary
                 ///TODO parse error first
                 
-                let decoder = JSONDecoder()
                 do {
-                    let data = try JSONSerialization.data(withJSONObject: res!, options: .prettyPrinted)
-                    let resObj = try decoder.decode(T.self, from: data)
-                    complete(task, .success(resObj))
+                    if let res = res {
+                        let data = try JSONSerialization.data(withJSONObject: res, options: .prettyPrinted)
+                        let decodedResponse = try JSONDecoder().decode(T.self, from: data)
+                        complete(task, .success(decodedResponse))
+                    } else {
+
+                    }
+
                 } catch let err {
                     complete(task, .failure(err))
                 }
