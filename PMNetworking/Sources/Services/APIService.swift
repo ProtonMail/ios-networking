@@ -43,7 +43,7 @@ extension Bundle {
     }
     
     /// Returns the major version of the app.
-    var majorVersion: String {
+    public var majorVersion: String {
         return infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
     }
 }
@@ -151,7 +151,7 @@ public protocol APIServiceDelegate: class {
     //func relogin()
     //func humanverify()
     
-    
+    var appVersion : String { get }
     
     func onDohTroubleshot()
     

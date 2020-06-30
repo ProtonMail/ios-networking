@@ -166,6 +166,10 @@ extension MainViewController : AuthDelegate {
 
 
 extension MainViewController : APIServiceDelegate {
+    var appVersion: String {
+        return "iOS_\(Bundle.main.majorVersion)"
+    }
+    
     func onChallenge(challenge: URLAuthenticationChallenge,
                      credential: AutoreleasingUnsafeMutablePointer<URLCredential?>?) -> URLSession.AuthChallengeDisposition {
         

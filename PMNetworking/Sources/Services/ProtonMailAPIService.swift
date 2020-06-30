@@ -642,7 +642,7 @@ public class PMAPIService : APIService {
                     }
                     
                     // move to delegte
-                    let appversion = "iOS_\(Bundle.main.majorVersion)"
+                    let appversion = self.serviceDelegate?.appVersion ?? "iOS_\(Bundle.main.majorVersion)"
                     request.setValue("application/vnd.protonmail.v1+json", forHTTPHeaderField: "Accept")
                     request.setValue(appversion, forHTTPHeaderField: "x-pm-appversion")
                     
