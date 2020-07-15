@@ -51,6 +51,7 @@ public enum DoHStatus {
 public protocol DoHConfig {
     var apiHost : String { get }
     var defaultHost : String { get }
+    var defaultPath : String { get }
 }
 
 protocol DoHInterface {
@@ -77,7 +78,7 @@ open class DoH : DoHInterface {
                 let newurl = URL(string: config.defaultHost)!
                 let host = newurl.host
                 let hostUrl = newurl.absoluteString.replacingOccurrences(of: host!, with: found.dns.url)
-                return hostUrl
+                return hostUrl + config.defaultPath
             }
             
             //doing google for now. will add others
@@ -87,12 +88,12 @@ open class DoH : DoHInterface {
                 let newurl = URL(string: config.defaultHost)!
                 let host = newurl.host
                 let hostUrl = newurl.absoluteString.replacingOccurrences(of: host!, with: url)
-                return hostUrl
+                return hostUrl + config.defaultPath
             }
         case .off:
             break
         }
-        return config.defaultHost
+        return config.defaultHost + config.defaultPath
     }
     
     public init() throws {
