@@ -73,10 +73,10 @@ class MainViewController: UIViewController {
         }
         
         let authApi: Authenticator = {
-            let configuration = Authenticator.Configuration(scheme: "https",
-                                                            host: "api.protonmail.ch",
-                                                            apiPath: "",
-                                                            clientVersion: "iOS_1.12.0")
+            _ = Authenticator.Configuration(scheme: "https",
+                                            host: "api.protonmail.ch",
+                                            apiPath: "",
+                                            clientVersion: "iOS_1.12.0")
             return Authenticator(api: apiService)
         }()
         
@@ -199,6 +199,7 @@ extension MainViewController : APIServiceDelegate {
     }
     
     func onHumanVerify() {
+        // this part of code will be in the framework
         let bundle = Bundle(for: HumanCheckMenuViewController.self)
         let storyboard = UIStoryboard.init(name: "HumanVerify", bundle: bundle)
         guard let customViewController = storyboard.instantiateViewController(withIdentifier: "HumanCheckMenuViewController") as? HumanCheckMenuViewController else {

@@ -73,9 +73,9 @@ class RecaptchaViewController: UIViewController, UIWebViewDelegate {
 //        MBProgressHUD.showAdded(to: webView, animated: true)
         //let recptcha = NSURL(string: "https://secure.protonmail.com/mobile.html")!
         
-//        let recptcha = URL(string: "https://secure.protonmail.com/captcha/captcha.html?token=signup&client=ios&host=\(Server.live.hostUrl)")!
-//        let requestObj = URLRequest(url: recptcha)
-//        webView.loadRequest(requestObj)
+        let recptcha = URL(string: "https://secure.protonmail.com/captcha/captcha.html?token=signup&client=ios&host=\(Server.live.hostUrl)")!
+        let requestObj = URLRequest(url: recptcha)
+        webView.loadRequest(requestObj)
     }
 
     override var preferredStatusBarStyle : UIStatusBarStyle {
@@ -84,7 +84,7 @@ class RecaptchaViewController: UIViewController, UIWebViewDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: true)
+//        navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -131,6 +131,7 @@ class RecaptchaViewController: UIViewController, UIWebViewDelegate {
     }
     
     @IBAction func createAccountAction(_ sender: UIButton) {
+         let _ = self.navigationController?.popViewController(animated: true)
 //        if viewModel.isTokenOk() {
 //            self.finishChecking(true)
 //            if doneClicked {
@@ -174,47 +175,47 @@ class RecaptchaViewController: UIViewController, UIWebViewDelegate {
     
     func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebView.NavigationType) -> Bool {
 //        PMLog.D("\(request)")
-//        let urlString = request.url?.absoluteString;
-//
-//        if urlString?.contains("https://www.google.com/recaptcha/api2/frame") == true {
-//            startVerify = true;
-//        }
-//
-//        if urlString?.contains(".com/fc/api/nojs") == true {
-//            startVerify = true;
-//        }
-//        if urlString?.contains("fc/apps/canvas") == true {
-//            startVerify = true;
-//        }
-//
-//        if urlString?.contains("about:blank") == true {
-//            startVerify = true;
-//        }
-//
-//        if urlString?.contains("https://www.google.com/intl/en/policies/privacy") == true {
-//            return false
-//        }
-//
-//        if urlString?.contains("how-to-solve-") == true {
-//            return false
-//        }
-//        if urlString?.contains("https://www.google.com/intl/en/policies/terms") == true {
-//            return false
-//        }
-//
-//        if let _ = urlString?.range(of: "https://secure.protonmail.com/expired_recaptcha_response://") {
+        let urlString = request.url?.absoluteString;
+
+        if urlString?.contains("https://www.google.com/recaptcha/api2/frame") == true {
+            startVerify = true;
+        }
+
+        if urlString?.contains(".com/fc/api/nojs") == true {
+            startVerify = true;
+        }
+        if urlString?.contains("fc/apps/canvas") == true {
+            startVerify = true;
+        }
+
+        if urlString?.contains("about:blank") == true {
+            startVerify = true;
+        }
+
+        if urlString?.contains("https://www.google.com/intl/en/policies/privacy") == true {
+            return false
+        }
+
+        if urlString?.contains("how-to-solve-") == true {
+            return false
+        }
+        if urlString?.contains("https://www.google.com/intl/en/policies/terms") == true {
+            return false
+        }
+
+        if let _ = urlString?.range(of: "https://secure.protonmail.com/expired_recaptcha_response://") {
 //            viewModel.setRecaptchaToken("", isExpired: true)
-//            resetWebviewHeight()
-//            webView.reload()
-//            return false
-//        }
-//        else if let _ = urlString?.range(of: "https://secure.protonmail.com/captcha/recaptcha_response://") {
-//            if let token = urlString?.replacingOccurrences(of: "https://secure.protonmail.com/captcha/recaptcha_response://", with: "", options: NSString.CompareOptions.widthInsensitive, range: nil) {
+            resetWebviewHeight()
+            webView.reload()
+            return false
+        }
+        else if let _ = urlString?.range(of: "https://secure.protonmail.com/captcha/recaptcha_response://") {
+            if let token = urlString?.replacingOccurrences(of: "https://secure.protonmail.com/captcha/recaptcha_response://", with: "", options: NSString.CompareOptions.widthInsensitive, range: nil) {
 //                viewModel.setRecaptchaToken(token, isExpired: false)
-//            }
-//            resetWebviewHeight()
-//            return false
-//        }
+            }
+            resetWebviewHeight()
+            return false
+        }
         return true
     }
     

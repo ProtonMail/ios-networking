@@ -107,7 +107,7 @@
       },
       "source_files": "PMNetworking/Sources/HumanVerify/**/*",
       "resources": [
-        "PMNetworking/Assets/HumanVerify.storyboard"
+        "PMNetworking/Assets/HumanVerify/**/*"
       ]
     }
   ],

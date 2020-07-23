@@ -19,18 +19,26 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yi2-BB-2UJ">
-                                <rect key="frame" x="164" y="211" width="46" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yi2-BB-2UJ">
+                                <rect key="frame" x="75.5" y="144" width="224" height="30"/>
+                                <color key="backgroundColor" systemColor="systemGray5Color" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Test Auth &amp; Trigger HumanVerify"/>
                                 <connections>
                                     <action selector="testButton:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Seq-DW-JSG"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="Yi2-BB-2UJ" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="100" id="1UY-ZJ-UfI"/>
+                            <constraint firstItem="Yi2-BB-2UJ" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="SIe-Ki-3rL"/>
+                            <constraint firstItem="Yi2-BB-2UJ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="26" id="Snb-yy-RfX"/>
+                            <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="Yi2-BB-2UJ" secondAttribute="trailing" constant="26" id="ee3-Tb-mO4"/>
+                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="Opy-fk-95s"/>
+                    <navigationItem key="navigationItem" id="Opy-fk-95s">
+                        <barButtonItem key="backBarButtonItem" title=" " id="Ndn-50-11I"/>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>

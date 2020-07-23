@@ -27,11 +27,11 @@ import UIKit
 class PhoneVerifyViewController: UIViewController, SignupViewModelDelegate {
     
     @IBOutlet weak var emailTextField: TextInsetTextField!
-    @IBOutlet weak var verifyCodeTextField: TextInsetTextField!
+   // @IBOutlet weak var verifyCodeTextField: TextInsetTextField!
     
-    @IBOutlet weak var warningView: UIView!
-    @IBOutlet weak var warningLabel: UILabel!
-    @IBOutlet weak var warningIcon: UIImageView!
+//    @IBOutlet weak var warningView: UIView!
+//    @IBOutlet weak var warningLabel: UILabel!
+//    @IBOutlet weak var warningIcon: UIImageView!
     
     @IBOutlet weak var titleTwoLabel: UILabel!
     
@@ -44,19 +44,21 @@ class PhoneVerifyViewController: UIViewController, SignupViewModelDelegate {
     fileprivate let hidePriority : UILayoutPriority = UILayoutPriority(rawValue: 1.0);
     fileprivate let showPriority: UILayoutPriority = UILayoutPriority(rawValue: 750.0);
     
-    @IBOutlet weak var logoTopPaddingConstraint: NSLayoutConstraint!
-    @IBOutlet weak var logoLeftPaddingConstraint: NSLayoutConstraint!
-    @IBOutlet weak var titleTopPaddingConstraint: NSLayoutConstraint!
-    @IBOutlet weak var titleLeftPaddingConstraint: NSLayoutConstraint!
-    @IBOutlet weak var userNameTopPaddingConstraint: NSLayoutConstraint!
+//    @IBOutlet weak var logoTopPaddingConstraint: NSLayoutConstraint!
+//    @IBOutlet weak var logoLeftPaddingConstraint: NSLayoutConstraint!
+//    @IBOutlet weak var titleTopPaddingConstraint: NSLayoutConstraint!
+//    @IBOutlet weak var titleLeftPaddingConstraint: NSLayoutConstraint!
+//    @IBOutlet weak var userNameTopPaddingConstraint: NSLayoutConstraint!
     @IBOutlet weak var scrollBottomPaddingConstraint: NSLayoutConstraint!
     
-    @IBOutlet weak var topLeftButton: UIButton!
+//    @IBOutlet weak var topLeftButton: UIButton!
     @IBOutlet weak var topTitleLabel: UILabel!
-    @IBOutlet weak var phoneFieldNoteLabel: UILabel!
+//    @IBOutlet weak var phoneFieldNoteLabel: UILabel!
     
     fileprivate let kSegueToNotificationEmail = "sign_up_pwd_email_segue"
     fileprivate let kSegueToCountryPicker = "phone_verify_to_country_picker_segue"
+    
+    private let kSegueToVerifyCode = "phone_verify_to_verify_code_segue"
     
     fileprivate var startVerify : Bool = false
     fileprivate var checkUserStatus : Bool = false
@@ -72,12 +74,12 @@ class PhoneVerifyViewController: UIViewController, SignupViewModelDelegate {
     func configConstraint(_ show : Bool) -> Void {
         let level = show ? showPriority : hidePriority
         
-        logoTopPaddingConstraint.priority = level
-        logoLeftPaddingConstraint.priority = level
-        titleTopPaddingConstraint.priority = level
-        titleLeftPaddingConstraint.priority = level
-        
-        userNameTopPaddingConstraint.priority = level
+//        logoTopPaddingConstraint.priority = level
+//        logoLeftPaddingConstraint.priority = level
+//        titleTopPaddingConstraint.priority = level
+//        titleLeftPaddingConstraint.priority = level
+//        
+//        userNameTopPaddingConstraint.priority = level
         
         titleTwoLabel.isHidden = show
     }
@@ -97,6 +99,9 @@ class PhoneVerifyViewController: UIViewController, SignupViewModelDelegate {
         
         self.updateCountryCode(1)
         self.updateButtonStatus()
+        
+        title = "Human verification"
+        
     }
     
     func updateCountryCode(_ code : Int) {
@@ -114,11 +119,11 @@ class PhoneVerifyViewController: UIViewController, SignupViewModelDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: true)
-//        NotificationCenter.default.addKeyboardObserver(self)
-        self.viewModel.setDelegate(self)
-        //register timer
-        self.startAutoFetch()
+//        navigationController?.setNavigationBarHidden(true, animated: true)
+        NotificationCenter.default.addKeyboardObserver(self)
+//        self.viewModel.setDelegate(self)
+//        //register timer
+//        self.startAutoFetch()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -127,10 +132,10 @@ class PhoneVerifyViewController: UIViewController, SignupViewModelDelegate {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-//        NotificationCenter.default.removeKeyboardObserver(self)
-        self.viewModel.setDelegate(nil)
-        //unregister timer
-        self.stopAutoFetch()
+        NotificationCenter.default.removeKeyboardObserver(self)
+//        self.viewModel.setDelegate(nil)
+//        //unregister timer
+//        self.stopAutoFetch()
     }
     
     override func didReceiveMemoryWarning() {
@@ -138,7 +143,7 @@ class PhoneVerifyViewController: UIViewController, SignupViewModelDelegate {
     }
     
     func verificationCodeChanged(_ viewModel: SignupViewModel, code: String!) {
-        verifyCodeTextField.text = code
+//        verifyCodeTextField.text = code
     }
     
     fileprivate func startAutoFetch()
@@ -188,8 +193,12 @@ class PhoneVerifyViewController: UIViewController, SignupViewModelDelegate {
         stopLoading = true
         let _ = self.navigationController?.popViewController(animated: true)
     }
+    @IBAction func haveCodeAction(_ sender: Any) {
+        self.performSegue(withIdentifier: self.kSegueToVerifyCode, sender: self)
+    }
     
     @IBAction func sendCodeAction(_ sender: UIButton) {
+         self.performSegue(withIdentifier: self.kSegueToVerifyCode, sender: self)
 //        let phonenumber = emailTextField.text ?? ""
 //        let buildPhonenumber = "\(countryCode)\(phonenumber)"
 //        MBProgressHUD.showAdded(to: view, animated: true)
@@ -260,7 +269,7 @@ class PhoneVerifyViewController: UIViewController, SignupViewModelDelegate {
     }
     func dismissKeyboard() {
         emailTextField.resignFirstResponder()
-        verifyCodeTextField.resignFirstResponder()
+//        verifyCodeTextField.resignFirstResponder()
     }
     
     @IBAction func editEnd(_ sender: UITextField) {
@@ -318,25 +327,25 @@ extension PhoneVerifyViewController : UITextFieldDelegate {
 }
 //
 //// MARK: - NSNotificationCenterKeyboardObserverProtocol
-//extension PhoneVerifyViewController : NSNotificationCenterKeyboardObserverProtocol {
-//    func keyboardWillHideNotification(_ notification: Notification) {
-//        let keyboardInfo = notification.keyboardInfo
-//        scrollBottomPaddingConstraint.constant = 0.0
-//        self.configConstraint(false)
-//        UIView.animate(withDuration: keyboardInfo.duration, delay: 0, options: keyboardInfo.animationOption, animations: { () -> Void in
-//            self.view.layoutIfNeeded()
-//            }, completion: nil)
-//    }
-//
-//    func keyboardWillShowNotification(_ notification: Notification) {
-//        let keyboardInfo = notification.keyboardInfo
-//        let info: NSDictionary = notification.userInfo! as NSDictionary
-//        if let keyboardSize = (info[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-//            scrollBottomPaddingConstraint.constant = keyboardSize.height;
-//        }
-//        self.configConstraint(true)
-//        UIView.animate(withDuration: keyboardInfo.duration, delay: 0, options: keyboardInfo.animationOption, animations: { () -> Void in
-//            self.view.layoutIfNeeded()
-//            }, completion: nil)
-//    }
-//}
+extension PhoneVerifyViewController : NSNotificationCenterKeyboardObserverProtocol {
+    func keyboardWillHideNotification(_ notification: Notification) {
+        let keyboardInfo = notification.keyboardInfo
+        scrollBottomPaddingConstraint.constant = 0.0
+        self.configConstraint(false)
+        UIView.animate(withDuration: keyboardInfo.duration, delay: 0, options: keyboardInfo.animationOption, animations: { () -> Void in
+            self.view.layoutIfNeeded()
+            }, completion: nil)
+    }
+
+    func keyboardWillShowNotification(_ notification: Notification) {
+        let keyboardInfo = notification.keyboardInfo
+        let info: NSDictionary = notification.userInfo! as NSDictionary
+        if let keyboardSize = (info[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            scrollBottomPaddingConstraint.constant = keyboardSize.height;
+        }
+        self.configConstraint(true)
+        UIView.animate(withDuration: keyboardInfo.duration, delay: 0, options: keyboardInfo.animationOption, animations: { () -> Void in
+            self.view.layoutIfNeeded()
+            }, completion: nil)
+    }
+}

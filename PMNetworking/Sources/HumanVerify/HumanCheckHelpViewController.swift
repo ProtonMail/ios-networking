@@ -25,13 +25,11 @@ import UIKit
 
 //TODO:: add coordinator and add to all sub VCs
 
-final public class HumanCheckMenuViewController: UIViewController {
+final public class HumanCheckHelpViewController: UIViewController {
     
     fileprivate let kSegueToRecaptcha = "check_menu_to_recaptcha_verify_segue"
     fileprivate let kSegueToEmailVerify = "check_menu_to_email_verify_segue"
     fileprivate let kSegueToPhoneVerify = "check_menu_to_phone_verify_segue"
-    
-    let kSegueToHelp = "check_menu_to_help_segue"
     
     @IBOutlet weak var recaptchaViewConstraint: NSLayoutConstraint!
     @IBOutlet weak var emailViewConstraint: NSLayoutConstraint!
@@ -48,20 +46,12 @@ final public class HumanCheckMenuViewController: UIViewController {
     
     fileprivate let kButtonHeight : CGFloat = 60.0
     
-    
     @IBOutlet weak var segmentControl: UISegmentedControl!
     @IBOutlet weak var containerView: UIView!
-    enum SegmentSection {
-        case captcha
-        case email
-        case sms
-        
-    }
-    
+
     //var viewModel : SignupViewModel!
     
-    let sections : [SegmentSection] = [.captcha, .email, .sms]
-    
+    @IBOutlet weak var tableView: UITableView!
     public override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -74,105 +64,10 @@ final public class HumanCheckMenuViewController: UIViewController {
 //        emailCheckButton.setTitle(LocalString._email_verification, for: .normal)
 //        phoneCheckButton.setTitle(LocalString._phone_verification, for: .normal)
         
-        
-        title = "Human verification"
-        
-        segmentControl.removeAllSegments()
-        segmentControl.insertSegment(withTitle: "Captcha", at: 0, animated: false)
-        segmentControl.insertSegment(withTitle: "Email", at: 1, animated: false)
-        segmentControl.insertSegment(withTitle: "SMS", at: 2, animated: false)
-        segmentControl.addTarget(self, action: #selector(selectionDidChange(_:)), for: .valueChanged)
-
-        // Select First Segment
-        segmentControl.selectedSegmentIndex = 0
-        
+        title = "Help"
         self.setupSignUpFunctions()
-        
-        self.updateView()
     }
-    
-    @IBAction func helpAction(_ sender: Any) {
-        self.performSegue(withIdentifier: self.kSegueToHelp, sender: self)
-    }
-    
-    private lazy var capcha: RecaptchaViewController = {
-        // Load Storyboard
-        let bundle = Bundle(for: HumanCheckMenuViewController.self)
-        let storyboard = UIStoryboard.init(name: "HumanVerify", bundle: bundle)
-        let customViewController = storyboard.instantiateViewController(withIdentifier: "RecaptchaViewController") as! RecaptchaViewController
 
-
-        // Add View Controller as Child View Controller
-        self.add(asChildViewController: customViewController)
-
-        return customViewController
-    }()
-
-    private lazy var email: EmailVerifyViewController = {
-        // Load Storyboard
-        let bundle = Bundle(for: HumanCheckMenuViewController.self)
-        let storyboard = UIStoryboard.init(name: "HumanVerify", bundle: bundle)
-        let customViewController = storyboard.instantiateViewController(withIdentifier: "EmailVerifyViewController") as! EmailVerifyViewController
-
-
-        // Add View Controller as Child View Controller
-        self.add(asChildViewController: customViewController)
-
-        return customViewController
-    }()
-    
-    private lazy var sms: PhoneVerifyViewController = {
-        // Load Storyboard
-        let bundle = Bundle(for: HumanCheckMenuViewController.self)
-        let storyboard = UIStoryboard.init(name: "HumanVerify", bundle: bundle)
-        let customViewController = storyboard.instantiateViewController(withIdentifier: "PhoneVerifyViewController") as! PhoneVerifyViewController
-
-
-        // Add View Controller as Child View Controller
-        self.add(asChildViewController: customViewController)
-
-        return customViewController
-    }()
-    
-    @objc func selectionDidChange(_ sender: UISegmentedControl) {
-        updateView()
-    }
-    
-    private func updateView() {
-        if segmentControl.selectedSegmentIndex == 0 {
-            remove(asChildViewController: sms)
-            add(asChildViewController: capcha)
-        } else if segmentControl.selectedSegmentIndex == 1  {
-            remove(asChildViewController: capcha)
-            add(asChildViewController: email)
-        } else if segmentControl.selectedSegmentIndex == 2 {
-            remove(asChildViewController: email)
-            add(asChildViewController: sms)
-        }
-    }
-    
-    private func remove(asChildViewController viewController: UIViewController) {
-        // Notify Child View Controller
-        viewController.willMove(toParent: nil)
-        // Remove Child View From Superview
-        viewController.view.removeFromSuperview()
-        // Notify Child View Controller
-        viewController.removeFromParent()
-    }
-    
-    private func add(asChildViewController viewController: UIViewController) {
-        // Add Child View Controller
-        addChild(viewController)
-        // Add Child View as Subview
-        self.containerView .addSubview(viewController.view)
-        // Configure Child View
-        viewController.view.frame = self.containerView.bounds
-        viewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-
-        // Notify Child View Controller
-        viewController.didMove(toParent: self)
-    }
-    
     internal func setupSignUpFunctions () {
 //        let directs = viewModel.getDirect()
 //        if directs.count <= 0 {
@@ -272,4 +167,46 @@ final public class HumanCheckMenuViewController: UIViewController {
         self.performSegue(withIdentifier: kSegueToPhoneVerify, sender: self)
     }
 
+}
+
+
+
+// MARK: - UITableViewDataSource
+extension HumanCheckHelpViewController: UITableViewDataSource {
+    public override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.tableView.zeroMargin()
+    }
+    
+    public func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "help_cell", for: indexPath) as! HelpTableViewCell
+        if indexPath.row == 0 {
+            cell.ConfigCell(top: "Manual Verification", details: "If the three option for human verifications are not working for you, you can contact us to for a manual verification.")
+        } else  {
+            cell.ConfigCell(top: "Help Page on our website", details: "If you need more information on the human verification. Why this is needed etc.")
+        }
+        return cell
+    }
+
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 2
+    }
+    
+    public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.zeroMargin()
+    }
+}
+
+// MARK: - UITableViewDelegate
+
+extension HumanCheckHelpViewController: UITableViewDelegate {
+
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+    }
+    
 }
