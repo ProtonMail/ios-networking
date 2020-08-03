@@ -27,11 +27,10 @@ import UIKit
 
 final public class HumanCheckMenuViewController: UIViewController {
     
-    fileprivate let kSegueToRecaptcha = "check_menu_to_recaptcha_verify_segue"
-    fileprivate let kSegueToEmailVerify = "check_menu_to_email_verify_segue"
-    fileprivate let kSegueToPhoneVerify = "check_menu_to_phone_verify_segue"
-    
-    let kSegueToHelp = "check_menu_to_help_segue"
+    private let kSegueToRecaptcha = "check_menu_to_recaptcha_verify_segue"
+    private let kSegueToEmailVerify = "check_menu_to_email_verify_segue"
+    private let kSegueToPhoneVerify = "check_menu_to_phone_verify_segue"
+    private let kSegueToHelp = "check_menu_to_help_segue"
     
     @IBOutlet weak var recaptchaViewConstraint: NSLayoutConstraint!
     @IBOutlet weak var emailViewConstraint: NSLayoutConstraint!
@@ -48,46 +47,31 @@ final public class HumanCheckMenuViewController: UIViewController {
     
     fileprivate let kButtonHeight : CGFloat = 60.0
     
-    
     @IBOutlet weak var segmentControl: UISegmentedControl!
     @IBOutlet weak var containerView: UIView!
-    enum SegmentSection {
-        case captcha
-        case email
-        case sms
-        
+    
+    var viewModel : HumanCheckViewModel!
+    
+    public func setViewModel( viewModel : HumanCheckViewModel) {
+        self.viewModel = viewModel
     }
-    
-    //var viewModel : SignupViewModel!
-    
-    let sections : [SegmentSection] = [.captcha, .email, .sms]
     
     public override func viewDidLoad() {
         super.viewDidLoad()
         
-//        topLeftButton.setTitle(LocalString._general_back_action, for: .normal)
-//        topTitleLabel.text = LocalString._human_verification
-//        topNotesLabel.text = LocalString._to_prevent_abuse_of_protonmail_we_need_to_verify_that_you_are_human
-//        optionsTitleLabel.text = LocalString._please_select_one_of_the_following_options
-//
-//        captchaButton.setTitle(LocalString._captcha, for: .normal)
-//        emailCheckButton.setTitle(LocalString._email_verification, for: .normal)
-//        phoneCheckButton.setTitle(LocalString._phone_verification, for: .normal)
+        //TODO:: locale
+        self.title = "Human verification"
+        self.segmentControl.removeAllSegments()
         
-        
-        title = "Human verification"
-        
-        segmentControl.removeAllSegments()
-        segmentControl.insertSegment(withTitle: "Captcha", at: 0, animated: false)
-        segmentControl.insertSegment(withTitle: "Email", at: 1, animated: false)
-        segmentControl.insertSegment(withTitle: "SMS", at: 2, animated: false)
+        for (index, value) in self.viewModel.verifyTypes.enumerated() {
+            segmentControl.insertSegment(withTitle: value.toString, at: index, animated: false)
+        }
         segmentControl.addTarget(self, action: #selector(selectionDidChange(_:)), for: .valueChanged)
 
         // Select First Segment
         segmentControl.selectedSegmentIndex = 0
-        
+        self.navigationController?.hideBackground()
         self.setupSignUpFunctions()
-        
         self.updateView()
     }
     
@@ -95,29 +79,24 @@ final public class HumanCheckMenuViewController: UIViewController {
         self.performSegue(withIdentifier: self.kSegueToHelp, sender: self)
     }
     
-    private lazy var capcha: RecaptchaViewController = {
+    //TODO:: subviews coordinator
+    private var capcha: RecaptchaViewController {
         // Load Storyboard
         let bundle = Bundle(for: HumanCheckMenuViewController.self)
         let storyboard = UIStoryboard.init(name: "HumanVerify", bundle: bundle)
         let customViewController = storyboard.instantiateViewController(withIdentifier: "RecaptchaViewController") as! RecaptchaViewController
-
-
         // Add View Controller as Child View Controller
         self.add(asChildViewController: customViewController)
-
         return customViewController
-    }()
+    }
 
     private lazy var email: EmailVerifyViewController = {
         // Load Storyboard
         let bundle = Bundle(for: HumanCheckMenuViewController.self)
         let storyboard = UIStoryboard.init(name: "HumanVerify", bundle: bundle)
         let customViewController = storyboard.instantiateViewController(withIdentifier: "EmailVerifyViewController") as! EmailVerifyViewController
-
-
         // Add View Controller as Child View Controller
         self.add(asChildViewController: customViewController)
-
         return customViewController
     }()
     
@@ -126,11 +105,8 @@ final public class HumanCheckMenuViewController: UIViewController {
         let bundle = Bundle(for: HumanCheckMenuViewController.self)
         let storyboard = UIStoryboard.init(name: "HumanVerify", bundle: bundle)
         let customViewController = storyboard.instantiateViewController(withIdentifier: "PhoneVerifyViewController") as! PhoneVerifyViewController
-
-
         // Add View Controller as Child View Controller
         self.add(asChildViewController: customViewController)
-
         return customViewController
     }()
     
@@ -138,16 +114,21 @@ final public class HumanCheckMenuViewController: UIViewController {
         updateView()
     }
     
+    internal var lastViewController: UIViewController?
     private func updateView() {
-        if segmentControl.selectedSegmentIndex == 0 {
-            remove(asChildViewController: sms)
-            add(asChildViewController: capcha)
-        } else if segmentControl.selectedSegmentIndex == 1  {
-            remove(asChildViewController: capcha)
-            add(asChildViewController: email)
-        } else if segmentControl.selectedSegmentIndex == 2 {
-            remove(asChildViewController: email)
-            add(asChildViewController: sms)
+        let index = segmentControl.selectedSegmentIndex
+        let item = self.viewModel.verifyTypes[index]
+        if let vc = lastViewController {
+            self.remove(asChildViewController: vc)
+            lastViewController = nil
+        }
+        switch item {
+        case .email:
+            self.add(asChildViewController: email)
+        case .recaptcha:
+            self.add(asChildViewController: capcha)
+        case .sms:
+            self.add(asChildViewController: sms)
         }
     }
     
@@ -218,7 +199,6 @@ final public class HumanCheckMenuViewController: UIViewController {
 //        customViewController.didMove(toParent: self)
     }
     
-    
     public override var preferredStatusBarStyle : UIStatusBarStyle {
         return UIStatusBarStyle.default;
     }
@@ -226,18 +206,6 @@ final public class HumanCheckMenuViewController: UIViewController {
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: true)
-    }
-    
-    public override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-    }
-    
-    public override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-    }
-    
-    public override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
     }
     
     

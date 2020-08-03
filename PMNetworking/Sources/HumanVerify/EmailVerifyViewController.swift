@@ -23,16 +23,7 @@
 
 import UIKit
 
-
-
-public class PMCommon {
-    
-    static let bundle = Bundle(for: PMCommon.self)
-    
-}
-
-
-class EmailVerifyViewController: UIViewController, SignupViewModelDelegate {
+class EmailVerifyViewController: UIViewController { //}, SignupViewModelDelegate {
     
     @IBOutlet weak var emailTextField: TextInsetTextField!
 //    @IBOutlet weak var verifyCodeTextField: TextInsetTextField!
@@ -63,7 +54,7 @@ class EmailVerifyViewController: UIViewController, SignupViewModelDelegate {
     fileprivate var startVerify : Bool = false
     fileprivate var checkUserStatus : Bool = false
     fileprivate var stopLoading : Bool = false
-    var viewModel : SignupViewModel!
+//    var viewModel : SignupViewModel!
     
     fileprivate var doneClicked : Bool = false
     
@@ -121,9 +112,9 @@ class EmailVerifyViewController: UIViewController, SignupViewModelDelegate {
     }
     
     
-    func verificationCodeChanged(_ viewModel: SignupViewModel, code: String!) {
-        //verifyCodeTextField.text = code
-    }
+//    func verificationCodeChanged(_ viewModel: SignupViewModel, code: String!) {
+//        //verifyCodeTextField.text = code
+//    }
     
     fileprivate func startAutoFetch()
     {
@@ -139,7 +130,7 @@ class EmailVerifyViewController: UIViewController, SignupViewModelDelegate {
     }
     
     @objc func countDown() {
-        let count = self.viewModel.getTimerSet()
+//        let count = self.viewModel.getTimerSet()
 //        UIView.performWithoutAnimation { () -> Void in
 //            if count != 0 {
 //                self.sendCodeButton.setTitle(String(format: LocalString._retry_after_seconds, count), for: UIControl.State())

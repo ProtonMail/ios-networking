@@ -131,12 +131,16 @@ class MainViewController: UIViewController {
         // make a fake call to trigger the human verify
         
         DispatchQueue.main.async {
-            self.onHumanVerify()
+            
         }
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    @IBAction func humanVerifyAction(_ sender: Any) {
+        self.onHumanVerify()
     }
 }
 
@@ -206,6 +210,8 @@ extension MainViewController : APIServiceDelegate {
             print("bad")
             return
         }
+        customViewController.setViewModel(viewModel: HumanCheckViewModelImpl.init(types: [.email, .recaptcha, .sms]))
+        
         self.navigationController?.pushViewController(customViewController, animated: true)
     }
 }

@@ -22,7 +22,7 @@
 
 
 import Foundation
-//
+
 ////typealias CheckUserNameBlock = (Result<CheckUserExistResponse.AvailabilityStatus>) -> Void
 //typealias CreateUserBlock = (Bool, Bool, String, Error?) -> Void
 //typealias GenerateKey = (Bool, String?, NSError?) -> Void
@@ -32,113 +32,140 @@ import Foundation
 //    func verificationCodeChanged(_ viewModel : SignupViewModel, code : String!)
 //}
 //
-//enum VerifyCodeType : Int {
-//    case email = 0
-//    case recaptcha = 1
-//    case sms = 2
-//    var toString : String {
-//        get {
-//            switch(self) {
-//            case .email:
-//                return "email"
-//            case .recaptcha:
-//                return "captcha"
-//            case .sms:
-//                return "sms"
-//            }
-//        }
-//    }
+//protocol ViewModelProtocolBase : AnyObject {
+////    func setModel(vm: Any)
+//    func inactiveViewModel() -> Void
 //}
 //
-//typealias AvailableDomainsComplete = ([String]) -> Void
+//class ViewModelProtocol<ViewModel: ViewModelProtocolBase> : ViewModelProtocolBase {
 //
-//class SignupViewModel : NSObject {
+//    func setModel(vm: Any)
+//    /// typedefine - view model -- if the class name defined in set function. the sub class could ignore viewModelType
+////    associatedtype viewModelType
+//
+//    func set(viewModel: ViewModel) -> Void
+//}
+
+public enum VerifyCodeType : Int {
+    case email = 0
+    case recaptcha = 1
+    case sms = 2
+    var toString : String {
+        get {
+            switch(self) {
+            case .email:
+                return "Email"
+            case .recaptcha:
+                return "Captcha"
+            case .sms:
+                return "SMS"
+            }
+        }
+    }
+}
+
+
+public protocol HumanCheckViewModel : class {
+    var verifyTypes : [VerifyCodeType] { get set }
+    
+    
+}
+
+//typealias AvailableDomainsComplete = ([String]) -> Void
+public class HumanCheckViewModelImpl : HumanCheckViewModel {
+    public var verifyTypes: [VerifyCodeType] = []
+    
+    public init(types: [VerifyCodeType]) {
+        self.verifyTypes = types
+    }
+    
+    
 //    func setDelegate (_ delegate: SignupViewModelDelegate?) {
 //        fatalError("This method must be overridden")
 //    }
-//    
-////    func checkUserName(_ username: String, complete: CheckUserNameBlock!) -> Void {
-////        fatalError("This method must be overridden")
-////    }
-//    
+    
+//    func checkUserName(_ username: String, complete: CheckUserNameBlock!) -> Void {
+//        fatalError("This method must be overridden")
+//    }
+    
 //    func sendVerifyCode (_ type: VerifyCodeType, complete: SendVerificationCodeBlock!) -> Void {
 //        fatalError("This method must be overridden")
 //    }
-//    
+//
 //    //
 //    func setRecaptchaToken (_ token : String, isExpired : Bool ) {
 //        fatalError("This method must be overridden")
 //    }
-//    
+//
 //    func setPickedUserName (_ username: String, domain:String) {
 //        fatalError("This method must be overridden")
 //    }
-//    
+//
 //    func isTokenOk() -> Bool {
 //        fatalError("This method must be overridden")
 //    }
-//    
+//
 //    func createNewUser(_ complete :@escaping CreateUserBlock) {
 //        fatalError("This method must be overridden")
 //    }
-//    
+//
 //    func generateKey(_ complete :@escaping GenerateKey) {
 //        fatalError("This method must be overridden")
 //    }
-//    
+//
 //    func setRecovery(_ receiveNews:Bool, email : String, displayName : String) {
 //        fatalError("This method must be overridden")
 //    }
-//    
+//
 //    func setCodeEmail(_ email : String) {
 //        fatalError("This method must be overridden")
 //    }
-//    
+//
 //    func setCodePhone(_ phone : String) {
 //        fatalError("This method must be overridden")
 //    }
-//    
+//
 //    func setEmailVerifyCode(_ code: String) {
 //        fatalError("This method must be overridden")
 //    }
-//    
+//
 //    func setPhoneVerifyCode (_ code: String) {
 //        fatalError("This method must be overridden")
 //    }
-//    
+//
 //    func setSinglePassword(_ password: String) {
 //        fatalError("This method must be overridden")
 //    }
-//    
+//
 //    func setAgreePolicy(_ isAgree : Bool) {
 //        fatalError("This method must be overridden")
 //    }
-//        
+//
 //    func getTimerSet () -> Int {
 //        fatalError("This method must be overridden")
 //    }
-//    
+//
 //    func getCurrentBit() -> Int {
 //        fatalError("This method must be overridden")
 //    }
-//    
+//
 //    func setBit(_ bit: Int) {
 //        fatalError("This method must be overridden")
 //    }
-//    
+//
 //    func fetchDirect(_ res : @escaping (_ directs:[String]) -> Void) {
 //        fatalError("This method must be overridden")
 //    }
-//    
+//
 //    func getDirect() -> [String] {
 //        fatalError("This method must be overridden")
 //    }
-//    
+//
 //    func getDomains(_ complete : @escaping AvailableDomainsComplete) -> Void {
 //        fatalError("This method must be overridden")
 //    }
-//    
+//
 //    func isAccountManager() -> Bool {
 //        return false
 //    }
-//}
+}

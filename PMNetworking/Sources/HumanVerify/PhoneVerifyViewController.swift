@@ -24,7 +24,7 @@
 import UIKit
 //import MBProgressHUD
 
-class PhoneVerifyViewController: UIViewController, SignupViewModelDelegate {
+class PhoneVerifyViewController: UIViewController { //}, SignupViewModelDelegate {
     
     @IBOutlet weak var emailTextField: TextInsetTextField!
    // @IBOutlet weak var verifyCodeTextField: TextInsetTextField!
@@ -39,6 +39,7 @@ class PhoneVerifyViewController: UIViewController, SignupViewModelDelegate {
     @IBOutlet weak var continueButton: UIButton!
     
     @IBOutlet weak var pickerButton: UIButton!
+    @IBOutlet weak var errorMessgae: ComposeErrorView!
     
     //define
     fileprivate let hidePriority : UILayoutPriority = UILayoutPriority(rawValue: 1.0);
@@ -63,7 +64,7 @@ class PhoneVerifyViewController: UIViewController, SignupViewModelDelegate {
     fileprivate var startVerify : Bool = false
     fileprivate var checkUserStatus : Bool = false
     fileprivate var stopLoading : Bool = false
-    var viewModel : SignupViewModel!
+//    var viewModel : SignupViewModel!
     
     fileprivate var doneClicked : Bool = false
     
@@ -124,6 +125,8 @@ class PhoneVerifyViewController: UIViewController, SignupViewModelDelegate {
 //        self.viewModel.setDelegate(self)
 //        //register timer
 //        self.startAutoFetch()
+        
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -142,9 +145,9 @@ class PhoneVerifyViewController: UIViewController, SignupViewModelDelegate {
         super.didReceiveMemoryWarning()
     }
     
-    func verificationCodeChanged(_ viewModel: SignupViewModel, code: String!) {
-//        verifyCodeTextField.text = code
-    }
+//    func verificationCodeChanged(_ viewModel: SignupViewModel, code: String!) {
+////        verifyCodeTextField.text = code
+//    }
     
     fileprivate func startAutoFetch()
     {
@@ -160,7 +163,7 @@ class PhoneVerifyViewController: UIViewController, SignupViewModelDelegate {
     }
     
     @objc func countDown() {
-        let count = self.viewModel.getTimerSet()
+//        let count = self.viewModel.getTimerSet()
 //        UIView.performWithoutAnimation { () -> Void in
 //            if count != 0 {
 //                self.sendCodeButton.setTitle(String(format: LocalString._retry_after_seconds, count), for: UIControl.State())
@@ -198,7 +201,11 @@ class PhoneVerifyViewController: UIViewController, SignupViewModelDelegate {
     }
     
     @IBAction func sendCodeAction(_ sender: UIButton) {
-         self.performSegue(withIdentifier: self.kSegueToVerifyCode, sender: self)
+        
+        self.errorMessgae.setError("test", withShake: true)
+        
+        
+//         self.performSegue(withIdentifier: self.kSegueToVerifyCode, sender: self)
 //        let phonenumber = emailTextField.text ?? ""
 //        let buildPhonenumber = "\(countryCode)\(phonenumber)"
 //        MBProgressHUD.showAdded(to: view, animated: true)

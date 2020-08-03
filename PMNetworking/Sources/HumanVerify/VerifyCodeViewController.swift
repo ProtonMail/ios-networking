@@ -24,7 +24,7 @@
 import UIKit
 //import MBProgressHUD
 
-class VerifyCodeViewController: UIViewController, SignupViewModelDelegate {
+class VerifyCodeViewController: UIViewController { //}, SignupViewModelDelegate {
     
     @IBOutlet weak var emailTextField: TextInsetTextField!
     @IBOutlet weak var verifyCodeTextField: TextInsetTextField!
@@ -57,7 +57,7 @@ class VerifyCodeViewController: UIViewController, SignupViewModelDelegate {
     fileprivate var startVerify : Bool = false
     fileprivate var checkUserStatus : Bool = false
     fileprivate var stopLoading : Bool = false
-    var viewModel : SignupViewModel!
+//    var viewModel : SignupViewModel!
     
     fileprivate var doneClicked : Bool = false
     
@@ -127,9 +127,9 @@ class VerifyCodeViewController: UIViewController, SignupViewModelDelegate {
         super.didReceiveMemoryWarning()
     }
     
-    func verificationCodeChanged(_ viewModel: SignupViewModel, code: String!) {
-        verifyCodeTextField.text = code
-    }
+//    func verificationCodeChanged(_ viewModel: SignupViewModel, code: String!) {
+//        verifyCodeTextField.text = code
+//    }
     
     fileprivate func startAutoFetch()
     {
@@ -145,7 +145,7 @@ class VerifyCodeViewController: UIViewController, SignupViewModelDelegate {
     }
     
     @objc func countDown() {
-        let count = self.viewModel.getTimerSet()
+//        let count = self.viewModel.getTimerSet()
 //        UIView.performWithoutAnimation { () -> Void in
 //            if count != 0 {
 //                self.sendCodeButton.setTitle(String(format: LocalString._retry_after_seconds, count), for: UIControl.State())
