@@ -35,7 +35,7 @@ enum DoHProvider {
 
 
 public protocol DoHProviderPublic {
-    func fetch(sync host: String) -> DNS?
+    func fetch(sync host: String) -> [DNS]?
     func fetch(async host: String)
     #if canImport(PromiseKit)
     func fetch(host: String) -> Promise<DNS?>
@@ -45,12 +45,12 @@ public protocol DoHProviderPublic {
 protocol DoHProviderInternal : DoHProviderPublic {
     func query(host: String) -> String
     func parse(response: String) -> DNS?
-    func parse(data response: Data) -> DNS?
+    func parse(data response: Data) -> [DNS]?
 }
 
 
 extension DoHProviderInternal {
-    public func fetch(sync host: String) -> DNS? {
+    public func fetch(sync host: String) -> [DNS]? {
         let urlStr = self.query(host: host)
         let url = URL(string: urlStr)!
         guard let resData = try? Data.init(contentsOf: url) else {
