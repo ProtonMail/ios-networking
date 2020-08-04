@@ -41,15 +41,11 @@ class PhoneVerifyViewController: UIViewController { //}, SignupViewModelDelegate
     @IBOutlet weak var pickerButton: UIButton!
     @IBOutlet weak var errorMessgae: ComposeErrorView!
     
+    @IBOutlet weak var inputPhoneView: UIView!
     //define
     fileprivate let hidePriority : UILayoutPriority = UILayoutPriority(rawValue: 1.0);
     fileprivate let showPriority: UILayoutPriority = UILayoutPriority(rawValue: 750.0);
-    
-//    @IBOutlet weak var logoTopPaddingConstraint: NSLayoutConstraint!
-//    @IBOutlet weak var logoLeftPaddingConstraint: NSLayoutConstraint!
-//    @IBOutlet weak var titleTopPaddingConstraint: NSLayoutConstraint!
-//    @IBOutlet weak var titleLeftPaddingConstraint: NSLayoutConstraint!
-//    @IBOutlet weak var userNameTopPaddingConstraint: NSLayoutConstraint!
+
     @IBOutlet weak var scrollBottomPaddingConstraint: NSLayoutConstraint!
     
 //    @IBOutlet weak var topLeftButton: UIButton!
@@ -97,6 +93,9 @@ class PhoneVerifyViewController: UIViewController { //}, SignupViewModelDelegate
 //        titleTwoLabel.text = LocalString._enter_your_cell_phone_number
 //        phoneFieldNoteLabel.text = LocalString._we_will_send_a_verification_code_to_the_cell_phone_above
 //        continueButton.setTitle(LocalString._genernal_continue, for: .normal)
+        self.inputPhoneView.roundCorners()
+        self.inputPhoneView.layer.borderWidth = 1
+        self.inputPhoneView.layer.borderColor = UIColor.blue.cgColor
         
         self.updateCountryCode(1)
         self.updateButtonStatus()
