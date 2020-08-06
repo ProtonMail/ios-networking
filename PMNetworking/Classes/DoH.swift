@@ -243,6 +243,11 @@ open class DoH : DoHInterface {
     
     var globalCounter = 0
     public func handleError(host: String, error: Error?)  -> Bool {
+        
+        guard status != .off else {
+            return false
+        }
+        
         guard let config = self as? DoHConfig else {
             return false
         }
@@ -347,7 +352,8 @@ open class DoH : DoHInterface {
             code == NSURLErrorDNSLookupFailed ||
             code == -1200 ||
             code == 451 ||
-            code == 310
+            code == 310 ||
+            code == -1005 // only for testing
             else {
                 return false
         }
