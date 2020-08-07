@@ -74,7 +74,6 @@ protocol DoHInterface {
 open class DoH : DoHInterface {
     
     public var status : DoHStatus = .off
-    
     private var caches : [String: [DNSCache]] = [:]
     private var providers : [DoHProviderPublic] = []
     
@@ -233,7 +232,6 @@ open class DoH : DoHInterface {
     }
     
     public func clearAll() {
-        
         pthread_mutex_lock(&self.mutex)
         defer { pthread_mutex_unlock(&self.mutex) }
         
@@ -293,7 +291,16 @@ open class DoH : DoHInterface {
         }
         self.caches[config.apiHost] = found
         
-        return true
+        // loop and if all tried
+        for (key,value) in self.caches {
+            for val in value {
+                if val.retry < 1 {
+                    return true
+                }
+            }
+        }
+        
+        return false
     }
     
     func debugModeLogic(host: String)  -> Bool {
@@ -358,8 +365,9 @@ open class DoH : DoHInterface {
             code == NSURLErrorDNSLookupFailed ||
             code == -1200 ||
             code == 451 ||
-            code == 310 ||
-            code == -1005 // only for testing
+            code == 310
+            //            code == -1004 ||  // only for testing
+            //            code == -1005 // only for testing
             else {
                 return false
         }
