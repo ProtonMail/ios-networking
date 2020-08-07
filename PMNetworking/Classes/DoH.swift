@@ -358,9 +358,9 @@ open class DoH : DoHInterface {
             code == NSURLErrorDNSLookupFailed ||
             code == -1200 ||
             code == 451 ||
-            code == 310
+            code == 310 ||
             //            code == -1004 ||  // only for testing
-            //            code == -1005 // only for testing
+                        code == -1005 // only for testing
             else {
                 return false
         }
