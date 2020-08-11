@@ -246,6 +246,7 @@ open class DoH : DoHInterface {
     }
     
     var globalCounter = 0
+    var firstTime = 0
     public func handleError(host: String, error: Error?)  -> Bool {
         
         guard status != .off else {
@@ -291,13 +292,19 @@ open class DoH : DoHInterface {
         }
         self.caches[config.apiHost] = found
         
-        // loop and if all tried
+        // loop and if all tried // should only loop found
         for (key,value) in self.caches {
             for val in value {
                 if val.retry < 1 {
                     return true
                 }
             }
+        }
+        
+        //temp workaround
+        if status != .off && found.count == 1 && firstTime == 0 {
+            firstTime = firstTime + 1
+            return true
         }
         
         return false
@@ -366,8 +373,8 @@ open class DoH : DoHInterface {
             code == -1200 ||
             code == 451 ||
             code == 310 ||
-            //            code == -1004 ||  // only for testing
-                        code == -1005 // only for testing
+//            code == -1004 ||  // only for testing
+            code == -1005 // only for testing
             else {
                 return false
         }
