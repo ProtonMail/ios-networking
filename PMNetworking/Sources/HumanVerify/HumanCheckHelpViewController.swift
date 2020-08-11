@@ -52,6 +52,8 @@ final public class HumanCheckHelpViewController: UIViewController {
     //var viewModel : SignupViewModel!
     
     @IBOutlet weak var tableView: UITableView!
+    
+    
     public override func viewDidLoad() {
         super.viewDidLoad()
         
