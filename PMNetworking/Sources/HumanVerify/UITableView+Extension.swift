@@ -20,8 +20,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonMail.  If not, see <https://www.gnu.org/licenses/>.
 
-
-import Foundation
+#if canImport(UIKit)
+import UIKit
 
 extension UITableView {
     
@@ -70,3 +70,4 @@ extension UITableView {
         self.register(UINib(nibName: cellID, bundle: nil), forCellReuseIdentifier: cellID)
     }
 }
+#endif
