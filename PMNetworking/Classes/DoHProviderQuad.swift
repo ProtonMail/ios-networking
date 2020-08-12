@@ -32,10 +32,10 @@ struct Quad9 : DoHProviderInternal {
 
     let supported: [Int] = [DNSType.txt.rawValue]
     
-    public let url = "https://dns.google.com"
-
+    public let url = "https://dns11.quad9.net:5053"
+    
     func query(host: String) -> String {
-        return self.url + "/resolve?type=TXT&name=" + host
+        return self.url + "/dns-query?type=TXT&name=" + host
     }
     
     func parse(response: String) -> DNS? {
