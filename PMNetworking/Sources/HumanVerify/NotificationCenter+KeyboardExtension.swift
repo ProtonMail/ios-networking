@@ -20,7 +20,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonMail.  If not, see <https://www.gnu.org/licenses/>.
 
-
+#if canImport(UIKit)
 import UIKit
 
 @objc public protocol NSNotificationCenterKeyboardObserverProtocol: NSObjectProtocol {
@@ -84,3 +84,4 @@ extension NotificationCenter {
         }
     }
 }
+#endif

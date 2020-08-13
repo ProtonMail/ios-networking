@@ -20,8 +20,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonMail.  If not, see <https://www.gnu.org/licenses/>.
 
-
-import Foundation
+#if canImport(UIKit)
+import UIKit
 
 protocol CountryPickerViewControllerDelegate {
     func dismissed();
@@ -169,8 +169,4 @@ extension CountryPickerViewController: UITableViewDelegate {
     }
     
 }
-
-
-
-
-
+#endif
