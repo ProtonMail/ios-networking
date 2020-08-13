@@ -12,6 +12,7 @@ let package = Package(
     products: [
         .library(
             name: "PMNetworking",
+            type: .dynamic,
             targets: ["PMNetworking"]),
     ],
     dependencies: [
