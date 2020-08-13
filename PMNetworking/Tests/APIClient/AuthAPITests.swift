@@ -55,7 +55,6 @@ class AuthAPITests: XCTestCase {
     }
 
     func testAuthInfo() {
-        
         stub(condition: isHost("test.protonmail.ch") && isMethodPOST() && isPath("/auth/info")) { request in
             var dict = [String:Any]()
             if let components = URLComponents(url: request.url!, resolvingAgainstBaseURL: false) {
@@ -105,25 +104,21 @@ class AuthAPITests: XCTestCase {
         }
         
         
-        let api = PMAPIService(doh: DoHMail.default, sessionUID: "testSessionUID", userID: "testUserID")
+        let api = PMAPIService(doh: DoHMail.default, sessionUID: "testSessionUID")
         let expectation1 = self.expectation(description: "Success completion block called")
         let authInfoOK = AuthAPI.Router.info(username: "ok")//unittest100
         api.exec(route: authInfoOK) { (task, response: AuthInfoResponse) in
             XCTAssertEqual(response.code, 1000)
             XCTAssert(response.error == nil)
-            XCTAssertTrue(response.SRPSession != nil)
-            XCTAssertTrue(response.SRPSession! == "b7953c6a26d97a8f7a673afb79e6e9ce")
+            XCTAssertTrue(response.srpSession != nil)
+            XCTAssertTrue(response.srpSession! == "b7953c6a26d97a8f7a673afb79e6e9ce")
             expectation1.fulfill()
         }
+        
         
         let expectation2 = self.expectation(description: "Success completion block called")
         let authInfoOK1 = AuthAPI.Router.info(username: "ok")//unittest100
         api.exec(route: authInfoOK1) { (task, result: Result<AuthInfoRes, Error>) in
-//            result.
-//            XCTAssertEqual(response.code, 1000)
-//            XCTAssert(response.error == nil)
-//            XCTAssertTrue(response.SRPSession != nil)
-//            XCTAssertTrue(response.SRPSession! == "b7953c6a26d97a8f7a673afb79e6e9ce")
             expectation2.fulfill()
         }
         
@@ -141,7 +136,7 @@ class AuthAPITests: XCTestCase {
             return HTTPStubsResponse(data: body, statusCode: 200, headers: headers)
         }
 
-        let api = PMAPIService(doh: DoHMail.default, sessionUID: "testSessionUID", userID: "testUserID")
+        let api = PMAPIService(doh: DoHMail.default, sessionUID: "testSessionUID")
         let expectation1 = self.expectation(description: "Success completion block called")
         let authModulusOK = AuthAPI.Router.modulus
         api.exec(route: authModulusOK) { (task, response: AuthModulusResponse) in
@@ -168,7 +163,7 @@ class AuthAPITests: XCTestCase {
             return HTTPStubsResponse(data: body, statusCode: 200, headers: headers)
         }
 
-        let api = PMAPIService(doh: DoHMail.default, sessionUID: "testSessionUID", userID: "testUserID")
+        let api = PMAPIService(doh: DoHMail.default, sessionUID: "testSessionUID")
         let expectation1 = self.expectation(description: "Success completion block called")
         let authOK = AuthAPI.Router.auth(username: "ok", ephemeral: "", proof: "", session: "")
         api.exec(route: authOK) { (task, response: AuthResponse) in

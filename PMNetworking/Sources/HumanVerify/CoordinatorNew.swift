@@ -24,26 +24,26 @@
 import UIKit
 
 
-protocol CoordinatorDelegate: class {
-    func willStop(in coordinator: CoordinatorNew)
-    func didStop(in coordinator: CoordinatorNew)
+public protocol CoordinatorDelegate: class {
+    func willStop(in coordinator: Coordinator)
+    func didStop(in coordinator: Coordinator)
+}
+
+public protocol CoordinatedBase : AnyObject {
+    func getCoordinator() -> Coordinator?
 }
 
 /// Used typically on view controllers to refer to it's coordinator
-protocol CoordinatedNew : CoordinatedNewBase where coordinatorType: CoordinatorNew {
+public protocol Coordinated : CoordinatedBase where coordinatorType: Coordinator {
     associatedtype coordinatorType
     func set(coordinator: coordinatorType)
 }
 
-protocol CoordinatedAlerts {
+public protocol CoordinatedAlerts {
     func controller(notFount dest: String)
 }
 
-protocol CoordinatedNewBase : AnyObject {
-    func getCoordinator() -> CoordinatorNew?
-}
-
-protocol CoordinatorNew : AnyObject {
+public protocol Coordinator : AnyObject {
     /// Triggers navigation to the corresponding controller
     /// set viewmodel and coordinator when call start
     func start()
@@ -56,7 +56,7 @@ protocol CoordinatorNew : AnyObject {
 }
 
 /// Navigate and stop methods are optional
-extension CoordinatorNew {
+extension Coordinator {
     func navigate(from source: UIViewController, to destination: UIViewController, with identifier: String?, and sender: AnyObject?) -> Bool {
         return false
     }
@@ -68,7 +68,7 @@ extension CoordinatorNew {
 
 
 /// The default coordinator is for the segue perform handled by system. need to return true in navigat function to trigger. if return false, need to push in the start().
-protocol DefaultCoordinator: CoordinatorNew {
+public protocol DefaultCoordinator: Coordinator {
     associatedtype VC: UIViewController
     var viewController: VC? { get set }
     
@@ -82,13 +82,13 @@ protocol DefaultCoordinator: CoordinatorNew {
 }
 
 
-protocol PushCoordinator: DefaultCoordinator {
+public protocol PushCoordinator: DefaultCoordinator {
     var configuration: ((VC) -> ())? { get }
     var navigationController: UINavigationController? { get }
 }
 
-extension PushCoordinator where VC: UIViewController, VC: CoordinatedNew {
-    func start() {
+extension PushCoordinator where VC: UIViewController, VC: Coordinated {
+    public func start() {
         guard let viewController = viewController else {
             return
         }
@@ -97,7 +97,7 @@ extension PushCoordinator where VC: UIViewController, VC: CoordinatedNew {
         navigationController?.pushViewController(viewController, animated: animated)
     }
     
-    func stop() {
+    public func stop() {
         delegate?.willStop(in: self)
         navigationController?.popViewController(animated: animated)
         delegate?.didStop(in: self)
@@ -110,7 +110,7 @@ protocol ModalCoordinator: DefaultCoordinator {
     var destinationNavigationController: UINavigationController? { get }
 }
 
-extension ModalCoordinator where VC: UIViewController, VC: CoordinatedNew {
+extension ModalCoordinator where VC: UIViewController, VC: Coordinated {
     func start() {
         guard let viewController = viewController else {
             return
@@ -145,7 +145,7 @@ protocol PushModalCoordinator: DefaultCoordinator {
 
 extension DefaultCoordinator {
     // default implementation if not overriden
-    var animated: Bool {
+    public var animated: Bool {
         get {
             return true
         }
@@ -160,13 +160,13 @@ extension DefaultCoordinator {
     
     /// optional go with deeplink
     ///
-    /// - Parameter deepLink: deepLink
-    func follow(_ deepLink: DeepLink) {
+    /// - Parameter deepLink: deepLipublic nk
+    public func follow(_ deepLink: DeepLink) {
         
     }
     
     /// if add deeplinks could handle here
-    func processDeepLink() {
+    public func processDeepLink() {
         
     }
 }

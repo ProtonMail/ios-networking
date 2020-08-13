@@ -20,8 +20,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonMail.  If not, see <https://www.gnu.org/licenses/>.
 
-
-import Foundation
+#if canImport(UIKit)
 import UIKit
 
 extension UIColor {
@@ -226,3 +225,6 @@ extension UIColor {
         self.init(hexString: hexString as String, alpha: alpha)
     }
 }
+
+
+#endif

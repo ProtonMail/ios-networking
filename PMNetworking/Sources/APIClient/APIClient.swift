@@ -27,6 +27,9 @@ import Foundation
 
 
 protocol APIClient {
-
+ 
 }
 
+protocol Client {
+    var apiService : APIService { get }
+}

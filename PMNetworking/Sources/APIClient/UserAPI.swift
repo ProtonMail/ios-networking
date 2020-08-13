@@ -25,6 +25,9 @@
 
 import Foundation
 
+public typealias SendVerificationCodeBlock = (Bool, NSError?) -> Void
+
+
 public struct HumanVerificationToken {
     let type: TokenType
     let token: String
@@ -99,7 +102,6 @@ public class UserAPI : APIClient {
     
     static let route : String = "/users"
     
-    
     ///
     static let vpnType = 2
     
@@ -126,7 +128,6 @@ public class UserAPI : APIClient {
         case checkUsername(String)
         case createUser(UserProperties)
         case userInfo
-        
         
         public var path: String {
             switch self {

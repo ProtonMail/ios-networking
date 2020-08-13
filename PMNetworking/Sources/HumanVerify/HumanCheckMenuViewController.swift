@@ -25,8 +25,23 @@ import UIKit
 
 //TODO:: add coordinator and add to all sub VCs
 
-final public class HumanCheckMenuViewController: UIViewController {
+final public class HumanCheckMenuViewController: UIViewController, ViewModelProtocol, Coordinated {
+
+    typealias viewModelType = HumanCheckViewModel
+    public typealias coordinatorType = HumanCheckMenuCoordinator
+    private var viewModel : HumanCheckViewModel!
+    private var coordinator : coordinatorType?
+    public func getCoordinator() -> Coordinator? {
+        return self.coordinator
+    }
+    public func set(coordinator: HumanCheckMenuCoordinator) {
+        self.coordinator = coordinator
+    }
+    func set(viewModel: HumanCheckViewModel) {
+        self.viewModel = viewModel
+    }
     
+
     private let kSegueToRecaptcha = "check_menu_to_recaptcha_verify_segue"
     private let kSegueToEmailVerify = "check_menu_to_email_verify_segue"
     private let kSegueToPhoneVerify = "check_menu_to_phone_verify_segue"
@@ -49,9 +64,7 @@ final public class HumanCheckMenuViewController: UIViewController {
     
     @IBOutlet weak var segmentControl: UISegmentedControl!
     @IBOutlet weak var containerView: UIView!
-    
-    var viewModel : HumanCheckViewModel!
-    
+
     public func setViewModel( viewModel : HumanCheckViewModel) {
         self.viewModel = viewModel
     }
@@ -96,6 +109,7 @@ final public class HumanCheckMenuViewController: UIViewController {
         let storyboard = UIStoryboard.init(name: "HumanVerify", bundle: bundle)
         let customViewController = storyboard.instantiateViewController(withIdentifier: "EmailVerifyViewController") as! EmailVerifyViewController
         // Add View Controller as Child View Controller
+        customViewController.viewModel = self.viewModel
         self.add(asChildViewController: customViewController)
         return customViewController
     }()
@@ -106,6 +120,7 @@ final public class HumanCheckMenuViewController: UIViewController {
         let storyboard = UIStoryboard.init(name: "HumanVerify", bundle: bundle)
         let customViewController = storyboard.instantiateViewController(withIdentifier: "PhoneVerifyViewController") as! PhoneVerifyViewController
         // Add View Controller as Child View Controller
+        customViewController.viewModel = self.viewModel
         self.add(asChildViewController: customViewController)
         return customViewController
     }()
@@ -125,10 +140,12 @@ final public class HumanCheckMenuViewController: UIViewController {
         switch item {
         case .email:
             self.add(asChildViewController: email)
-        case .recaptcha:
+        case .capcha:
             self.add(asChildViewController: capcha)
         case .sms:
             self.add(asChildViewController: sms)
+        default:
+            break
         }
     }
     

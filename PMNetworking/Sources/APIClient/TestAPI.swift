@@ -29,111 +29,139 @@ import Foundation
 //Test API
 //Humanverify test: https://gitlab.protontech.ch/ProtonMail/Slim-API/blob/develop/api-spec/pm_api_test.md
 
-public class TestAPI : APIClient {
-
-    static let route : String = "/users"
+public enum VerifyMethod : String {
+    case capcha
+    case sms
+    case email
+    case invite
+    case payment
+    case coupon
     
-    public enum Router: Request {
-        case code(type: HumanVerificationToken.TokenType, receiver: String)
-        case check(token: HumanVerificationToken)
-        case checkUsername(String)
-        case createUser(UserProperties)
-        case userInfo
-        
-        public var path: String {
-            switch self {
-            case .code:
-                return route + "/code"
-            case .check:
-                return route + "/check"
-            case .checkUsername(let username):
-                return route + "/available?Name=" + username.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
-            case .createUser:
-                return route
-            case .userInfo:
-                return route
-            }
+//    "sms",
+//    "email",
+//    "payment",
+//    "invite",
+//    "coupon
+    
+    public init?(rawValue: String) {
+        switch rawValue {
+        case "sms": self = .sms
+        case "email": self = .email
+        case "capcha": self = .capcha
+        default:
+            return nil
         }
-        
-        public var isAuth: Bool {
-            switch self {
-            case .code, .check, .userInfo:
-                return true
-            default:
-                return false
-            }
-        }
-        
-        public var header: [String : Any] {
-            return [:]
-        }
-        
-        public var apiVersion: Int {
-            switch self {
-            case .code, .check, .checkUsername, .createUser, .userInfo:
-                return v_user_default
-            }
-        }
-        
-        public var method: HTTPMethod {
-            switch self {
-            case .checkUsername, .userInfo:
-                return .get
-            case  .code, .createUser:
-                return .post
-            case .check:
-                return .put
-            }
-        }
-        
-        public var parameters: [String: Any]? {
-            switch self {
-            case .code(let type, let receiver):
-                let destinationType: String
-                switch type {
-                case .email:
-                    destinationType = "Address"
-                case .sms:
-                    destinationType = "Phone"
-                case .payment, .invite, .captcha:
-                    fatalError("Wrong parameter used. Payment is not supported by code endpoint.")
-                }
-                return [
-                    "Type": type.rawValue,
-                    "Destination": [
-                        destinationType: receiver
-                    ]
-                ]
-            case .check(let token):
-                return [
-                    "Token": "\(token.fullValue)",
-                    "TokenType": token.type.rawValue,
-                    "Type": vpnType
-                ]
-            case .createUser(let userProperties):
-                var params: [String: Any] = [
-                    "Email": userProperties.email,
-                    "Username": userProperties.username,
-                    "Type": vpnType,
-                    "Auth": [
-                        "Version": 4,
-                        "ModulusID": userProperties.modulusID,
-                        "Salt": userProperties.salt,
-                        "Verifier": userProperties.verifier
-                    ]
-                ]
-                if let token = userProperties.appleToken {
-                    params["Payload"] = [
-                        "higgs-boson": token.base64EncodedString()
-                    ]
-                }
-                return params
-            default:
-                return [:]
-            }
+    }
+    
+    var toString : String {
+        switch self {
+        case .sms:
+            return "SMS"
+        case .email:
+            return "Email"
+        case .capcha:
+            return "CAPCHA"
+        default:
+            return ""
         }
     }
 }
+public class TestApiClient : Client {
+    var apiService: APIService
+    public init(api: APIService) {
+        self.apiService = api
+    }
+    static let route : String = "/internal/tests"
+    public enum Router: Request {
+        case humanverify(type: VerifyMethod?, token: String?)
+        public var path: String {
+            switch self {
+            case .humanverify(_,_):
+                return route + "/humanverification"
+            }
+        }
+        public var isAuth: Bool {
+            return false
+        }
+        public var header: [String : Any] {
+//            switch self {
+//            case .humanverify(let type, let token):
+//                if let t = type, let str = token {
+//                    let dict = ["x-pm-human-verification-token-type": t.toString,
+//                                "x-pm-human-verification-token": str,
+//                                "TokenType": t.toString,
+//                                "Token": str]
+//                    return dict
+//                }
+//            }
+            return [:]
+        }
+        public var apiVersion: Int {
+            return 3
+        }
+        public var method: HTTPMethod {
+            switch self {
+            case .humanverify(_,_):
+                return .post
+            }
+        }
+        public var parameters: [String: Any]? {
+            switch self {
+            case .humanverify(let type, let token):
+                if let t = type, let str = token {
+                    let dict = ["TokenType": t.toString,
+                                "Token": str]
+                    return dict
+                }
+            }
+            return [:]
+        }
+    }
+}
+
+extension TestApiClient {
+    // 3 ways.
+    //  1. primise kit
+    //  2. delaget
+    //  3. combin
+    public func triggerHumanVerify(type: VerifyMethod?, token: String?, complete: @escaping  (_ task: URLSessionDataTask?, _ response: TestHV) -> Void) {
+        let route = Router.humanverify(type: type, token: token)
+        self.apiService.exec(route: route, complete: complete)
+    }
+    
+//    public func triggerHumanVerify(complete: @escaping  (_ task: URLSessionDataTask?, _ response: Response) -> Void) {
+//        let route = Router.humanverify
+//        self.apiService.exec(route:  route, complete: complete)
+//    }
+}
+
+
+
+
+class TestApi : Request {
+    var path: String = "/tests/humanverification"
+    var header: [String : Any] = [:]
+    var method: HTTPMethod = .get
+    var parameters: [String : Any]? = nil
+}
+
+public class TestHV : Response {
+    public var supported : [VerifyMethod] = []
+    public override func ParseResponse(_ response: [String : Any]) -> Bool {
+        if let details  = response["Details"] as? [String: Any] {
+            if let support = details["HumanVerificationMethods"] as? [String] {
+                for item in support {
+                    if let method = VerifyMethod(rawValue: item) {
+                        supported.append(method)
+                    }
+                }
+            }
+        }
+        return true
+    }
+}
+
+
 //public struct HumanVerificationToken {
 //    let type: TokenType
 //    let token: String

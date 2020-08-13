@@ -115,7 +115,7 @@ class NetworkTests: XCTestCase {
         }
         let expectation1 = self.expectation(description: "Success completion block called")
         let checkName = UserAPI.Router.checkUsername("ok")
-        let api = PMAPIService(doh: DoHMail.default, sessionUID: "testSessionUID", userID: "testUserID")
+        let api = PMAPIService(doh: DoHMail.default, sessionUID: "testSessionUID")
         api.exec(route: checkName) { (task, response) in
             XCTAssertEqual(response.code, 1000)
             expectation1.fulfill()

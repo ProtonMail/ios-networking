@@ -105,10 +105,15 @@
 
         ]
       },
-      "source_files": "PMNetworking/Sources/HumanVerify/**/*",
-      "resources": [
-        "PMNetworking/Assets/HumanVerify/**/*"
-      ]
+      "ios": {
+        "source_files": "PMNetworking/Sources/HumanVerify/**/*",
+        "resources": [
+          "PMNetworking/Assets/HumanVerify/**/*"
+        ]
+      },
+      "osx": {
+        "source_files": "PMNetworking/Sources/HumanVerify/**/*"
+      }
     }
   ],
   "swift_version": "5.0"

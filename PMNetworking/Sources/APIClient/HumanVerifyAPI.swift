@@ -71,7 +71,7 @@ public class HumanVerifyAPI : APIClient {
         public var apiVersion: Int {
             switch self {
             case .code, .check, .checkUsername, .createUser, .userInfo:
-                return v_user_default
+                return 3
             }
         }
         
@@ -108,13 +108,13 @@ public class HumanVerifyAPI : APIClient {
                 return [
                     "Token": "\(token.fullValue)",
                     "TokenType": token.type.rawValue,
-                    "Type": vpnType
+                    "Type": "1"
                 ]
             case .createUser(let userProperties):
                 var params: [String: Any] = [
                     "Email": userProperties.email,
                     "Username": userProperties.username,
-                    "Type": vpnType,
+                    "Type": "1",
                     "Auth": [
                         "Version": 4,
                         "ModulusID": userProperties.modulusID,

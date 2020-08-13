@@ -22,7 +22,6 @@
 
 #if canImport(UIKit)
 import UIKit
-//import MBProgressHUD
 
 class RecaptchaViewController: UIViewController, UIWebViewDelegate {
     
@@ -48,11 +47,10 @@ class RecaptchaViewController: UIViewController, UIWebViewDelegate {
     fileprivate var checkUserStatus : Bool = false
     fileprivate var stopLoading : Bool = false
     fileprivate var doneClicked : Bool = false
-//    var viewModel : SignupViewModel!
+    //var viewModel : SignupViewModel!
     
     func configConstraint(_ show : Bool) -> Void {
         let level = show ? showPriority : hidePriority
-        
         logoTopPaddingConstraint.priority = level
         logoLeftPaddingConstraint.priority = level
         titleTopPaddingConstraint.priority = level
@@ -61,18 +59,14 @@ class RecaptchaViewController: UIViewController, UIWebViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        topLeftButton.setTitle(LocalString._general_back_action, for: .normal)
-//        topTitleLabel.text = LocalString._human_verification
-//        continueButton.setTitle(LocalString._genernal_continue, for: .normal)
-        
         resetChecking()
         webView.scrollView.isScrollEnabled = false
         
         URLCache.shared.removeAllCachedResponses();
-//        MBProgressHUD.showAdded(to: webView, animated: true)
+        //MBProgressHUD.showAdded(to: webView, animated: true)
+        continueButton.isEnabled = false
         //let recptcha = NSURL(string: "https://secure.protonmail.com/mobile.html")!
-        
+        //https://secure.protonmail.com/captcha/captcha.html?token={captcha_token}&client={client_name}&host={host_url}
         let recptcha = URL(string: "https://secure.protonmail.com/captcha/captcha.html?token=signup&client=ios&host=\(Server.live.hostUrl)")!
         let requestObj = URLRequest(url: recptcha)
         webView.loadRequest(requestObj)
@@ -84,7 +78,6 @@ class RecaptchaViewController: UIViewController, UIWebViewDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -98,7 +91,6 @@ class RecaptchaViewController: UIViewController, UIWebViewDelegate {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    
     
     // MARK: - Navigation
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -204,16 +196,17 @@ class RecaptchaViewController: UIViewController, UIWebViewDelegate {
         }
 
         if let _ = urlString?.range(of: "https://secure.protonmail.com/expired_recaptcha_response://") {
-//            viewModel.setRecaptchaToken("", isExpired: true)
+//viewModel.setRecaptchaToken("", isExpired: true)
             resetWebviewHeight()
             webView.reload()
             return false
         }
         else if let _ = urlString?.range(of: "https://secure.protonmail.com/captcha/recaptcha_response://") {
             if let token = urlString?.replacingOccurrences(of: "https://secure.protonmail.com/captcha/recaptcha_response://", with: "", options: NSString.CompareOptions.widthInsensitive, range: nil) {
-//                viewModel.setRecaptchaToken(token, isExpired: false)
+//viewModel.setRecaptchaToken(token, isExpired: false)
             }
             resetWebviewHeight()
+            continueButton.isEnabled = true
             return false
         }
         return true

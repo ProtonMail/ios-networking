@@ -70,8 +70,9 @@ TODO: Add long description of the pod here.
 
   s.subspec 'HumanVerify' do |humanverify|
     humanverify.dependency 'PMCommon/APIClient'
-    humanverify.source_files = 'PMNetworking/Sources/HumanVerify/**/*'
-    humanverify.resources = ['PMNetworking/Assets/HumanVerify/**/*']
+    humanverify.ios.source_files = 'PMNetworking/Sources/HumanVerify/**/*'
+    humanverify.ios.resources = ['PMNetworking/Assets/HumanVerify/**/*']
+    humanverify.osx.source_files = 'PMNetworking/Sources/HumanVerify/**/*'
 
 #    humanverify.resource_bundles = {
 #        'HumanVerify' => ['PMNetworking/Assets/HumanVerify.storyboard']

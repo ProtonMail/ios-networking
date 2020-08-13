@@ -66,6 +66,7 @@ public protocol Request : Package {
     var isAuth: Bool { get }
 }
 
+
 extension Request {
     public var isAuth : Bool {
         get {

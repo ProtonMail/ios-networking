@@ -27,12 +27,7 @@ import UIKit
 class PhoneVerifyViewController: UIViewController { //}, SignupViewModelDelegate {
     
     @IBOutlet weak var emailTextField: TextInsetTextField!
-   // @IBOutlet weak var verifyCodeTextField: TextInsetTextField!
-    
-//    @IBOutlet weak var warningView: UIView!
-//    @IBOutlet weak var warningLabel: UILabel!
-//    @IBOutlet weak var warningIcon: UIImageView!
-    
+
     @IBOutlet weak var titleTwoLabel: UILabel!
     
     @IBOutlet weak var sendCodeButton: UIButton!
@@ -42,15 +37,10 @@ class PhoneVerifyViewController: UIViewController { //}, SignupViewModelDelegate
     @IBOutlet weak var errorMessgae: ComposeErrorView!
     
     @IBOutlet weak var inputPhoneView: UIView!
-    //define
-    fileprivate let hidePriority : UILayoutPriority = UILayoutPriority(rawValue: 1.0);
-    fileprivate let showPriority: UILayoutPriority = UILayoutPriority(rawValue: 750.0);
-
+    
     @IBOutlet weak var scrollBottomPaddingConstraint: NSLayoutConstraint!
     
-//    @IBOutlet weak var topLeftButton: UIButton!
     @IBOutlet weak var topTitleLabel: UILabel!
-//    @IBOutlet weak var phoneFieldNoteLabel: UILabel!
     
     fileprivate let kSegueToNotificationEmail = "sign_up_pwd_email_segue"
     fileprivate let kSegueToCountryPicker = "phone_verify_to_country_picker_segue"
@@ -60,39 +50,17 @@ class PhoneVerifyViewController: UIViewController { //}, SignupViewModelDelegate
     fileprivate var startVerify : Bool = false
     fileprivate var checkUserStatus : Bool = false
     fileprivate var stopLoading : Bool = false
-//    var viewModel : SignupViewModel!
-    
     fileprivate var doneClicked : Bool = false
     
     fileprivate var timer : Timer!
     
     fileprivate var countryCode : String = "+1"
     
-    func configConstraint(_ show : Bool) -> Void {
-        let level = show ? showPriority : hidePriority
-        
-//        logoTopPaddingConstraint.priority = level
-//        logoLeftPaddingConstraint.priority = level
-//        titleTopPaddingConstraint.priority = level
-//        titleLeftPaddingConstraint.priority = level
-//        
-//        userNameTopPaddingConstraint.priority = level
-        
-        titleTwoLabel.isHidden = show
-    }
+    var viewModel : HumanCheckViewModel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        emailTextField.attributedPlaceholder = NSAttributedString(string: LocalString._cell_phone_number,
-//                                                                  attributes:[NSAttributedString.Key.foregroundColor : UIColor(hexColorCode: "#9898a8")])
-//        verifyCodeTextField.attributedPlaceholder = NSAttributedString(string: LocalString._enter_verification_code,
-//                                                                       attributes:[NSAttributedString.Key.foregroundColor : UIColor(hexColorCode: "#9898a8")])
-//
-//        topLeftButton.setTitle(LocalString._general_back_action, for: .normal)
-//        topTitleLabel.text = LocalString._human_verification
-//        titleTwoLabel.text = LocalString._enter_your_cell_phone_number
-//        phoneFieldNoteLabel.text = LocalString._we_will_send_a_verification_code_to_the_cell_phone_above
-//        continueButton.setTitle(LocalString._genernal_continue, for: .normal)
+        
         self.inputPhoneView.roundCorners()
         self.inputPhoneView.layer.borderWidth = 1
         self.inputPhoneView.layer.borderColor = UIColor.blue.cgColor
@@ -119,13 +87,12 @@ class PhoneVerifyViewController: UIViewController { //}, SignupViewModelDelegate
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        navigationController?.setNavigationBarHidden(true, animated: true)
         NotificationCenter.default.addKeyboardObserver(self)
 //        self.viewModel.setDelegate(self)
 //        //register timer
 //        self.startAutoFetch()
         
-        
+        emailTextField.becomeFirstResponder()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -148,13 +115,12 @@ class PhoneVerifyViewController: UIViewController { //}, SignupViewModelDelegate
 ////        verifyCodeTextField.text = code
 //    }
     
-    fileprivate func startAutoFetch()
-    {
+    fileprivate func startAutoFetch() {
         self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(PhoneVerifyViewController.countDown), userInfo: nil, repeats: true)
         self.timer.fire()
     }
-    fileprivate func stopAutoFetch()
-    {
+    
+    fileprivate func stopAutoFetch() {
         if self.timer != nil {
             self.timer.invalidate()
             self.timer = nil
@@ -181,14 +147,11 @@ class PhoneVerifyViewController: UIViewController { //}, SignupViewModelDelegate
     // MARK: - Navigation
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == kSegueToNotificationEmail {
-//            let viewController = segue.destination as! SignUpEmailViewController
-//            viewController.viewModel = self.viewModel
-//        } else if segue.identifier == kSegueToCountryPicker {
-//            let popup = segue.destination as! CountryPickerViewController
-//            popup.delegate = self
-//            self.setPresentationStyleForSelfController(self, presentingController: popup)
-//        }
+        if segue.identifier == self.kSegueToVerifyCode {
+            let viewController = segue.destination as! VerifyCodeViewController
+            self.viewModel.type = .sms
+            viewController.viewModel = self.viewModel
+        }
     }
     
     @IBAction func backAction(_ sender: UIButton) {
@@ -196,14 +159,25 @@ class PhoneVerifyViewController: UIViewController { //}, SignupViewModelDelegate
         let _ = self.navigationController?.popViewController(animated: true)
     }
     @IBAction func haveCodeAction(_ sender: Any) {
+        let emailaddress = emailTextField.text
+        
+        guard let phone = emailaddress else {
+            self.errorMessgae.isHidden = false
+            self.errorMessgae.setError("Phone number is empty", withShake: true)
+            return
+        }
+        let buildPhonenumber = "\(countryCode)\(phone)"
+        self.errorMessgae.isHidden = true
+        
+        //MBProgressHUD.showAdded(to: view, animated: true)
+        self.viewModel.setEmail(email: buildPhonenumber)
         self.performSegue(withIdentifier: self.kSegueToVerifyCode, sender: self)
     }
     
     @IBAction func sendCodeAction(_ sender: UIButton) {
+//        self.errorMessgae.setError("test", withShake: true)
         
-        self.errorMessgae.setError("test", withShake: true)
-        
-        
+        self.sendCode()
 //         self.performSegue(withIdentifier: self.kSegueToVerifyCode, sender: self)
 //        let phonenumber = emailTextField.text ?? ""
 //        let buildPhonenumber = "\(countryCode)\(phonenumber)"
@@ -236,37 +210,57 @@ class PhoneVerifyViewController: UIViewController { //}, SignupViewModelDelegate
     }
     
     @IBAction func verifyCodeAction(_ sender: UIButton) {
-//        dismissKeyboard()
-//        
-//        if doneClicked {
-//            return
-//        }
-//        doneClicked = true;
-//        MBProgressHUD.showAdded(to: view, animated: true)
-//        dismissKeyboard()
-//        viewModel.setPhoneVerifyCode(verifyCodeTextField.text!)
-//        DispatchQueue.main.async(execute: { () -> Void in
-//            self.viewModel.createNewUser { (isOK, createDone, message, error) -> Void in
-//                MBProgressHUD.hide(for: self.view, animated: true)
-//                self.doneClicked = false
-//                if !message.isEmpty {
-//                    let title = LocalString._create_user_failed
-//                    var message = LocalString._default_error_please_try_again
-//                    if let error = error {
-//                        message = error.localizedDescription
-//                    }
-//                    let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-//                    alert.addOKAction()
-//                    self.present(alert, animated: true, completion: nil)
-//                } else {
-//                    if isOK || createDone {
-//                        DispatchQueue.main.async(execute: { () -> Void in
-//                            self.performSegue(withIdentifier: self.kSegueToNotificationEmail, sender: self)
-//                        })
-//                    }
-//                }
-//            }
-//        })
+        dismissKeyboard()
+        if doneClicked {
+            return
+        }
+        doneClicked = true;
+        dismissKeyboard()
+        
+        let emailaddress = emailTextField.text
+        
+        guard let phone = emailaddress else {
+            self.errorMessgae.isHidden = false
+            self.errorMessgae.setError("Phone number is empty", withShake: true)
+            return
+        }
+        let buildPhonenumber = "\(countryCode)\(phone)"
+        self.errorMessgae.isHidden = true
+        
+        //MBProgressHUD.showAdded(to: view, animated: true)
+        self.viewModel.setEmail(email: buildPhonenumber)
+        
+        //        dismissKeyboard()
+        //
+        //        if doneClicked {
+        //            return
+        //        }
+        //        doneClicked = true;
+        //        MBProgressHUD.showAdded(to: view, animated: true)
+        //        dismissKeyboard()
+        //        viewModel.setPhoneVerifyCode(verifyCodeTextField.text!)
+        //        DispatchQueue.main.async(execute: { () -> Void in
+        //            self.viewModel.createNewUser { (isOK, createDone, message, error) -> Void in
+        //                MBProgressHUD.hide(for: self.view, animated: true)
+        //                self.doneClicked = false
+        //                if !message.isEmpty {
+        //                    let title = LocalString._create_user_failed
+        //                    var message = LocalString._default_error_please_try_again
+        //                    if let error = error {
+        //                        message = error.localizedDescription
+        //                    }
+        //                    let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        //                    alert.addOKAction()
+        //                    self.present(alert, animated: true, completion: nil)
+        //                } else {
+        //                    if isOK || createDone {
+        //                        DispatchQueue.main.async(execute: { () -> Void in
+        //                            self.performSegue(withIdentifier: self.kSegueToNotificationEmail, sender: self)
+        //                        })
+        //                    }
+        //                }
+        //            }
+        //        })
     }
     
     @IBAction func tapAction(_ sender: UITapGestureRecognizer) {
@@ -275,7 +269,6 @@ class PhoneVerifyViewController: UIViewController { //}, SignupViewModelDelegate
     }
     func dismissKeyboard() {
         emailTextField.resignFirstResponder()
-//        verifyCodeTextField.resignFirstResponder()
     }
     
     @IBAction func editEnd(_ sender: UITextField) {
@@ -287,20 +280,52 @@ class PhoneVerifyViewController: UIViewController { //}, SignupViewModelDelegate
     }
     
     func updateButtonStatus() {
-//        let emailaddress = (emailTextField.text ?? "").trim()
-//        //need add timer
-//        if emailaddress.isEmpty || self.viewModel.getTimerSet() > 0 {
-//            sendCodeButton.isEnabled = false
-//        } else {
-//            sendCodeButton.isEnabled = true
-//        }
-//        
-//        let verifyCode = (verifyCodeTextField.text ?? "").trim()
-//        if verifyCode.isEmpty {
-//            continueButton.isEnabled = false
-//        } else {
-//            continueButton.isEnabled = true
-//        }
+        let emailaddress = (emailTextField.text ?? "").trim()
+        //need add timer
+        if emailaddress.isEmpty { //buildPhonenumber|| self.viewModel.getTimerSet() > 0 {
+            sendCodeButton.isEnabled = false
+        } else {
+            sendCodeButton.isEnabled = true
+        }
+    }
+    
+    func sendCode() {
+        let emailaddress = emailTextField.text
+        
+        guard let phone = emailaddress else {
+            self.errorMessgae.isHidden = false
+            self.errorMessgae.setError("Phone number is empty", withShake: true)
+            return
+        }
+        let buildPhonenumber = "\(countryCode)\(phone)"
+        self.errorMessgae.isHidden = true
+        
+        //MBProgressHUD.showAdded(to: view, animated: true)
+        self.viewModel.setEmail(email: buildPhonenumber)
+        self.viewModel.sendVerifyCode (.sms) { (isOK, error) -> Void in
+            //MBProgressHUD.hide(for: self.view, animated: true)
+            //            if !isOK {
+            //                var alert :  UIAlertController!
+            //                var title = LocalString._verification_code_request_failed
+            //                var message = ""
+            //                if error?.code == 12201 { //USER_CODE_EMAIL_INVALID = 12201
+            //                    title = LocalString._email_address_invalid
+            //                    message = LocalString._please_input_a_valid_email_address
+            //                } else {
+            //                    message = error!.localizedDescription
+            //                }
+            //                alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            //                alert.addOKAction()
+            //                self.present(alert, animated: true, completion: nil)
+            //            } else {
+            //                let alert = UIAlertController(title: LocalString._verification_code_sent,
+            //                                              message: LocalString._please_check_email_for_code,
+            //                                              preferredStyle: .alert)
+            //                alert.addOKAction()
+            //                self.present(alert, animated: true, completion: nil)
+            //            }
+        }
+        self.performSegue(withIdentifier: self.kSegueToVerifyCode, sender: self)
     }
 }
 
@@ -337,10 +362,12 @@ extension PhoneVerifyViewController : NSNotificationCenterKeyboardObserverProtoc
     func keyboardWillHideNotification(_ notification: Notification) {
         let keyboardInfo = notification.keyboardInfo
         scrollBottomPaddingConstraint.constant = 0.0
-        self.configConstraint(false)
-        UIView.animate(withDuration: keyboardInfo.duration, delay: 0, options: keyboardInfo.animationOption, animations: { () -> Void in
+        //self.configConstraint(false)
+        UIView.animate(withDuration: keyboardInfo.duration,
+                       delay: 0, options: keyboardInfo.animationOption,
+                       animations: { () -> Void in
             self.view.layoutIfNeeded()
-            }, completion: nil)
+        }, completion: nil)
     }
 
     func keyboardWillShowNotification(_ notification: Notification) {
@@ -349,10 +376,12 @@ extension PhoneVerifyViewController : NSNotificationCenterKeyboardObserverProtoc
         if let keyboardSize = (info[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             scrollBottomPaddingConstraint.constant = keyboardSize.height;
         }
-        self.configConstraint(true)
-        UIView.animate(withDuration: keyboardInfo.duration, delay: 0, options: keyboardInfo.animationOption, animations: { () -> Void in
+        //self.configConstraint(true)
+        UIView.animate(withDuration: keyboardInfo.duration,
+                       delay: 0, options: keyboardInfo.animationOption,
+                       animations: { () -> Void in
             self.view.layoutIfNeeded()
-            }, completion: nil)
+        }, completion: nil)
     }
 }
 #endif

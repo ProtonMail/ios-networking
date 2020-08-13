@@ -49,10 +49,10 @@ protocol HasLocalStorage {
 //    return helper
 //}()
 
-final class ServiceFactory {
+final public class ServiceFactory {
     
     ///this is the a tempary.
-    static let `default` : ServiceFactory = ServiceFactory()
+    static public let `default` : ServiceFactory = ServiceFactory()
     
     private var servicesDictionary: [String: Service] = [:]
     

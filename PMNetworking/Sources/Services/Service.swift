@@ -26,7 +26,7 @@
 import Foundation
 
 /// service base, hold the service instance in order to make requests
-protocol Service {
+public protocol Service {
     var service : APIService {get}
 }
 

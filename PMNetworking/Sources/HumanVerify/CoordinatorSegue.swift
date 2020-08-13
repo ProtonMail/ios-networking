@@ -30,7 +30,7 @@ class CoordinatorSegue: UIStoryboardSegue {
     @objc open var sender: AnyObject?
     
     override func perform() {
-        guard let coordinated = self.source as? CoordinatedNewBase else {
+        guard let coordinated = self.source as? CoordinatedBase else {
             return
         }
         

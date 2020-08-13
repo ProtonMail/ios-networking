@@ -96,12 +96,6 @@ class MessageAPI : APIClient {
 //    }
 }
 
-
-
-
-//
-//
-//
 //enum UserRouter: Router {
 //
 //    case code(type: HumanVerificationToken.TokenType, receiver: String)

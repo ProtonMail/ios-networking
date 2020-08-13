@@ -97,7 +97,7 @@ class UserAPITests: XCTestCase {
     func testUserAvailable() {
         let expectation1 = self.expectation(description: "Success completion block called")
         let checkNameOk = UserAPI.Router.checkUsername("ok")
-        let api = PMAPIService(doh: DoHMail.default, sessionUID: "testSessionUID", userID: "testUserID")
+        let api = PMAPIService(doh: DoHMail.default, sessionUID: "testSessionUID")
         api.exec(route: checkNameOk) { (task, response) in
             XCTAssertEqual(response.code, 1000)
             XCTAssert(response.error == nil)
@@ -107,7 +107,7 @@ class UserAPITests: XCTestCase {
         ///
         let expectation2 = self.expectation(description: "Success completion block called")
         let checkNameInvalidChar = UserAPI.Router.checkUsername("InvalidCharacters")
-        let api2 = PMAPIService(doh: DoHMail.default, sessionUID: "testSessionUID", userID: "testUserID")
+        let api2 = PMAPIService(doh: DoHMail.default, sessionUID: "testSessionUID")
         api2.exec(route: checkNameInvalidChar) { (task, response) in
             XCTAssertEqual(response.code, 12102)
             XCTAssertEqual(response.errorMessage, "Invalid characters")
@@ -118,7 +118,7 @@ class UserAPITests: XCTestCase {
         ///
         let expectation3 = self.expectation(description: "Success completion block called")
         let startSpecialCharacter = UserAPI.Router.checkUsername("StartSpecialCharacter")
-        let api3 = PMAPIService(doh: DoHMail.default, sessionUID: "testSessionUID", userID: "testUserID")
+        let api3 = PMAPIService(doh: DoHMail.default, sessionUID: "testSessionUID")
         api3.exec(route: startSpecialCharacter) { (task, response) in
             XCTAssertEqual(response.code, 12103)
             XCTAssertEqual(response.errorMessage, "Username start with special character")
@@ -129,7 +129,7 @@ class UserAPITests: XCTestCase {
         ///
         let expectationexpectation4 = self.expectation(description: "Success completion block called")
         let endSpecialCharacter = UserAPI.Router.checkUsername("EndSpecialCharacter")
-        let api4 = PMAPIService(doh: DoHMail.default, sessionUID: "testSessionUID", userID: "testUserID")
+        let api4 = PMAPIService(doh: DoHMail.default, sessionUID: "testSessionUID")
         api4.exec(route: endSpecialCharacter) { (task, response) in
             XCTAssertEqual(response.code, 12104)
             XCTAssertEqual(response.errorMessage, "Username end with special character")
@@ -139,7 +139,7 @@ class UserAPITests: XCTestCase {
         ///
         let expectation5 = self.expectation(description: "Success completion block called")
         let usernameToolong = UserAPI.Router.checkUsername("UsernameToolong")
-        let api5 = PMAPIService(doh: DoHMail.default, sessionUID: "testSessionUID", userID: "testUserID")
+        let api5 = PMAPIService(doh: DoHMail.default, sessionUID: "testSessionUID")
         api5.exec(route: usernameToolong) { (task, response) in
             XCTAssertEqual(response.code, 12105)
             XCTAssertEqual(response.errorMessage, "Username too long")
@@ -148,7 +148,7 @@ class UserAPITests: XCTestCase {
         }///
         let expectation6 = self.expectation(description: "Success completion block called")
         let usernameAlreadyUsed = UserAPI.Router.checkUsername("UsernameAlreadyUsed")
-        let api6 = PMAPIService(doh: DoHMail.default, sessionUID: "testSessionUID", userID: "testUserID")
+        let api6 = PMAPIService(doh: DoHMail.default, sessionUID: "testSessionUID")
         api6.exec(route: usernameAlreadyUsed) { (task, response) in
             XCTAssertEqual(response.code, 12106)
             XCTAssertEqual(response.errorMessage, "Username already used")
@@ -158,6 +158,5 @@ class UserAPITests: XCTestCase {
         self.waitForExpectations(timeout: 30) { (expectationError) -> Void in
             XCTAssertNil(expectationError)
         }
-        
     }
 }

@@ -23,7 +23,7 @@
 
 import Foundation
 
-class DeepLink {
+public class DeepLink {
     
     class Node {
         //
@@ -55,7 +55,7 @@ class DeepLink {
         self.append(node)
     }
     
-    required init(from decoder: Decoder) throws {
+    required public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let elements = try container.decode(Array<Node>.self, forKey: .elements)
         
@@ -186,7 +186,7 @@ extension DeepLink.Node: Equatable {
 }
 
 extension DeepLink: CustomDebugStringConvertible {
-    var debugDescription: String {
+    public var debugDescription: String {
         var steps: Array<String> = []
         
         var current = head
@@ -213,7 +213,7 @@ extension DeepLink.Node: Codable {
 extension DeepLink: Codable {
     enum CodingKeys: CodingKey { case elements }
     enum Errors: Error { case empty }
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         var containter = encoder.container(keyedBy: CodingKeys.self)
         guard let head = self.head else { throw Errors.empty }
         

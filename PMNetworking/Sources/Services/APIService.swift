@@ -125,7 +125,7 @@ enum Server : APIServerConfig {
             return "https"
         }
     }
-
+    
 }
 
 //enum <T> {
@@ -155,11 +155,13 @@ public protocol APIServiceDelegate: class {
     
     func onDohTroubleshot()
     
-    func onHumanVerify()
-    
     func onChallenge(challenge: URLAuthenticationChallenge,
                      credential: AutoreleasingUnsafeMutablePointer<URLCredential?>?) -> URLSession.AuthChallengeDisposition
+    
+}
 
+public protocol HumanVerifyDelegate: class {
+    func onHumanVerify(methods : [VerifyMethod])
 }
 
 /// this is auth related delegate in background
@@ -181,6 +183,7 @@ public protocol APIService : API {
     func setSessionUID(uid: String)
     var serviceDelegate: APIServiceDelegate? {get}
     var authDelegate : AuthDelegate? {get}
+    var humanDelegate : HumanVerifyDelegate? {get}
 }
 
 class TestResponse : Response {
@@ -226,18 +229,20 @@ public extension APIService {
             ret_res = apiRes
         }
         //TODO:: missing auth
+        var header = route.header
+        header[HTTPHeader.apiVersion] = route.version
         self.request(method: route.method, path: route.path,
                      parameters: route.parameters,
-                     headers: [HTTPHeader.apiVersion: route.version],
+                     headers: header,
                      authenticated: true,//route.getIsAuthFunction(),
-            customAuthCredential: nil, //route.authCredential,
-            completion: completionWrapper)
+                     customAuthCredential: nil, //route.authCredential,
+                     completion: completionWrapper)
         
         //wait operations
         let _ = sema.wait(timeout: DispatchTime.distantFuture)
-//        if let e = ret_error {
-//            throw e
-//        }
+        //        if let e = ret_error {
+        //            throw e
+        //        }
         return ret_res
     }
     
@@ -246,18 +251,21 @@ public extension APIService {
         
         // 1 make a request , 2 wait for the respons async 3. valid response 4. parse data into response 5. some data need save into database.
         let completionWrapper: CompletionBlock = { task, res, error in
-             let realType = T.self
+            let realType = T.self
             let apiRes = realType.init()
             if error != nil {
                 //TODO check error
                 apiRes.ParseHttpError(error!, response: res)
+                if let resRaw = res {
+                    let _ = apiRes.ParseResponse(resRaw)
+                }
                 complete(task, apiRes)
                 return
             }
             
             if res == nil {
                 // TODO check res
-//                apiRes.error = NSError.badResponse()
+                //                apiRes.error = NSError.badResponse()
                 complete(task, apiRes)
                 return
             }
@@ -270,104 +278,105 @@ public extension APIService {
         }
         
         var header = route.header
-        header["x-pm-apiversion"] = route.version
+        header[HTTPHeader.apiVersion] = route.version
         self.request(method: route.method, path: route.path,
                      parameters: route.parameters,
-                     headers: [HTTPHeader.apiVersion: route.version],
+                     headers: header,
                      authenticated: route.isAuth,
-            customAuthCredential: nil, //route.authCredential,
-            completion: completionWrapper)
+                     customAuthCredential: nil, //route.authCredential,
+                     completion: completionWrapper)
     }
     
     
     func exec<T>(route: Request,
                  complete: @escaping (_ task: URLSessionDataTask?, _ result: Result<T, Error>) -> Void) where T : Codable {
         
-            // 1 make a request , 2 wait for the respons async 3. valid response 4. parse data into response 5. some data need save into database.
-            let completionWrapper: CompletionBlock = { task, res, error in
-                //                let realType = T.self
-                //                let apiRes = realType.init()
-                //                if error != nil {
-                //                    //TODO check error
-                //                    apiRes.ParseHttpError(error!, response: res)
-                //                    complete(task, apiRes)
-                //                    return
-                //                }
-                //
-                //                if res == nil {
-                //                    // TODO check res
-                //    //                apiRes.error = NSError.badResponse()
-                //                    complete(task, apiRes)
-                //                    return
-                //                }
-                //
-                //                var hasError = apiRes.ParseResponseError(res!)
-                //                if !hasError {
-                //                    hasError = !apiRes.ParseResponse(res!)
-                //                }
-                //                complete(task, apiRes)
-                //                let data = try! JSONEncoder().encode(res as! [String: Any])
-                //                let dictionary = try! JSONSerialization.jsonObject(with: data, options: .allowFragments) as! T
-                //                complete(task, dictionary)
-                //                return dictionary
-                ///TODO parse error first
-                
-                do {
-                    if let res = res {
-                        let data = try JSONSerialization.data(withJSONObject: res, options: .prettyPrinted)
-                        let decodedResponse = try JSONDecoder().decode(T.self, from: data)
-                        complete(task, .success(decodedResponse))
-                    } else {
-
-                    }
-
-                } catch let err {
-                    complete(task, .failure(err))
+        // 1 make a request , 2 wait for the respons async 3. valid response 4. parse data into response 5. some data need save into database.
+        let completionWrapper: CompletionBlock = { task, res, error in
+            //                let realType = T.self
+            //                let apiRes = realType.init()
+            //                if error != nil {
+            //                    //TODO check error
+            //                    apiRes.ParseHttpError(error!, response: res)
+            //                    complete(task, apiRes)
+            //                    return
+            //                }
+            //
+            //                if res == nil {
+            //                    // TODO check res
+            //    //                apiRes.error = NSError.badResponse()
+            //                    complete(task, apiRes)
+            //                    return
+            //                }
+            //
+            //                var hasError = apiRes.ParseResponseError(res!)
+            //                if !hasError {
+            //                    hasError = !apiRes.ParseResponse(res!)
+            //                }
+            //                complete(task, apiRes)
+            //                let data = try! JSONEncoder().encode(res as! [String: Any])
+            //                let dictionary = try! JSONSerialization.jsonObject(with: data, options: .allowFragments) as! T
+            //                complete(task, dictionary)
+            //                return dictionary
+            ///TODO parse error first
+            do {
+                if let res = res {
+                    let data = try JSONSerialization.data(withJSONObject: res, options: .prettyPrinted)
+                    let decodedResponse = try JSONDecoder().decode(T.self, from: data)
+                    complete(task, .success(decodedResponse))
+                } else {
+                    // todo fix the cast
+                    complete(task, .failure(error as! Error))
                 }
+                
+            } catch let err {
+                complete(task, .failure(err))
             }
             
-            var header = route.header
-            header["x-pm-apiversion"] = route.version
-        
-            self.request(method: route.method, path: route.path,
-                         parameters: route.parameters,
-                         headers: [HTTPHeader.apiVersion: route.version],
-                         authenticated: true,//route.getIsAuthFunction(),
-                customAuthCredential: nil, //route.authCredential,
-                completion: completionWrapper)
+            
         }
+        
+        var header = route.header
+        header[HTTPHeader.apiVersion] = route.version
+        self.request(method: route.method, path: route.path,
+                     parameters: route.parameters,
+                     headers: header,
+                     authenticated: true,//route.getIsAuthFunction(),
+                     customAuthCredential: nil, //route.authCredential,
+                     completion: completionWrapper)
+    }
     
     
-//    func exec(content: URLRequestConvertible ) {
-//           // get doh url
-//
-//           // check if enable vpn
-//
-//           //build body
-//
-//           //build the request
-//
-//           //queue requests
-//
-//           // pass request to networklayer
-//
-//           // waiting response
-//
-//           //complete/error
-//       }
-//
-//       func completeHanlding() {
-//           //
-//       }
-//       func errorHandling() {
-//           // if doh do
-//               //retry
-//           // if humanverification do
-//           // if networking issue do
-//           // if token expiared do
-//               // renew token with authitection framewrok
-//           // if renew token failed do
-//
-//           // a lot of error handling here and will trigger delegates
-//       }
+    //    func exec(content: URLRequestConvertible ) {
+    //           // get doh url
+    //
+    //           // check if enable vpn
+    //
+    //           //build body
+    //
+    //           //build the request
+    //
+    //           //queue requests
+    //
+    //           // pass request to networklayer
+    //
+    //           // waiting response
+    //
+    //           //complete/error
+    //       }
+    //
+    //       func completeHanlding() {
+    //           //
+    //       }
+    //       func errorHandling() {
+    //           // if doh do
+    //               //retry
+    //           // if humanverification do
+    //           // if networking issue do
+    //           // if token expiared do
+    //               // renew token with authitection framewrok
+    //           // if renew token failed do
+    //
+    //           // a lot of error handling here and will trigger delegates
+    //       }
 }

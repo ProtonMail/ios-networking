@@ -20,12 +20,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonMail.  If not, see <https://www.gnu.org/licenses/>.
 
-
+#if canImport(UIKit)
 import UIKit
 
 class ComposeErrorView: PMView {
-
-    
     @IBOutlet weak var errorLabel: UILabel!
     override func getNibName() -> String {
         return "ComposeErrorView"
@@ -33,11 +31,32 @@ class ComposeErrorView: PMView {
     
     func setError(_ msg : String, withShake : Bool) {
         errorLabel.text = msg
+        errorLabel.backgroundColor = UIColor(hexColorCode: "#E84118")
+        self.layoutIfNeeded()
+        if withShake {
+            errorLabel.shake(3, offset: 10)
+        }
+        Timer.scheduledTimer(withTimeInterval: 2, repeats: false) { (timer) in
+            self.isHidden = true
+        }
+    }
+    
+    func setOk(_ msg : String, withShake : Bool = false) {
+        errorLabel.text = msg
+        errorLabel.backgroundColor = UIColor(hexColorCode: "#44BD32")
         self.layoutIfNeeded()
         if withShake {
             errorLabel.shake(3, offset: 10)
         }
         
+        Timer.scheduledTimer(withTimeInterval: 2, repeats: false) { (timer) in
+            self.isHidden = true
+        }
     }
-
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        self.layer.cornerRadius = 8.0
+    }
 }
+#endif

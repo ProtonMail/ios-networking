@@ -48,7 +48,7 @@ protocol Deeplinkable: class {
 //    }
 //}
 
-extension CoordinatedNew where Self: Deeplinkable {
+extension Coordinated where Self: Deeplinkable {
     func appendDeeplink(path: DeepLink.Node) {
         guard let deeplink = self.deeplinkStorage else {
             assert(false, "Controller does not have UIWindowScene available")

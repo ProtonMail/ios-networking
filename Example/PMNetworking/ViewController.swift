@@ -36,6 +36,18 @@ class DoHMail : DoH, DoHConfig {
     static let `default` = try! DoHMail()
 }
 
+class TestDoHMail : DoH, DoHConfig {
+    //defind your default host
+    var defaultHost: String = "https://protonmail.blue"
+    //defind your query host
+    var apiHost : String = "dmfygsltqojxxi33onvqws3bomnua.protonpro.xyz"
+        
+    var defaultPath: String = "/api"
+    
+    //singleton
+    static let `default` = try! TestDoHMail()
+}
+
 
 ///each user will have one api service  & you can create more than one unauthed apiService
 ///session/auth data are controlled by a central manager. it needs to extend & implment the API service delegates.
@@ -43,6 +55,7 @@ let apiService = PMAPIService(doh: DoHMail.default)
 
 // e.g. we use main view controller as a central manager. it could be any management class instance
 class MainViewController: UIViewController {
+    let testApi = PMAPIService(doh: TestDoHMail.default, sessionUID: "testSessionUID")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,6 +78,10 @@ class MainViewController: UIViewController {
     
     /// simulate the cache of auth credential
     var authCredential : AuthCredential? = nil
+    
+    
+    
+    var blueAuthCredential : AuthCredential? = nil
     
     func testFramework() {
         if self.authCredential != nil {
@@ -129,9 +146,69 @@ class MainViewController: UIViewController {
     func testHumanVerify() {
         // setup the mock
         // make a fake call to trigger the human verify
-        
         DispatchQueue.main.async {
             
+        }
+    }
+    
+    @IBAction func triggerHumanTest(_ sender: Any) {
+        TestDoHMail.default.status = .off
+        testApi.serviceDelegate = self
+        testApi.authDelegate = self
+        let authApi: Authenticator = {
+            _ = Authenticator.Configuration(scheme: "https",
+                                            host: "api.protonmail.ch",
+                                            apiPath: "",
+                                            clientVersion: "iOS_1.12.0")
+            return Authenticator(api: testApi)
+        }()
+        
+        authApi.authenticate(username: "feng2", password: "123") { result in
+            switch result {
+            case .failure(Authenticator.Errors.serverError(let error)): // error response returned by server
+                print(error)
+            case .failure(Authenticator.Errors.emptyServerSrpAuth):
+                print("")
+            case .failure(Authenticator.Errors.emptyClientSrpAuth):
+                print("")
+            case .failure(Authenticator.Errors.wrongServerProof):
+                print("")
+            case .failure(Authenticator.Errors.emptyAuthResponse):
+                print("")
+            case .failure(Authenticator.Errors.emptyAuthInfoResponse):
+                print("")
+            case .failure(_): // network or parsing error
+                print("")
+            case .success(.ask2FA(let context)): // success but need 2FA
+                print(context)
+            case .success(.newCredential(let credential, let passwordMode)): // success without 2FA
+                self.blueAuthCredential = credential
+                print("pwd mode: \(passwordMode)")
+                //self.testAccessToken()
+                self.processTest()
+                break
+            case .success(.updatedCredential):
+                assert(false, "Should never happen in this flow")
+            }
+            print(result)
+        }
+    }
+    
+    func processTest(type: VerifyMethod? = nil, token: String? = nil) {
+        let client = TestApiClient(api: self.testApi)
+        client.triggerHumanVerify(type: type, token: token) { (_, response) in
+            if response.code == 9001 {
+                let desc = response.error?.description
+                print(response.error)
+                self.onHumanVerify(types: response.supported)
+            } else if response.code == 1000 {
+                print("Retry ok  coce : \(1000)")
+            } else if response.code == 12400 {
+                print("Retry ok  coce : \(12400)")
+            } else {
+                let desc = response.error?.description
+                print(desc)
+            }
         }
     }
     
@@ -140,15 +217,31 @@ class MainViewController: UIViewController {
     }
     
     @IBAction func humanVerifyAction(_ sender: Any) {
-        self.onHumanVerify()
+        self.onHumanVerify(types: [.capcha, .email, .sms])
+    }
+    
+    func onHumanVerify(types: [VerifyMethod]) {
+        //#1
+        let vm = HumanCheckViewModelImpl(types: types, api: testApi)
+        let coordinator = HumanCheckMenuCoordinator(nav: self.navigationController!,
+                                                    vm: vm,
+                                                    services: ServiceFactory.default)
+        coordinator?.start()
+        //#2 helper
+        
+        vm.onDoneBlock = { result in
+            let (type, token) = vm.getToken()
+            self.processTest(type: type, token: token)
+        }
+
     }
 }
 
 extension MainViewController : AuthDelegate {
     func getToken(bySessionUID uid: String) -> AuthCredential? {
         print("looking for auth UID: " + uid)
-        print("compare cache with index: \(uid == authCredential?.sessionID ?? "") ")
-        return authCredential
+        print("compare cache with index: \(uid == blueAuthCredential?.sessionID ?? "") ")
+        return self.blueAuthCredential
     }
     
     func onUpdate(auth: AuthCredential) {
@@ -202,19 +295,10 @@ extension MainViewController : APIServiceDelegate {
         // show up Doh Troubleshot view
     }
     
-    func onHumanVerify() {
-        // this part of code will be in the framework
-        let bundle = Bundle(for: HumanCheckMenuViewController.self)
-        let storyboard = UIStoryboard.init(name: "HumanVerify", bundle: bundle)
-        guard let customViewController = storyboard.instantiateViewController(withIdentifier: "HumanCheckMenuViewController") as? HumanCheckMenuViewController else {
-            print("bad")
-            return
-        }
-        customViewController.setViewModel(viewModel: HumanCheckViewModelImpl.init(types: [.email, .recaptcha, .sms]))
-        
-        self.navigationController?.pushViewController(customViewController, animated: true)
-    }
+    
 }
+
+
 
 extension MainViewController: TrustKitUIDelegate {
     func onTrustKitValidationError(_ alert: UIAlertController) {

@@ -155,6 +155,9 @@ final class UserAgent {
 
 //Protonmail api serivce. all the network requestion must go with this.
 public class PMAPIService : APIService {
+    
+    public var humanDelegate: HumanVerifyDelegate?
+    
     /// auth delegation
     public weak var authDelegate: AuthDelegate?
     

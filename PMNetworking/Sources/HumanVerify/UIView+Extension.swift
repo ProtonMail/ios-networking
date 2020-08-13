@@ -21,7 +21,7 @@
 //  along with ProtonMail.  If not, see <https://www.gnu.org/licenses/>.
 
 
-import Foundation
+#if canImport(UIKit)
 
 extension UIView {
     @discardableResult func loadFromNib<T : UIView>() -> T? {
@@ -46,9 +46,12 @@ extension UIView {
         case top, bottom, left, right
     }
     
-    func roundCorners() {
-        layer.cornerRadius = 4.0
-        
+    func roundCorners(radius : CGFloat? = nil) {
+        if let r = radius {
+            layer.cornerRadius = r
+        } else {
+            layer.cornerRadius = 4.0
+        }
         clipsToBounds = true
     }
     
@@ -117,3 +120,4 @@ extension UIView {
         self.layer.addSublayer(gradientLayer)
     }
 }
+#endif
