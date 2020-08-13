@@ -109,8 +109,14 @@ final class UserAgent {
     
     //eg. iOS/10_1
     private func deviceVersion() -> String {
+        #if canImport(UIKit)
         let currentDevice = UIDevice.current
         return "\(currentDevice.systemName)/\(currentDevice.systemVersion)"
+        #elseif canImport(AppKit)
+        return "macOS/\(ProcessInfo.processInfo.operatingSystemVersionString)"
+        #else
+        return ""
+        #endif
     }
     //eg. iPhone5,2
     private func deviceName() -> String {

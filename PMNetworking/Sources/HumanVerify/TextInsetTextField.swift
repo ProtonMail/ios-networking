@@ -20,8 +20,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonMail.  If not, see <https://www.gnu.org/licenses/>.
 
-
-import Foundation
+#if canImport(UIKit)
+import UIKit
 
 class TextInsetTextField: UITextField {
     fileprivate let inset: CGFloat = 0
@@ -34,3 +34,4 @@ class TextInsetTextField: UITextField {
         return super.textRect(forBounds: bounds).insetBy(dx: inset, dy: 0)
     }
 }
+#endif

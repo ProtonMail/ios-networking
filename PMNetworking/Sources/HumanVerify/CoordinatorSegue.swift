@@ -20,8 +20,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonMail.  If not, see <https://www.gnu.org/licenses/>.
 
-
-import Foundation
+#if canImport(UIKit)
+import UIKit
 
 /// when viewController override the 'prepare' function. don't forget to call super. it triggers the setSender.
 /// in order to use this. need to set segue class in the storyboard
@@ -42,3 +42,4 @@ class CoordinatorSegue: UIStoryboardSegue {
         }
     }
 }
+#endif
