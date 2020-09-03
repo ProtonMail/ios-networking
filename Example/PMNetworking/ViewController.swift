@@ -60,7 +60,6 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         // start a
          TrustKitWrapper.start(delegate: self)
         
@@ -155,6 +154,11 @@ class MainViewController: UIViewController {
         TestDoHMail.default.status = .off
         testApi.serviceDelegate = self
         testApi.authDelegate = self
+        
+        //set the human verification delegation
+        testApi.humanDelegate = self
+        
+        //
         let authApi: Authenticator = {
             _ = Authenticator.Configuration(scheme: "https",
                                             host: "api.protonmail.ch",
@@ -200,7 +204,7 @@ class MainViewController: UIViewController {
             if response.code == 9001 {
                 let desc = response.error?.description
                 print(response.error)
-                self.onHumanVerify(types: response.supported)
+                self.onHumanVerify(methods: response.supported)
             } else if response.code == 1000 {
                 print("Retry ok  coce : \(1000)")
             } else if response.code == 12400 {
@@ -217,23 +221,16 @@ class MainViewController: UIViewController {
     }
     
     @IBAction func humanVerifyAction(_ sender: Any) {
-        self.onHumanVerify(types: [.capcha, .email, .sms])
+        self.onHumanVerify(methods: [.capcha, .email, .sms])
     }
-    
-    func onHumanVerify(types: [VerifyMethod]) {
-        //#1
-        let vm = HumanCheckViewModelImpl(types: types, api: testApi)
-        let coordinator = HumanCheckMenuCoordinator(nav: self.navigationController!,
-                                                    vm: vm,
-                                                    services: ServiceFactory.default)
-        coordinator?.start()
-        //#2 helper
+   
+    @IBAction func dohUIAction(_ sender: Any) {
         
-        vm.onDoneBlock = { result in
-            let (type, token) = vm.getToken()
-            self.processTest(type: type, token: token)
-        }
-
+        
+//        let vm = NetworkTroubleShootViewModelImpl()
+        let coordinator = NetworkTroubleShootCoordinator(nav: self.navigationController!,
+                                                    services: ServiceFactory.default)
+        coordinator.start()
     }
 }
 
@@ -294,8 +291,26 @@ extension MainViewController : APIServiceDelegate {
     func onDohTroubleshot() {
         // show up Doh Troubleshot view
     }
-    
-    
+}
+
+
+extension MainViewController: HumanVerifyDelegate {
+    func onHumanVerify(methods types: [VerifyMethod]) {
+        //#1
+        
+        let vm = HumanCheckViewModelImpl(types: types, api: testApi)
+        let coordinator = HumanCheckMenuCoordinator(nav: self.navigationController!,
+                                                    vm: vm,
+                                                    services: ServiceFactory.default)
+        coordinator?.start()
+        //#2 helper
+        
+        vm.onDoneBlock = { result in
+            let (type, token) = vm.getToken()
+            self.processTest(type: type, token: token)
+        }
+
+    }
 }
 
 

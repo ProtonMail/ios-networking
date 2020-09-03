@@ -57,11 +57,11 @@ public protocol Coordinator : AnyObject {
 
 /// Navigate and stop methods are optional
 extension Coordinator {
-    func navigate(from source: UIViewController, to destination: UIViewController, with identifier: String?, and sender: AnyObject?) -> Bool {
+    public func navigate(from source: UIViewController, to destination: UIViewController, with identifier: String?, and sender: AnyObject?) -> Bool {
         return false
     }
     
-    func stop() {
+    public func stop() {
         
     }
 }
@@ -104,14 +104,14 @@ extension PushCoordinator where VC: UIViewController, VC: Coordinated {
     }
 }
 
-protocol ModalCoordinator: DefaultCoordinator {
+public protocol ModalCoordinator: DefaultCoordinator {
     var configuration: ((VC) -> ())? { get }
     var navigationController: UINavigationController? { get }
     var destinationNavigationController: UINavigationController? { get }
 }
 
 extension ModalCoordinator where VC: UIViewController, VC: Coordinated {
-    func start() {
+    public func start() {
         guard let viewController = viewController else {
             return
         }
@@ -128,7 +128,7 @@ extension ModalCoordinator where VC: UIViewController, VC: Coordinated {
         }
     }
     
-    func stop() {
+    public func stop() {
         delegate?.willStop(in: self)
         viewController?.dismiss(animated: true, completion: {
             self.delegate?.didStop(in: self)

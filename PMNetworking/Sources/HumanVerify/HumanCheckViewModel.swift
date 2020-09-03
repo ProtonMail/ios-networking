@@ -144,12 +144,16 @@ public protocol HumanCheckViewModel : class {
     
     public func sendVerifyCode(_ type: VerifyMethod, complete: SendVerificationCodeBlock) {
         
-        let t : HumanVerificationToken.TokenType = self.type == .email ? .email : .sms
+        let t : HumanVerificationToken.TokenType = type == .email ? .email : .sms
         let route = UserAPI.Router.code(type: t, receiver: destination)
         self.apiService.exec(route: route) { (task, response) in
-            if response.code != 200 { //} !hasError {
+            if response.code != 1000 { //} !hasError {
                 //self.lastSendTime = Date()
+            } else {
+                print("200 get code")
             }
+            
+           
             //complete(!hasError, response?.error)
         }
     }

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="kN8-ZJ-W2a">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="kN8-ZJ-W2a">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17124"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -40,7 +41,7 @@
                                                     <outlet property="delegate" destination="XYV-2Y-X0C" id="LJa-r6-xeN"/>
                                                 </connections>
                                             </webView>
-                                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uOc-mm-9Q7">
+                                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uOc-mm-9Q7">
                                                 <rect key="frame" x="87.5" y="133" width="200" height="42"/>
                                                 <color key="backgroundColor" red="0.56862745100000001" green="0.59999999999999998" blue="0.79607843140000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
@@ -133,7 +134,7 @@
                             </imageView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="J5Y-XM-Jb6">
                                 <rect key="frame" x="16" y="44" width="343" height="623"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <label key="tableHeaderView" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Do you need any help with the human verification? Here would be a help text." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="A6R-hN-ChJ">
                                     <rect key="frame" x="0.0" y="0.0" width="343" height="61"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -142,7 +143,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="help_cell" rowHeight="134" id="5pS-E3-X2d" customClass="HelpTableViewCell" customModule="PMCommon" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="help_cell" rowHeight="134" id="5pS-E3-X2d" customClass="HelpTableViewCell" customModule="PMCommon" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="89" width="343" height="134"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="5pS-E3-X2d" id="y2y-wu-cTX">
@@ -150,7 +151,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1SH-jy-8Bu">
-                                                    <rect key="frame" x="47" y="19" width="273" height="21"/>
+                                                    <rect key="frame" x="36" y="19" width="263" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="tMI-uK-pyX"/>
                                                     </constraints>
@@ -159,35 +160,46 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U0B-DX-6xR">
-                                                    <rect key="frame" x="47" y="40" width="281" height="83"/>
+                                                    <rect key="frame" x="36" y="40" width="291" height="83"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jAI-ku-Vd9">
-                                                    <rect key="frame" x="23" y="19" width="16" height="16"/>
-                                                    <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <rect key="frame" x="12" y="19" width="16" height="16"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="16" id="ARU-8y-TH8"/>
                                                         <constraint firstAttribute="width" constant="16" id="Qor-Da-Kdb"/>
                                                     </constraints>
                                                 </imageView>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic-arrow-right" highlightedImage="ic-arrow-right" translatesAutoresizingMaskIntoConstraints="NO" id="aF3-5O-H4e" userLabel="right image">
+                                                    <rect key="frame" x="303" y="19" width="16" height="16"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="16" id="0JS-u9-Xa9"/>
+                                                        <constraint firstAttribute="width" constant="16" id="k03-FO-DTl"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="jAI-ku-Vd9" firstAttribute="leading" secondItem="y2y-wu-cTX" secondAttribute="leadingMargin" constant="8" id="2XL-Lr-RV9"/>
+                                                <constraint firstItem="jAI-ku-Vd9" firstAttribute="leading" secondItem="y2y-wu-cTX" secondAttribute="leading" constant="12" id="2XL-Lr-RV9"/>
                                                 <constraint firstItem="U0B-DX-6xR" firstAttribute="top" secondItem="1SH-jy-8Bu" secondAttribute="bottom" id="8gL-Hm-z64"/>
+                                                <constraint firstItem="aF3-5O-H4e" firstAttribute="top" secondItem="y2y-wu-cTX" secondAttribute="topMargin" constant="8" id="FFl-Ye-aVV"/>
                                                 <constraint firstItem="jAI-ku-Vd9" firstAttribute="top" secondItem="y2y-wu-cTX" secondAttribute="topMargin" constant="8" id="I0x-wG-Ded"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="U0B-DX-6xR" secondAttribute="trailing" id="JqP-OS-Gwx"/>
                                                 <constraint firstItem="1SH-jy-8Bu" firstAttribute="leading" secondItem="jAI-ku-Vd9" secondAttribute="trailing" constant="8" id="MYH-9K-3CL"/>
                                                 <constraint firstItem="U0B-DX-6xR" firstAttribute="leading" secondItem="1SH-jy-8Bu" secondAttribute="leading" id="STx-8f-6B3"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="U0B-DX-6xR" secondAttribute="bottom" id="axi-Xk-U7Y"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="1SH-jy-8Bu" secondAttribute="trailing" constant="8" id="e8B-aD-iGs"/>
+                                                <constraint firstItem="aF3-5O-H4e" firstAttribute="leading" secondItem="1SH-jy-8Bu" secondAttribute="trailing" constant="4" id="ctT-S1-jTj"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="aF3-5O-H4e" secondAttribute="trailing" constant="8" id="qGA-LK-nw3"/>
                                                 <constraint firstItem="1SH-jy-8Bu" firstAttribute="top" secondItem="y2y-wu-cTX" secondAttribute="topMargin" constant="8" id="y3s-a6-7oL"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="detailLabel" destination="U0B-DX-6xR" id="49o-VA-oS3"/>
                                             <outlet property="leftImage" destination="jAI-ku-Vd9" id="dOX-KN-dm8"/>
+                                            <outlet property="rightImage" destination="aF3-5O-H4e" id="HSY-p5-rac"/>
                                             <outlet property="topLabel" destination="1SH-jy-8Bu" id="Rek-hu-n4u"/>
                                         </connections>
                                     </tableViewCell>
@@ -269,7 +281,7 @@
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Human Verification" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ND6-no-hE2">
-                                                <rect key="frame" x="72.5" y="121" width="230" height="36"/>
+                                                <rect key="frame" x="72.5" y="121" width="230.5" height="36"/>
                                                 <fontDescription key="fontDescription" type="system" weight="thin" pointSize="30"/>
                                                 <color key="textColor" red="0.31372549020000001" green="0.31372549020000001" blue="0.3803921569" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -301,7 +313,7 @@ we need to verify that you are human.</string>
                                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Aq3-VR-LLt" userLabel="recaptcha_view">
                                                 <rect key="frame" x="37.5" y="298" width="300" height="0.0"/>
                                                 <subviews>
-                                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZwP-bW-2uu">
+                                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZwP-bW-2uu">
                                                         <rect key="frame" x="50" y="-21" width="200" height="42"/>
                                                         <color key="backgroundColor" red="0.56862745100000001" green="0.59999999999999998" blue="0.79607843140000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
@@ -333,7 +345,7 @@ we need to verify that you are human.</string>
                                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o0O-pA-70q">
                                                 <rect key="frame" x="37.5" y="298" width="300" height="0.0"/>
                                                 <subviews>
-                                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oEd-L3-e9c">
+                                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oEd-L3-e9c">
                                                         <rect key="frame" x="50" y="-21" width="200" height="42"/>
                                                         <color key="backgroundColor" red="0.56862745100000001" green="0.59999999999999998" blue="0.79607843140000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
@@ -365,7 +377,7 @@ we need to verify that you are human.</string>
                                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hmd-Tr-A1H">
                                                 <rect key="frame" x="37.5" y="298" width="300" height="0.0"/>
                                                 <subviews>
-                                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xSN-yE-FoB">
+                                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xSN-yE-FoB">
                                                         <rect key="frame" x="50" y="-21" width="200" height="42"/>
                                                         <color key="backgroundColor" red="0.56862745100000001" green="0.59999999999999998" blue="0.79607843140000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
@@ -503,7 +515,7 @@ we need to verify that you are human.</string>
                                             </label>
                                             <view hidden="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ojm-hs-grn" customClass="ComposeErrorView" customModule="PMCommon" customModuleProvider="target">
                                                 <rect key="frame" x="28" y="24" width="319" height="46"/>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="46" id="CXV-I6-JmE"/>
                                                 </constraints>
@@ -542,7 +554,7 @@ we need to verify that you are human.</string>
                                                     <constraint firstAttribute="height" constant="50" id="g7L-mQ-xPE"/>
                                                 </constraints>
                                             </view>
-                                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="05y-zb-VWq">
+                                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="05y-zb-VWq">
                                                 <rect key="frame" x="36" y="250" width="303" height="42"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="42" id="gfX-Oy-q0z"/>
@@ -569,7 +581,7 @@ we need to verify that you are human.</string>
                                                 <color key="textColor" red="0.31372549020000001" green="0.31372549020000001" blue="0.3803921569" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bbK-y4-wPa">
+                                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bbK-y4-wPa">
                                                 <rect key="frame" x="36" y="200" width="303" height="42"/>
                                                 <color key="backgroundColor" red="0.396078431372549" green="0.49411764705882355" blue="0.89411764705882346" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <constraints>
@@ -693,7 +705,7 @@ we need to verify that you are human.</string>
                                             </label>
                                             <view hidden="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qqh-sw-UIq" customClass="ComposeErrorView" customModule="PMCommon" customModuleProvider="target">
                                                 <rect key="frame" x="28" y="24" width="319" height="46"/>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="46" id="7i4-iP-S8p"/>
                                                 </constraints>
@@ -708,7 +720,7 @@ we need to verify that you are human.</string>
                                                             <constraint firstAttribute="height" constant="1" id="25k-D5-r0J"/>
                                                         </constraints>
                                                     </view>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QPe-tj-Afs">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QPe-tj-Afs">
                                                         <rect key="frame" x="0.0" y="0.0" width="60" height="49"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="60" id="dcq-O2-Uk4"/>
@@ -750,7 +762,7 @@ we need to verify that you are human.</string>
                                                     <constraint firstAttribute="height" constant="50" id="z0L-nL-Sed"/>
                                                 </constraints>
                                             </view>
-                                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lNF-QJ-adk">
+                                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lNF-QJ-adk">
                                                 <rect key="frame" x="28" y="261" width="319" height="42"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="42" id="k8S-5t-WXe"/>
@@ -777,7 +789,7 @@ we need to verify that you are human.</string>
                                                 <color key="textColor" red="0.31372549020000001" green="0.31372549020000001" blue="0.3803921569" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hpx-h5-Gvz">
+                                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hpx-h5-Gvz">
                                                 <rect key="frame" x="28" y="211" width="319" height="42"/>
                                                 <color key="backgroundColor" red="0.41511026020000003" green="0.49069678779999998" blue="0.86671131850000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <constraints>
@@ -889,10 +901,10 @@ we need to verify that you are human.</string>
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                             </imageView>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gkN-Cf-t1a">
-                                <rect key="frame" x="16" y="8" width="343" height="619"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your Country Code" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Rg-mL-nYy">
-                                        <rect key="frame" x="16" y="16" width="311" height="20"/>
+                                        <rect key="frame" x="16" y="16" width="343" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20" id="Svh-mW-FRb"/>
                                         </constraints>
@@ -901,24 +913,24 @@ we need to verify that you are human.</string>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="106" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="1Vx-YJ-aJb">
-                                        <rect key="frame" x="8" y="44" width="327" height="522"/>
+                                        <rect key="frame" x="8" y="44" width="359" height="550"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <prototypes>
                                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="country_code_table_cell" rowHeight="106" id="KK0-qX-D2O" customClass="CountryCodeTableViewCell" customModule="PMCommon" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="28" width="327" height="106"/>
+                                                <rect key="frame" x="0.0" y="28" width="359" height="106"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KK0-qX-D2O" id="znd-i8-G90">
-                                                    <rect key="frame" x="0.0" y="0.0" width="327" height="106"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="359" height="106"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Country name" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jWm-Zt-clR">
-                                                            <rect key="frame" x="28" y="44.5" width="250.5" height="17"/>
+                                                            <rect key="frame" x="28" y="44.5" width="283" height="17"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="+9999" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PfO-pL-Zk0">
-                                                            <rect key="frame" x="278.5" y="44.5" width="44.5" height="17"/>
+                                                            <rect key="frame" x="311" y="44.5" width="44" height="17"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -954,10 +966,10 @@ we need to verify that you are human.</string>
                                         </connections>
                                     </tableView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zZ7-Hm-NrN">
-                                        <rect key="frame" x="0.0" y="574" width="343" height="45"/>
+                                        <rect key="frame" x="0.0" y="602" width="375" height="45"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lq9-2T-Q4L">
-                                                <rect key="frame" x="0.0" y="1" width="171" height="44"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lq9-2T-Q4L">
+                                                <rect key="frame" x="0.0" y="1" width="187" height="44"/>
                                                 <color key="backgroundColor" red="0.96862745100000003" green="0.96470588239999999" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                 <state key="normal" title="Cancel">
@@ -968,8 +980,8 @@ we need to verify that you are human.</string>
                                                     <action selector="cancelAction:" destination="jlT-c5-bVR" eventType="touchUpInside" id="enJ-gt-bkJ"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qt8-jt-XRz">
-                                                <rect key="frame" x="172" y="1" width="171" height="44"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qt8-jt-XRz">
+                                                <rect key="frame" x="188" y="1" width="187" height="44"/>
                                                 <color key="backgroundColor" red="0.96862745100000003" green="0.96470588239999999" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                 <state key="normal" title="Apply">
@@ -1015,12 +1027,11 @@ we need to verify that you are human.</string>
                             <constraint firstAttribute="trailing" secondItem="CNJ-lB-lRs" secondAttribute="trailing" id="D7d-ow-WoM"/>
                             <constraint firstAttribute="bottom" secondItem="CNJ-lB-lRs" secondAttribute="bottom" id="DEW-bD-97n"/>
                             <constraint firstItem="CNJ-lB-lRs" firstAttribute="top" secondItem="eN8-3I-evI" secondAttribute="top" id="Pgi-AP-kQv"/>
-                            <constraint firstItem="6A6-R9-4S3" firstAttribute="top" secondItem="gkN-Cf-t1a" secondAttribute="bottom" constant="20" id="TZS-Hl-Aur"/>
-                            <constraint firstItem="gkN-Cf-t1a" firstAttribute="top" secondItem="3rM-PF-1ZH" secondAttribute="bottom" constant="8" id="YU3-TW-OxI"/>
-                            <constraint firstAttribute="centerX" secondItem="gkN-Cf-t1a" secondAttribute="centerX" id="kM3-qN-VYD"/>
+                            <constraint firstItem="6A6-R9-4S3" firstAttribute="top" secondItem="gkN-Cf-t1a" secondAttribute="bottom" id="TZS-Hl-Aur"/>
+                            <constraint firstItem="gkN-Cf-t1a" firstAttribute="top" secondItem="3rM-PF-1ZH" secondAttribute="bottom" id="YU3-TW-OxI"/>
                             <constraint firstItem="CNJ-lB-lRs" firstAttribute="leading" secondItem="eN8-3I-evI" secondAttribute="leading" id="p1V-Dy-GaK"/>
-                            <constraint firstAttribute="trailing" secondItem="gkN-Cf-t1a" secondAttribute="trailing" constant="16" id="wq5-5Q-RXS"/>
-                            <constraint firstItem="gkN-Cf-t1a" firstAttribute="leading" secondItem="eN8-3I-evI" secondAttribute="leading" constant="16" id="xwh-rX-B08"/>
+                            <constraint firstAttribute="trailing" secondItem="gkN-Cf-t1a" secondAttribute="trailing" id="wq5-5Q-RXS"/>
+                            <constraint firstItem="gkN-Cf-t1a" firstAttribute="leading" secondItem="eN8-3I-evI" secondAttribute="leading" id="xwh-rX-B08"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="sge-Ep-Shh"/>
@@ -1106,7 +1117,14 @@ we need to verify that you are human.</string>
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="cvn-xC-D2z">
                         <barButtonItem key="backBarButtonItem" title=" " id="LrA-eU-7Hk"/>
+                        <barButtonItem key="leftBarButtonItem" title="Item" image="ic-close" landscapeImage="ic-close" id="qkf-WB-zOs">
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <action selector="closeAction:" destination="Wxg-Gt-OHZ" id="J1G-78-fhW"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Help" id="yYS-ww-kFh">
+                            <color key="tintColor" red="0.396078431372549" green="0.49411764705882355" blue="0.89411764705882346" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="helpAction:" destination="Wxg-Gt-OHZ" id="MiD-5z-Yp0"/>
                             </connections>
@@ -1163,7 +1181,7 @@ we need to verify that you are human.</string>
                                                     </view>
                                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="example@protonmail.com" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="TJq-tu-0tC" customClass="TextInsetTextField" customModule="PMCommon" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="319" height="40"/>
-                                                        <color key="backgroundColor" systemColor="systemGray5Color" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="backgroundColor" systemColor="systemGray5Color"/>
                                                         <color key="textColor" red="0.56862745100000001" green="0.59999999999999998" blue="0.79607843140000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress" returnKeyType="next" enablesReturnKeyAutomatically="YES" textContentType="email"/>
@@ -1185,7 +1203,7 @@ we need to verify that you are human.</string>
                                                     <constraint firstItem="TJq-tu-0tC" firstAttribute="leading" secondItem="WyN-sE-CQq" secondAttribute="leading" id="zNx-6j-xn9"/>
                                                 </constraints>
                                             </view>
-                                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bZh-lQ-Mbv">
+                                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bZh-lQ-Mbv">
                                                 <rect key="frame" x="28" y="264.5" width="319" height="42"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="42" id="WFp-R0-pim"/>
@@ -1210,7 +1228,7 @@ we need to verify that you are human.</string>
                                                 <color key="textColor" red="0.31372549020000001" green="0.31372549020000001" blue="0.3803921569" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hr8-DY-hs8">
+                                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hr8-DY-hs8">
                                                 <rect key="frame" x="28" y="196.5" width="319" height="42"/>
                                                 <color key="backgroundColor" red="0.56862745100000001" green="0.59999999999999998" blue="0.79607843140000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
@@ -1329,7 +1347,7 @@ we need to verify that you are human.</string>
                                             </label>
                                             <view hidden="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="m0v-pW-je1" customClass="ComposeErrorView" customModule="PMCommon" customModuleProvider="target">
                                                 <rect key="frame" x="28" y="18" width="319" height="46"/>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="46" id="cNY-zI-2tl"/>
                                                 </constraints>
@@ -1350,7 +1368,7 @@ we need to verify that you are human.</string>
                                                             <constraint firstAttribute="height" constant="1" id="CGi-mD-JPV"/>
                                                         </constraints>
                                                     </view>
-                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter Verification Code" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="Ald-uj-OGn" customClass="TextInsetTextField" customModule="PMCommon" customModuleProvider="target">
+                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter Verification Code" minimumFontSize="12" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Ald-uj-OGn" customClass="TextInsetTextField" customModule="PMCommon" customModuleProvider="target">
                                                         <rect key="frame" x="6" y="0.0" width="313" height="50"/>
                                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <color key="textColor" red="0.090196078430000007" green="0.094117647060000004" blue="0.10980392160000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1380,7 +1398,7 @@ we need to verify that you are human.</string>
                                                 <color key="textColor" red="0.31372549020000001" green="0.31372549020000001" blue="0.3803921569" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9O8-Ud-d6E">
+                                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9O8-Ud-d6E">
                                                 <rect key="frame" x="28" y="216" width="319" height="42"/>
                                                 <color key="backgroundColor" red="0.31372549019607843" green="0.39215686274509803" blue="0.71372549019607845" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
@@ -1402,13 +1420,13 @@ we need to verify that you are human.</string>
                                                     <action selector="verifyCodeAction:" destination="5GO-eP-O0i" eventType="touchUpInside" id="7uc-23-chT"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l1B-Mk-fDQ">
+                                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l1B-Mk-fDQ">
                                                 <rect key="frame" x="28" y="262" width="319" height="42"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="42" id="smH-5c-ANA"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                <state key="normal" title="Request replacement code">
+                                                <state key="normal" title="Did not receive the code?">
                                                     <color key="titleColor" red="0.396078431372549" green="0.49411764705882355" blue="0.89411764705882346" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
                                                 <state key="disabled">
@@ -1499,8 +1517,16 @@ we need to verify that you are human.</string>
         <segue reference="PYV-F0-FTL"/>
     </inferredMetricsTieBreakers>
     <resources>
+        <image name="ic-arrow-right" width="19.5" height="17.5"/>
+        <image name="ic-close" width="24" height="24"/>
         <image name="popup_behind_image" width="106.66666412353516" height="153.33332824707031"/>
         <image name="signup_back" width="13" height="21.5"/>
         <image name="signup_logo" width="98" height="16"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray5Color">
+            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
     </resources>
 </document>

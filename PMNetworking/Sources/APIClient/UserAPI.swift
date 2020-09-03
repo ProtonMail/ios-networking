@@ -187,12 +187,13 @@ public class UserAPI : APIClient {
                 case .payment, .invite, .captcha:
                     fatalError("Wrong parameter used. Payment is not supported by code endpoint.")
                 }
-                return [
+                let out : [String : Any] = [
                     "Type": type.rawValue,
                     "Destination": [
                         destinationType: receiver
                     ]
                 ]
+                return out
             case .check(let token):
                 return [
                     "Token": "\(token.fullValue)",

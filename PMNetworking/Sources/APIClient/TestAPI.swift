@@ -52,8 +52,7 @@ public enum VerifyMethod : String {
             return nil
         }
     }
-    
-    var toString : String {
+    var localizedTitle : String {
         switch self {
         case .sms:
             return "SMS"
@@ -61,6 +60,19 @@ public enum VerifyMethod : String {
             return "Email"
         case .capcha:
             return "CAPCHA"
+        default:
+            return ""
+        }
+    }
+    
+    var toString : String {
+        switch self {
+        case .sms:
+            return "sms"
+        case .email:
+            return "email"
+        case .capcha:
+            return "capcha"
         default:
             return ""
         }
@@ -81,19 +93,19 @@ public class TestApiClient : Client {
             }
         }
         public var isAuth: Bool {
-            return false
+            return true
         }
         public var header: [String : Any] {
-//            switch self {
-//            case .humanverify(let type, let token):
-//                if let t = type, let str = token {
-//                    let dict = ["x-pm-human-verification-token-type": t.toString,
-//                                "x-pm-human-verification-token": str,
-//                                "TokenType": t.toString,
-//                                "Token": str]
-//                    return dict
-//                }
-//            }
+            switch self {
+            case .humanverify(let type, let token):
+                if let t = type, let str = token {
+                    let dict = ["x-pm-human-verification-token-type": t.toString,
+                                "x-pm-human-verification-token": str,
+                                "TokenType": t.toString,
+                                "Token": str]
+                    return dict
+                }
+            }
             return [:]
         }
         public var apiVersion: Int {
@@ -106,14 +118,6 @@ public class TestApiClient : Client {
             }
         }
         public var parameters: [String: Any]? {
-            switch self {
-            case .humanverify(let type, let token):
-                if let t = type, let str = token {
-                    let dict = ["TokenType": t.toString,
-                                "Token": str]
-                    return dict
-                }
-            }
             return [:]
         }
     }
