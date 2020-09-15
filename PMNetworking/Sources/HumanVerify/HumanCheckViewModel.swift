@@ -124,7 +124,7 @@ public protocol HumanCheckViewModel : class {
         return "Code sent to \(self.destination)"
     }
     
-    public var type: VerifyMethod = .capcha
+    public var type: VerifyMethod = .captcha
     
     public func getDestination() -> String {
         return self.destination

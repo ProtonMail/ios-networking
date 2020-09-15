@@ -30,7 +30,7 @@ import Foundation
 //Humanverify test: https://gitlab.protontech.ch/ProtonMail/Slim-API/blob/develop/api-spec/pm_api_test.md
 
 public enum VerifyMethod : String {
-    case capcha
+    case captcha
     case sms
     case email
     case invite
@@ -47,7 +47,7 @@ public enum VerifyMethod : String {
         switch rawValue {
         case "sms": self = .sms
         case "email": self = .email
-        case "capcha": self = .capcha
+        case "captcha": self = .captcha
         default:
             return nil
         }
@@ -58,8 +58,8 @@ public enum VerifyMethod : String {
             return "SMS"
         case .email:
             return "Email"
-        case .capcha:
-            return "CAPCHA"
+        case .captcha:
+            return "CAPTCHA"
         default:
             return ""
         }
@@ -71,8 +71,8 @@ public enum VerifyMethod : String {
             return "sms"
         case .email:
             return "email"
-        case .capcha:
-            return "capcha"
+        case .captcha:
+            return "captcha"
         default:
             return ""
         }

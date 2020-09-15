@@ -144,7 +144,7 @@ final public class HumanCheckMenuViewController: UIViewController, ViewModelProt
         switch item {
         case .email:
             self.add(asChildViewController: email)
-        case .capcha:
+        case .captcha:
             self.add(asChildViewController: capcha)
         case .sms:
             self.add(asChildViewController: sms)

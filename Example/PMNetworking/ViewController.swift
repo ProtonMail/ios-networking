@@ -221,7 +221,7 @@ class MainViewController: UIViewController {
     }
     
     @IBAction func humanVerifyAction(_ sender: Any) {
-        self.onHumanVerify(methods: [.capcha, .email, .sms])
+        self.onHumanVerify(methods: [.captcha, .email, .sms])
     }
    
     @IBAction func dohUIAction(_ sender: Any) {
