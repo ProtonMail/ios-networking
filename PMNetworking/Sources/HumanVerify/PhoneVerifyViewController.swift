@@ -151,6 +151,9 @@ class PhoneVerifyViewController: UIViewController { //}, SignupViewModelDelegate
             let viewController = segue.destination as! VerifyCodeViewController
             self.viewModel.type = .sms
             viewController.viewModel = self.viewModel
+        } else if segue.identifier == kSegueToCountryPicker {
+            let popup = segue.destination as! CountryPickerViewController
+            popup.delegate = self
         }
     }
     

@@ -131,23 +131,8 @@ class EmailVerifyViewController: UIViewController { //}, SignupViewModelDelegate
     @IBAction func haveCodeAction(_ sender: Any) {
         
         let emailaddress = emailTextField.text
-        
-        guard let email = emailaddress else {
-            self.errorView.isHidden = false
-            self.errorView.setError("email is empty", withShake: true)
-            return
-        }
-        
-        if !email.isValidEmail() {
-            //show error
-            self.errorView.isHidden = false
-            self.errorView.setError("invalid email address", withShake: true)
-            return
-        } else {
-            //clear error
-            self.errorView.isHidden = true
-        }
-        self.viewModel.setEmail(email: email)
+        self.viewModel.setEmail(email: emailaddress ?? "")
+        self.errorView.isHidden = true
         self.performSegue(withIdentifier: self.kSegueToVerifyCode, sender: self)
     }
     

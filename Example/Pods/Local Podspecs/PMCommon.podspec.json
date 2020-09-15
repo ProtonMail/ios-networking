@@ -51,7 +51,10 @@
         "PMCommon/Authentication": [
 
         ],
-        "PMCommon/HumanVerify": [
+        "PMCommon/HumanVerifyUI": [
+
+        ],
+        "PMCommon/DohUI": [
 
         ]
       }
@@ -99,7 +102,7 @@
       "source_files": "PMNetworking/Sources/Authentication/**/*"
     },
     {
-      "name": "HumanVerify",
+      "name": "HumanVerifyUI",
       "dependencies": {
         "PMCommon/APIClient": [
 
@@ -113,6 +116,18 @@
       },
       "osx": {
         "source_files": "PMNetworking/Sources/HumanVerify/**/*"
+      }
+    },
+    {
+      "name": "DohUI",
+      "ios": {
+        "source_files": "PMNetworking/Sources/DohUI/**/*",
+        "resources": [
+          "PMNetworking/Assets/DohUI/**/*"
+        ]
+      },
+      "osx": {
+        "source_files": "PMNetworking/Sources/DohUI/**/*"
       }
     }
   ],

@@ -113,6 +113,11 @@ extension String {
         return String.emailTest.evaluate(with: self)
     }
     
+    func sixDigits() -> Bool {
+        let regex = NSPredicate(format:"SELF MATCHES[c] %@", "\\d{6}")
+        return regex.evaluate(with: self)
+    }
+    
     /**
      String extension for remove the whitespaces begain&end
      

@@ -138,10 +138,19 @@ class VerifyCodeViewController: UIViewController { //}, SignupViewModelDelegate 
     }
     
     @IBAction func verifyCodeAction(_ sender: Any) {
-        let phonenumber = (verifyCodeTextField.text ?? "").trim()
-        if phonenumber.count == 6 {
+        let code = (verifyCodeTextField.text ?? "").trim()
+        
+        
+        guard code.sixDigits() else {
+            self.errorView.isHidden = false
+            self.errorView.setError("Incorrect code. must be 6 digits", withShake: true)
+            return
+        }
+        
+        
+        if code.count == 6 {
             //ok
-            self.viewModel.finalToken(token: phonenumber)
+            self.viewModel.finalToken(token: code)
             // verify 6 digits only
             let _ = self.navigationController?.popToRootViewController(animated: true)
         } else {
@@ -152,7 +161,7 @@ class VerifyCodeViewController: UIViewController { //}, SignupViewModelDelegate 
     
     @IBAction func requestReplacementAction(_ sender: Any) {
         self.errorView.isHidden = true
-        let alert = UIAlertController(title: "Request new code?", message: "Get a replacement code send to \(self.viewModel.getDestination()).", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Request new code?", message: "Get a replacement code sent to \(self.viewModel.getDestination()).", preferredStyle: .alert)
         
         alert.addAction(.init(title: "Request new code", style: .default, handler: { _ in
             self.errorView.isHidden = false

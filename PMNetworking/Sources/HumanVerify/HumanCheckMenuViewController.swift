@@ -77,7 +77,7 @@ final public class HumanCheckMenuViewController: UIViewController, ViewModelProt
         self.segmentControl.removeAllSegments()
         
         for (index, value) in self.viewModel.verifyTypes.enumerated() {
-            segmentControl.insertSegment(withTitle: value.toString, at: index, animated: false)
+            segmentControl.insertSegment(withTitle: value.localizedTitle, at: index, animated: false)
         }
         segmentControl.addTarget(self, action: #selector(selectionDidChange(_:)), for: .valueChanged)
 
@@ -90,6 +90,10 @@ final public class HumanCheckMenuViewController: UIViewController, ViewModelProt
     
     @IBAction func helpAction(_ sender: Any) {
         self.performSegue(withIdentifier: self.kSegueToHelp, sender: self)
+    }
+    
+    @IBAction func closeAction(_ sender: Any) {
+        let _ = self.navigationController?.popViewController(animated: true)
     }
     
     //TODO:: subviews coordinator
@@ -140,7 +144,7 @@ final public class HumanCheckMenuViewController: UIViewController, ViewModelProt
         switch item {
         case .email:
             self.add(asChildViewController: email)
-        case .capcha:
+        case .captcha:
             self.add(asChildViewController: capcha)
         case .sms:
             self.add(asChildViewController: sms)

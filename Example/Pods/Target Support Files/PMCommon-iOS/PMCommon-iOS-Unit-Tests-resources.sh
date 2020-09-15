@@ -97,14 +97,18 @@ EOM
   esac
 }
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_resource "${PODS_ROOT}/../../PMNetworking/Assets/DohUI/Alerts.storyboard"
   install_resource "${PODS_ROOT}/../../PMNetworking/Assets/HumanVerify/ComposeErrorView.xib"
   install_resource "${PODS_ROOT}/../../PMNetworking/Assets/HumanVerify/HumanVerify.storyboard"
   install_resource "${PODS_ROOT}/../../PMNetworking/Assets/HumanVerify/phone_country_code.geojson"
+  install_resource "${PODS_ROOT}/../../PMNetworking/Assets/HumanVerify/HumanVerify.xcassets"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_resource "${PODS_ROOT}/../../PMNetworking/Assets/DohUI/Alerts.storyboard"
   install_resource "${PODS_ROOT}/../../PMNetworking/Assets/HumanVerify/ComposeErrorView.xib"
   install_resource "${PODS_ROOT}/../../PMNetworking/Assets/HumanVerify/HumanVerify.storyboard"
   install_resource "${PODS_ROOT}/../../PMNetworking/Assets/HumanVerify/phone_country_code.geojson"
+  install_resource "${PODS_ROOT}/../../PMNetworking/Assets/HumanVerify/HumanVerify.xcassets"
 fi
 
 mkdir -p "${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"

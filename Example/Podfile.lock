@@ -38,10 +38,12 @@ PODS:
   - PMCommon/Default (0.1.0):
     - PMCommon/APIClient
     - PMCommon/Authentication
-    - PMCommon/HumanVerify
+    - PMCommon/DohUI
+    - PMCommon/HumanVerifyUI
     - PMCommon/Networking
     - PMCommon/Services
-  - PMCommon/HumanVerify (0.1.0):
+  - PMCommon/DohUI (0.1.0)
+  - PMCommon/HumanVerifyUI (0.1.0):
     - PMCommon/APIClient
   - PMCommon/Networking (0.1.0):
     - AFNetworking (~> 4.0)
@@ -79,7 +81,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   AFNetworking: 7864c38297c79aaca1500c33288e429c3451fdce
   OHHTTPStubs: cb29d2a9d09a828ecb93349a2b0c64f99e0db89f
-  PMCommon: 2fe948a49a0e33cabc432a07d826de2a587dac1e
+  PMCommon: 19787bc5a0e102b40936bb3b2944d89f195e22cc
   PMCrypto: 70361d6a49e834bfae377b3b4524c2b305fb95c4
   TrustKit: 0a64b37d31518f16e344ceaf27e129dde624ce75
 

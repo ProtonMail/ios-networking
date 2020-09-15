@@ -23,14 +23,10 @@
 #if canImport(UIKit)
 import UIKit
 
-class HelpTableViewCell : UITableViewCell {
-    
-    @IBOutlet weak var flagImage: UIImageView! // no longer used, replaced by flag emoji in v1.11.12
-    @IBOutlet weak var countryLabel: UILabel!
-    @IBOutlet weak var codeLabel: UILabel!
-    
+class HelpTableViewCell : UITableViewCell {    
     @IBOutlet weak var leftImage: UIImageView!
-    
+    @IBOutlet weak var rightImage: UIImageView!
+
     @IBOutlet weak var topLabel: UILabel!
     @IBOutlet weak var detailLabel: UILabel!
     
@@ -52,9 +48,10 @@ class HelpTableViewCell : UITableViewCell {
         super.layoutSubviews()
     }
     
-    func ConfigCell(top: String, details: String) {
+    func ConfigCell(top: String, details: String, left: UIImage) {
         self.topLabel.text = top
         self.detailLabel.text = details
+        self.leftImage.image = left
     }
 
 }

@@ -30,7 +30,7 @@ import Foundation
 //Humanverify test: https://gitlab.protontech.ch/ProtonMail/Slim-API/blob/develop/api-spec/pm_api_test.md
 
 public enum VerifyMethod : String {
-    case capcha
+    case captcha
     case sms
     case email
     case invite
@@ -47,20 +47,32 @@ public enum VerifyMethod : String {
         switch rawValue {
         case "sms": self = .sms
         case "email": self = .email
-        case "capcha": self = .capcha
+        case "captcha": self = .captcha
         default:
             return nil
+        }
+    }
+    var localizedTitle : String {
+        switch self {
+        case .sms:
+            return "SMS"
+        case .email:
+            return "Email"
+        case .captcha:
+            return "CAPTCHA"
+        default:
+            return ""
         }
     }
     
     var toString : String {
         switch self {
         case .sms:
-            return "SMS"
+            return "sms"
         case .email:
-            return "Email"
-        case .capcha:
-            return "CAPCHA"
+            return "email"
+        case .captcha:
+            return "captcha"
         default:
             return ""
         }
@@ -81,19 +93,19 @@ public class TestApiClient : Client {
             }
         }
         public var isAuth: Bool {
-            return false
+            return true
         }
         public var header: [String : Any] {
-//            switch self {
-//            case .humanverify(let type, let token):
-//                if let t = type, let str = token {
-//                    let dict = ["x-pm-human-verification-token-type": t.toString,
-//                                "x-pm-human-verification-token": str,
-//                                "TokenType": t.toString,
-//                                "Token": str]
-//                    return dict
-//                }
-//            }
+            switch self {
+            case .humanverify(let type, let token):
+                if let t = type, let str = token {
+                    let dict = ["x-pm-human-verification-token-type": t.toString,
+                                "x-pm-human-verification-token": str,
+                                "TokenType": t.toString,
+                                "Token": str]
+                    return dict
+                }
+            }
             return [:]
         }
         public var apiVersion: Int {
@@ -106,14 +118,6 @@ public class TestApiClient : Client {
             }
         }
         public var parameters: [String: Any]? {
-            switch self {
-            case .humanverify(let type, let token):
-                if let t = type, let str = token {
-                    let dict = ["TokenType": t.toString,
-                                "Token": str]
-                    return dict
-                }
-            }
             return [:]
         }
     }
