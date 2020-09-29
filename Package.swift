@@ -29,6 +29,9 @@ let package = Package(
                 "Info.plist"],
             resources: [
                 .process("PMNetworking/Assets")
-            ]),
-    ]
+            ],
+            cSettings: [ CSetting.define("ENABLE_BITCODE", to: "NO")],
+            cxxSettings: [CXXSetting.define("ENABLE_BITCODE", to: "NO")]),
+    ],
+    swiftLanguageVersions: [.v5]
 )

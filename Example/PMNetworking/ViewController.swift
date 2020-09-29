@@ -25,6 +25,7 @@
 import UIKit
 import PMCommon
 import Crypto
+import PMAuthentication
 
 ///Defind your doh settings
 class DoHMail : DoH, DoHConfig {
@@ -88,12 +89,14 @@ class MainViewController: UIViewController {
             return
         }
         
+        // TODO: update to a PMAuthentication version that depends on PMNetworking
         let authApi: Authenticator = {
-            _ = Authenticator.Configuration(scheme: "https",
+            let config = Authenticator.Configuration(trust: nil,
+                                            scheme: "https",
                                             host: "api.protonmail.ch",
                                             apiPath: "",
                                             clientVersion: "iOS_1.12.0")
-            return Authenticator(api: apiService)
+            return Authenticator(configuration: config)
         }()
         
         authApi.authenticate(username: "unittest100", password: "unittest100") { result in
@@ -115,7 +118,7 @@ class MainViewController: UIViewController {
             case .success(.ask2FA(let context)): // success but need 2FA
                 print(context)
             case .success(.newCredential(let credential, let passwordMode)): // success without 2FA
-                self.authCredential = credential
+                self.authCredential = AuthCredential(.init(UID: credential.UID, accessToken: credential.accessToken, refreshToken: credential.refreshToken, expiration: credential.expiration, scope: credential.scope))
                 print("pwd mode: \(passwordMode)")
                 self.testAccessToken()
                 break
@@ -158,13 +161,14 @@ class MainViewController: UIViewController {
         //set the human verification delegation
         testApi.humanDelegate = self
         
-        //
+        // TODO: update to a PMAuthentication version that depends on PMNetworking
         let authApi: Authenticator = {
-            _ = Authenticator.Configuration(scheme: "https",
+            let config = Authenticator.Configuration(trust: nil,
+                                                     scheme: "https",
                                             host: "api.protonmail.ch",
                                             apiPath: "",
                                             clientVersion: "iOS_1.12.0")
-            return Authenticator(api: testApi)
+            return Authenticator(configuration: config)
         }()
         
         authApi.authenticate(username: "feng2", password: "123") { result in
@@ -186,7 +190,7 @@ class MainViewController: UIViewController {
             case .success(.ask2FA(let context)): // success but need 2FA
                 print(context)
             case .success(.newCredential(let credential, let passwordMode)): // success without 2FA
-                self.blueAuthCredential = credential
+                self.blueAuthCredential = AuthCredential(.init(UID: credential.UID, accessToken: credential.accessToken, refreshToken: credential.refreshToken, expiration: credential.expiration, scope: credential.scope))
                 print("pwd mode: \(passwordMode)")
                 //self.testAccessToken()
                 self.processTest()

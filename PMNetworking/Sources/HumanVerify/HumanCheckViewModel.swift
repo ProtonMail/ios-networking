@@ -21,7 +21,8 @@
 //  along with ProtonMail.  If not, see <https://www.gnu.org/licenses/>.
 
 
-import Foundation
+#if canImport(UIKit)
+import UIKit
 
 ////typealias CheckUserNameBlock = (Result<CheckUserExistResponse.AvailabilityStatus>) -> Void
 //typealias CreateUserBlock = (Bool, Bool, String, Error?) -> Void
@@ -248,3 +249,4 @@ public protocol HumanCheckViewModel : class {
     //        return false
     //    }
 }
+#endif
