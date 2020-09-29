@@ -21,7 +21,8 @@
 //  along with ProtonMail.  If not, see <https://www.gnu.org/licenses/>.
     
 
-import Foundation
+#if canImport(UIKit)
+import UIKit
 
 
 public class HumanCheckMenuCoordinator: PushCoordinator {
@@ -110,3 +111,4 @@ extension HumanCheckMenuCoordinator: CoordinatorDelegate {
         self.stop()
     }
 }
+#endif

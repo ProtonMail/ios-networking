@@ -22,6 +22,7 @@
 
 
 #if canImport(UIKit)
+import UIKit
 
 extension UIView {
     @discardableResult func loadFromNib<T : UIView>() -> T? {

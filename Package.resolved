@@ -1,0 +1,25 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "AFNetworking",
+        "repositoryURL": "https://github.com/AFNetworking/AFNetworking.git",
+        "state": {
+          "branch": null,
+          "revision": "ffae2391ab0c29dc88eb0a58d2f5b2c2c27cadbf",
+          "version": "4.0.1"
+        }
+      },
+      {
+        "package": "Crypto",
+        "repositoryURL": "https://gitlab.protontech.ch/apple/shared/pmcrypto.git",
+        "state": {
+          "branch": null,
+          "revision": "0724307167ae8e7785da56b56433e2edc3d2a542",
+          "version": "2.0.1"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
