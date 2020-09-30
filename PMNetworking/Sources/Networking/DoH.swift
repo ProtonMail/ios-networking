@@ -52,17 +52,29 @@ public protocol DoHConfig {
     var apiHost : String { get }
     var defaultHost : String { get }
     var defaultPath : String { get }
+    
+    /// debug mode vars
+    var debugMode : Bool { get }
+    var blockList : [String : Int] { get }
 }
 
 public extension DoHConfig {
     var defaultPath : String {
         return ""
     }
+    
+    var debugMode : Bool {
+        return false
+    }
+    
+    var blockList : [String : Int] {
+        return [String : Int]()
+    }
 }
 
 protocol DoHInterface {
     func getHostUrl() -> String
-    func handleError(host: String, error: Error?)
+    func handleError(host: String, error: Error?) -> Bool
     func clearAll()
     func codeCheck(code: Int) -> Bool
 }
@@ -70,12 +82,19 @@ protocol DoHInterface {
 open class DoH : DoHInterface {
     
     public var status : DoHStatus = .off
-    
     private var caches : [String: [DNSCache]] = [:]
     private var providers : [DoHProviderPublic] = []
+    
     internal var mutex = pthread_mutex_t()
+    internal var hostUrlMutex = pthread_mutex_t()
+    
+    public var debugBlock : [String: Bool] = [:]
     
     public func getHostUrl() -> String {
+        pthread_mutex_lock(&self.hostUrlMutex)
+        defer {
+            pthread_mutex_unlock(&self.hostUrlMutex)
+        }
         let config = self as! DoHConfig
         switch status {
         case .on, .auto:
@@ -86,14 +105,14 @@ open class DoH : DoHInterface {
                 let hostUrl = newurl.absoluteString.replacingOccurrences(of: host!, with: found.dns.url)
                 return hostUrl + config.defaultPath
             }
+            /// block call or call back call
+            fetchAll(host: config.apiHost) // this is sync call
             
-            //doing google for now. will add others
-            if let dns = Google().fetch(sync: config.apiHost) {
-                self.cache(set: config.apiHost, dns: dns)
-                let url = dns.url
+            if let found = self.cache(get: config.apiHost) {
+                print("Found from cache")
                 let newurl = URL(string: config.defaultHost)!
                 let host = newurl.host
-                let hostUrl = newurl.absoluteString.replacingOccurrences(of: host!, with: url)
+                let hostUrl = newurl.absoluteString.replacingOccurrences(of: host!, with: found.dns.url)
                 return hostUrl + config.defaultPath
             }
         case .off:
@@ -102,8 +121,25 @@ open class DoH : DoHInterface {
         return config.defaultHost + config.defaultPath
     }
     
+    func fetchAll(host: String) {
+        //doing google for now. will add others
+        if let dns = Google().fetch(sync: host) {
+            self.cache(set: host, dnsList: dns)
+        }
+        
+        if let dns = Quad9().fetch(sync: host) {
+            self.cache(set: host, dnsList: dns)
+        }
+        var tmp = self.caches[host] ?? []
+        for (index, _) in tmp.enumerated() {
+            tmp[index].retry = 0
+        }
+        self.caches[host] = tmp
+    }
+    
     public init() throws {
         pthread_mutex_init(&mutex, nil)
+        pthread_mutex_init(&hostUrlMutex, nil)
         guard let config = self as? DoHConfig else {
             throw RuntimeError("Class didn't extend DoHConfig")
         }
@@ -127,6 +163,11 @@ open class DoH : DoHInterface {
         guard var found = self.caches[host] else {
             return nil
         }
+        
+        found = found.filter { (cache) -> Bool in
+            return cache.primary == true || cache.retry < 1
+        }
+        self.caches[host] = found
         
         guard let first = found.first else {
             return nil
@@ -181,12 +222,24 @@ open class DoH : DoHInterface {
         self.caches[host] = tmp
     }
     
+    func cache(set host: String, dnsList : [DNS]) {
+        pthread_mutex_lock(&self.mutex)
+        defer { pthread_mutex_unlock(&self.mutex) }
+        
+        for dns in dnsList {
+            let timeout = Date().timeIntervalSince1970 + Double(dns.ttl) * 1000
+            let cache = DNSCache(primary: false, dns: dns, lastTimeout: timeout, retry: 0)
+            var tmp = self.caches[host] ?? []
+            tmp.append(cache)
+            self.caches[host] = tmp
+        }
+    }
+    
     func cache(clear host: String) {
         
     }
     
     public func clearAll() {
-        
         pthread_mutex_lock(&self.mutex)
         defer { pthread_mutex_unlock(&self.mutex) }
         
@@ -200,31 +253,43 @@ open class DoH : DoHInterface {
         self.caches[config.apiHost] = tmp
     }
     
-    public func handleError(host: String, error: Error?) {
-        guard let config = self as? DoHConfig else {
-            return
+    var globalCounter = 0
+    var firstTime = 0
+    public func handleError(host: String, error: Error?)  -> Bool {
+        
+        guard status != .off else {
+            return false
         }
+        
+        guard let config = self as? DoHConfig else {
+            return false
+        }
+        
+        guard config.debugMode == false else {
+            return self.debugModeLogic(host: host)
+        }
+        
         guard let error = error as NSError? else {
-            return
+            return false
         }
         guard let newurl = URL(string: host) else {
-            return
+            return false
         }
         guard let host = newurl.host else {
-            return
+            return false
         }
         
         let code = error.code
         
         guard self.codeCheck(code: code) else {
-            return
+            return false
         }
         
         pthread_mutex_lock(&self.mutex)
         defer { pthread_mutex_unlock(&self.mutex) }
         
         guard var found = self.caches[config.apiHost] else {
-            return
+            return false
         }
         
         for i in 0 ..< found.count {
@@ -235,6 +300,77 @@ open class DoH : DoHInterface {
         }
         self.caches[config.apiHost] = found
         
+        // loop and if all tried // should only loop found
+        for (key,value) in self.caches {
+            for val in value {
+                if val.retry < 1 {
+                    return true
+                }
+            }
+        }
+        
+        //temp workaround
+        if status != .off && found.count == 1 && firstTime == 0 {
+            firstTime = firstTime + 1
+            return true
+        }
+        
+        return false
+    }
+    
+    func debugModeLogic(host: String)  -> Bool {
+        guard let config = self as? DoHConfig else {
+            return false
+        }
+        
+        guard let newurl = URL(string: host) else {
+            return false
+        }
+        guard let host = newurl.host else {
+            return false
+        }
+        
+        guard let foundCode = config.blockList[host] else {
+            return false
+        }
+        
+        let code = foundCode
+        
+        guard self.codeCheck(code: code) else {
+            return false
+        }
+        
+        pthread_mutex_lock(&self.mutex)
+        defer { pthread_mutex_unlock(&self.mutex) }
+        
+        globalCounter = globalCounter + 1
+        guard globalCounter % 2 == 0 else {
+            return false
+        }
+        
+        guard var found = self.caches[config.apiHost] else {
+            return false
+        }
+        
+        for i in 0 ..< found.count {
+            let item = found[i]
+            if item.dns.url == host {
+                found[i].retry += 1
+            }
+        }
+        self.caches[config.apiHost] = found
+        
+        
+        // loop and if all tried
+        for (key,value) in self.caches {
+            for val in value {
+                if val.retry < 1 {
+                    return true
+                }
+            }
+        }
+        
+        return false
     }
     
     public func codeCheck(code: Int) -> Bool {
@@ -244,7 +380,9 @@ open class DoH : DoHInterface {
             code == NSURLErrorDNSLookupFailed ||
             code == -1200 ||
             code == 451 ||
-            code == 310
+            code == 310 ||
+//            code == -1004 ||  // only for testing
+            code == -1005 // only for testing
             else {
                 return false
         }

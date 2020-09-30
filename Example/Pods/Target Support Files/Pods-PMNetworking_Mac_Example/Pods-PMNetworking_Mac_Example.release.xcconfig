@@ -1,7 +1,8 @@
 ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES
-FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/AFNetworking-c94d3492" "${PODS_CONFIGURATION_BUILD_DIR}/PMAuthentication-macOS" "${PODS_CONFIGURATION_BUILD_DIR}/PMCommon-macOS" "${PODS_CONFIGURATION_BUILD_DIR}/TrustKit-macOS" "${PODS_ROOT}/PMCrypto" "${PODS_ROOT}/PMCrypto/Crypto.xcframework/macos-x86_64"
+CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO
+FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/AFNetworking-c94d3492" "${PODS_CONFIGURATION_BUILD_DIR}/PMAuthentication" "${PODS_CONFIGURATION_BUILD_DIR}/PMCommon-macOS" "${PODS_CONFIGURATION_BUILD_DIR}/TrustKit-macOS" "${PODS_ROOT}/PMCrypto" "${PODS_XCFRAMEWORKS_BUILD_DIR}/Crypto"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/AFNetworking-c94d3492/AFNetworking.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/PMAuthentication-macOS/PMAuthentication.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/PMCommon-macOS/PMCommon.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/TrustKit-macOS/TrustKit.framework/Headers"
+HEADER_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/AFNetworking-c94d3492/AFNetworking.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/PMAuthentication/PMAuthentication.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/PMCommon-macOS/PMCommon.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/TrustKit-macOS/TrustKit.framework/Headers"
 LD_RUNPATH_SEARCH_PATHS = $(inherited) '@executable_path/../Frameworks' '@loader_path/Frameworks'
 OTHER_LDFLAGS = $(inherited) -ObjC -framework "AFNetworking" -framework "Crypto" -framework "Foundation" -framework "PMAuthentication" -framework "PMCommon" -framework "Security" -framework "TrustKit"
 OTHER_SWIFT_FLAGS = $(inherited) -D COCOAPODS
@@ -9,4 +10,5 @@ PODS_BUILD_DIR = ${BUILD_DIR}
 PODS_CONFIGURATION_BUILD_DIR = ${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
 PODS_PODFILE_DIR_PATH = ${SRCROOT}/.
 PODS_ROOT = ${SRCROOT}/Pods
+PODS_XCFRAMEWORKS_BUILD_DIR = $(PODS_CONFIGURATION_BUILD_DIR)/XCFrameworkIntermediates
 USE_RECURSIVE_SCRIPT_INPUTS_IN_SCRIPT_PHASES = YES

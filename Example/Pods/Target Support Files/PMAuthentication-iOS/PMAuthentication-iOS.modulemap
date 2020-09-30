@@ -1,6 +1,0 @@
-framework module PMAuthentication {
-  umbrella header "PMAuthentication-iOS-umbrella.h"
-
-  export *
-  module * { export * }
-}
