@@ -1,5 +1,5 @@
 framework module PMAuthentication {
-  umbrella header "PMAuthentication-macOS-umbrella.h"
+  umbrella header "PMAuthentication-umbrella.h"
 
   export *
   module * { export * }
