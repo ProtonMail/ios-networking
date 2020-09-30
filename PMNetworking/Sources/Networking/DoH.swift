@@ -54,6 +54,12 @@ public protocol DoHConfig {
     var defaultPath : String { get }
 }
 
+public extension DoHConfig {
+    var defaultPath : String {
+        return ""
+    }
+}
+
 protocol DoHInterface {
     func getHostUrl() -> String
     func handleError(host: String, error: Error?)

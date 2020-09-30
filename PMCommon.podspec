@@ -42,6 +42,8 @@ TODO: Add long description of the pod here.
     default.dependency 'PMCommon/APIClient'
     default.dependency 'PMCommon/Services'
     default.dependency 'PMCommon/Authentication'
+    default.dependency 'PMCommon/HumanVerifyUI'
+    default.dependency 'PMCommon/DohUI'
   end
   
   # Optional subspecs
@@ -61,11 +63,30 @@ TODO: Add long description of the pod here.
   end
   
   s.subspec 'Authentication' do |authentication|
-    authentication.dependency 'PMCommon/APIClient'
-    authentication.dependency 'PMCrypto'
-    authentication.source_files = 'PMNetworking/Sources/Authentication/**/*'
+      authentication.dependency 'PMCrypto'
+      authentication.dependency 'PMCommon/Services'
+      authentication.dependency 'PMCommon/APIClient'
+      authentication.source_files = 'PMNetworking/Sources/Authentication/**/*'
   end
 
+  s.subspec 'HumanVerifyUI' do |humanverify|
+    humanverify.dependency 'PMCommon/APIClient'
+    humanverify.ios.source_files = 'PMNetworking/Sources/HumanVerify/**/*'
+    humanverify.ios.resources = ['PMNetworking/Assets/HumanVerify/**/*']
+    humanverify.osx.source_files = 'PMNetworking/Sources/HumanVerify/**/*'
+
+#    humanverify.resource_bundles = {
+#        'HumanVerify' => ['PMNetworking/Assets/HumanVerify.storyboard']
+#    }
+  end
+
+  s.subspec 'DohUI' do |humanverify|
+    humanverify.ios.source_files = 'PMNetworking/Sources/DohUI/**/*'
+    humanverify.ios.resources = ['PMNetworking/Assets/DohUI/**/*']
+    humanverify.osx.source_files = 'PMNetworking/Sources/DohUI/**/*'
+  end
+  
+  
   # s.resource_bundles = {
   #   'PMNetworking' => ['PMNetworking/Assets/*.png']
   # }

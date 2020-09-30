@@ -2,8 +2,26 @@
 //  APIService.swift
 //  Pods
 //
-//  Created by Yanfeng Zhang on 5/22/20.
+//  Created on 5/22/20.
 //
+//
+//  Copyright (c) 2019 Proton Technologies AG
+//
+//  This file is part of ProtonMail.
+//
+//  ProtonMail is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  ProtonMail is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with ProtonMail.  If not, see <https://www.gnu.org/licenses/>.
+
 
 import Foundation
 
@@ -11,6 +29,25 @@ import Foundation
 struct HTTPHeader {
     static let apiVersion = "x-pm-apiversion"
 }
+
+
+extension Bundle {
+    /// Returns the app version in a nice to read format
+    var appVersion: String {
+        return "\(majorVersion) (\(buildVersion))"
+    }
+    
+    /// Returns the build version of the app.
+    var buildVersion: String {
+        return infoDictionary?["CFBundleVersion"] as? String ?? "Unknown"
+    }
+    
+    /// Returns the major version of the app.
+    public var majorVersion: String {
+        return infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
+    }
+}
+
 
 
 //struct ErrorResponse: Codable {
@@ -88,7 +125,7 @@ enum Server : APIServerConfig {
             return "https"
         }
     }
-
+    
 }
 
 //enum <T> {
@@ -114,12 +151,17 @@ public protocol APIServiceDelegate: class {
     //func relogin()
     //func humanverify()
     
-    func onChallenge()
+    var appVersion : String { get }
     
     func onDohTroubleshot()
     
-    func onHumanVerify()
+    func onChallenge(challenge: URLAuthenticationChallenge,
+                     credential: AutoreleasingUnsafeMutablePointer<URLCredential?>?) -> URLSession.AuthChallengeDisposition
     
+}
+
+public protocol HumanVerifyDelegate: class {
+    func onHumanVerify(methods : [VerifyMethod])
 }
 
 /// this is auth related delegate in background
@@ -137,8 +179,11 @@ public protocol APIService : API {
     //var vpn : VPNInterface {get}
     //var doh:  DoH  {get}//depends on NetworkLayer. {get}
     //var queue : [Request] {get}
+    
+    func setSessionUID(uid: String)
     var serviceDelegate: APIServiceDelegate? {get}
     var authDelegate : AuthDelegate? {get}
+    var humanDelegate : HumanVerifyDelegate? {get}
 }
 
 class TestResponse : Response {
@@ -184,18 +229,20 @@ public extension APIService {
             ret_res = apiRes
         }
         //TODO:: missing auth
+        var header = route.header
+        header[HTTPHeader.apiVersion] = route.version
         self.request(method: route.method, path: route.path,
                      parameters: route.parameters,
-                     headers: [HTTPHeader.apiVersion: route.version],
+                     headers: header,
                      authenticated: true,//route.getIsAuthFunction(),
-            customAuthCredential: nil, //route.authCredential,
-            completion: completionWrapper)
+                     customAuthCredential: nil, //route.authCredential,
+                     completion: completionWrapper)
         
         //wait operations
         let _ = sema.wait(timeout: DispatchTime.distantFuture)
-//        if let e = ret_error {
-//            throw e
-//        }
+        //        if let e = ret_error {
+        //            throw e
+        //        }
         return ret_res
     }
     
@@ -204,18 +251,21 @@ public extension APIService {
         
         // 1 make a request , 2 wait for the respons async 3. valid response 4. parse data into response 5. some data need save into database.
         let completionWrapper: CompletionBlock = { task, res, error in
-             let realType = T.self
+            let realType = T.self
             let apiRes = realType.init()
             if error != nil {
                 //TODO check error
                 apiRes.ParseHttpError(error!, response: res)
+                if let resRaw = res {
+                    let _ = apiRes.ParseResponse(resRaw)
+                }
                 complete(task, apiRes)
                 return
             }
             
             if res == nil {
                 // TODO check res
-//                apiRes.error = NSError.badResponse()
+                //                apiRes.error = NSError.badResponse()
                 complete(task, apiRes)
                 return
             }
@@ -228,105 +278,105 @@ public extension APIService {
         }
         
         var header = route.header
-        header["x-pm-apiversion"] = route.version
-        
-        
+        header[HTTPHeader.apiVersion] = route.version
         self.request(method: route.method, path: route.path,
                      parameters: route.parameters,
-                     headers: [HTTPHeader.apiVersion: route.version],
-                     authenticated: true,//route.getIsAuthFunction(),
-            customAuthCredential: nil, //route.authCredential,
-            completion: completionWrapper)
+                     headers: header,
+                     authenticated: route.isAuth,
+                     customAuthCredential: nil, //route.authCredential,
+                     completion: completionWrapper)
     }
     
     
     func exec<T>(route: Request,
                  complete: @escaping (_ task: URLSessionDataTask?, _ result: Result<T, Error>) -> Void) where T : Codable {
         
-            // 1 make a request , 2 wait for the respons async 3. valid response 4. parse data into response 5. some data need save into database.
-            let completionWrapper: CompletionBlock = { task, res, error in
-                //                let realType = T.self
-                //                let apiRes = realType.init()
-                //                if error != nil {
-                //                    //TODO check error
-                //                    apiRes.ParseHttpError(error!, response: res)
-                //                    complete(task, apiRes)
-                //                    return
-                //                }
-                //
-                //                if res == nil {
-                //                    // TODO check res
-                //    //                apiRes.error = NSError.badResponse()
-                //                    complete(task, apiRes)
-                //                    return
-                //                }
-                //
-                //                var hasError = apiRes.ParseResponseError(res!)
-                //                if !hasError {
-                //                    hasError = !apiRes.ParseResponse(res!)
-                //                }
-                //                complete(task, apiRes)
-                //                let data = try! JSONEncoder().encode(res as! [String: Any])
-                //                let dictionary = try! JSONSerialization.jsonObject(with: data, options: .allowFragments) as! T
-                //                complete(task, dictionary)
-                //                return dictionary
-                
-                
-                ///TODO parse error first
-                
-                let decoder = JSONDecoder()
-                do {
-                    let data = try JSONSerialization.data(withJSONObject: res!, options: .prettyPrinted)
-                    let resObj = try decoder.decode(T.self, from: data)
-                    complete(task, .success(resObj))
-                } catch let err {
-                    complete(task, .failure(err))
+        // 1 make a request , 2 wait for the respons async 3. valid response 4. parse data into response 5. some data need save into database.
+        let completionWrapper: CompletionBlock = { task, res, error in
+            //                let realType = T.self
+            //                let apiRes = realType.init()
+            //                if error != nil {
+            //                    //TODO check error
+            //                    apiRes.ParseHttpError(error!, response: res)
+            //                    complete(task, apiRes)
+            //                    return
+            //                }
+            //
+            //                if res == nil {
+            //                    // TODO check res
+            //    //                apiRes.error = NSError.badResponse()
+            //                    complete(task, apiRes)
+            //                    return
+            //                }
+            //
+            //                var hasError = apiRes.ParseResponseError(res!)
+            //                if !hasError {
+            //                    hasError = !apiRes.ParseResponse(res!)
+            //                }
+            //                complete(task, apiRes)
+            //                let data = try! JSONEncoder().encode(res as! [String: Any])
+            //                let dictionary = try! JSONSerialization.jsonObject(with: data, options: .allowFragments) as! T
+            //                complete(task, dictionary)
+            //                return dictionary
+            ///TODO parse error first
+            do {
+                if let res = res {
+                    let data = try JSONSerialization.data(withJSONObject: res, options: .prettyPrinted)
+                    let decodedResponse = try JSONDecoder().decode(T.self, from: data)
+                    complete(task, .success(decodedResponse))
+                } else {
+                    // todo fix the cast
+                    complete(task, .failure(error as! Error))
                 }
+                
+            } catch let err {
+                complete(task, .failure(err))
             }
             
-            var header = route.header
-            header["x-pm-apiversion"] = route.version
             
-            
-            self.request(method: route.method, path: route.path,
-                         parameters: route.parameters,
-                         headers: [HTTPHeader.apiVersion: route.version],
-                         authenticated: true,//route.getIsAuthFunction(),
-                customAuthCredential: nil, //route.authCredential,
-                completion: completionWrapper)
         }
+        
+        var header = route.header
+        header[HTTPHeader.apiVersion] = route.version
+        self.request(method: route.method, path: route.path,
+                     parameters: route.parameters,
+                     headers: header,
+                     authenticated: true,//route.getIsAuthFunction(),
+                     customAuthCredential: nil, //route.authCredential,
+                     completion: completionWrapper)
+    }
     
     
-//    func exec(content: URLRequestConvertible ) {
-//           // get doh url
-//
-//           // check if enable vpn
-//
-//           //build body
-//
-//           //build the request
-//
-//           //queue requests
-//
-//           // pass request to networklayer
-//
-//           // waiting response
-//
-//           //complete/error
-//       }
-//
-//       func completeHanlding() {
-//           //
-//       }
-//       func errorHandling() {
-//           // if doh do
-//               //retry
-//           // if humanverification do
-//           // if networking issue do
-//           // if token expiared do
-//               // renew token with authitection framewrok
-//           // if renew token failed do
-//
-//           // a lot of error handling here and will trigger delegates
-//       }
+    //    func exec(content: URLRequestConvertible ) {
+    //           // get doh url
+    //
+    //           // check if enable vpn
+    //
+    //           //build body
+    //
+    //           //build the request
+    //
+    //           //queue requests
+    //
+    //           // pass request to networklayer
+    //
+    //           // waiting response
+    //
+    //           //complete/error
+    //       }
+    //
+    //       func completeHanlding() {
+    //           //
+    //       }
+    //       func errorHandling() {
+    //           // if doh do
+    //               //retry
+    //           // if humanverification do
+    //           // if networking issue do
+    //           // if token expiared do
+    //               // renew token with authitection framewrok
+    //           // if renew token failed do
+    //
+    //           // a lot of error handling here and will trigger delegates
+    //       }
 }

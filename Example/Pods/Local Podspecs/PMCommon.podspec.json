@@ -50,6 +50,12 @@
         ],
         "PMCommon/Authentication": [
 
+        ],
+        "PMCommon/HumanVerifyUI": [
+
+        ],
+        "PMCommon/DohUI": [
+
         ]
       }
     },
@@ -83,14 +89,46 @@
     {
       "name": "Authentication",
       "dependencies": {
-        "PMCommon/APIClient": [
+        "PMCrypto": [
 
         ],
-        "PMCrypto": [
+        "PMCommon/Services": [
+
+        ],
+        "PMCommon/APIClient": [
 
         ]
       },
       "source_files": "PMNetworking/Sources/Authentication/**/*"
+    },
+    {
+      "name": "HumanVerifyUI",
+      "dependencies": {
+        "PMCommon/APIClient": [
+
+        ]
+      },
+      "ios": {
+        "source_files": "PMNetworking/Sources/HumanVerify/**/*",
+        "resources": [
+          "PMNetworking/Assets/HumanVerify/**/*"
+        ]
+      },
+      "osx": {
+        "source_files": "PMNetworking/Sources/HumanVerify/**/*"
+      }
+    },
+    {
+      "name": "DohUI",
+      "ios": {
+        "source_files": "PMNetworking/Sources/DohUI/**/*",
+        "resources": [
+          "PMNetworking/Assets/DohUI/**/*"
+        ]
+      },
+      "osx": {
+        "source_files": "PMNetworking/Sources/DohUI/**/*"
+      }
     }
   ],
   "swift_version": "5.0"

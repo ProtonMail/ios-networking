@@ -1,15 +1,11 @@
 //
-//  AuthCredential.swift
-//  PMAuthentication
+//  File.swift
+//  
 //
-//  Created by Anatoly Rosencrantz on 20/02/2020.
-//  Copyright © 2020 ProtonMail. All rights reserved.
+//  Created by Anatoly Rosencrantz on 23/09/2020.
 //
 
 import Foundation
-
-/// Blind object to returned to clients in order to continue authentication upon 2FA code input
-public typealias TwoFactorContext = (credential: Credential, passwordMode: PasswordMode)
 
 /// Credential to be used across all authenticated API calls
 public struct Credential {
@@ -43,11 +39,33 @@ public struct Credential {
     }
 }
 
+
+extension Credential {
+    public init(_ authCredential: AuthCredential) {
+        self.init(UID: authCredential.sessionID,
+                  accessToken: authCredential.accessToken,
+                  refreshToken: authCredential.refreshToken,
+                  expiration: authCredential.expiration,
+                  scope: [])
+    }
+}
+extension AuthCredential {
+    public convenience init(_ credential: Credential) {
+        self.init(sessionID: credential.UID,
+                  accessToken: credential.accessToken,
+                  refreshToken: credential.refreshToken,
+                  expiration: credential.expiration,
+                  privateKey: nil,
+                  passwordKeySalt: nil)
+    }
+}
+
+internal typealias Scope = String
+
 @dynamicMemberLookup
-protocol CredentialConvertible {
+internal protocol CredentialConvertible {
     typealias Scope = String
     
-    var code: Int { get }
     var accessToken: String { get }
     var expiresIn: TimeInterval { get }
     var tokenType: String { get }
