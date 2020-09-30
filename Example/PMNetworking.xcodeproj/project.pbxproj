@@ -299,7 +299,6 @@
 			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "PMNetworking_Example" */;
 			buildPhases = (
 				E9FED9F3D124AF99FED080EA /* [CP] Check Pods Manifest.lock */,
-				80E0AA99DB148AC1673CC7B2 /* [CP] Prepare Artifacts */,
 				607FACCC1AFB9204008FA782 /* Sources */,
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
@@ -339,7 +338,6 @@
 			buildConfigurationList = 751B8B06245AB30F006A9195 /* Build configuration list for PBXNativeTarget "PMNetworking_Mac_Example" */;
 			buildPhases = (
 				D76FE2AAEB040171E521C376 /* [CP] Check Pods Manifest.lock */,
-				D8C3EC2B533359E228E18B37 /* [CP] Prepare Artifacts */,
 				751B8ADC245AB30B006A9195 /* Sources */,
 				751B8ADD245AB30B006A9195 /* Frameworks */,
 				751B8ADE245AB30B006A9195 /* Resources */,
@@ -503,7 +501,6 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-PMNetworking_Example/Pods-PMNetworking_Example-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/cocoapods-artifacts-${CONFIGURATION}.txt",
 				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
 				"${BUILT_PRODUCTS_DIR}/PMCommon-iOS/PMCommon.framework",
 				"${BUILT_PRODUCTS_DIR}/TrustKit-iOS/TrustKit.framework",
@@ -526,7 +523,6 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-PMNetworking_Mac_Example/Pods-PMNetworking_Mac_Example-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/cocoapods-artifacts-${CONFIGURATION}.txt",
 				"${BUILT_PRODUCTS_DIR}/AFNetworking-c94d3492/AFNetworking.framework",
 				"${BUILT_PRODUCTS_DIR}/PMCommon-macOS/PMCommon.framework",
 				"${BUILT_PRODUCTS_DIR}/TrustKit-macOS/TrustKit.framework",
@@ -540,24 +536,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PMNetworking_Mac_Example/Pods-PMNetworking_Mac_Example-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		80E0AA99DB148AC1673CC7B2 /* [CP] Prepare Artifacts */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PMNetworking_Example/Pods-PMNetworking_Example-artifacts.sh",
-				"${PODS_ROOT}/PMCrypto/Crypto.xcframework",
-			);
-			name = "[CP] Prepare Artifacts";
-			outputPaths = (
-				"${BUILT_PRODUCTS_DIR}/cocoapods-artifacts-${CONFIGURATION}.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PMNetworking_Example/Pods-PMNetworking_Example-artifacts.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		AFBD0B82D002C2EDB1FEEE8E /* [CP] Check Pods Manifest.lock */ = {
@@ -624,24 +602,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D8C3EC2B533359E228E18B37 /* [CP] Prepare Artifacts */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PMNetworking_Mac_Example/Pods-PMNetworking_Mac_Example-artifacts.sh",
-				"${PODS_ROOT}/PMCrypto/Crypto.xcframework",
-			);
-			name = "[CP] Prepare Artifacts";
-			outputPaths = (
-				"${BUILT_PRODUCTS_DIR}/cocoapods-artifacts-${CONFIGURATION}.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PMNetworking_Mac_Example/Pods-PMNetworking_Mac_Example-artifacts.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E9FED9F3D124AF99FED080EA /* [CP] Check Pods Manifest.lock */ = {

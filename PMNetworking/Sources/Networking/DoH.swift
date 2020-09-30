@@ -62,6 +62,14 @@ public extension DoHConfig {
     var defaultPath : String {
         return ""
     }
+    
+    var debugMode : Bool {
+        return false
+    }
+    
+    var blockList : [String : Int] {
+        return [String : Int]()
+    }
 }
 
 protocol DoHInterface {
