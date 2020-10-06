@@ -103,6 +103,7 @@ final public class HumanCheckMenuViewController: UIViewController, ViewModelProt
         let storyboard = UIStoryboard.init(name: "HumanVerify", bundle: bundle)
         let customViewController = storyboard.instantiateViewController(withIdentifier: "RecaptchaViewController") as! RecaptchaViewController
         // Add View Controller as Child View Controller
+        customViewController.viewModel = self.viewModel
         self.add(asChildViewController: customViewController)
         return customViewController
     }

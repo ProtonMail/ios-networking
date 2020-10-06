@@ -47,7 +47,7 @@ class RecaptchaViewController: UIViewController, UIWebViewDelegate {
     fileprivate var checkUserStatus : Bool = false
     fileprivate var stopLoading : Bool = false
     fileprivate var doneClicked : Bool = false
-    //var viewModel : SignupViewModel!
+    var viewModel: HumanCheckViewModel!
     
     func configConstraint(_ show : Bool) -> Void {
         let level = show ? showPriority : hidePriority
@@ -196,14 +196,14 @@ class RecaptchaViewController: UIViewController, UIWebViewDelegate {
         }
 
         if let _ = urlString?.range(of: "https://secure.protonmail.com/expired_recaptcha_response://") {
-//viewModel.setRecaptchaToken("", isExpired: true)
+            self.viewModel.finalToken(token: "")
             resetWebviewHeight()
             webView.reload()
             return false
         }
         else if let _ = urlString?.range(of: "https://secure.protonmail.com/captcha/recaptcha_response://") {
             if let token = urlString?.replacingOccurrences(of: "https://secure.protonmail.com/captcha/recaptcha_response://", with: "", options: NSString.CompareOptions.widthInsensitive, range: nil) {
-//viewModel.setRecaptchaToken(token, isExpired: false)
+                self.viewModel.finalToken(token: token)
             }
             resetWebviewHeight()
             continueButton.isEnabled = true
