@@ -85,10 +85,10 @@ public class TestApiClient : Client {
     }
     static let route : String = "/internal/tests"
     public enum Router: Request {
-        case humanverify(type: VerifyMethod?, token: String?)
+        case humanverify(destination: String?, type: VerifyMethod?, token: String?)
         public var path: String {
             switch self {
-            case .humanverify(_,_):
+            case .humanverify(_,_,_):
                 return route + "/humanverification"
             }
         }
@@ -97,12 +97,12 @@ public class TestApiClient : Client {
         }
         public var header: [String : Any] {
             switch self {
-            case .humanverify(let type, let token):
-                if let t = type, let str = token {
+            case .humanverify(let destination, let type, let token):
+                if let dest = destination, let t = type, let str = token {
                     let dict = ["x-pm-human-verification-token-type": t.toString,
-                                "x-pm-human-verification-token": str,
+                                "x-pm-human-verification-token": "\(dest):\(str)",
                                 "TokenType": t.toString,
-                                "Token": str]
+                                "Token": "\(dest):\(str)"]
                     return dict
                 }
             }
@@ -113,7 +113,7 @@ public class TestApiClient : Client {
         }
         public var method: HTTPMethod {
             switch self {
-            case .humanverify(_,_):
+            case .humanverify(_,_,_):
                 return .post
             }
         }
@@ -128,8 +128,9 @@ extension TestApiClient {
     //  1. primise kit
     //  2. delaget
     //  3. combin
-    public func triggerHumanVerify(type: VerifyMethod?, token: String?, complete: @escaping  (_ task: URLSessionDataTask?, _ response: TestHV) -> Void) {
-        let route = Router.humanverify(type: type, token: token)
+    public func triggerHumanVerify(destination: String?, type: VerifyMethod?, token: String?,
+                                   complete: @escaping  (_ task: URLSessionDataTask?, _ response: TestHV) -> Void) {
+        let route = Router.humanverify(destination: destination, type: type, token: token)
         self.apiService.exec(route: route, complete: complete)
     }
     
