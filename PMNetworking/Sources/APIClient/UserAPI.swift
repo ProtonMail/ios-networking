@@ -146,8 +146,10 @@ public class UserAPI : APIClient {
         
         public var isAuth: Bool {
             switch self {
-            case .code, .check, .userInfo:
+            case .check, .userInfo:
                 return true
+            case .code:
+                return false
             default:
                 return false
             }

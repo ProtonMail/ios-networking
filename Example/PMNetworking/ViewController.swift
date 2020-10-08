@@ -199,9 +199,9 @@ class MainViewController: UIViewController {
         }
     }
     
-    func processTest(type: VerifyMethod? = nil, token: String? = nil) {
+    func processTest(dest: String? = nil, type: VerifyMethod? = nil, token: String? = nil) {
         let client = TestApiClient(api: self.testApi)
-        client.triggerHumanVerify(type: type, token: token) { (_, response) in
+        client.triggerHumanVerify(destination: dest, type: type, token: token) { (_, response) in
             if response.code == 9001 {
                 let desc = response.error?.description
                 print(response.error)
@@ -307,8 +307,8 @@ extension MainViewController: HumanVerifyDelegate {
         //#2 helper
         
         vm.onDoneBlock = { result in
-            let (type, token) = vm.getToken()
-            self.processTest(type: type, token: token)
+            let (dest, type, token) = vm.getToken()
+            self.processTest(dest: dest, type: type, token: token)
         }
 
     }

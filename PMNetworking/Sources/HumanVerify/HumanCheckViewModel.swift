@@ -84,7 +84,7 @@ public protocol HumanCheckViewModel : class {
     //    var client_name : String
     //    var host_url: String
     func finalToken(token: String)
-    func getToken() -> (VerifyMethod?, String?)
+    func getToken() -> (String?, VerifyMethod?, String?)
     
     var type: VerifyMethod {get set}
     func setEmail(email:String)
@@ -107,8 +107,8 @@ public protocol HumanCheckViewModel : class {
         self.tokenType = self.type
         self.onDoneBlock?(true)
     }
-    public func getToken() -> (VerifyMethod?, String?) {
-        return (tokenType, token)
+    public func getToken() -> (String?, VerifyMethod?, String?) {
+        return (self.destination, tokenType, token)
     }
     
     public func getTitle() -> String {
