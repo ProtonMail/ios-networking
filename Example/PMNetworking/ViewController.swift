@@ -236,26 +236,33 @@ class MainViewController: UIViewController {
 }
 
 extension MainViewController : AuthDelegate {
+    
+    func onRefresh(bySessionUID uid: String, complete: (Credential?, NSError?) -> Void) {
+        // must call complete - later will have a middle layer manager to handle this because all plantforms will be sharee the same logic
+         
+        //steps:
+        // - find auth by uid
+        // - double check if the auth ok
+        // - call refresh token
+        // - pass result to complete
+    }
+    
     func getToken(bySessionUID uid: String) -> AuthCredential? {
         print("looking for auth UID: " + uid)
         print("compare cache with index: \(uid == blueAuthCredential?.sessionID ?? "") ")
         return self.blueAuthCredential
     }
     
-    func onUpdate(auth: AuthCredential) {
+    func onUpdate(auth: Credential) {
         /// update your local cache
     }
     
-    func onLogout() {
-        //
+    // right now the logout and revoke do the same but they triggered by a different event. will try to unify this.
+    func onLogout(sessionUID uid: String) {
+        //try to logout this user by uid
     }
-    
-    func onRevoke() {
-        //
-    }
-    
-    func onRefresh() {
-        //
+    func onRevoke(sessionUID uid: String) {
+        //try to logout this user by uid
     }
     
     func onForceUpgrade() {
@@ -265,6 +272,18 @@ extension MainViewController : AuthDelegate {
 
 
 extension MainViewController : APIServiceDelegate {
+    func isReachable() -> Bool {
+        return true //
+    }
+    
+    var userAgent: String {
+        return ""
+    }
+    
+    func onHumanVerify() {
+        
+    }
+    
     var appVersion: String {
         return "iOS_\(Bundle.main.majorVersion)"
     }
