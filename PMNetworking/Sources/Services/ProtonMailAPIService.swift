@@ -570,6 +570,10 @@ public class PMAPIService : APIService {
                                                                                  localizedDescription: errorMessage,
                                                                                  localizedFailureReason: errorMessage,
                                                                                  localizedRecoverySuggestion: nil)
+                            if responseCode == 5003 || responseCode == 5005 {
+                                self.authDelegate?.onForceUpgrade()
+                                completion?(task, responseDict, displayError)
+                            }
                             //                            if responseCode.forceUpgrade {
                             //                                // old check responseCode == 5001 || responseCode == 5002 || responseCode == 5003 || responseCode == 5004
                             //                                // new logic will not log user out
@@ -613,6 +617,9 @@ public class PMAPIService : APIService {
                                     self.authDelegate?.onRevoke()
                                     //NotificationCenter.default.post(name: .didReovke, object: nil, userInfo: ["uid": userID ?? ""])
                                 }
+                            } else if responseCode == 5003 || responseCode == 5005 {
+                                self.authDelegate?.onForceUpgrade()
+                                completion?(task, responseDictionary, error)
                             }
                                 //                            else if responseCode.forceUpgrade  {
                                 //                                //FIXME: shouldn't be here

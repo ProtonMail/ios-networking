@@ -257,6 +257,10 @@ extension MainViewController : AuthDelegate {
     func onRefresh() {
         //
     }
+    
+    func onForceUpgrade() {
+        //
+    }
 }
 
 

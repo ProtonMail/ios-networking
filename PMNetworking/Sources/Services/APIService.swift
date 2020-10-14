@@ -172,6 +172,7 @@ public protocol AuthDelegate: class {
     func onLogout()
     func onRevoke()
     func onRefresh()
+    func onForceUpgrade()
 }
 
 public protocol APIService : API {
