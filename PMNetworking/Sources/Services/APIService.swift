@@ -146,14 +146,17 @@ public protocol API {
 public protocol APIServiceDelegate: class {
     func onUpdate(serverTime: Int64)
     //func onError(error: NSError)
-    //func isReachable() -> Bool
-    //func dohTroubleshot()
-    //func relogin()
-    //func humanverify()
+    
+    //check if server reachable or check if network avaliable
+    func isReachable() -> Bool
     
     var appVersion : String { get }
     
+    var userAgent : String { get }
+    
     func onDohTroubleshot()
+    
+    func onHumanVerify()
     
     func onChallenge(challenge: URLAuthenticationChallenge,
                      credential: AutoreleasingUnsafeMutablePointer<URLCredential?>?) -> URLSession.AuthChallengeDisposition
@@ -164,14 +167,15 @@ public protocol HumanVerifyDelegate: class {
     func onHumanVerify(methods : [VerifyMethod])
 }
 
+public typealias AuthRefreshComplete = (_ auth: Credential?, _ hasError : NSError?) -> Void
+
 /// this is auth related delegate in background
 public protocol AuthDelegate: class {
     func getToken(bySessionUID uid: String) -> AuthCredential?
-    //func updateAuthCredential(_ credential: PMAuthentication.Credential)
-    func onUpdate(auth: AuthCredential)
-    func onLogout()
-    func onRevoke()
-    func onRefresh()
+    func onLogout(sessionUID uid: String)
+    func onUpdate(auth: Credential)
+    func onRevoke(sessionUID uid: String)
+    func onRefresh(bySessionUID uid: String, complete: AuthRefreshComplete)
     func onForceUpgrade()
 }
 
