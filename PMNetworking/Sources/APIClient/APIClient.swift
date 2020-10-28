@@ -30,6 +30,6 @@ public protocol APIClient {
  
 }
 
-protocol Client {
+public protocol Client {
     var apiService : APIService { get }
 }

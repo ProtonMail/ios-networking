@@ -41,7 +41,6 @@ TODO: Add long description of the pod here.
     default.dependency 'PMCommon/Networking'
     default.dependency 'PMCommon/APIClient'
     default.dependency 'PMCommon/Services'
-    default.dependency 'PMCommon/Authentication'
     default.dependency 'PMCommon/SRP'
   end
   

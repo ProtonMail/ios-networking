@@ -28,7 +28,7 @@ import Foundation
 open class Response {
     required public init() {}
     
-    public var code : Int! = 1000
+    public var code : Int = 1000
     public var errorMessage : String?
     var internetCode : Int? //only use when error happend.
     
@@ -43,17 +43,17 @@ open class Response {
     }
     
     func ParseResponseError (_ response: [String : Any]) -> Bool {
-        code = response["Code"] as? Int
+        code = response["Code"] as? Int ?? 0
         errorMessage = response["Error"] as? String
         if code == nil {
             return false
         }
-
+        
         if code != 1000 && code != 1001 {
-//            self.error = NSError.protonMailError(code ?? 1000,
-//                                                 localizedDescription: errorMessage ?? "",
-//                                                 localizedFailureReason: nil,
-//                                                 localizedRecoverySuggestion: nil)
+            self.error = NSError.protonMailError(code ?? 1000,
+                                                 localizedDescription: errorMessage ?? "",
+                                                 localizedFailureReason: nil,
+                                                 localizedRecoverySuggestion: nil)
         }
         return code != 1000 && code != 1001
     }
@@ -65,7 +65,7 @@ open class Response {
         }
         else {
             internetCode = error.code
-            self.code = internetCode
+            self.code = internetCode ?? 0
         }
         self.errorMessage = error.localizedDescription
         self.error = error

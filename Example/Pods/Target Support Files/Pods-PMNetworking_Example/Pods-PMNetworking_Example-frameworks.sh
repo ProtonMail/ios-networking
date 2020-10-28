@@ -176,7 +176,11 @@ code_sign_if_enabled() {
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework"
+<<<<<<< HEAD
   install_framework "${BUILT_PRODUCTS_DIR}/AwaitKit-iOS/AwaitKit.framework"
+=======
+  install_framework "${BUILT_PRODUCTS_DIR}/PMAuthentication-iOS/PMAuthentication.framework"
+>>>>>>> 2ca2dbe (update example project)
   install_framework "${BUILT_PRODUCTS_DIR}/PMCommon-iOS/PMCommon.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/PMCoreTranslation/PMCoreTranslation.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/PMForceUpgrade/PMForceUpgrade.framework"
@@ -188,7 +192,11 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework"
+<<<<<<< HEAD
   install_framework "${BUILT_PRODUCTS_DIR}/AwaitKit-iOS/AwaitKit.framework"
+=======
+  install_framework "${BUILT_PRODUCTS_DIR}/PMAuthentication-iOS/PMAuthentication.framework"
+>>>>>>> 2ca2dbe (update example project)
   install_framework "${BUILT_PRODUCTS_DIR}/PMCommon-iOS/PMCommon.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/PMCoreTranslation/PMCoreTranslation.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/PMForceUpgrade/PMForceUpgrade.framework"

@@ -38,7 +38,7 @@ class UserServiceImpl: MessageService {
         
         //apiClient.exec()/apiClient.ayncExec()
             // ....
-        let result = self.service.exec(route: UserAPI.Router.checkUsername("tedst")) as? TestResponse
+        let _ = self.service.exec(route: UserAPI.Router.checkUsername("tedst")) as? TestResponse
         
         
         

@@ -64,14 +64,48 @@ public protocol Request : Package {
     var method: HTTPMethod { get }
     
     var isAuth: Bool { get }
+    
+    var authCredential: AuthCredential? {get }
+    var autoRetry: Bool { get }
 }
 
+//open class DefaultRequest : Request {
+//    public var path: String = ""
+//    
+//    public var auth: AuthCredential?
+//    
+//    public var authCredential: AuthCredential? {
+//        get {
+//            return self.auth
+//        }
+//    }
+//}
 
 extension Request {
     public var isAuth : Bool {
         get {
             return true
         }
+    }
+    
+    public var autoRetry : Bool {
+        return true
+    }
+    
+    public var header : [String : Any] {
+        return [:]
+    }
+    
+    public var authCredential: AuthCredential? {
+        return nil
+    }
+    
+    public var method: HTTPMethod {
+        return .get
+    }
+    
+    public var parameters: [String : Any]? {
+        return nil
     }
 }
 

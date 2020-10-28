@@ -24,6 +24,7 @@
 
 import UIKit
 import PMCommon
+import PMAuthentication
 import Crypto
 import PMForceUpgrade
 import PMHumanVerification
@@ -98,16 +99,7 @@ class MainViewController: UIViewController {
             self.testAccessToken()
             return
         }
-        
-        // TODO: update to a PMAuthentication version that depends on PMNetworking
-        let authApi: Authenticator = {
-            _ = Authenticator.Configuration(scheme: "https",
-                                            host: "api.protonmail.ch",
-                                            apiPath: "",
-                                            clientVersion: "iOS_1.12.0")
-            return Authenticator(api: apiService)
-        }()
-        
+        let authApi: Authenticator = Authenticator(api: testApi)
         authApi.authenticate(username: "unittest100", password: "unittest100") { result in
             switch result {
             case .failure(Authenticator.Errors.serverError(let error)): // error response returned by server
@@ -127,7 +119,7 @@ class MainViewController: UIViewController {
             case .success(.ask2FA(let context)): // success but need 2FA
                 print(context)
             case .success(.newCredential(let credential, let passwordMode)): // success without 2FA
-                self.authCredential = credential
+                //self.authCredential = credential
                 print("pwd mode: \(passwordMode)")
                 self.testAccessToken()
                 break
@@ -161,16 +153,8 @@ class MainViewController: UIViewController {
         //set the human verification delegation
         let url = URL(string: "https://protonmail.com/support/knowledge-base/human-verification/")!
         testApi.humanDelegate = HumanCheckHelper(apiService: testApi, supportURL: url, navigationController: self.navigationController!, responseDelegate: self)
-        
-        // TODO: update to a PMAuthentication version that depends on PMNetworking
-        let authApi: Authenticator = {
-            _ = Authenticator.Configuration(scheme: "https",
-                                            host: "api.protonmail.ch",
-                                            apiPath: "",
-                                            clientVersion: "iOS_1.12.0")
-            return Authenticator(api: testApi)
-        }()
-        
+
+        let authApi: Authenticator = Authenticator(api: testApi)
         authApi.authenticate(username: "feng2", password: "123") { result in
             switch result {
             case .failure(Authenticator.Errors.serverError(let error)): // error response returned by server
@@ -190,7 +174,7 @@ class MainViewController: UIViewController {
             case .success(.ask2FA(let context)): // success but need 2FA
                 print(context)
             case .success(.newCredential(let credential, let passwordMode)): // success without 2FA
-                self.blueAuthCredential = credential
+               // self.blueAuthCredential = credential
                 print("pwd mode: \(passwordMode)")
                 self.processHumanVerifyTest()
                 break
@@ -276,20 +260,21 @@ extension MainViewController : AuthDelegate {
         //try to logout this user by uid
     }
     
-    func onRevoke(sessionUID uid: String) {
-        //try to logout this user by uid
+    func onForceUpgrade() {
+        //
     }
 }
 
 
-extension MainViewController: APIServiceDelegate {
+extension MainViewController : APIServiceDelegate {
+    var userAgent: String? {
+        return ""
+    }
+    
     func isReachable() -> Bool {
         return true
     }
     
-    var userAgent: String {
-        return ""
-    }
     
     var appVersion: String {
         return "iOS_\(Bundle.main.majorVersion)"

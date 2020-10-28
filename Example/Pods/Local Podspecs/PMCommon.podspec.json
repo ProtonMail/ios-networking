@@ -48,10 +48,17 @@
         "PMCommon/Services": [
 
         ],
+<<<<<<< HEAD
         "PMCommon/Authentication": [
 
         ],
         "PMCommon/SRP": [
+=======
+        "PMCommon/HumanVerifyUI": [
+
+        ],
+        "PMCommon/DohUI": [
+>>>>>>> 2ca2dbe (update example project)
 
         ]
       }

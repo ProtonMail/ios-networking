@@ -1,8 +1,6 @@
 //
 //  Endpoint.swift
-//  PMAuthentication
-//
-//  Created on 20/02/2020.
+//  PMAuthentication - Created on 20/02/2020.
 //
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -21,7 +19,6 @@
 //
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonMail.  If not, see <https://www.gnu.org/licenses/>.
-
 
 import Foundation
 

@@ -1,9 +1,16 @@
 CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO
 CODE_SIGN_IDENTITY =
+<<<<<<< HEAD
 FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/AFNetworking-c94d3492" "${PODS_CONFIGURATION_BUILD_DIR}/AwaitKit-macOS" "${PODS_CONFIGURATION_BUILD_DIR}/OHHTTPStubs-macOS" "${PODS_CONFIGURATION_BUILD_DIR}/PMCommon-macOS" "${PODS_CONFIGURATION_BUILD_DIR}/PromiseKit.root-CorePromise-Foundation" "${PODS_ROOT}/PMCrypto" "${PODS_XCFRAMEWORKS_BUILD_DIR}/Crypto"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
 LD_RUNPATH_SEARCH_PATHS = $(inherited) '@executable_path/../Frameworks' '@loader_path/../Frameworks'
 OTHER_LDFLAGS = $(inherited) -ObjC -framework "AFNetworking" -framework "AwaitKit" -framework "CFNetwork" -framework "Crypto" -framework "Foundation" -framework "OHHTTPStubs" -framework "PMCommon" -framework "PromiseKit"
+=======
+FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/AFNetworking-c94d3492" "${PODS_CONFIGURATION_BUILD_DIR}/OHHTTPStubs-macOS" "${PODS_CONFIGURATION_BUILD_DIR}/PMCommon-macOS"
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
+LD_RUNPATH_SEARCH_PATHS = $(inherited) '@executable_path/../Frameworks' '@loader_path/../Frameworks'
+OTHER_LDFLAGS = $(inherited) -ObjC -framework "AFNetworking" -framework "CFNetwork" -framework "Foundation" -framework "OHHTTPStubs" -framework "PMCommon"
+>>>>>>> 2ca2dbe (update example project)
 OTHER_SWIFT_FLAGS = $(inherited) -D COCOAPODS
 PODS_BUILD_DIR = ${BUILD_DIR}
 PODS_CONFIGURATION_BUILD_DIR = ${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
