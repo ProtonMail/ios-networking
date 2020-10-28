@@ -27,7 +27,8 @@ PODS:
   - OHHTTPStubs/OHPathHelpers (9.0.0)
   - OHHTTPStubs/Swift (9.0.0):
     - OHHTTPStubs/Default
-  - PMAuthentication (1.2.1):
+  - PMAuthentication (1.2.3):
+    - PMCommon
     - PMCrypto
   - PMCommon (0.1.0):
     - PMCommon/Default (= 0.1.0)
@@ -57,7 +58,7 @@ PODS:
   - TrustKit (1.6.2)
 
 DEPENDENCIES:
-  - PMAuthentication (from `https://gitlab.protontech.ch/apple/shared/pmauthentication.git`, tag `1.2.1`)
+  - PMAuthentication (from `../../../pmauthentication/`)
   - PMCommon (from `../`)
   - PMCommon/Tests (from `../`)
   - PMCrypto (from `https://gitlab.protontech.ch/apple/shared/pmcrypto.git`, tag `1.1.0`)
@@ -71,8 +72,7 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   PMAuthentication:
-    :git: https://gitlab.protontech.ch/apple/shared/pmauthentication.git
-    :tag: 1.2.1
+    :path: "../../../pmauthentication/"
   PMCommon:
     :path: "../"
   PMCrypto:
@@ -80,9 +80,6 @@ EXTERNAL SOURCES:
     :tag: 1.1.0
 
 CHECKOUT OPTIONS:
-  PMAuthentication:
-    :git: https://gitlab.protontech.ch/apple/shared/pmauthentication.git
-    :tag: 1.2.1
   PMCrypto:
     :git: https://gitlab.protontech.ch/apple/shared/pmcrypto.git
     :tag: 1.1.0
@@ -90,11 +87,11 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   AFNetworking: 7864c38297c79aaca1500c33288e429c3451fdce
   OHHTTPStubs: cb29d2a9d09a828ecb93349a2b0c64f99e0db89f
-  PMAuthentication: 43dcef5cec38ecafb436b3cbd50fa3a2394bbcb1
+  PMAuthentication: 202e10af5c3af9130b923d296dcd05ed70d98197
   PMCommon: 19787bc5a0e102b40936bb3b2944d89f195e22cc
   PMCrypto: 70361d6a49e834bfae377b3b4524c2b305fb95c4
   TrustKit: 0a64b37d31518f16e344ceaf27e129dde624ce75
 
-PODFILE CHECKSUM: 0b6861295170eb0bafb0ac9765808ec8e3b1da33
+PODFILE CHECKSUM: 8316b8a4fdd53215cc9d5b5db67be81d108d45dc
 
-COCOAPODS: 1.10.0.beta.2
+COCOAPODS: 1.10.0

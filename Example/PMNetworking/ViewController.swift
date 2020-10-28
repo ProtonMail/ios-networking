@@ -24,6 +24,7 @@
 
 import UIKit
 import PMCommon
+import PMAuthentication
 import Crypto
 
 ///Defind your doh settings
@@ -89,13 +90,14 @@ class MainViewController: UIViewController {
         }
         
         // TODO: update to a PMAuthentication version that depends on PMNetworking
-        let authApi: Authenticator = {
-            _ = Authenticator.Configuration(scheme: "https",
-                                            host: "api.protonmail.ch",
-                                            apiPath: "",
-                                            clientVersion: "iOS_1.12.0")
-            return Authenticator(api: apiService)
-        }()
+//        let authApi: Authenticator = {
+//            _ = Authenticator.Configuration(scheme: "https",
+//                                            host: "api.protonmail.ch",
+//                                            apiPath: "",
+//                                            clientVersion: "iOS_1.12.0")
+//            return Authenticator(api: apiService)
+//        }()
+        let authApi: Authenticator = Authenticator(api: testApi)
         
         authApi.authenticate(username: "unittest100", password: "unittest100") { result in
             switch result {
@@ -116,7 +118,7 @@ class MainViewController: UIViewController {
             case .success(.ask2FA(let context)): // success but need 2FA
                 print(context)
             case .success(.newCredential(let credential, let passwordMode)): // success without 2FA
-                self.authCredential = credential
+                //self.authCredential = credential
                 print("pwd mode: \(passwordMode)")
                 self.testAccessToken()
                 break
@@ -160,14 +162,14 @@ class MainViewController: UIViewController {
         testApi.humanDelegate = self
         
         // TODO: update to a PMAuthentication version that depends on PMNetworking
-        let authApi: Authenticator = {
-            _ = Authenticator.Configuration(scheme: "https",
-                                            host: "api.protonmail.ch",
-                                            apiPath: "",
-                                            clientVersion: "iOS_1.12.0")
-            return Authenticator(api: testApi)
-        }()
-        
+//        let authApi: Authenticator = {
+//            _ = Authenticator.Configuration(scheme: "https",
+//                                            host: "api.protonmail.ch",
+//                                            apiPath: "",
+//                                            clientVersion: "iOS_1.12.0")
+//            return Authenticator(api: testApi)
+//        }()
+        let authApi: Authenticator = Authenticator(api: testApi)
         authApi.authenticate(username: "feng2", password: "123") { result in
             switch result {
             case .failure(Authenticator.Errors.serverError(let error)): // error response returned by server
@@ -187,7 +189,7 @@ class MainViewController: UIViewController {
             case .success(.ask2FA(let context)): // success but need 2FA
                 print(context)
             case .success(.newCredential(let credential, let passwordMode)): // success without 2FA
-                self.blueAuthCredential = credential
+               // self.blueAuthCredential = credential
                 print("pwd mode: \(passwordMode)")
                 //self.testAccessToken()
                 self.processTest()
@@ -203,16 +205,15 @@ class MainViewController: UIViewController {
         let client = TestApiClient(api: self.testApi)
         client.triggerHumanVerify(destination: dest, type: type, token: token) { (_, response) in
             if response.code == 9001 {
-                let desc = response.error?.description
-                print(response.error)
                 self.onHumanVerify(methods: response.supported)
             } else if response.code == 1000 {
                 print("Retry ok  coce : \(1000)")
             } else if response.code == 12400 {
                 print("Retry ok  coce : \(12400)")
             } else {
-                let desc = response.error?.description
-                print(desc)
+                if let desc = response.error?.description {
+                    print(desc)
+                }
             }
         }
     }

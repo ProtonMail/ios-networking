@@ -245,9 +245,11 @@ public extension APIService {
         
         //wait operations
         let _ = sema.wait(timeout: DispatchTime.distantFuture)
-        //        if let e = ret_error {
-        //            throw e
-        //        }
+//        if let e = ret_error {
+//            throw e
+//        }
+        if let e = ret_error {
+        }
         return ret_res
     }
     

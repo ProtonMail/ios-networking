@@ -274,7 +274,7 @@ public class PMAPIService : APIService {
         #endif
         
         sessionManager.setSessionDidReceiveAuthenticationChallenge { session, challenge, credential -> URLSession.AuthChallengeDisposition in
-            var dispositionToReturn: URLSession.AuthChallengeDisposition = .performDefaultHandling
+            let dispositionToReturn: URLSession.AuthChallengeDisposition = .performDefaultHandling
             if let dis = self.serviceDelegate?.onChallenge(challenge: challenge, credential: credential) {
                 return dis
             }
@@ -348,14 +348,20 @@ public class PMAPIService : APIService {
         defer {
             pthread_mutex_unlock(&self.mutex)
         }
-        let authCredential = self.authDelegate?.getToken(bySessionUID: self.sessionUID)
-        guard let credential = authCredential else {
-            //PMLog.D("token is empty")
-            return
+        if let authCredential = self.authDelegate?.getToken(bySessionUID: self.sessionUID) {
+            if authCredential.isExpired {
+                
+            }
         }
+        
+        
+//        guard let credential = authCredential else {
+//            //PMLog.D("token is empty")
+//            return
+//        }
         //TODO:: fix me.  need to aline the auth framwork Credential object with Networking Credential object
-        //credential.expire()
-        //self.authDelegate?.onUpdate(auth: credential)
+//        credential.expire()
+//        self.authDelegate?.onUpdate(auth: credential)
     }
     
     public func request(method: HTTPMethod, path: String,

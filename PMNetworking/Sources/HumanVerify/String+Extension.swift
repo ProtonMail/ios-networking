@@ -262,7 +262,7 @@ extension String {
             if !replacedString.isEmpty && replacedString.count > 0 {
                 return replacedString
             }
-        } catch let ex as NSError {
+        } catch let _ as NSError {
             
         }
         return self
@@ -275,7 +275,7 @@ extension String {
             return regex.firstMatch(in: self,
                                     options: NSRegularExpression.MatchingOptions(rawValue: 0),
                                     range: NSRange(location: 0, length: self.count)) != nil
-        } catch let ex as NSError {
+        } catch let _ as NSError {
             
         }
         
@@ -410,7 +410,7 @@ extension String {
             let data : Data! = self.data(using: String.Encoding.utf8)
             let decoded = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String:String] ?? ["" : ""]
             return decoded
-        } catch let ex as NSError {
+        } catch let _ as NSError {
 
         }
         return ["":""]

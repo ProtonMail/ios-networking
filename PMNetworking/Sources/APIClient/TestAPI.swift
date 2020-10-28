@@ -25,7 +25,6 @@
 
 import Foundation
 
-
 //Test API
 //Humanverify test: https://gitlab.protontech.ch/ProtonMail/Slim-API/blob/develop/api-spec/pm_api_test.md
 
@@ -36,13 +35,7 @@ public enum VerifyMethod : String {
     case invite
     case payment
     case coupon
-    
-//    "sms",
-//    "email",
-//    "payment",
-//    "invite",
-//    "coupon
-    
+
     public init?(rawValue: String) {
         switch rawValue {
         case "sms": self = .sms

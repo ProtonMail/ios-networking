@@ -1,6 +1,6 @@
 {
   "name": "PMAuthentication",
-  "version": "1.2.1",
+  "version": "1.2.3",
   "summary": "Authentication for ProtonMail",
   "description": "Lower level Authentication flow for ProtonMail + UserInfo",
   "homepage": "https://gitlab.protontech.ch/apple/shared/pmauthentication",
@@ -20,6 +20,9 @@
   ],
   "dependencies": {
     "PMCrypto": [
+
+    ],
+    "PMCommon": [
 
     ]
   },
