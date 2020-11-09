@@ -71,8 +71,9 @@ public enum VerifyMethod : String {
         }
     }
 }
+
 public class TestApiClient : Client {
-    var apiService: APIService
+    public var apiService: APIService
     public init(api: APIService) {
         self.apiService = api
     }
@@ -126,11 +127,6 @@ extension TestApiClient {
         let route = Router.humanverify(destination: destination, type: type, token: token)
         self.apiService.exec(route: route, complete: complete)
     }
-    
-//    public func triggerHumanVerify(complete: @escaping  (_ task: URLSessionDataTask?, _ response: Response) -> Void) {
-//        let route = Router.humanverify
-//        self.apiService.exec(route:  route, complete: complete)
-//    }
 }
 
 

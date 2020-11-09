@@ -43,34 +43,32 @@ open class Response {
     }
     
     func ParseResponseError (_ response: [String : Any]) -> Bool {
-//        code = response["Code"] as? Int
-//        errorMessage = response["Error"] as? String
-//        if code == nil {
-//            return false
-//        }
-//
-//        if code != 1000 && code != 1001 {
-////            self.error = NSError.protonMailError(code ?? 1000,
-////                                                 localizedDescription: errorMessage ?? "",
-////                                                 localizedFailureReason: nil,
-////                                                 localizedRecoverySuggestion: nil)
-//        }
-//        return code != 1000 && code != 1001
+        code = response["Code"] as? Int ?? 0
+        errorMessage = response["Error"] as? String
+        if code == nil {
+            return false
+        }
         
-        return false
+        if code != 1000 && code != 1001 {
+            self.error = NSError.protonMailError(code ?? 1000,
+                                                 localizedDescription: errorMessage ?? "",
+                                                 localizedFailureReason: nil,
+                                                 localizedRecoverySuggestion: nil)
+        }
+        return code != 1000 && code != 1001
     }
     
     func ParseHttpError (_ error: NSError, response: [String : Any]? = nil) {//TODO::need refactor.
-//        self.code = 404
-//        if let detail = error.userInfo["com.alamofire.serialization.response.error.response"] as? HTTPURLResponse {
-//            self.code = detail.statusCode
-//        }
-//        else {
-//            internetCode = error.code
-//            self.code = internetCode
-//        }
-//        self.errorMessage = error.localizedDescription
-//        self.error = error
+        self.code = 404
+        if let detail = error.userInfo["com.alamofire.serialization.response.error.response"] as? HTTPURLResponse {
+            self.code = detail.statusCode
+        }
+        else {
+            internetCode = error.code
+            self.code = internetCode ?? 0
+        }
+        self.errorMessage = error.localizedDescription
+        self.error = error
     }
     
     open func ParseResponse (_ response: [String : Any]) -> Bool {

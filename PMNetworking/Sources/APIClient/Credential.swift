@@ -11,11 +11,9 @@ import Foundation
 /// Blind object to returned to clients in order to continue authentication upon 2FA code input
 public typealias TwoFactorContext = (credential: Credential, passwordMode: PasswordMode)
 
-
 public enum PasswordMode: Int, Codable {
     case one = 1, two = 2
 }
-
 
 /// Credential to be used across all authenticated API calls
 public struct Credential {
@@ -37,7 +35,7 @@ public struct Credential {
     }
     
     public init(res: CredentialConvertible, UID: String = "") {
-        self.UID = res.UID ?? UID
+        self.UID = res.UID ?? res.sessionID ?? UID
         self.accessToken = res.accessToken
         self.refreshToken = res.refreshToken
         self.expiration = Date(timeIntervalSinceNow: res.expiresIn)
@@ -67,5 +65,15 @@ extension CredentialConvertible {
         let mirror = Mirror(reflecting: self)
         guard let child = mirror.children.first(where: { $0.label == name }) else { return nil }
         return child.value as? T
+    }
+}
+
+extension Credential {
+    public init(_ authCredential: AuthCredential) {
+        self.init(UID: authCredential.sessionID,
+                  accessToken: authCredential.accessToken,
+                  refreshToken: authCredential.refreshToken,
+                  expiration: authCredential.expiration,
+                  scope: [])
     }
 }

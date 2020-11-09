@@ -1,5 +1,5 @@
 CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO
-FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/AFNetworking" "${PODS_CONFIGURATION_BUILD_DIR}/OHHTTPStubs" "${PODS_CONFIGURATION_BUILD_DIR}/PMCommon-iOS" "${PODS_ROOT}/PMCrypto" "${PODS_XCFRAMEWORKS_BUILD_DIR}/Crypto"
+FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/AFNetworking" "${PODS_CONFIGURATION_BUILD_DIR}/OHHTTPStubs-iOS" "${PODS_CONFIGURATION_BUILD_DIR}/PMCommon-iOS" "${PODS_ROOT}/PMCrypto" "${PODS_XCFRAMEWORKS_BUILD_DIR}/Crypto"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
 LD_RUNPATH_SEARCH_PATHS = $(inherited) '@executable_path/Frameworks' '@loader_path/Frameworks'
 OTHER_LDFLAGS = $(inherited) -ObjC -framework "AFNetworking" -framework "CFNetwork" -framework "Crypto" -framework "Foundation" -framework "OHHTTPStubs" -framework "PMCommon"

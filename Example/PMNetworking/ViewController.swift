@@ -88,17 +88,7 @@ class MainViewController: UIViewController {
             self.testAccessToken()
             return
         }
-        
-        // TODO: update to a PMAuthentication version that depends on PMNetworking
-//        let authApi: Authenticator = {
-//            _ = Authenticator.Configuration(scheme: "https",
-//                                            host: "api.protonmail.ch",
-//                                            apiPath: "",
-//                                            clientVersion: "iOS_1.12.0")
-//            return Authenticator(api: apiService)
-//        }()
         let authApi: Authenticator = Authenticator(api: testApi)
-        
         authApi.authenticate(username: "unittest100", password: "unittest100") { result in
             switch result {
             case .failure(Authenticator.Errors.serverError(let error)): // error response returned by server
@@ -160,15 +150,6 @@ class MainViewController: UIViewController {
         
         //set the human verification delegation
         testApi.humanDelegate = self
-        
-        // TODO: update to a PMAuthentication version that depends on PMNetworking
-//        let authApi: Authenticator = {
-//            _ = Authenticator.Configuration(scheme: "https",
-//                                            host: "api.protonmail.ch",
-//                                            apiPath: "",
-//                                            clientVersion: "iOS_1.12.0")
-//            return Authenticator(api: testApi)
-//        }()
         let authApi: Authenticator = Authenticator(api: testApi)
         authApi.authenticate(username: "feng2", password: "123") { result in
             switch result {
@@ -273,13 +254,14 @@ extension MainViewController : AuthDelegate {
 
 
 extension MainViewController : APIServiceDelegate {
+    var userAgent: String? {
+        return ""
+    }
+    
     func isReachable() -> Bool {
         return true //
     }
     
-    var userAgent: String {
-        return ""
-    }
     
     func onHumanVerify() {
         

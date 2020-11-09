@@ -158,3 +158,14 @@ final public class AuthCredential: NSObject, NSCoding {
         aCoder.encode(passwordKeySalt, forKey: CoderKey.salt)
     }
 }
+
+extension AuthCredential {
+    public convenience init(_ credential: Credential) {
+        self.init(sessionID: credential.UID,
+                  accessToken: credential.accessToken,
+                  refreshToken: credential.refreshToken,
+                  expiration: credential.expiration,
+                  privateKey: nil,
+                  passwordKeySalt: nil)
+    }
+}

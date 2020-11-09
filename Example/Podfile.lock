@@ -30,6 +30,10 @@ PODS:
   - PMAuthentication (1.2.3):
     - PMCommon
     - PMCrypto
+  - PMAuthentication/Tests (1.2.3):
+    - OHHTTPStubs/Swift
+    - PMCommon
+    - PMCrypto
   - PMCommon (0.1.0):
     - PMCommon/Default (= 0.1.0)
   - PMCommon/APIClient (0.1.0):
@@ -59,6 +63,7 @@ PODS:
 
 DEPENDENCIES:
   - PMAuthentication (from `../../../pmauthentication/`)
+  - PMAuthentication/Tests (from `../../../pmauthentication/`)
   - PMCommon (from `../`)
   - PMCommon/Tests (from `../`)
   - PMCrypto (from `https://gitlab.protontech.ch/apple/shared/pmcrypto.git`, tag `1.1.0`)
@@ -87,11 +92,11 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   AFNetworking: 7864c38297c79aaca1500c33288e429c3451fdce
   OHHTTPStubs: cb29d2a9d09a828ecb93349a2b0c64f99e0db89f
-  PMAuthentication: 202e10af5c3af9130b923d296dcd05ed70d98197
+  PMAuthentication: b2ed177ed04a10b0f2a2c0b498ddb0526698df17
   PMCommon: 19787bc5a0e102b40936bb3b2944d89f195e22cc
   PMCrypto: 70361d6a49e834bfae377b3b4524c2b305fb95c4
   TrustKit: 0a64b37d31518f16e344ceaf27e129dde624ce75
 
-PODFILE CHECKSUM: 8316b8a4fdd53215cc9d5b5db67be81d108d45dc
+PODFILE CHECKSUM: 087ffc8a954b2dd63411c0318841b059e7e17655
 
 COCOAPODS: 1.10.0

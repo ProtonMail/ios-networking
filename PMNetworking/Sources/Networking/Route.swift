@@ -66,12 +66,15 @@ public protocol Request : Package {
     var isAuth: Bool { get }
 }
 
-
 extension Request {
     public var isAuth : Bool {
         get {
             return true
         }
+    }
+    
+    public var header : [String : Any] {
+        return [:]
     }
 }
 

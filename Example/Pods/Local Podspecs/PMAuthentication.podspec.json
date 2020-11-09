@@ -26,5 +26,17 @@
 
     ]
   },
-  "static_framework": true
+  "static_framework": true,
+  "testspecs": [
+    {
+      "name": "Tests",
+      "test_type": "unit",
+      "source_files": "PMAuthenticationTests/**/*.swift",
+      "dependencies": {
+        "OHHTTPStubs/Swift": [
+
+        ]
+      }
+    }
+  ]
 }

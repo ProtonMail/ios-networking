@@ -27,7 +27,6 @@ import Foundation
 
 public typealias SendVerificationCodeBlock = (Bool, NSError?) -> Void
 
-
 public struct HumanVerificationToken {
     let type: TokenType
     let token: String

@@ -1,8 +1,6 @@
 //
-//  APIClient.swift
-//  Pods
-//
-//  Created on 5/22/20.
+//  Endpoint.swift
+//  PMAuthentication - Created on 20/02/2020.
 //
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -22,14 +20,24 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonMail.  If not, see <https://www.gnu.org/licenses/>.
 
-
 import Foundation
 
-
-public protocol APIClient {
- 
+protocol Endpoint {
+    associatedtype Response: Codable
+    var request: URLRequest { get }
 }
 
-public protocol Client {
-    var apiService : APIService { get }
+struct ErrorResponse: Codable {
+    var code: Int
+    var error: String
+    var errorDescription: String
+}
+
+extension NSError {
+    convenience init(_ serverError: ErrorResponse) {
+        let userInfo = [NSLocalizedDescriptionKey: serverError.error,
+                        NSLocalizedFailureReasonErrorKey: serverError.errorDescription]
+        
+        self.init(domain: "PMAuthentication", code: serverError.code, userInfo: userInfo)
+    }
 }

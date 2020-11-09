@@ -301,7 +301,7 @@ open class DoH : DoHInterface {
         self.caches[config.apiHost] = found
         
         // loop and if all tried // should only loop found
-        for (key,value) in self.caches {
+        for (_,value) in self.caches {
             for val in value {
                 if val.retry < 1 {
                     return true
@@ -362,7 +362,7 @@ open class DoH : DoHInterface {
         
         
         // loop and if all tried
-        for (key,value) in self.caches {
+        for (_,value) in self.caches {
             for val in value {
                 if val.retry < 1 {
                     return true

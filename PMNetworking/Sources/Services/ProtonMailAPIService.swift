@@ -208,7 +208,7 @@ public class PMAPIService : APIService {
     public weak var authDelegate: AuthDelegate?
     
     ///
-    public var serviceDelegate: APIServiceDelegate?
+    public weak var serviceDelegate: APIServiceDelegate?
     
     /// synchronize lock
     private var mutex = pthread_mutex_t()
@@ -299,13 +299,17 @@ public class PMAPIService : APIService {
         //TODO:: fix me. this is wrong. concurruncy
         DispatchQueue.global(qos: .default).async {
             pthread_mutex_lock(&self.mutex)
-            let authCredential = self.authDelegate?.getToken(bySessionUID: self.sessionUID)
-            guard let credential = authCredential else {
+            guard let delegate = self.authDelegate else {
                 pthread_mutex_unlock(&self.mutex)
-                completion(nil, nil, NSError(domain: "empty token", code: 0, userInfo: nil))
+                completion(nil, nil, NSError(domain: "AuthDelegate is required", code: 0, userInfo: nil))
                 return
             }
-            
+            let authCredential = delegate.getToken(bySessionUID: self.sessionUID)
+            guard let credential = authCredential else {
+                pthread_mutex_unlock(&self.mutex)
+                completion(nil, nil, NSError(domain: "Empty token", code: 0, userInfo: nil))
+                return
+            }
             // when local credential expired, should handle the case same as api reuqest error handling
             guard !credential.isExpired else {
                 self.authDelegate?.onRefresh(bySessionUID: self.sessionUID) { newCredential, error in

@@ -152,7 +152,7 @@ public protocol APIServiceDelegate: class {
     
     var appVersion : String { get }
     
-    var userAgent : String { get }
+    var userAgent : String? { get }
     
     func onDohTroubleshot()
     
@@ -196,6 +196,7 @@ class TestResponse : Response {
 }
 
 typealias RequestComplete = (_ task: URLSessionDataTask?, _ response: Response) -> Void
+
 public extension APIService {
     //init
     func exec<T>(route: Request) -> T? where T : Response {
@@ -217,7 +218,7 @@ public extension APIService {
             }
             
             if res == nil {
-                // TODO check res
+                // TODO:: check res
                 //apiRes.error = NSError.badResponse()
                 ret_error = apiRes.error
                 return
@@ -245,10 +246,9 @@ public extension APIService {
         
         //wait operations
         let _ = sema.wait(timeout: DispatchTime.distantFuture)
-//        if let e = ret_error {
-//            throw e
-//        }
         if let e = ret_error {
+            //TODO::fix me
+            print(e.localizedDescription)
         }
         return ret_res
     }
@@ -271,8 +271,8 @@ public extension APIService {
             }
             
             if res == nil {
-                // TODO check res
-                //                apiRes.error = NSError.badResponse()
+                // TODO:: check res
+                //apiRes.error = NSError.badResponse()
                 complete(task, apiRes)
                 return
             }
@@ -294,53 +294,34 @@ public extension APIService {
                      completion: completionWrapper)
     }
     
-    
-    func exec<T>(route: Request,
-                 complete: @escaping (_ task: URLSessionDataTask?, _ result: Result<T, Error>) -> Void) where T : Codable {
+    func exec<T>(route: Request, complete: @escaping (_ response: T) -> Void) where T : Response {
         
         // 1 make a request , 2 wait for the respons async 3. valid response 4. parse data into response 5. some data need save into database.
         let completionWrapper: CompletionBlock = { task, res, error in
-            //                let realType = T.self
-            //                let apiRes = realType.init()
-            //                if error != nil {
-            //                    //TODO check error
-            //                    apiRes.ParseHttpError(error!, response: res)
-            //                    complete(task, apiRes)
-            //                    return
-            //                }
-            //
-            //                if res == nil {
-            //                    // TODO check res
-            //    //                apiRes.error = NSError.badResponse()
-            //                    complete(task, apiRes)
-            //                    return
-            //                }
-            //
-            //                var hasError = apiRes.ParseResponseError(res!)
-            //                if !hasError {
-            //                    hasError = !apiRes.ParseResponse(res!)
-            //                }
-            //                complete(task, apiRes)
-            //                let data = try! JSONEncoder().encode(res as! [String: Any])
-            //                let dictionary = try! JSONSerialization.jsonObject(with: data, options: .allowFragments) as! T
-            //                complete(task, dictionary)
-            //                return dictionary
-            ///TODO parse error first
-            do {
-                if let res = res {
-                    let data = try JSONSerialization.data(withJSONObject: res, options: .prettyPrinted)
-                    let decodedResponse = try JSONDecoder().decode(T.self, from: data)
-                    complete(task, .success(decodedResponse))
-                } else {
-                    // todo fix the cast
-                    complete(task, .failure(error as! Error))
+            let realType = T.self
+            let apiRes = realType.init()
+            if error != nil {
+                //TODO check error
+                apiRes.ParseHttpError(error!, response: res)
+                if let resRaw = res {
+                    let _ = apiRes.ParseResponse(resRaw)
                 }
-                
-            } catch let err {
-                complete(task, .failure(err))
+                complete(apiRes)
+                return
             }
             
+            if res == nil {
+                //TODO:: check res
+                //apiRes.error = NSError.badResponse()
+                complete(apiRes)
+                return
+            }
             
+            var hasError = apiRes.ParseResponseError(res!)
+            if !hasError {
+                hasError = !apiRes.ParseResponse(res!)
+            }
+            complete(apiRes)
         }
         
         var header = route.header
@@ -348,7 +329,82 @@ public extension APIService {
         self.request(method: route.method, path: route.path,
                      parameters: route.parameters,
                      headers: header,
-                     authenticated: true,//route.getIsAuthFunction(),
+                     authenticated: route.isAuth,
+                     customAuthCredential: nil, //route.authCredential,
+                     completion: completionWrapper)
+    }
+    
+    
+    func exec<T>(route: Request, complete: @escaping (_ task: URLSessionDataTask?, _ result: Result<T, Error>) -> Void) where T : Codable {
+        
+        // 1 make a request , 2 wait for the respons async 3. valid response 4. parse data into response 5. some data need save into database.
+        let completionWrapper: CompletionBlock = { task, res, error in
+            do {
+                if let res = res {
+                    //this is a workaround for afnetworking, will change it
+                    let responseData = try JSONSerialization.data(withJSONObject: res, options: .prettyPrinted)
+                    
+                    let decoder = JSONDecoder()
+                    decoder.keyDecodingStrategy = .decapitaliseFirstLetter
+                    // server error code
+                    if let error = try? decoder.decode(ErrorResponse.self, from: responseData) {
+                        throw NSError(error)
+                    }
+                    // server SRP
+                    let decodedResponse = try decoder.decode(T.self, from: responseData)
+                    complete(task, .success(decodedResponse))
+                } else {
+                    // todo fix the cast
+                    complete(task, .failure(error!))
+                }
+                
+            } catch let err {
+                complete(task, .failure(err))
+            }
+        }
+        var header = route.header
+        header[HTTPHeader.apiVersion] = route.version
+        self.request(method: route.method, path: route.path,
+                     parameters: route.parameters,
+                     headers: header,
+                     authenticated: route.isAuth,
+                     customAuthCredential: nil, //route.authCredential,
+                     completion: completionWrapper)
+    }
+    
+    
+    func exec<T>(route: Request, complete: @escaping (_ result: Result<T, Error>) -> Void) where T : Codable {
+        // 1 make a request , 2 wait for the respons async 3. valid response 4. parse data into response 5. some data need save into database.
+        let completionWrapper: CompletionBlock = { task, res, error in
+            do {
+                if let res = res {
+                    //this is a workaround for afnetworking, will change it
+                    let responseData = try JSONSerialization.data(withJSONObject: res, options: .prettyPrinted)
+                    
+                    let decoder = JSONDecoder()
+                    decoder.keyDecodingStrategy = .decapitaliseFirstLetter
+                    // server error code
+                    if let error = try? decoder.decode(ErrorResponse.self, from: responseData) {
+                        throw NSError(error)
+                    }
+                    // server SRP
+                    let decodedResponse = try decoder.decode(T.self, from: responseData)
+                    complete(.success(decodedResponse))
+                } else {
+                    // todo fix the cast
+                    complete(.failure(error!))
+                }
+                
+            } catch let err {
+                complete(.failure(err))
+            }
+        }
+        var header = route.header
+        header[HTTPHeader.apiVersion] = route.version
+        self.request(method: route.method, path: route.path,
+                     parameters: route.parameters,
+                     headers: header,
+                     authenticated: route.isAuth,
                      customAuthCredential: nil, //route.authCredential,
                      completion: completionWrapper)
     }
@@ -370,10 +426,6 @@ public extension APIService {
     //           // waiting response
     //
     //           //complete/error
-    //       }
-    //
-    //       func completeHanlding() {
-    //           //
     //       }
     //       func errorHandling() {
     //           // if doh do
