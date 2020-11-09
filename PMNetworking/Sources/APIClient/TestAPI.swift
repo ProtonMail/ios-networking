@@ -155,6 +155,26 @@ public class TestHV : Response {
     }
 }
 
+public struct ExpireTokenResponse: Codable {
+    public var code: Int
+}
+
+public class ExpireToken : Request {
+    let uid: String
+    public init(uid: String) {
+        self.uid = uid
+    }
+    public var path: String {
+        return "/internal/quark/user:expire:access:token?UID=\(self.uid)"
+    }
+    public var method: HTTPMethod = .get
+    public var parameters: [String : Any]? = nil
+    
+    public var isAuth: Bool {
+        return false
+    }
+}
+
 
 //public struct HumanVerificationToken {
 //    let type: TokenType

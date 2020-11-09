@@ -243,9 +243,6 @@ extension MainViewController : AuthDelegate {
     func onLogout(sessionUID uid: String) {
         //try to logout this user by uid
     }
-    func onRevoke(sessionUID uid: String) {
-        //try to logout this user by uid
-    }
     
     func onForceUpgrade() {
         //

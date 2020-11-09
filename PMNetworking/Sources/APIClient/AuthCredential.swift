@@ -57,11 +57,11 @@ final public class AuthCredential: NSObject, NSCoding {
     // user session id, this change in every login
     public var sessionID: String
     // plain text accessToken
-    private(set) var accessToken: String
+    public var accessToken: String
     // refresh token use to renew access token
-    var refreshToken: String
+    public var refreshToken: String
     // the expiration time
-    private(set) var expiration: Date
+    public var expiration: Date
     
     // the login private key, ususally it is first userkey
     private(set) var privateKey : String?
@@ -81,6 +81,10 @@ final public class AuthCredential: NSObject, NSCoding {
         return Date().compare(expiration) != .orderedAscending
     }
 
+    func expire() {
+        expiration = Date.distantPast
+    }
+    
     func update(salt: String?, privateKey: String?) {
         self.privateKey = privateKey
         self.passwordKeySalt = salt

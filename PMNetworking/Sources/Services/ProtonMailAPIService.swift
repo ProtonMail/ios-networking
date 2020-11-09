@@ -319,7 +319,7 @@ public class PMAPIService : APIService {
                         DispatchQueue.main.async {
                             //NSError.alertBadTokenToast()
                             completion(newCredential?.accessToken, self.sessionUID, err)
-                            self.authDelegate?.onRevoke(sessionUID: self.sessionUID)
+                            self.authDelegate?.onLogout(sessionUID: self.sessionUID)
                             //NotificationCenter.default.post(name: .didReovke, object: nil, userInfo: ["uid": self.sessionUID ])error
                         }
                     } else if let err = error, err.domain == self.APIServiceErrorDomain && err.code == APIErrorCode.AuthErrorCode.localCacheBad {
@@ -352,29 +352,23 @@ public class PMAPIService : APIService {
         defer {
             pthread_mutex_unlock(&self.mutex)
         }
-        if let authCredential = self.authDelegate?.getToken(bySessionUID: self.sessionUID) {
-            if authCredential.isExpired {
-                
-            }
+        guard let authCredential = self.authDelegate?.getToken(bySessionUID: self.sessionUID) else {
+            print("token is empty")
+            return
         }
         
-        
-//        guard let credential = authCredential else {
-//            //PMLog.D("token is empty")
-//            return
-//        }
-        //TODO:: fix me.  need to aline the auth framwork Credential object with Networking Credential object
-//        credential.expire()
-//        self.authDelegate?.onUpdate(auth: credential)
+        //TODO:: fix me.  to aline the auth framwork Credential object with Networking Credential object
+        authCredential.expire()
+        self.authDelegate?.onUpdate(auth: Credential( authCredential))
     }
     
     public func request(method: HTTPMethod, path: String,
                         parameters: Any?, headers: [String : Any]?,
-                        authenticated: Bool, customAuthCredential: AuthCredential?, completion: CompletionBlock?) {
+                        authenticated: Bool, autoRetry : Bool, customAuthCredential: AuthCredential?, completion: CompletionBlock?) {
         
         self.request(method: method, path: path, parameters: parameters,
-                     headers: headers, authenticated: authenticated, authRetry: false, authRetryRemains: 10,
-                     customAuthCredential: nil, completion: completion)
+                     headers: headers, authenticated: authenticated, authRetry: autoRetry, authRetryRemains: 10,
+                     customAuthCredential: customAuthCredential, completion: completion)
         
     }
     //new requestion function
@@ -384,7 +378,7 @@ public class PMAPIService : APIService {
                  headers: [String : Any]?,
                  authenticated: Bool = true,
                  authRetry: Bool = true,
-                 authRetryRemains: Int = 10,
+                 authRetryRemains: Int = 5,
                  customAuthCredential: AuthCredential? = nil,
                  completion: CompletionBlock?) {
         let authBlock: AuthTokenBlock = { token, userID, error in
@@ -424,10 +418,13 @@ public class PMAPIService : APIService {
                                                  customAuthCredential: customAuthCredential,
                                                  completion: completion)
                                 } else {
-                                    self.authDelegate?.onRevoke(sessionUID: self.sessionUID)
+                                    self.authDelegate?.onLogout(sessionUID: self.sessionUID)
                                     //NotificationCenter.default.post(name: .didReovke, object: nil, userInfo: ["uid": userID ?? ""])
                                 }
                             }
+                        } else if authenticated && httpCode == 422 && authRetry {
+                            completion?(nil, nil, error)
+                            self.authDelegate?.onLogout(sessionUID: self.sessionUID)
                         } else if let responseDict = response as? [String : Any], let responseCode = responseDict["Code"] as? Int {
                             let errorMessage = responseDict["Error"] as? String ?? ""
                             let displayError : NSError = NSError.protonMailError(responseCode,
@@ -481,7 +478,7 @@ public class PMAPIService : APIService {
                                                      customAuthCredential: customAuthCredential,
                                                      completion: completion)
                                     } else {
-                                        self.authDelegate?.onRevoke(sessionUID: self.sessionUID)
+                                        self.authDelegate?.onLogout(sessionUID: self.sessionUID)
                                         //NotificationCenter.default.post(name: .didReovke, object: nil, userInfo: ["uid": userID ?? ""])
                                     }
                                 }

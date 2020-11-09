@@ -137,7 +137,7 @@ public typealias CompletionBlock = (_ task: URLSessionDataTask?, _ response: [St
 public protocol API {
     func request(method: HTTPMethod, path: String,
                  parameters: Any?, headers: [String : Any]?,
-                 authenticated: Bool,
+                 authenticated: Bool, autoRetry: Bool,
                  customAuthCredential: AuthCredential?,
                  completion: CompletionBlock?)
 }
@@ -174,8 +174,7 @@ public protocol AuthDelegate: class {
     func getToken(bySessionUID uid: String) -> AuthCredential?
     func onLogout(sessionUID uid: String)
     func onUpdate(auth: Credential)
-    func onRevoke(sessionUID uid: String)
-    func onRefresh(bySessionUID uid: String, complete: AuthRefreshComplete)
+    func onRefresh(bySessionUID uid: String, complete:  @escaping AuthRefreshComplete)
     func onForceUpgrade()
 }
 
@@ -240,8 +239,9 @@ public extension APIService {
         self.request(method: route.method, path: route.path,
                      parameters: route.parameters,
                      headers: header,
-                     authenticated: true,//route.getIsAuthFunction(),
-                     customAuthCredential: nil, //route.authCredential,
+                     authenticated: route.isAuth,
+                     autoRetry: route.autoRetry,
+                     customAuthCredential: route.authCredential,
                      completion: completionWrapper)
         
         //wait operations
@@ -290,7 +290,8 @@ public extension APIService {
                      parameters: route.parameters,
                      headers: header,
                      authenticated: route.isAuth,
-                     customAuthCredential: nil, //route.authCredential,
+                     autoRetry: route.autoRetry,
+                     customAuthCredential: route.authCredential,
                      completion: completionWrapper)
     }
     
@@ -330,7 +331,8 @@ public extension APIService {
                      parameters: route.parameters,
                      headers: header,
                      authenticated: route.isAuth,
-                     customAuthCredential: nil, //route.authCredential,
+                     autoRetry: route.autoRetry,
+                     customAuthCredential: route.authCredential,
                      completion: completionWrapper)
     }
     
@@ -368,7 +370,8 @@ public extension APIService {
                      parameters: route.parameters,
                      headers: header,
                      authenticated: route.isAuth,
-                     customAuthCredential: nil, //route.authCredential,
+                     autoRetry: route.autoRetry,
+                     customAuthCredential: route.authCredential,
                      completion: completionWrapper)
     }
     
@@ -405,7 +408,8 @@ public extension APIService {
                      parameters: route.parameters,
                      headers: header,
                      authenticated: route.isAuth,
-                     customAuthCredential: nil, //route.authCredential,
+                     autoRetry: route.autoRetry,
+                     customAuthCredential: route.authCredential,
                      completion: completionWrapper)
     }
     
