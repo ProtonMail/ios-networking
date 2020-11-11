@@ -89,6 +89,8 @@ extension Request {
     public var authCredential: AuthCredential? {
         return nil
     }
+    
+    public 
 }
 
 

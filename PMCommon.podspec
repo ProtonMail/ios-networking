@@ -41,7 +41,7 @@ TODO: Add long description of the pod here.
     default.dependency 'PMCommon/Networking'
     default.dependency 'PMCommon/APIClient'
     default.dependency 'PMCommon/Services'
-    default.dependency 'PMCommon/Authentication'
+    # default.dependency 'PMCommon/Authentication'
     default.dependency 'PMCommon/HumanVerifyUI'
     default.dependency 'PMCommon/DohUI'
   end

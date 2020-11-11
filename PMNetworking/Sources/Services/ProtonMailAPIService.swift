@@ -21,11 +21,8 @@
 //  along with ProtonMail.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-
 //REMOVE the networking ref
 import AFNetworking
-
-
 
 public class APIErrorCode {
     static public let responseOK = 1000
@@ -196,11 +193,10 @@ final class UserAgent {
 }
 
 
+public let APIServiceErrorDomain = NSError.protonMailErrorDomain("APIService")
 
 //Protonmail api serivce. all the network requestion must go with this.
 public class PMAPIService : APIService {
-    
-    let APIServiceErrorDomain = NSError.protonMailErrorDomain("APIService")
     
     public var humanDelegate: HumanVerifyDelegate?
     
@@ -314,7 +310,7 @@ public class PMAPIService : APIService {
             guard !credential.isExpired else {
                 self.authDelegate?.onRefresh(bySessionUID: self.sessionUID) { newCredential, error in
                     self.debugError(error)
-                    if let err = error, err.domain == self.APIServiceErrorDomain && err.code == APIErrorCode.AuthErrorCode.invalidGrant {
+                    if let err = error, err.domain == APIServiceErrorDomain && err.code == APIErrorCode.AuthErrorCode.invalidGrant {
                         pthread_mutex_unlock(&self.mutex)
                         DispatchQueue.main.async {
                             //NSError.alertBadTokenToast()
@@ -322,7 +318,7 @@ public class PMAPIService : APIService {
                             self.authDelegate?.onLogout(sessionUID: self.sessionUID)
                             //NotificationCenter.default.post(name: .didReovke, object: nil, userInfo: ["uid": self.sessionUID ])error
                         }
-                    } else if let err = error, err.domain == self.APIServiceErrorDomain && err.code == APIErrorCode.AuthErrorCode.localCacheBad {
+                    } else if let err = error, err.domain == APIServiceErrorDomain && err.code == APIErrorCode.AuthErrorCode.localCacheBad {
                         pthread_mutex_unlock(&self.mutex)
                         DispatchQueue.main.async {
                             //NSError.alertBadTokenToast()

@@ -185,9 +185,9 @@ public protocol APIService : API {
     //var queue : [Request] {get}
     
     func setSessionUID(uid: String)
-    var serviceDelegate: APIServiceDelegate? {get}
-    var authDelegate : AuthDelegate? {get}
-    var humanDelegate : HumanVerifyDelegate? {get}
+    var serviceDelegate: APIServiceDelegate? {get set}
+    var authDelegate : AuthDelegate? {get set}
+    var humanDelegate : HumanVerifyDelegate? {get set}
 }
 
 class TestResponse : Response {
