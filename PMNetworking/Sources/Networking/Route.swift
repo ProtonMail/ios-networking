@@ -66,8 +66,6 @@ public protocol Request : Package {
     var isAuth: Bool { get }
     
     var authCredential: AuthCredential? {get }
-    
-    
     var autoRetry: Bool { get }
 }
 
@@ -90,7 +88,13 @@ extension Request {
         return nil
     }
     
-    public 
+    public var method: HTTPMethod {
+        return .get
+    }
+    
+    public var parameters: [String : Any]? {
+        return nil
+    }
 }
 
 

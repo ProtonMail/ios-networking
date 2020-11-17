@@ -26,8 +26,8 @@
 import Foundation
 
 /// http headers key
-struct HTTPHeader {
-    static let apiVersion = "x-pm-apiversion"
+public struct HTTPHeader {
+    static public let apiVersion = "x-pm-apiversion"
 }
 
 
@@ -57,7 +57,7 @@ extension Bundle {
 //}
 
 ///
-protocol APIServerConfig  {
+public protocol APIServerConfig  {
     //host name    xxx.xxxxxxx.com
     var host : String { get }
     // http https ws wss etc ...
@@ -69,7 +69,7 @@ protocol APIServerConfig  {
 }
 
 extension APIServerConfig {
-    var hostUrl : String {
+    public var hostUrl : String {
         get {
             return self.protocol + "://" + self.host
         }
@@ -77,7 +77,7 @@ extension APIServerConfig {
 }
 
 //Predefined servers, could also add the serverlist load from config env later
-enum Server : APIServerConfig {
+public enum Server : APIServerConfig {
     case live //"api.protonmail.ch"
     case testlive //"test-api.protonmail.ch"
     
@@ -90,7 +90,7 @@ enum Server : APIServerConfig {
     //local test
     //static let URL_HOST : String = "http://127.0.0.1"  //http
     
-    var host: String {
+    public var host: String {
         get {
             switch self {
             case .live:
@@ -109,7 +109,7 @@ enum Server : APIServerConfig {
         }
     }
     
-    var path: String {
+    public var path: String {
         get {
             switch self {
             case .live, .testlive, .dev2:
@@ -120,7 +120,7 @@ enum Server : APIServerConfig {
         }
     }
     
-    var `protocol`: String {
+    public var `protocol`: String {
         get {
             return "https"
         }
@@ -134,6 +134,7 @@ enum Server : APIServerConfig {
 //}
 
 public typealias CompletionBlock = (_ task: URLSessionDataTask?, _ response: [String : Any]?, _ error: NSError?) -> Void
+
 public protocol API {
     func request(method: HTTPMethod, path: String,
                  parameters: Any?, headers: [String : Any]?,

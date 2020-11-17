@@ -85,16 +85,16 @@ final public class AuthCredential: NSObject, NSCoding {
         expiration = Date.distantPast
     }
     
-    func update(salt: String?, privateKey: String?) {
+    public func update(salt: String?, privateKey: String?) {
         self.privateKey = privateKey
         self.passwordKeySalt = salt
     }
 
-    func udpate (password: String) {
+    public func udpate (password: String) {
         self.mailboxpassword = password
     }
     
-    func udpate(sessionID: String,
+    public func udpate(sessionID: String,
                 accessToken: String,
                 refreshToken: String,
                 expiration: Date)
@@ -132,7 +132,7 @@ final public class AuthCredential: NSObject, NSCoding {
         self.mailboxpassword = aDecoder.decodeObject(forKey: CoderKey.password) as? String ?? ""
     }
     
-    class func unarchive(data: NSData?) -> AuthCredential? {
+    public class func unarchive(data: NSData?) -> AuthCredential? {
         guard let data = data as Data? else { return nil }
         
         // Looks like this is necessary for cases when AuthCredential was updated and saved by one target, and unarchived by another. For example, Share extension updates token from server, archives AuthCredential with its prefix, and after a while main target should unarchive it - and should know that prefix
@@ -148,7 +148,7 @@ final public class AuthCredential: NSObject, NSCoding {
     
     // MARK - Class methods
     
-    func archive() -> Data {
+    public func archive() -> Data {
         return NSKeyedArchiver.archivedData(withRootObject: self)
     }
     

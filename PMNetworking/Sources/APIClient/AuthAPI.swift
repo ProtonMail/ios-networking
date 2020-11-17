@@ -64,7 +64,6 @@ public struct AuthAPI : APIClient {
     }
     
     public enum Router: Request {
-        
         case info(username: String)
         case modulus
         case auth(username: String, ephemeral:String, proof: String, session: String)
