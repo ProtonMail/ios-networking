@@ -245,7 +245,7 @@ public class PMAPIService : APIService {
         // init lock
         pthread_mutex_init(&mutex, nil)
         self.doh = doh
-        doh.status = .on //userCachedStatus.isDohOn ? .on : .off
+        doh.status = .off //userCachedStatus.isDohOn ? .on : .off
         
         // set config
         //self.serverConfig = config
@@ -396,7 +396,7 @@ public class PMAPIService : APIService {
                         
                         if authenticated && httpCode == 401 && authRetry {
                             self.expireCredential()
-                            if path.contains("https://api.protonmail.ch/refresh") { //tempery no need later
+                            if path.isRefreshPath { //tempery no need later
                                 completion?(nil, nil, error)
                                 self.authDelegate?.onLogout(sessionUID: self.sessionUID)
                                 //self.delegate?.onError(error: error)
@@ -418,7 +418,7 @@ public class PMAPIService : APIService {
                                     //NotificationCenter.default.post(name: .didReovke, object: nil, userInfo: ["uid": userID ?? ""])
                                 }
                             }
-                        } else if authenticated && httpCode == 422 && authRetry {
+                        } else if authenticated && httpCode == 422 && authRetry && path.isRefreshPath {
                             completion?(nil, nil, error)
                             self.authDelegate?.onLogout(sessionUID: self.sessionUID)
                         } else if let responseDict = response as? [String : Any], let responseCode = responseDict["Code"] as? Int {
@@ -766,3 +766,8 @@ public class PMAPIService : APIService {
     }
 }
 
+extension String {
+    var isRefreshPath: Bool {
+        return self.contains("/auth/refresh")
+    }
+}
