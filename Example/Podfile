@@ -2,15 +2,27 @@ source 'https://cdn.cocoapods.org/'
 #source 'git@gitlab.protontech.ch:proton/mobile/apple/podspecs.git'
 
 target 'PMNetworking_Example' do
-  platform :ios, '10.0'
+  platform :ios, '11.0'
   use_frameworks!
 
   pod 'PMCrypto', :git => 'https://gitlab.protontech.ch/apple/shared/pmcrypto.git', :tag => '1.1.0'
   pod 'PMCommon', :path => '../', :testspecs => ['Tests']
+  pod 'PMForceUpgrade', :git => 'git@gitlab.protontech.ch:apple/shared/pmforceupgrade.git', :branch => 'develop'
+#  pod 'PMForceUpgrade', :path => '../../pmforceupgrade'
+  pod 'PMHumanVerification', :git => 'git@gitlab.protontech.ch:apple/shared/pmhumanverification.git', :branch => 'Develop'
+#  pod 'PMHumanVerification', :path => '../../pmhumanverification'
+  pod 'PMUICommon', :git => 'git@gitlab.protontech.ch:apple/shared/pmuicommon.git', :branch => 'develop'
+#  pod 'PMUICommon', :path => '../../pmuicommon'
+  pod 'PMUIFoundations', :git => 'git@gitlab.protontech.ch:apple/shared/PMUIFoundations.git', :branch => 'master'
+#  pod 'PMUIFoundations', :path => '../../PMUIFoundations'
+  pod 'PMCoreTranslation', :git => 'git@gitlab.protontech.ch:apple/shared/pmcoretranslation.git', :branch => 'develop'
+#  pod 'PMCoreTranslation', :path => '../../pmcoretranslation'
 #  pod 'PMAuthentication', :git => 'https://gitlab.protontech.ch/apple/shared/pmauthentication.git', :tag => '1.2.1'
   #pod 'PMAPIClient', :path => '../', :testspecs => ['Tests']
   #pod 'PMNetworking-Alamofire', :path => '../', :testspecs => ['Tests']
   pod 'TrustKit', '1.6.2'
+  pod 'PromiseKit', '~> 6.0'
+  pod 'AwaitKit', '~> 5.0.0'
   
   target 'PMNetworking_Tests' do
     inherit! :search_paths
@@ -24,14 +36,12 @@ end
 
 
 target 'PMNetworking_Mac_Example' do
-  platform :osx, '10.12'
+  platform :osx, '10.14'
   use_frameworks!
   
   pod 'PMCrypto', :git => 'https://gitlab.protontech.ch/apple/shared/pmcrypto.git', :tag => '1.1.0'
   pod 'PMCommon', :path => '../', :testspecs => ['Tests']
   pod 'PMAuthentication', :git => 'https://gitlab.protontech.ch/apple/shared/pmauthentication.git', :tag => '1.2.1'
-  #pod 'PMAPIClient', :path => '../', :testspecs => ['Tests']
-  #pod 'PMNetworking-Alamofire', :path => '../', :testspecs => ['Tests']
   pod 'TrustKit', '1.6.2'
   
   target 'PMNetworking_Mac_ExampleTests' do

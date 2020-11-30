@@ -1,0 +1,60 @@
+
+/**
+ *  Human verification
+ */
+
+"Human verification" = "Human verification";
+"SMS" = "SMS";
+"Email" = "Email";
+"CAPTCHA" = "CAPTCHA";
+"Help" = "Help";
+"OK" = "OK";
+"Cancel" = "Cancel";
+
+// Email method
+
+"Your email will only be used for this one-time verification." = "Your email will only be used for this one-time verification.";
+"Email" = "Email";
+"Get verification code" = "Get verification code";
+"I already have a code" = "I already have a code";
+
+// SMS method
+
+"Your phone number will only be used for this one-time verification." = "Your phone number will only be used for this one-time verification.";
+"Phone number" = "Phone number";
+"Search country" = "Search country";
+
+// Verification
+
+"Enter the verification code that was sent to %@" = "Enter the verification code that was sent to %@";
+"Enter the verification code that was sent to %@. If you don't find the email in your inbox, please check your spam folder." = "Enter the verification code that was sent to %@. If you don't find the email in your inbox, please check your spam folder.";
+"Verification code" = "Verification code";
+"Enter the 6-digit code." = "Enter the 6-digit code.";
+"Verify" = "Verify";
+"Verifying" = "Verifying";
+"Did not receive the code?" = "Did not receive the code?";
+"Invalid verification code" = "Invalid verification code";
+"Would you like to receive a new verification code or use an alternative verification method?" = "Would you like to receive a new verification code or use an alternative verification method?";
+"Resend" = "Resend";
+"Try other method" = "Try other method";
+"Request new code?" = "Request new code?";
+"Get a replacement code sent to %@." = "Get a replacement code sent to %@.";
+"Request new code" = "Request new code";
+"Code sent to %@" = "Code sent to %@";
+
+// Verification help
+
+"Need help with human verification?" = "Need help with human verification?";
+"Request an invite" = "Request an invite";
+"If you are having trouble creating your account, please request an invitation and we will respond within 1 business day." = "If you are having trouble creating your account, please request an invitation and we will respond within 1 business day.";
+"Visit our Help Center" = "Visit our Help Center";
+"Learn more about human verification and why we ask for it." = "Learn more about human verification and why we ask for it.";
+
+/**
+ *  Force upgrade
+ */
+
+"Update required" = "Update required";
+"Learn more" = "Learn more";
+"Update" = "Update";
+"Quit" = "Quit";
