@@ -229,6 +229,25 @@ public class PMAPIService : APIService {
     private var refreshTokenFailedCount = 0
     
     
+    var tokenExpired = false
+    let serialQueue = DispatchQueue(label: "com.proton.common")
+    func tokenExpire() -> Bool {
+        serialQueue.sync {
+            let ret = self.tokenExpired
+            if ret == false {
+                self.tokenExpired = true
+            }
+            return ret
+        }
+    }
+    func tokenReset() {
+        serialQueue.sync {
+            self.tokenExpired = false
+        }
+    }
+    
+    
+    
     //    var network : NetworkLayer
     //    var vpn : VPNInterface
     //    var doh:  DoH //depends on NetworkLayer.
@@ -329,6 +348,7 @@ public class PMAPIService : APIService {
                             self.authDelegate?.onUpdate(auth: credential)
                         }
                         pthread_mutex_unlock(&self.mutex)
+                        self.tokenReset()
                         DispatchQueue.main.async {
                             completion(newCredential?.accessToken, self.sessionUID, error)
                         }
@@ -339,11 +359,19 @@ public class PMAPIService : APIService {
             
             pthread_mutex_unlock(&self.mutex)
             // renew
+            self.tokenReset()
             completion(credential.accessToken, self.sessionUID == "" ? credential.sessionID : self.sessionUID, nil)
         }
     }
     
+    
+    
     internal func expireCredential() {
+        
+        guard self.tokenExpire() == false else {
+            return
+        }
+        
         pthread_mutex_lock(&self.mutex)
         defer {
             pthread_mutex_unlock(&self.mutex)
