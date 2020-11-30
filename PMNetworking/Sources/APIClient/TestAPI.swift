@@ -100,9 +100,7 @@ public class TestApiClient : Client {
             case .humanverify(let destination, let type, let token):
                 if let dest = destination, let t = type, let str = token {
                     let dict = ["x-pm-human-verification-token-type": t.toString,
-                                "x-pm-human-verification-token": "\(dest):\(str)",
-                                "TokenType": t.toString,
-                                "Token": "\(dest):\(str)"]
+                                "x-pm-human-verification-token": dest == "" ? str : "\(dest):\(str)"]
                     return dict
                 }
             }
@@ -129,9 +127,13 @@ extension TestApiClient {
     //  2. delaget
     //  3. combin
     public func triggerHumanVerify(destination: String?, type: VerifyMethod?, token: String?,
-                                   complete: @escaping  (_ task: URLSessionDataTask?, _ response: TestHV) -> Void) {
+                                   complete: @escaping  (_ task: URLSessionDataTask?, _ response: HumanVerificationResponse) -> Void) {
         let route = Router.humanverify(destination: destination, type: type, token: token)
         self.apiService.exec(route: route, complete: complete)
+    }
+    
+    public func triggerHumanVerifyRoute(destination: String?, type: VerifyMethod?, token: String?) -> Router  {
+        return Router.humanverify(destination: destination, type: type, token: token)
     }
     
 //    public func triggerHumanVerify(complete: @escaping  (_ task: URLSessionDataTask?, _ response: Response) -> Void) {
@@ -150,8 +152,9 @@ class TestApi : Request {
     var parameters: [String : Any]? = nil
 }
 
-public class TestHV : Response {
+public class HumanVerificationResponse: Response {
     public var supported : [VerifyMethod] = []
+    
     public override func ParseResponse(_ response: [String : Any]) -> Bool {
         if let details  = response["Details"] as? [String: Any] {
             if let support = details["HumanVerificationMethods"] as? [String] {

@@ -42,6 +42,8 @@ TODO: Add long description of the pod here.
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
   s.dependency 'AFNetworking', '~> 4.0'
+  s.dependency 'PromiseKit', '~> 6.0'
+  s.dependency 'AwaitKit', '~> 5.0.0'
   
   s.test_spec 'Tests' do |test_spec|
     test_spec.source_files = 'PMNetworking/Tests/**/*'

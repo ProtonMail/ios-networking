@@ -26,7 +26,7 @@
 import Foundation
 
 
-protocol APIClient {
+public protocol APIClient {
  
 }
 

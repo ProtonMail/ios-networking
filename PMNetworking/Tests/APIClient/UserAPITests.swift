@@ -32,6 +32,8 @@ class UserAPITests: XCTestCase {
     class DoHMail : DoH, DoHConfig {
         //defind your default host
         var defaultHost: String = "https://test.protonmail.ch"
+        //defind your default captcha host
+        var captchaHost: String = "https://api.protonmail.ch"
         //defind your query host
         var apiHost : String = "test.protonpro.xyz"
         //singleton

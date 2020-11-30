@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17154" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="h82-E1-unW">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="h82-E1-unW">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17124"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -24,36 +24,36 @@
                                 <rect key="frame" x="16" y="70" width="343" height="140"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yi2-BB-2UJ">
-                                        <rect key="frame" x="139" y="0.0" width="65" height="26"/>
-                                        <color key="backgroundColor" systemColor="systemGray5Color"/>
+                                        <rect key="frame" x="140" y="0.0" width="63" height="26"/>
+                                        <color key="backgroundColor" systemColor="systemGray6Color"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="26" id="RF9-BV-mD1"/>
                                         </constraints>
-                                        <state key="normal" title="Test Auth"/>
+                                        <state key="normal" title="Auth test"/>
                                         <connections>
-                                            <action selector="testButton:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Seq-DW-JSG"/>
+                                            <action selector="authAction:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Ofe-N3-SAM"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vum-O6-kWV">
-                                        <rect key="frame" x="106.5" y="34" width="130" height="30"/>
+                                        <rect key="frame" x="105" y="34" width="133" height="30"/>
                                         <color key="backgroundColor" systemColor="systemGray6Color"/>
-                                        <state key="normal" title="Human Verification"/>
+                                        <state key="normal" title="Force Upgrade test"/>
                                         <connections>
-                                            <action selector="humanVerifyAction:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="e9G-sl-eO6"/>
+                                            <action selector="forceUpgradeAction:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="ne3-mP-cgb"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QuA-PY-RXK">
-                                        <rect key="frame" x="67.5" y="72" width="208" height="30"/>
+                                        <rect key="frame" x="91" y="72" width="161" height="30"/>
                                         <color key="backgroundColor" systemColor="systemGray6Color"/>
-                                        <state key="normal" title="Trigger HumanVerification Call"/>
+                                        <state key="normal" title="Human Verification test"/>
                                         <connections>
-                                            <action selector="triggerHumanTest:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Kbo-wg-Hnb"/>
+                                            <action selector="humanVerificationAction:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="ABu-ty-YCI"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CTQ-sa-1gr">
-                                        <rect key="frame" x="121.5" y="110" width="100" height="30"/>
+                                        <rect key="frame" x="145.5" y="110" width="52" height="30"/>
                                         <color key="backgroundColor" systemColor="systemGray6Color"/>
-                                        <state key="normal" title="Trigger Doh UI"/>
+                                        <state key="normal" title="DOH UI"/>
                                         <connections>
                                             <action selector="dohUIAction:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="juf-8z-qnm"/>
                                         </connections>
@@ -96,9 +96,6 @@
         </scene>
     </scenes>
     <resources>
-        <systemColor name="systemGray5Color">
-            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
         <systemColor name="systemGray6Color">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

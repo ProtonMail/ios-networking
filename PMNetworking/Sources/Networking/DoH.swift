@@ -51,6 +51,7 @@ public enum DoHStatus {
 public protocol DoHConfig {
     var apiHost : String { get }
     var defaultHost : String { get }
+    var captchaHost : String { get }
     var defaultPath : String { get }
     
     /// debug mode vars
@@ -74,6 +75,7 @@ public extension DoHConfig {
 
 protocol DoHInterface {
     func getHostUrl() -> String
+    func getCaptchaHostUrl() -> String
     func handleError(host: String, error: Error?) -> Bool
     func clearAll()
     func codeCheck(code: Int) -> Bool
@@ -119,6 +121,11 @@ open class DoH : DoHInterface {
             break
         }
         return config.defaultHost + config.defaultPath
+    }
+    
+    public func getCaptchaHostUrl() -> String {
+        let config = self as! DoHConfig
+        return config.captchaHost
     }
     
     func fetchAll(host: String) {

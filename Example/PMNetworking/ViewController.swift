@@ -25,11 +25,16 @@
 import UIKit
 import PMCommon
 import Crypto
+import PMForceUpgrade
+import PMHumanVerification
+import PMUICommon
 
 ///Defind your doh settings
 class DoHMail : DoH, DoHConfig {
     //defind your default host
     var defaultHost: String = "https://api.protonmail.ch"
+    //defind your default captcha host
+    var captchaHost: String = "https://api.protonmail.ch"
     //defind your query host
     var apiHost : String = "dmfygsltqojxxi33onvqws3bomnua.protonpro.xyz"
     //singleton
@@ -39,6 +44,8 @@ class DoHMail : DoH, DoHConfig {
 class TestDoHMail : DoH, DoHConfig {
     //defind your default host
     var defaultHost: String = "https://protonmail.blue"
+    //defind your default captcha host
+    var captchaHost: String = "mail.protonmail.blue"
     //defind your query host
     var apiHost : String = "dmfygsltqojxxi33onvqws3bomnua.protonpro.xyz"
         
@@ -61,25 +68,29 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         
         // start a
-         TrustKitWrapper.start(delegate: self)
+        TrustKitWrapper.start(delegate: self)
         
-        //set auth delegate
+        // set auth delegate
         apiService.authDelegate = self
+        
+        // set force upgrade delegate
+        let forceUrl = URL(string: "itms-apps://itunes.apple.com/app/id979659905")!
+        apiService.forceUpgradeDelegate = ForceUpgradeHelper(config: .mobile(forceUrl), responseDelegate: self)
+        
+        // set human delegate
+        let humanUrl = URL(string: "https://protonmail.com/support/knowledge-base/human-verification/")!
+        apiService.humanDelegate = HumanCheckHelper(apiService: apiService, supportURL: humanUrl, navigationController: self.navigationController!)
         
         // set service event delegate
         apiService.serviceDelegate = self
     }
     
-    @IBAction func testButton(_ sender: Any) {
+    @IBAction func authAction(_ sender: Any) {
         self.testFramework()
-
     }
     
     /// simulate the cache of auth credential
     var authCredential : AuthCredential? = nil
-    
-    
-    
     var blueAuthCredential : AuthCredential? = nil
     
     func testFramework() {
@@ -139,25 +150,17 @@ class MainViewController: UIViewController {
         let request3 = UserAPI.Router.userInfo
         apiService.exec(route: request3) { (task, response: GetUserInfoResponse) in
             print(response.code as Any)
-            self.testHumanVerify()
         }
     }
     
-    func testHumanVerify() {
-        // setup the mock
-        // make a fake call to trigger the human verify
-        DispatchQueue.main.async {
-            
-        }
-    }
-    
-    @IBAction func triggerHumanTest(_ sender: Any) {
+    @IBAction func humanVerificationAction(_ sender: Any) {
         TestDoHMail.default.status = .off
         testApi.serviceDelegate = self
         testApi.authDelegate = self
         
         //set the human verification delegation
-        testApi.humanDelegate = self
+        let url = URL(string: "https://protonmail.com/support/knowledge-base/human-verification/")!
+        testApi.humanDelegate = HumanCheckHelper(apiService: testApi, supportURL: url, navigationController: self.navigationController!, responseDelegate: self)
         
         // TODO: update to a PMAuthentication version that depends on PMNetworking
         let authApi: Authenticator = {
@@ -189,8 +192,7 @@ class MainViewController: UIViewController {
             case .success(.newCredential(let credential, let passwordMode)): // success without 2FA
                 self.blueAuthCredential = credential
                 print("pwd mode: \(passwordMode)")
-                //self.testAccessToken()
-                self.processTest()
+                self.processHumanVerifyTest()
                 break
             case .success(.updatedCredential):
                 assert(false, "Should never happen in this flow")
@@ -199,36 +201,48 @@ class MainViewController: UIViewController {
         }
     }
     
-    func processTest(dest: String? = nil, type: VerifyMethod? = nil, token: String? = nil) {
+    func processHumanVerifyTest(dest: String? = nil, type: VerifyMethod? = nil, token: String? = nil) {
+        // Human Verify request with empty token just to provoke human verification error
         let client = TestApiClient(api: self.testApi)
         client.triggerHumanVerify(destination: dest, type: type, token: token) { (_, response) in
-            if response.code == 9001 {
-                let desc = response.error?.description
-                print(response.error)
-                self.onHumanVerify(methods: response.supported)
-            } else if response.code == 1000 {
-                print("Retry ok  coce : \(1000)")
-            } else if response.code == 12400 {
-                print("Retry ok  coce : \(12400)")
-            } else {
-                let desc = response.error?.description
-                print(desc)
-            }
+            print("Human verify test result: \(response.error?.description as Any)")
         }
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    
-    @IBAction func humanVerifyAction(_ sender: Any) {
-        self.onHumanVerify(methods: [.captcha, .email, .sms])
+    @IBAction func forceUpgradeAction(_ sender: Any) {
+        apiService.serviceDelegate = {
+            class TestDelegate: APIServiceDelegate {
+                func onUpdate(serverTime: Int64) {}
+                func isReachable() -> Bool { return true }
+                var appVersion: String = "iOS_0.0.1"
+                var userAgent: String = ""
+                func onDohTroubleshot() {}
+                func onChallenge(challenge: URLAuthenticationChallenge, credential: AutoreleasingUnsafeMutablePointer<URLCredential?>?) -> URLSession.AuthChallengeDisposition {
+                    return .performDefaultHandling
+                }
+            }
+            return TestDelegate()
+        }()
+        
+        //set the human verification delegation
+        let url = URL(string: "itms-apps://itunes.apple.com/app/id979659905")!
+        apiService.forceUpgradeDelegate = ForceUpgradeHelper(config: .mobile(url), responseDelegate: self)
+        
+        // TODO: update to a PMAuthentication version that depends on PMNetworking
+        let authApi: Authenticator = {
+            _ = Authenticator.Configuration(scheme: "https",
+                                            host: "api.protonmail.ch",
+                                            apiPath: "",
+                                            clientVersion: "iOS_1.12.0")
+            return Authenticator(api: apiService)
+        }()
+        
+        authApi.authenticate(username: "feng2", password: "123") { result in
+            print (result)
+        }
     }
    
     @IBAction func dohUIAction(_ sender: Any) {
-        
-        
-//        let vm = NetworkTroubleShootViewModelImpl()
         let coordinator = NetworkTroubleShootCoordinator(nav: self.navigationController!,
                                                     services: ServiceFactory.default)
         coordinator.start()
@@ -261,27 +275,20 @@ extension MainViewController : AuthDelegate {
     func onLogout(sessionUID uid: String) {
         //try to logout this user by uid
     }
+    
     func onRevoke(sessionUID uid: String) {
         //try to logout this user by uid
-    }
-    
-    func onForceUpgrade() {
-        //
     }
 }
 
 
-extension MainViewController : APIServiceDelegate {
+extension MainViewController: APIServiceDelegate {
     func isReachable() -> Bool {
-        return true //
+        return true
     }
     
     var userAgent: String {
         return ""
-    }
-    
-    func onHumanVerify() {
-        
     }
     
     var appVersion: String {
@@ -317,31 +324,34 @@ extension MainViewController : APIServiceDelegate {
     }
 }
 
-
-extension MainViewController: HumanVerifyDelegate {
-    func onHumanVerify(methods types: [VerifyMethod]) {
-        //#1
-        
-        let vm = HumanCheckViewModelImpl(types: types, api: testApi)
-        let coordinator = HumanCheckMenuCoordinator(nav: self.navigationController!,
-                                                    vm: vm,
-                                                    services: ServiceFactory.default)
-        coordinator?.start()
-        //#2 helper
-        
-        vm.onDoneBlock = { result in
-            let (dest, type, token) = vm.getToken()
-            self.processTest(dest: dest, type: type, token: token)
-        }
-
-    }
-}
-
-
-
 extension MainViewController: TrustKitUIDelegate {
     func onTrustKitValidationError(_ alert: UIAlertController) {
         //pops up error alert
-        
     }
+}
+
+extension MainViewController: ForceUpgradeResponseDelegate {
+    func onQuitButtonPressed() {
+        // on quit button pressed
+    }
+    
+    func onUpdateButtonPressed() {
+        // on update button pressed
+    }
+}
+
+extension MainViewController: HumanVerifyResponseDelegate {
+    func onHumanVerifyStart() {
+        print ("Human verify start")
+    }
+    
+    func onHumanVerifyEnd(result: HumanVerifyEndResult) {
+        switch result {
+        case .success:
+            print ("Human verify success")
+        case .cancel:
+            print ("Human verify cancel")
+        }
+    }
+
 }

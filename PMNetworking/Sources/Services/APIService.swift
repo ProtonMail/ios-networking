@@ -156,15 +156,35 @@ public protocol APIServiceDelegate: class {
     
     func onDohTroubleshot()
     
-    func onHumanVerify()
-    
     func onChallenge(challenge: URLAuthenticationChallenge,
                      credential: AutoreleasingUnsafeMutablePointer<URLCredential?>?) -> URLSession.AuthChallengeDisposition
-    
 }
 
 public protocol HumanVerifyDelegate: class {
-    func onHumanVerify(methods : [VerifyMethod])
+    typealias HumanVerifyHeader = [String : Any]
+    typealias HumanVerifyIsClosed = Bool
+
+    func onHumanVerify(methods: [VerifyMethod], completion: (@escaping (HumanVerifyHeader, HumanVerifyIsClosed, SendVerificationCodeBlock?) -> (Void)))
+    func getSupportURL() -> URL
+}
+
+public enum HumanVerifyEndResult {
+    case success
+    case cancel
+}
+
+public protocol HumanVerifyResponseDelegate: class {
+    func onHumanVerifyStart()
+    func onHumanVerifyEnd(result: HumanVerifyEndResult)
+}
+
+public protocol ForceUpgradeDelegate: class {
+    func onForceUpgrade(message: String)
+}
+
+public protocol ForceUpgradeResponseDelegate: class {
+    func onQuitButtonPressed()
+    func onUpdateButtonPressed()
 }
 
 public typealias AuthRefreshComplete = (_ auth: Credential?, _ hasError : NSError?) -> Void
@@ -176,19 +196,19 @@ public protocol AuthDelegate: class {
     func onUpdate(auth: Credential)
     func onRevoke(sessionUID uid: String)
     func onRefresh(bySessionUID uid: String, complete: AuthRefreshComplete)
-    func onForceUpgrade()
 }
 
-public protocol APIService : API {
+public protocol APIService: API {
     //var network : NetworkLayer {get}
     //var vpn : VPNInterface {get}
     //var doh:  DoH  {get}//depends on NetworkLayer. {get}
     //var queue : [Request] {get}
     
     func setSessionUID(uid: String)
-    var serviceDelegate: APIServiceDelegate? {get}
-    var authDelegate : AuthDelegate? {get}
-    var humanDelegate : HumanVerifyDelegate? {get}
+    var serviceDelegate: APIServiceDelegate? { get }
+    var authDelegate: AuthDelegate? { get }
+    var humanDelegate: HumanVerifyDelegate? { get }
+    var doh: DoH { get }
 }
 
 class TestResponse : Response {
@@ -252,14 +272,13 @@ public extension APIService {
     }
     
     func exec<T>(route: Request,
-                 complete: @escaping  (_ task: URLSessionDataTask?, _ response: T) -> Void) where T : Response {
+                 complete: @escaping  (_ task: URLSessionDataTask?, _ response: T) -> Void) where T: Response {
         
         // 1 make a request , 2 wait for the respons async 3. valid response 4. parse data into response 5. some data need save into database.
         let completionWrapper: CompletionBlock = { task, res, error in
             let realType = T.self
             let apiRes = realType.init()
             if error != nil {
-                //TODO check error
                 apiRes.ParseHttpError(error!, response: res)
                 if let resRaw = res {
                     let _ = apiRes.ParseResponse(resRaw)

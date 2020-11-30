@@ -66,7 +66,10 @@ public class APIErrorCode {
         static public let pwdUpdateFailed = 12023
         static public let pwdEmpty = 12024
     }
-
+    
+    static public let badAppVersion = 5003
+    static public let badApiVersion = 5005
+    static public let humanVerificationRequired = 9001
 }
 
 
@@ -202,16 +205,21 @@ public class PMAPIService : APIService {
     
     let APIServiceErrorDomain = NSError.protonMailErrorDomain("APIService")
     
+    /// ForceUpgradeDelegate
+    public var forceUpgradeDelegate: ForceUpgradeDelegate?
+    
+    /// HumanVerifyDelegate
     public var humanDelegate: HumanVerifyDelegate?
     
-    /// auth delegation
+    /// AuthDelegate
     public weak var authDelegate: AuthDelegate?
     
-    ///
+    /// APIServiceDelegate
     public var serviceDelegate: APIServiceDelegate?
     
-    /// synchronize lock
+    /// synchronize locks
     private var mutex = pthread_mutex_t()
+    private var humanVerificationMutex = pthread_mutex_t()
     
     //    /// the user id
     //    public var userID : String = ""
@@ -220,7 +228,7 @@ public class PMAPIService : APIService {
     public var sessionUID : String = ""
     
     /// doh with service config
-    let doh : DoH
+    public var doh : DoH
     
     /// network config
     //    let serverConfig : APIServerConfig
@@ -232,6 +240,9 @@ public class PMAPIService : APIService {
     /// refresh token failed count
     private var refreshTokenFailedCount = 0
     
+    private var isHumanVerifyUIPresented = false
+    
+    private var isForceUpgradeUIPresented = false
     
     //    var network : NetworkLayer
     //    var vpn : VPNInterface
@@ -250,6 +261,9 @@ public class PMAPIService : APIService {
         pthread_mutex_init(&mutex, nil)
         self.doh = doh
         doh.status = .on //userCachedStatus.isDohOn ? .on : .off
+        
+        // human verification lock
+        pthread_mutex_init(&humanVerificationMutex, nil)
         
         // set config
         //self.serverConfig = config
@@ -274,7 +288,7 @@ public class PMAPIService : APIService {
         #endif
         
         sessionManager.setSessionDidReceiveAuthenticationChallenge { session, challenge, credential -> URLSession.AuthChallengeDisposition in
-            var dispositionToReturn: URLSession.AuthChallengeDisposition = .performDefaultHandling
+            let dispositionToReturn: URLSession.AuthChallengeDisposition = .performDefaultHandling
             if let dis = self.serviceDelegate?.onChallenge(challenge: challenge, credential: credential) {
                 return dis
             }
@@ -349,7 +363,7 @@ public class PMAPIService : APIService {
             pthread_mutex_unlock(&self.mutex)
         }
         let authCredential = self.authDelegate?.getToken(bySessionUID: self.sessionUID)
-        guard let credential = authCredential else {
+        guard let _ = authCredential else {
             //PMLog.D("token is empty")
             return
         }
@@ -424,10 +438,25 @@ public class PMAPIService : APIService {
                                                                                  localizedDescription: errorMessage,
                                                                                  localizedFailureReason: errorMessage,
                                                                                  localizedRecoverySuggestion: nil)
-                            if responseCode == 5003 || responseCode == 5005 {
-                                self.authDelegate?.onForceUpgrade()
+                            if responseCode == APIErrorCode.humanVerificationRequired {
+                                // human verification required
+                                self.humanVerificationHandler(method: method,
+                                                              path: path,
+                                                              parameters: parameters,
+                                                              headers: headers,
+                                                              authenticated: authenticated,
+                                                              authRetry: authRetry,
+                                                              authRetryRemains: authRetryRemains,
+                                                              customAuthCredential: customAuthCredential,
+                                                              error: displayError,
+                                                              response: response,
+                                                              task: task,
+                                                              responseDict: responseDict,
+                                                              completion: completion)
+                            } else if responseCode == APIErrorCode.badAppVersion || responseCode == APIErrorCode.badApiVersion {
+                                self.forceUpgradeHandler(responseDictionary: responseDict)
                                 completion?(task, responseDict, displayError)
-                            }else if responseCode == APIErrorCode.API_offline {
+                            } else if responseCode == APIErrorCode.API_offline {
                                 completion?(task, responseDict, displayError)
                             } else {
                                 completion?(task, responseDict, displayError)
@@ -475,8 +504,23 @@ public class PMAPIService : APIService {
                                         //NotificationCenter.default.post(name: .didReovke, object: nil, userInfo: ["uid": userID ?? ""])
                                     }
                                 }
-                            } else if responseCode == 5003 || responseCode == 5005 {
-                                self.authDelegate?.onForceUpgrade()
+                            } else if responseCode == APIErrorCode.humanVerificationRequired {
+                                // human verification required
+                                self.humanVerificationHandler(method: method,
+                                                              path: path,
+                                                              parameters: parameters,
+                                                              headers: headers,
+                                                              authenticated: authenticated,
+                                                              authRetry: authRetry,
+                                                              authRetryRemains: authRetryRemains,
+                                                              customAuthCredential: customAuthCredential,
+                                                              error: error,
+                                                              response: response,
+                                                              task: task,
+                                                              responseDict: responseDictionary,
+                                                              completion: completion)
+                            } else if responseCode == APIErrorCode.badAppVersion || responseCode == APIErrorCode.badApiVersion {
+                                self.forceUpgradeHandler(responseDictionary: responseDictionary)
                                 completion?(task, responseDictionary, error)
                             } else if responseCode == APIErrorCode.API_offline {
                                 completion?(task, responseDictionary, error)
@@ -586,7 +630,6 @@ public class PMAPIService : APIService {
             authBlock(customAuthCredential?.accessToken, customAuthCredential?.sessionID, nil)
         }
     }
-    
     
     func upload (byPath path: String,
                  parameters: [String:String],
@@ -761,5 +804,135 @@ public class PMAPIService : APIService {
         // nothing
         #endif
     }
+    
+    func humanVerificationHandler(
+        method: HTTPMethod,
+        path: String,
+        parameters: Any?,
+        headers: [String : Any]?,
+        authenticated: Bool = true,
+        authRetry: Bool = true,
+        authRetryRemains: Int = 10,
+        customAuthCredential: AuthCredential? = nil,
+        error: NSError?,
+        response: Any?,
+        task: URLSessionDataTask?,
+        responseDict: [String : Any],
+        completion: CompletionBlock?) {
+        
+        // human verification required
+        if self.isHumanVerifyUIPresented == true {
+            // wait until ongoing human verification is finished
+            DispatchQueue.global(qos: .default).async {
+                pthread_mutex_lock(&self.humanVerificationMutex)
+                // recall request again
+                self.request(method: method,
+                             path: path,
+                             parameters: parameters,
+                             headers: headers,
+                             authenticated: authenticated,
+                             authRetryRemains: authRetryRemains - 1,
+                             customAuthCredential: customAuthCredential,
+                             completion: completion)
+                pthread_mutex_unlock(&self.humanVerificationMutex)
+            }
+        } else {
+            // human verification UI
+            self.humanVerificationUIHandler(method: method,
+                                          path: path,
+                                          parameters: parameters,
+                                          headers: headers,
+                                          authenticated: authenticated,
+                                          authRetry: authRetry,
+                                          authRetryRemains: authRetryRemains,
+                                          customAuthCredential: customAuthCredential,
+                                          error: error,
+                                          response: response,
+                                          task: task,
+                                          responseDict: responseDict,
+                                          completion: completion)
+        }
+    }
+
+    func humanVerificationUIHandler(
+        method: HTTPMethod,
+        path: String,
+        parameters: Any?,
+        headers: [String : Any]?,
+        authenticated: Bool = true,
+        authRetry: Bool = true,
+        authRetryRemains: Int = 10,
+        customAuthCredential: AuthCredential? = nil,
+        error: NSError?,
+        response: Any?,
+        task: URLSessionDataTask?,
+        responseDict: [String : Any],
+        completion: CompletionBlock?) {
+        
+        // get human verification methods
+        let hvResponse = HumanVerificationResponse()
+        if let error = error {
+            hvResponse.ParseHttpError(error, response: response as? [String : Any])
+        }
+        if let response = response as? [String : Any] {
+            let _ = hvResponse.ParseResponse(response)
+        }
+        self.isHumanVerifyUIPresented = true
+        
+        // human verification required delegate
+        DispatchQueue.global(qos: .default).async {
+            pthread_mutex_lock(&self.humanVerificationMutex)
+            DispatchQueue.main.async {
+                self.humanDelegate?.onHumanVerify(methods: hvResponse.supported) { header, isClosed, verificationCodeBlock in
+                    
+                    // close human verification UI
+                    if isClosed {
+                        // finish request with existing completion block
+                        completion?(task, responseDict, error)
+                        self.isHumanVerifyUIPresented = false
+                        pthread_mutex_unlock(&self.humanVerificationMutex)
+                        return
+                    }
+                    
+                    // human verification completion
+                    let hvCompletion: CompletionBlock = { task, response, error in
+                        if let error = error {
+                            verificationCodeBlock?(false, error)
+                        } else if let responseCode = response?["Code"] as? Int, responseCode == APIErrorCode.responseOK {
+                            verificationCodeBlock?(true, nil)
+                            // finish request with new completion block
+                            completion?(task, response, error)
+                            self.isHumanVerifyUIPresented = false
+                            pthread_mutex_unlock(&self.humanVerificationMutex)
+                        }
+                    }
+                    
+                    // merge headers
+                    var newHeaders = headers ?? [:]
+                    newHeaders.merge(header) { (_, new) in new }
+                    
+                    // retry request
+                    self.request(method: method,
+                                 path: path,
+                                 parameters: parameters,
+                                 headers: newHeaders,
+                                 authenticated: authenticated,
+                                 authRetry: authRetry,
+                                 authRetryRemains: authRetryRemains,
+                                 customAuthCredential: customAuthCredential,
+                                 completion: hvCompletion)
+                }
+            }
+        }
+    }
+    
+    func forceUpgradeHandler(responseDictionary: [String : Any]) {
+        let errorMessage = responseDictionary["Error"] as? String ?? ""
+        if let delegate = forceUpgradeDelegate, isForceUpgradeUIPresented == false {
+            isForceUpgradeUIPresented = true
+            delegate.onForceUpgrade(message: errorMessage)
+        }
+    }
+
 }
 
