@@ -30,6 +30,7 @@ import PMCommon
 class TestAPITests: XCTestCase {
     
     class DoHMail : DoH, DoHConfig {
+        var captchaHost: String = "mail.protonmail.blue"
         //defind your default host
         var defaultHost: String = "https://protonmail.blue"
         //defind your query host

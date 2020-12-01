@@ -196,10 +196,10 @@ class MainViewController: UIViewController {
     @IBAction func forceUpgradeAction(_ sender: Any) {
         apiService.serviceDelegate = {
             class TestDelegate: APIServiceDelegate {
+                var userAgent: String? = ""
                 func onUpdate(serverTime: Int64) {}
                 func isReachable() -> Bool { return true }
                 var appVersion: String = "iOS_0.0.1"
-                var userAgent: String = ""
                 func onDohTroubleshot() {}
                 func onChallenge(challenge: URLAuthenticationChallenge, credential: AutoreleasingUnsafeMutablePointer<URLCredential?>?) -> URLSession.AuthChallengeDisposition {
                     return .performDefaultHandling
@@ -213,14 +213,7 @@ class MainViewController: UIViewController {
         apiService.forceUpgradeDelegate = ForceUpgradeHelper(config: .mobile(url), responseDelegate: self)
         
         // TODO: update to a PMAuthentication version that depends on PMNetworking
-        let authApi: Authenticator = {
-            _ = Authenticator.Configuration(scheme: "https",
-                                            host: "api.protonmail.ch",
-                                            apiPath: "",
-                                            clientVersion: "iOS_1.12.0")
-            return Authenticator(api: apiService)
-        }()
-        
+        let authApi: Authenticator = Authenticator(api: apiService)
         authApi.authenticate(username: "feng2", password: "123") { result in
             print (result)
         }

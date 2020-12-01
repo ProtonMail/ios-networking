@@ -135,5 +135,140 @@ public class LocalizedString {
     
     /// Force upgrade alert quit button
     public lazy var _fu_alert_quit_button = NSLocalizedString("Quit",  bundle: Common.bundle, comment: "quit button")
-    
+
+    // Login screen
+
+    /// Login screen title
+    public lazy var _ls_screen_title = NSLocalizedString("Sign in",  bundle: Common.bundle, comment: "Login screen title")
+
+    /// Login screen subtitle
+    public lazy var _ls_screen_subtitle = NSLocalizedString("Enter your Proton Account details.",  bundle: Common.bundle, comment: "Login screen subtitle")
+
+    /// Username field title
+    public lazy var _ls_username_title = NSLocalizedString("Email or username",  bundle: Common.bundle, comment: "Username field title")
+
+    /// Password field title
+    public lazy var _ls_password_title = NSLocalizedString("Password",  bundle: Common.bundle, comment: "Password field title")
+
+    /// Help button
+    public lazy var _ls_help_button = NSLocalizedString("Need help?",  bundle: Common.bundle, comment: "Help button")
+
+    // Login help
+
+    /// Login help screen title
+    public lazy var _ls_help_screen_title = NSLocalizedString("How can we help?",  bundle: Common.bundle, comment: "Login help screen title")
+
+    /// Forgot username help button
+    public lazy var _ls_help_forgot_username = NSLocalizedString("Forgot username",  bundle: Common.bundle, comment: "Forgot username help button")
+
+    /// Forgot password help button
+    public lazy var _ls_help_forgot_password = NSLocalizedString("Forgot password",  bundle: Common.bundle, comment: "Forgot password help button")
+
+    /// Other sign-in issues help button
+    public lazy var _ls_help_other_issues = NSLocalizedString("Other sign-in issues",  bundle: Common.bundle, comment: "Other sign-in issues button")
+
+    /// Customer support help button
+    public lazy var _ls_help_customer_support = NSLocalizedString("Customer support",  bundle: Common.bundle, comment: "Customer support button")
+
+    /// More help button
+    public lazy var _ls_help_more_help = NSLocalizedString("Still need help? Contact us directly.",  bundle: Common.bundle, comment: "Customer support button")
+
+    // Login validation
+
+    /// Invalid username hint
+    public lazy var _ls_validation_invalid_username = NSLocalizedString("Please enter your Proton Account email or username.",  bundle: Common.bundle, comment: "Invalid username hint")
+
+    /// Invalid password hint
+    public lazy var _ls_validation_invalid_password = NSLocalizedString("Please enter your Proton Account password.",  bundle: Common.bundle, comment: "Invalid password hint")
+
+    // Login errors
+
+    /// Dialog button for missing keys error
+    public lazy var _ls_error_missing_keys_text_button = NSLocalizedString("Complete Setup",  bundle: Common.bundle, comment: "Dialog button for missing keys error")
+
+    /// Dialog text for missing keys error
+    public lazy var _ls_error_missing_keys_text = NSLocalizedString("Your account is missing keys, please sign in on web to automatically generate required keys. Once you have signed in on web, please return to the app and sign in.",  bundle: Common.bundle, comment: "Dialog text for missing keys error")
+
+    /// Dialog title for missing keys error
+    public lazy var _ls_error_missing_keys_title = NSLocalizedString("Account setup required",  bundle: Common.bundle, comment: "Dialog title for missing keys error")
+
+    /// Incorrect mailbox password error
+    public lazy var _ls_error_invalid_mailbox_password = NSLocalizedString("Incorrect mailbox password",  bundle: Common.bundle, comment: "Incorrect mailbox password error")
+
+    /// Generic error message when no better error can be displayed
+    public lazy var _ls_error_generic = NSLocalizedString("An error has occured",  bundle: Common.bundle, comment: "Generic error message when no better error can be displayed")
+
+    // Login choose username
+
+    /// Screen title for picking Protonmail username
+    public lazy var _ls_username_screen_title = NSLocalizedString("Create ProtonMail address",  bundle: Common.bundle, comment: "Screen title for creating ProtonMail address")
+
+    /// Info about existing ProtonMail address
+    public lazy var _ls_username_screen_info = NSLocalizedString("Your existing ProtonID is %@. You can now activate your ProtonMail address or pick a new one.",  bundle: Common.bundle, comment: "Info about existing ProtonMail address")
+
+    /// Username field title
+    public lazy var _ls_username_username_title = NSLocalizedString("Username",  bundle: Common.bundle, comment: "Username field title")
+
+    /// Action button title for picking Protonmail username
+    public lazy var _ls_username_button_title = NSLocalizedString("Next",  bundle: Common.bundle, comment: "Action button title for picking Protonmail username")
+
+    // Login create address
+
+    /// Action button title for creating ProtonMail address
+    public lazy var _ls_create_address_button_title = NSLocalizedString("Create address",  bundle: Common.bundle, comment: "Action button title for creating ProtonMail address")
+
+    /// Info about ProtonMail address usage
+    public lazy var _ls_create_address_info = NSLocalizedString("You will use this email address to log in to all Proton services.",  bundle: Common.bundle, comment: "Info about ProtonMail address usage")
+
+    /// Recovery address label title
+    public lazy var _ls_create_address_recovery_title = NSLocalizedString("Your recovery email address:",  bundle: Common.bundle, comment: "Recovery address label title")
+
+    /// Terms and conditions note
+    public lazy var _ls_create_address_terms_full = NSLocalizedString("By clicking Create address, you agree with Proton's Terms and Conditions.",  bundle: Common.bundle, comment: "Terms and conditions note")
+
+    /// Terms and conditions link in the note
+    public lazy var _ls_create_address_terms_link = NSLocalizedString("Terms and Conditions",  bundle: Common.bundle, comment: "Terms and conditions link in the note")
+
+    /// ProtonMail address availability
+    public lazy var _ls_create_address_available = NSLocalizedString("%@ is available",  bundle: Common.bundle, comment: "ProtonMail address availability")
+
+    // Login unlock mailbox
+
+    /// Mailbox unlock screen title
+    public lazy var _ls_login_mailbox_screen_title = NSLocalizedString("Unlock your mailbox",  bundle: Common.bundle, comment: "Mailbox unlock screen title")
+
+    /// Mailbox password field title
+    public lazy var _ls_login_mailbox_field_title = NSLocalizedString("Mailbox password",  bundle: Common.bundle, comment: "Mailbox password field title")
+
+    /// Mailbox unlock screen action button title
+    public lazy var _ls_login_mailbox_button_title = NSLocalizedString("Unlock",  bundle: Common.bundle, comment: "Mailbox unlock screen action button title")
+
+    /// Forgot password button title
+    public lazy var _ls_login_mailbox_forgot_password = NSLocalizedString("Forgot password",  bundle: Common.bundle, comment: "Forgot password button title")
+
+    // Login 2FA
+
+    /// 2FA screen title
+    public lazy var _ls_login_2fa_screen_title = NSLocalizedString("Two-factor authentication",  bundle: Common.bundle, comment: "2FA screen title")
+
+    /// 2FA screen action button title
+    public lazy var _ls_login_2fa_action_button_title = NSLocalizedString("Authenticate",  bundle: Common.bundle, comment: "2FA screen action button title")
+
+    /// 2FA screen field title
+    public lazy var _ls_login_2fa_field_title = NSLocalizedString("Two-factor code",  bundle: Common.bundle, comment: "2FA screen field title")
+
+    /// 2FA screen recovery field title
+    public lazy var _ls_login_2fa_recovery_field_title = NSLocalizedString("Recovery code",  bundle: Common.bundle, comment: "2FA screen recovery field title")
+
+    /// 2FA screen recovery button title
+    public lazy var _ls_login_2fa_recovery_button_title = NSLocalizedString("Use recovery code",  bundle: Common.bundle, comment: "2FA screen recovery button title")
+
+    /// 2FA screen 2FA button title
+    public lazy var _ls_login_2fa_2fa_button_title = NSLocalizedString("Use two-factor code",  bundle: Common.bundle, comment: "2FA screen 2FA button title")
+
+    /// 2FA screen field info
+    public lazy var _ls_login_2fa_field_info = NSLocalizedString("Enter the 6-digit code.",  bundle: Common.bundle, comment: "2FA screen field info")
+
+    /// 2FA screen recovery field info
+    public lazy var _ls_login_2fa_recovery_field_info = NSLocalizedString("Enter a 8-character recovery code.",  bundle: Common.bundle, comment: "2FA screen recovery field info")
 }
