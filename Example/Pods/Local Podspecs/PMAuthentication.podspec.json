@@ -26,7 +26,6 @@
 
     ]
   },
-  "static_framework": true,
   "testspecs": [
     {
       "name": "Tests",

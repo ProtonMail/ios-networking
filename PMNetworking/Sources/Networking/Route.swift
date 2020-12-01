@@ -69,6 +69,18 @@ public protocol Request : Package {
     var autoRetry: Bool { get }
 }
 
+//open class DefaultRequest : Request {
+//    public var path: String = ""
+//    
+//    public var auth: AuthCredential?
+//    
+//    public var authCredential: AuthCredential? {
+//        get {
+//            return self.auth
+//        }
+//    }
+//}
+
 extension Request {
     public var isAuth : Bool {
         get {
