@@ -20,6 +20,20 @@
                ReferencedContainer = "container:PMNetworking.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "CFE7A21CAE39367DB461FC3F5EBBDD53"
+               BuildableName = "PMAuthentication-macOS-Unit-Tests.xctest"
+               BlueprintName = "PMAuthentication-macOS-Unit-Tests"
+               ReferencedContainer = "container:Pods/Pods.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -45,6 +59,16 @@
                BlueprintIdentifier = "1F232E11A2C4BB7DBD6AACEAB95E899C"
                BuildableName = "PMCommon-macOS-Unit-Tests.xctest"
                BlueprintName = "PMCommon-macOS-Unit-Tests"
+               ReferencedContainer = "container:Pods/Pods.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "CFE7A21CAE39367DB461FC3F5EBBDD53"
+               BuildableName = "PMAuthentication-macOS-Unit-Tests.xctest"
+               BlueprintName = "PMAuthentication-macOS-Unit-Tests"
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
             </BuildableReference>
          </TestableReference>

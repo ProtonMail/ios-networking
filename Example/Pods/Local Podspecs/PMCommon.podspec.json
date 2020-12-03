@@ -48,9 +48,6 @@
         "PMCommon/Services": [
 
         ],
-        "PMCommon/Authentication": [
-
-        ],
         "PMCommon/SRP": [
 
         ]

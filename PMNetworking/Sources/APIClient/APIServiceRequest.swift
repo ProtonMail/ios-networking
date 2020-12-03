@@ -131,7 +131,7 @@ open class ApiRequest<T : ApiResponse> : ApiPackage {
                     path: self.path(),
                     parameters: self.toDictionary(),
                     headers: header,
-                    authenticated: self.getIsAuthFunction(),
+                    authenticated: self.getIsAuthFunction(), autoRetry: self.authRetry(),
                     customAuthCredential: self.authCredential,
                     completion: completionWrapper)
     }
@@ -177,7 +177,7 @@ open class ApiRequest<T : ApiResponse> : ApiPackage {
         //TODO:: missing auth
         api.request(method: self.method(), path: self.path(),
                     parameters: self.toDictionary(), headers: [HTTPHeader.apiVersion: self.apiVersion()],
-                    authenticated: self.getIsAuthFunction(), customAuthCredential: self.authCredential, completion: completionWrapper)
+                    authenticated: self.getIsAuthFunction(), autoRetry: self.authRetry(), customAuthCredential: self.authCredential, completion: completionWrapper)
         
         //wait operations
         let _ = sema.wait(timeout: DispatchTime.distantFuture)
@@ -281,7 +281,7 @@ open class ApiRequestNew<T : ApiResponse> : ApiPackage {
         //TODO:: missing auth
         apiService.request(method: self.method(), path: self.path(),
                     parameters: self.toDictionary(), headers: [HTTPHeader.apiVersion: self.apiVersion()],
-                    authenticated: self.getIsAuthFunction(), customAuthCredential: self.authCredential, completion: completionWrapper)
+                    authenticated: self.getIsAuthFunction(), autoRetry: self.authRetry(), customAuthCredential: self.authCredential, completion: completionWrapper)
         
         return deferred.promise
         

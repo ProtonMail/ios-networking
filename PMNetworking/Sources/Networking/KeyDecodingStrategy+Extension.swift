@@ -1,8 +1,6 @@
 //
 //  KeyDecodingStrategy.swift
-//  PMAuthentication
-//
-//  Created on 20/02/2020.
+//  PMAuthentication - Created on 20/02/2020.
 //
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -22,18 +20,18 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonMail.  If not, see <https://www.gnu.org/licenses/>.
 
-
 import Foundation
 
 extension JSONDecoder.KeyDecodingStrategy {
     /// Lowercases first character if the key does not start with acronym or adds underscore if first character is a digit.
     /// Example: UserID → userID, SPRSession → SRPSessoin, 2fa → _2fa
-    static var decapitaliseFirstLetter: JSONDecoder.KeyDecodingStrategy {
+    public static var decapitaliseFirstLetter: JSONDecoder.KeyDecodingStrategy {
         .custom { keys in
             let lastKey = keys.last!
             if lastKey.intValue != nil {
                 return lastKey
-            } 
+            }
+            
             // let's hope server will not return unicode glyphs as JSON keys
             let originalKey: String = lastKey.stringValue
             if CharacterSet.decimalDigits.contains(originalKey.unicodeScalars.first!) {

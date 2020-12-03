@@ -56,6 +56,7 @@ class ForceUpgradeAPITests: XCTestCase {
     }
     
     class TestAuthDelegate: AuthDelegate {
+        func onForceUpgrade() { }
         var authCredential: AuthCredential?
         func getToken(bySessionUID uid: String) -> AuthCredential? { return nil }
         func onLogout(sessionUID uid: String) { }
@@ -66,7 +67,7 @@ class ForceUpgradeAPITests: XCTestCase {
     
     class TestAPIServiceDelegate: APIServiceDelegate {
         func isReachable() -> Bool { return true }
-        var userAgent: String { return "" }
+        var userAgent: String? { return "" }
         func onUpdate(serverTime: Int64) { }
         var appVersion: String { return "iOS_0.0.1" }
         func onDohTroubleshot() { }

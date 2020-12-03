@@ -88,6 +88,7 @@ class HumanVerificationAPITests: XCTestCase {
     }
 
     class TestAuthDelegate: AuthDelegate {
+        func onForceUpgrade() { }
         var authCredential: AuthCredential?
         func getToken(bySessionUID uid: String) -> AuthCredential? {
             return AuthCredential(sessionID: "sessionID", accessToken: "accessToken", refreshToken: "refreshToken", expiration: Date().addingTimeInterval(60 * 60), privateKey: nil, passwordKeySalt: nil)
@@ -98,9 +99,9 @@ class HumanVerificationAPITests: XCTestCase {
         func onRefresh(bySessionUID uid: String, complete: (Credential?, NSError?) -> Void) { }
     }
     
-    class TestAPIServiceDelegate: APIServiceDelegate {
+    class TestAPIServiceDelegate: APIServiceDelegate {        
         func isReachable() -> Bool { return true }
-        var userAgent: String { return "" }
+        var userAgent: String? { return "" }
         func onUpdate(serverTime: Int64) { }
         var appVersion: String { return "iOS_1.12.0" }
         func onDohTroubleshot() { }

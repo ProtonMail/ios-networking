@@ -64,7 +64,6 @@ public struct AuthAPI : APIClient {
     }
     
     public enum Router: Request {
-        
         case info(username: String)
         case modulus
         case auth(username: String, ephemeral:String, proof: String, session: String)
@@ -121,65 +120,62 @@ public struct AuthAPI : APIClient {
 
 
 // MARK : Response part
-final public class AuthResponse : Response, CredentialConvertible {
+final public class AuthResponse : Response, CredentialConvertible {    
     
-    
-//    public var accessToken : String?
-//    public var expiresIn : TimeInterval?
-//    public var refreshToken : String?
-    public var sessionID : String?
-    public  var eventID : String?
-    
-//    public var scope : String?
-    public var serverProof : String?
-    var resetToken : String?
-//    var tokenType : String?
-    var passwordMode : Int = 0
-    
-    var userStatus : Int = 0
-    
-    /// The private key and salt will remove from auth response. need two sperate call to get them
-    var privateKey : String?
-    var keySalt : String?
-    
-    var twoFactor : Int = 0
-    
-//    var isEncryptedToken : Bool {
-//        return accessToken?.armored ?? false
-//    }
-    
-    
-//    var code: Int
-    var accessToken: String = ""
-    var expiresIn: TimeInterval = 0.0
-    var tokenType: String = ""
-    var scope: Scope = ""
-    var refreshToken: String = ""
+////    public var accessToken : String?
+////    public var expiresIn : TimeInterval?
+////    public var refreshToken : String?
+//    public var sessionID : String?
+//    public  var eventID : String?
+//
+////    public var scope : String?
+//    public var serverProof : String?
+//    var resetToken : String?
+////    var tokenType : String?
+//    var passwordMode : Int = 0
+//
+//    var userStatus : Int = 0
+//
+//    /// The private key and salt will remove from auth response. need two sperate call to get them
+//    var privateKey : String?
+//    var keySalt : String?
+//
+//    var twoFactor : Int = 0
+//
+////    var isEncryptedToken : Bool {
+////        return accessToken?.armored ?? false
+////    }
+////    var code: Int
+    public var accessToken: String = ""
+    public var expiresIn: TimeInterval = 0.0
+    public var tokenType: String = ""
+    public var scope: Scope = ""
+    public var refreshToken: String = ""
     
     
     public override func ParseResponse(_ response: [String : Any]!) -> Bool {
 //        self.code = 1000
         
-        self.sessionID = response["UID"] as? String //session id
-        self.accessToken = response["AccessToken"] as? String ?? ""
-        self.expiresIn = response["ExpiresIn"] as? TimeInterval  ?? 0
-        self.scope = response["Scope"] as? String ?? ""
-        self.eventID = response["EventID"] as? String
-        
-        self.serverProof = response["ServerProof"] as? String
-        self.resetToken = response["ResetToken"] as? String ?? ""
-        self.tokenType = response["TokenType"] as? String ?? ""
-        self.passwordMode = response["PasswordMode"] as? Int ?? 0
-        self.userStatus = response["UserStatus"] as? Int ?? 0
-        
-        self.privateKey = response["PrivateKey"] as? String
-        self.keySalt = response["KeySalt"] as? String
-        self.refreshToken = response["RefreshToken"] as? String  ?? ""
-        
-        if let twoFA = response["2FA"]  as? [String : Any] {
-            self.twoFactor = twoFA["Enabled"] as? Int ?? 0
-        }
-        
+//        self.sessionID = response["UID"] as? String //session id
+//        self.accessToken = response["AccessToken"] as? String ?? ""
+//        self.expiresIn = response["ExpiresIn"] as? TimeInterval  ?? 0
+//        self.scope = response["Scope"] as? String ?? ""
+//        self.eventID = response["EventID"] as? String
+//
+//        self.serverProof = response["ServerProof"] as? String
+//        self.resetToken = response["ResetToken"] as? String ?? ""
+//        self.tokenType = response["TokenType"] as? String ?? ""
+//        self.passwordMode = response["PasswordMode"] as? Int ?? 0
+//        self.userStatus = response["UserStatus"] as? Int ?? 0
+//
+//        self.privateKey = response["PrivateKey"] as? String
+//        self.keySalt = response["KeySalt"] as? String
+//        self.refreshToken = response["RefreshToken"] as? String  ?? ""
+//
+//        if let twoFA = response["2FA"]  as? [String : Any] {
+//            self.twoFactor = twoFA["Enabled"] as? Int ?? 0
+//        }
+//
         return true
     }
 }

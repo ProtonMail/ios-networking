@@ -57,11 +57,11 @@ final public class AuthCredential: NSObject, NSCoding {
     // user session id, this change in every login
     public var sessionID: String
     // plain text accessToken
-    private(set) var accessToken: String
+    public var accessToken: String
     // refresh token use to renew access token
-    var refreshToken: String
+    public var refreshToken: String
     // the expiration time
-    private(set) var expiration: Date
+    public var expiration: Date
     
     // the login private key, ususally it is first userkey
     private(set) var privateKey : String?
@@ -81,16 +81,20 @@ final public class AuthCredential: NSObject, NSCoding {
         return Date().compare(expiration) != .orderedAscending
     }
 
-    func update(salt: String?, privateKey: String?) {
+    func expire() {
+        expiration = Date.distantPast
+    }
+    
+    public func update(salt: String?, privateKey: String?) {
         self.privateKey = privateKey
         self.passwordKeySalt = salt
     }
 
-    func udpate (password: String) {
+    public func udpate (password: String) {
         self.mailboxpassword = password
     }
     
-    func udpate(sessionID: String,
+    public func udpate(sessionID: String,
                 accessToken: String,
                 refreshToken: String,
                 expiration: Date)
@@ -128,7 +132,7 @@ final public class AuthCredential: NSObject, NSCoding {
         self.mailboxpassword = aDecoder.decodeObject(forKey: CoderKey.password) as? String ?? ""
     }
     
-    class func unarchive(data: NSData?) -> AuthCredential? {
+    public class func unarchive(data: NSData?) -> AuthCredential? {
         guard let data = data as Data? else { return nil }
         
         // Looks like this is necessary for cases when AuthCredential was updated and saved by one target, and unarchived by another. For example, Share extension updates token from server, archives AuthCredential with its prefix, and after a while main target should unarchive it - and should know that prefix
@@ -144,7 +148,7 @@ final public class AuthCredential: NSObject, NSCoding {
     
     // MARK - Class methods
     
-    func archive() -> Data {
+    public func archive() -> Data {
         return NSKeyedArchiver.archivedData(withRootObject: self)
     }
     
@@ -156,5 +160,16 @@ final public class AuthCredential: NSObject, NSCoding {
         aCoder.encode(privateKey, forKey: CoderKey.key)
         aCoder.encode(mailboxpassword, forKey: CoderKey.password)
         aCoder.encode(passwordKeySalt, forKey: CoderKey.salt)
+    }
+}
+
+extension AuthCredential {
+    public convenience init(_ credential: Credential) {
+        self.init(sessionID: credential.UID,
+                  accessToken: credential.accessToken,
+                  refreshToken: credential.refreshToken,
+                  expiration: credential.expiration,
+                  privateKey: nil,
+                  passwordKeySalt: nil)
     }
 }

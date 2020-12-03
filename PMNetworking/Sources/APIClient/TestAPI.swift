@@ -25,7 +25,6 @@
 
 import Foundation
 
-
 //Test API
 //Humanverify test: https://gitlab.protontech.ch/ProtonMail/Slim-API/blob/develop/api-spec/pm_api_test.md
 
@@ -36,13 +35,7 @@ public enum VerifyMethod : String {
     case invite
     case payment
     case coupon
-    
-//    "sms",
-//    "email",
-//    "payment",
-//    "invite",
-//    "coupon
-    
+
     public init?(rawValue: String) {
         switch rawValue {
         case "sms": self = .sms
@@ -78,8 +71,9 @@ public enum VerifyMethod : String {
         }
     }
 }
+
 public class TestApiClient : Client {
-    var apiService: APIService
+    public var apiService: APIService
     public init(api: APIService) {
         self.apiService = api
     }
@@ -135,11 +129,6 @@ extension TestApiClient {
     public func triggerHumanVerifyRoute(destination: String?, type: VerifyMethod?, token: String?) -> Router  {
         return Router.humanverify(destination: destination, type: type, token: token)
     }
-    
-//    public func triggerHumanVerify(complete: @escaping  (_ task: URLSessionDataTask?, _ response: Response) -> Void) {
-//        let route = Router.humanverify
-//        self.apiService.exec(route:  route, complete: complete)
-//    }
 }
 
 
@@ -166,6 +155,26 @@ public class HumanVerificationResponse: Response {
             }
         }
         return true
+    }
+}
+
+public struct ExpireTokenResponse: Codable {
+    public var code: Int
+}
+
+public class ExpireToken : Request {
+    let uid: String
+    public init(uid: String) {
+        self.uid = uid
+    }
+    public var path: String {
+        return "/internal/quark/user:expire:access:token?UID=\(self.uid)"
+    }
+    public var method: HTTPMethod = .get
+    public var parameters: [String : Any]? = nil
+    
+    public var isAuth: Bool {
+        return false
     }
 }
 

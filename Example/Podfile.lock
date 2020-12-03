@@ -29,19 +29,19 @@ PODS:
   - OHHTTPStubs/OHPathHelpers (9.0.0)
   - OHHTTPStubs/Swift (9.0.0):
     - OHHTTPStubs/Default
-  - PMAuthentication (1.2.1):
+  - PMAuthentication (1.2.3):
+    - PMCommon
+    - PMCrypto
+  - PMAuthentication/Tests (1.2.3):
+    - OHHTTPStubs/Swift
+    - PMCommon
     - PMCrypto
   - PMCommon (0.1.0):
     - PMCommon/Default (= 0.1.0)
   - PMCommon/APIClient (0.1.0):
     - PMCommon/Networking
-  - PMCommon/Authentication (0.1.0):
-    - PMCommon/APIClient
-    - PMCommon/Services
-    - PMCrypto
   - PMCommon/Default (0.1.0):
     - PMCommon/APIClient
-    - PMCommon/Authentication
     - PMCommon/Networking
     - PMCommon/Services
     - PMCommon/SRP
@@ -80,7 +80,8 @@ PODS:
 
 DEPENDENCIES:
   - AwaitKit (~> 5.0.0)
-  - PMAuthentication (from `https://gitlab.protontech.ch/apple/shared/pmauthentication.git`, tag `1.2.1`)
+  - PMAuthentication (from `../../../pmauthentication/`)
+  - PMAuthentication/Tests (from `../../../pmauthentication/`)
   - PMCommon (from `../`)
   - PMCommon/Tests (from `../`)
   - "PMCoreTranslation (from `git@gitlab.protontech.ch:apple/shared/pmcoretranslation.git`, branch `develop`)"
@@ -102,8 +103,7 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   PMAuthentication:
-    :git: https://gitlab.protontech.ch/apple/shared/pmauthentication.git
-    :tag: 1.2.1
+    :path: "../../../pmauthentication/"
   PMCommon:
     :path: "../"
   PMCoreTranslation:
@@ -126,11 +126,8 @@ EXTERNAL SOURCES:
     :git: "git@gitlab.protontech.ch:apple/shared/PMUIFoundations.git"
 
 CHECKOUT OPTIONS:
-  PMAuthentication:
-    :git: https://gitlab.protontech.ch/apple/shared/pmauthentication.git
-    :tag: 1.2.1
   PMCoreTranslation:
-    :commit: a8ec6be237f2f0910a9df4499cf91b3b1aba8c2a
+    :commit: b6a4b847b70c2de008ff5e0006d902a71e584aaa
     :git: "git@gitlab.protontech.ch:apple/shared/pmcoretranslation.git"
   PMCrypto:
     :git: https://gitlab.protontech.ch/apple/shared/pmcrypto.git
@@ -152,8 +149,8 @@ SPEC CHECKSUMS:
   AFNetworking: 7864c38297c79aaca1500c33288e429c3451fdce
   AwaitKit: a6d0b0b6d603cedda8ef1c1c249b8d6730359917
   OHHTTPStubs: cb29d2a9d09a828ecb93349a2b0c64f99e0db89f
-  PMAuthentication: 43dcef5cec38ecafb436b3cbd50fa3a2394bbcb1
-  PMCommon: cc69a42f8545217b515e7d97740164caeeaf33ba
+  PMAuthentication: b2ed177ed04a10b0f2a2c0b498ddb0526698df17
+  PMCommon: 445682918717601b6c81917efdecb7c1bc0e0988
   PMCoreTranslation: 221df023e0a50c73bdadd07ce8917e053f69a859
   PMCrypto: 70361d6a49e834bfae377b3b4524c2b305fb95c4
   PMForceUpgrade: f494aa7192a45e642ef190a1c8d58ab746eaa515
@@ -163,6 +160,6 @@ SPEC CHECKSUMS:
   PromiseKit: 28fda91c973cc377875d8c0ea4f973013c05b6db
   TrustKit: 0a64b37d31518f16e344ceaf27e129dde624ce75
 
-PODFILE CHECKSUM: cc1f68f0cba6542e36ad8b0c2bb9ed8a4a707099
+PODFILE CHECKSUM: 0b87326ee48bddcf2a575ed822bf57a58372d8d3
 
 COCOAPODS: 1.10.0

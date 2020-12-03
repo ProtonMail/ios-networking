@@ -21,11 +21,8 @@
 //  along with ProtonMail.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-
 //REMOVE the networking ref
 import AFNetworking
-
-
 
 public class APIErrorCode {
     static public let responseOK = 1000
@@ -199,11 +196,10 @@ final class UserAgent {
 }
 
 
+public let APIServiceErrorDomain = NSError.protonMailErrorDomain("APIService")
 
 //Protonmail api serivce. all the network requestion must go with this.
 public class PMAPIService : APIService {
-    
-    let APIServiceErrorDomain = NSError.protonMailErrorDomain("APIService")
     
     /// ForceUpgradeDelegate
     public var forceUpgradeDelegate: ForceUpgradeDelegate?
@@ -214,8 +210,8 @@ public class PMAPIService : APIService {
     /// AuthDelegate
     public weak var authDelegate: AuthDelegate?
     
-    /// APIServiceDelegate
-    public var serviceDelegate: APIServiceDelegate?
+    ///
+    public weak var serviceDelegate: APIServiceDelegate?
     
     /// synchronize locks
     private var mutex = pthread_mutex_t()
@@ -244,6 +240,25 @@ public class PMAPIService : APIService {
     
     private var isForceUpgradeUIPresented = false
     
+    var tokenExpired = false
+    let serialQueue = DispatchQueue(label: "com.proton.common")
+    func tokenExpire() -> Bool {
+        serialQueue.sync {
+            let ret = self.tokenExpired
+            if ret == false {
+                self.tokenExpired = true
+            }
+            return ret
+        }
+    }
+    func tokenReset() {
+        serialQueue.sync {
+            self.tokenExpired = false
+        }
+    }
+    
+    
+    
     //    var network : NetworkLayer
     //    var vpn : VPNInterface
     //    var doh:  DoH //depends on NetworkLayer.
@@ -260,7 +275,7 @@ public class PMAPIService : APIService {
         // init lock
         pthread_mutex_init(&mutex, nil)
         self.doh = doh
-        doh.status = .on //userCachedStatus.isDohOn ? .on : .off
+        doh.status = .off //userCachedStatus.isDohOn ? .on : .off
         
         // human verification lock
         pthread_mutex_init(&humanVerificationMutex, nil)
@@ -313,26 +328,30 @@ public class PMAPIService : APIService {
         //TODO:: fix me. this is wrong. concurruncy
         DispatchQueue.global(qos: .default).async {
             pthread_mutex_lock(&self.mutex)
-            let authCredential = self.authDelegate?.getToken(bySessionUID: self.sessionUID)
-            guard let credential = authCredential else {
+            guard let delegate = self.authDelegate else {
                 pthread_mutex_unlock(&self.mutex)
-                completion(nil, nil, NSError(domain: "empty token", code: 0, userInfo: nil))
+                completion(nil, nil, NSError(domain: "AuthDelegate is required", code: 0, userInfo: nil))
                 return
             }
-            
+            let authCredential = delegate.getToken(bySessionUID: self.sessionUID)
+            guard let credential = authCredential else {
+                pthread_mutex_unlock(&self.mutex)
+                completion(nil, nil, NSError(domain: "Empty token", code: 0, userInfo: nil))
+                return
+            }
             // when local credential expired, should handle the case same as api reuqest error handling
             guard !credential.isExpired else {
                 self.authDelegate?.onRefresh(bySessionUID: self.sessionUID) { newCredential, error in
                     self.debugError(error)
-                    if let err = error, err.domain == self.APIServiceErrorDomain && err.code == APIErrorCode.AuthErrorCode.invalidGrant {
+                    if let err = error, err.domain == APIServiceErrorDomain && err.code == APIErrorCode.AuthErrorCode.invalidGrant {
                         pthread_mutex_unlock(&self.mutex)
                         DispatchQueue.main.async {
                             //NSError.alertBadTokenToast()
                             completion(newCredential?.accessToken, self.sessionUID, err)
-                            self.authDelegate?.onRevoke(sessionUID: self.sessionUID)
+                            self.authDelegate?.onLogout(sessionUID: self.sessionUID)
                             //NotificationCenter.default.post(name: .didReovke, object: nil, userInfo: ["uid": self.sessionUID ])error
                         }
-                    } else if let err = error, err.domain == self.APIServiceErrorDomain && err.code == APIErrorCode.AuthErrorCode.localCacheBad {
+                    } else if let err = error, err.domain == APIServiceErrorDomain && err.code == APIErrorCode.AuthErrorCode.localCacheBad {
                         pthread_mutex_unlock(&self.mutex)
                         DispatchQueue.main.async {
                             //NSError.alertBadTokenToast()
@@ -343,6 +362,7 @@ public class PMAPIService : APIService {
                             self.authDelegate?.onUpdate(auth: credential)
                         }
                         pthread_mutex_unlock(&self.mutex)
+                        self.tokenReset()
                         DispatchQueue.main.async {
                             completion(newCredential?.accessToken, self.sessionUID, error)
                         }
@@ -353,32 +373,40 @@ public class PMAPIService : APIService {
             
             pthread_mutex_unlock(&self.mutex)
             // renew
+            self.tokenReset()
             completion(credential.accessToken, self.sessionUID == "" ? credential.sessionID : self.sessionUID, nil)
         }
     }
     
+    
+    
     internal func expireCredential() {
+        
+        guard self.tokenExpire() == false else {
+            return
+        }
+        
         pthread_mutex_lock(&self.mutex)
         defer {
             pthread_mutex_unlock(&self.mutex)
         }
-        let authCredential = self.authDelegate?.getToken(bySessionUID: self.sessionUID)
-        guard let _ = authCredential else {
-            //PMLog.D("token is empty")
+        guard let authCredential = self.authDelegate?.getToken(bySessionUID: self.sessionUID) else {
+            print("token is empty")
             return
         }
-        //TODO:: fix me.  need to aline the auth framwork Credential object with Networking Credential object
-        //credential.expire()
-        //self.authDelegate?.onUpdate(auth: credential)
+        
+        //TODO:: fix me.  to aline the auth framwork Credential object with Networking Credential object
+        authCredential.expire()
+        self.authDelegate?.onUpdate(auth: Credential( authCredential))
     }
     
     public func request(method: HTTPMethod, path: String,
                         parameters: Any?, headers: [String : Any]?,
-                        authenticated: Bool, customAuthCredential: AuthCredential?, completion: CompletionBlock?) {
+                        authenticated: Bool, autoRetry : Bool, customAuthCredential: AuthCredential?, completion: CompletionBlock?) {
         
         self.request(method: method, path: path, parameters: parameters,
-                     headers: headers, authenticated: authenticated, authRetry: false, authRetryRemains: 10,
-                     customAuthCredential: nil, completion: completion)
+                     headers: headers, authenticated: authenticated, authRetry: autoRetry, authRetryRemains: 10,
+                     customAuthCredential: customAuthCredential, completion: completion)
         
     }
     //new requestion function
@@ -388,7 +416,7 @@ public class PMAPIService : APIService {
                  headers: [String : Any]?,
                  authenticated: Bool = true,
                  authRetry: Bool = true,
-                 authRetryRemains: Int = 10,
+                 authRetryRemains: Int = 5,
                  customAuthCredential: AuthCredential? = nil,
                  completion: CompletionBlock?) {
         let authBlock: AuthTokenBlock = { token, userID, error in
@@ -410,7 +438,7 @@ public class PMAPIService : APIService {
                         
                         if authenticated && httpCode == 401 && authRetry {
                             self.expireCredential()
-                            if path.contains("https://api.protonmail.ch/refresh") { //tempery no need later
+                            if path.isRefreshPath { //tempery no need later
                                 completion?(nil, nil, error)
                                 self.authDelegate?.onLogout(sessionUID: self.sessionUID)
                                 //self.delegate?.onError(error: error)
@@ -428,10 +456,13 @@ public class PMAPIService : APIService {
                                                  customAuthCredential: customAuthCredential,
                                                  completion: completion)
                                 } else {
-                                    self.authDelegate?.onRevoke(sessionUID: self.sessionUID)
+                                    self.authDelegate?.onLogout(sessionUID: self.sessionUID)
                                     //NotificationCenter.default.post(name: .didReovke, object: nil, userInfo: ["uid": userID ?? ""])
                                 }
                             }
+                        } else if authenticated && httpCode == 422 && authRetry && path.isRefreshPath {
+                            completion?(nil, nil, error)
+                            self.authDelegate?.onLogout(sessionUID: self.sessionUID)
                         } else if let responseDict = response as? [String : Any], let responseCode = responseDict["Code"] as? Int {
                             let errorMessage = responseDict["Error"] as? String ?? ""
                             let displayError : NSError = NSError.protonMailError(responseCode,
@@ -500,7 +531,7 @@ public class PMAPIService : APIService {
                                                      customAuthCredential: customAuthCredential,
                                                      completion: completion)
                                     } else {
-                                        self.authDelegate?.onRevoke(sessionUID: self.sessionUID)
+                                        self.authDelegate?.onLogout(sessionUID: self.sessionUID)
                                         //NotificationCenter.default.post(name: .didReovke, object: nil, userInfo: ["uid": userID ?? ""])
                                     }
                                 }
@@ -936,3 +967,8 @@ public class PMAPIService : APIService {
 
 }
 
+extension String {
+    var isRefreshPath: Bool {
+        return self.contains("/auth/refresh")
+    }
+}
