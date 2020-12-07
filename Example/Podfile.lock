@@ -16,24 +16,20 @@ PODS:
     - AFNetworking/NSURLSession
   - AwaitKit (5.0.1):
     - PromiseKit (~> 6)
-  - OHHTTPStubs/Core (9.0.0)
-  - OHHTTPStubs/Default (9.0.0):
+  - OHHTTPStubs/Core (9.1.0)
+  - OHHTTPStubs/Default (9.1.0):
     - OHHTTPStubs/Core
     - OHHTTPStubs/JSON
     - OHHTTPStubs/NSURLSession
     - OHHTTPStubs/OHPathHelpers
-  - OHHTTPStubs/JSON (9.0.0):
+  - OHHTTPStubs/JSON (9.1.0):
     - OHHTTPStubs/Core
-  - OHHTTPStubs/NSURLSession (9.0.0):
+  - OHHTTPStubs/NSURLSession (9.1.0):
     - OHHTTPStubs/Core
-  - OHHTTPStubs/OHPathHelpers (9.0.0)
-  - OHHTTPStubs/Swift (9.0.0):
+  - OHHTTPStubs/OHPathHelpers (9.1.0)
+  - OHHTTPStubs/Swift (9.1.0):
     - OHHTTPStubs/Default
-  - PMAuthentication (1.2.3):
-    - PMCommon
-    - PMCrypto
-  - PMAuthentication/Tests (1.2.3):
-    - OHHTTPStubs/Swift
+  - PMAuthentication (1.3.1):
     - PMCommon
     - PMCrypto
   - PMCommon (0.1.0):
@@ -80,12 +76,11 @@ PODS:
 
 DEPENDENCIES:
   - AwaitKit (~> 5.0.0)
-  - PMAuthentication (from `../../../pmauthentication/`)
-  - PMAuthentication/Tests (from `../../../pmauthentication/`)
+  - "PMAuthentication (from `git@gitlab.protontech.ch:apple/shared/pmauthentication.git`, branch `develop`)"
   - PMCommon (from `../`)
   - PMCommon/Tests (from `../`)
   - "PMCoreTranslation (from `git@gitlab.protontech.ch:apple/shared/pmcoretranslation.git`, branch `develop`)"
-  - PMCrypto (from `https://gitlab.protontech.ch/apple/shared/pmcrypto.git`, tag `1.1.0`)
+  - "PMCrypto (from `git@gitlab.protontech.ch:apple/shared/pmcrypto.git`, tag `1.1.0`)"
   - "PMForceUpgrade (from `git@gitlab.protontech.ch:apple/shared/pmforceupgrade.git`, branch `develop`)"
   - "PMHumanVerification (from `git@gitlab.protontech.ch:apple/shared/pmhumanverification.git`, branch `Develop`)"
   - "PMUICommon (from `git@gitlab.protontech.ch:apple/shared/pmuicommon.git`, branch `develop`)"
@@ -103,14 +98,15 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   PMAuthentication:
-    :path: "../../../pmauthentication/"
+    :branch: develop
+    :git: "git@gitlab.protontech.ch:apple/shared/pmauthentication.git"
   PMCommon:
     :path: "../"
   PMCoreTranslation:
     :branch: develop
     :git: "git@gitlab.protontech.ch:apple/shared/pmcoretranslation.git"
   PMCrypto:
-    :git: https://gitlab.protontech.ch/apple/shared/pmcrypto.git
+    :git: "git@gitlab.protontech.ch:apple/shared/pmcrypto.git"
     :tag: 1.1.0
   PMForceUpgrade:
     :branch: develop
@@ -126,11 +122,14 @@ EXTERNAL SOURCES:
     :git: "git@gitlab.protontech.ch:apple/shared/PMUIFoundations.git"
 
 CHECKOUT OPTIONS:
+  PMAuthentication:
+    :commit: 321cb4c5f06c04e1315227938575b824150df734
+    :git: "git@gitlab.protontech.ch:apple/shared/pmauthentication.git"
   PMCoreTranslation:
-    :commit: b6a4b847b70c2de008ff5e0006d902a71e584aaa
+    :commit: 6274c13bf75454bd0a7855533affd9aab6853396
     :git: "git@gitlab.protontech.ch:apple/shared/pmcoretranslation.git"
   PMCrypto:
-    :git: https://gitlab.protontech.ch/apple/shared/pmcrypto.git
+    :git: "git@gitlab.protontech.ch:apple/shared/pmcrypto.git"
     :tag: 1.1.0
   PMForceUpgrade:
     :commit: 8435fbc30d896d3ed45352e80a0335a952188052
@@ -148,8 +147,8 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   AFNetworking: 7864c38297c79aaca1500c33288e429c3451fdce
   AwaitKit: a6d0b0b6d603cedda8ef1c1c249b8d6730359917
-  OHHTTPStubs: cb29d2a9d09a828ecb93349a2b0c64f99e0db89f
-  PMAuthentication: b2ed177ed04a10b0f2a2c0b498ddb0526698df17
+  OHHTTPStubs: 90eac6d8f2c18317baeca36698523dc67c513831
+  PMAuthentication: 34795d10a276ca957250452749d424f017a50a3a
   PMCommon: 445682918717601b6c81917efdecb7c1bc0e0988
   PMCoreTranslation: 221df023e0a50c73bdadd07ce8917e053f69a859
   PMCrypto: 70361d6a49e834bfae377b3b4524c2b305fb95c4
@@ -160,6 +159,6 @@ SPEC CHECKSUMS:
   PromiseKit: 28fda91c973cc377875d8c0ea4f973013c05b6db
   TrustKit: 0a64b37d31518f16e344ceaf27e129dde624ce75
 
-PODFILE CHECKSUM: 0b87326ee48bddcf2a575ed822bf57a58372d8d3
+PODFILE CHECKSUM: e80d21688798d7fa0329fea384c4f5776a35f3d3
 
 COCOAPODS: 1.10.0

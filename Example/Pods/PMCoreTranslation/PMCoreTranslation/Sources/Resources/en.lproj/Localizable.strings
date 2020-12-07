@@ -100,9 +100,10 @@
  */
 
 "Create ProtonMail address" = "Create ProtonMail address";
-"Your existing ProtonID is %@. You can now activate your ProtonMail address or pick a new one." = "Your existing ProtonID is %@. You can now activate your ProtonMail address or pick a new one.";
+"Your Proton Account is associated with %@. To use ProtonMail, please create an address." = "Your Proton Account is associated with %@. To use ProtonMail, please create an address.";
 "Username" = "Username";
 "Next" = "Next";
+"Please enter a username." = "Please enter a username.";
 
 /**
  * Login create address

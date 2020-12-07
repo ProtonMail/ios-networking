@@ -1,6 +1,8 @@
 //
-//  UserEndpoint.swift
-//  PMAuthentication - Created on 16/03/2020.
+//  LoginBasicStatus.swift
+//  
+//
+//  Created on 21/10/2020.
 //
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -21,33 +23,7 @@
 //  along with ProtonMail.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import PMCommon
 
-
-extension AuthService {
-    
-    struct UserResponse: Codable {
-        let code: Int
-        let user: User
-    }
-    
-    struct UserInfoEndpoint: Request {
-        var path: String {
-            return "/users"
-        }
-        var method: HTTPMethod {
-            return .get
-        }
-        var parameters: [String : Any]? = nil
-        
-        var isAuth: Bool {
-            return true
-        }
-        var auth: AuthCredential?
-        var authCredential: AuthCredential? {
-            get {
-                return self.auth
-            }
-        }
-    }
+public enum LoginBasicStatus: String {
+    case loggedIn, ask2FA, askSecondPassword
 }

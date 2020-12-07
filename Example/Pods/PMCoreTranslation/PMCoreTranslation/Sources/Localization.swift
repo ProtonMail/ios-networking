@@ -203,14 +203,17 @@ public class LocalizedString {
     /// Screen title for picking Protonmail username
     public lazy var _ls_username_screen_title = NSLocalizedString("Create ProtonMail address",  bundle: Common.bundle, comment: "Screen title for creating ProtonMail address")
 
-    /// Info about existing ProtonMail address
-    public lazy var _ls_username_screen_info = NSLocalizedString("Your existing ProtonID is %@. You can now activate your ProtonMail address or pick a new one.",  bundle: Common.bundle, comment: "Info about existing ProtonMail address")
+    /// Info about existing external ProtonMail address
+    public lazy var _ls_username_screen_info = NSLocalizedString("Your Proton Account is associated with %@. To use ProtonMail, please create an address.",  bundle: Common.bundle, comment: "Info about existing external ProtonMail address")
 
     /// Username field title
     public lazy var _ls_username_username_title = NSLocalizedString("Username",  bundle: Common.bundle, comment: "Username field title")
 
     /// Action button title for picking Protonmail username
     public lazy var _ls_username_button_title = NSLocalizedString("Next",  bundle: Common.bundle, comment: "Action button title for picking Protonmail username")
+
+    /// Username field error message
+    public lazy var _ls_username_username_error = NSLocalizedString("Please enter a username.",  bundle: Common.bundle, comment: "Username field error message")
 
     // Login create address
 
