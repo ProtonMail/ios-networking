@@ -132,13 +132,13 @@ CHECKOUT OPTIONS:
     :git: "git@gitlab.protontech.ch:apple/shared/pmcrypto.git"
     :tag: 1.1.0
   PMForceUpgrade:
-    :commit: 8435fbc30d896d3ed45352e80a0335a952188052
+    :commit: 50543af354db3831346c3826c28e2a92beb74fae
     :git: "git@gitlab.protontech.ch:apple/shared/pmforceupgrade.git"
   PMHumanVerification:
-    :commit: 250f005981c6fd8181e19a7734601dd94b4df78f
+    :commit: e08a7c988d3efefdf96d04f3ca488df9e131457a
     :git: "git@gitlab.protontech.ch:apple/shared/pmhumanverification.git"
   PMUICommon:
-    :commit: a2c0d2dff2b822592a40acd6b160a7a4e03159a4
+    :commit: 2118d2441611c06bf6ce5f342da7e843598cf04c
     :git: "git@gitlab.protontech.ch:apple/shared/pmuicommon.git"
   PMUIFoundations:
     :commit: e2448c2d1093c2565e4948921fbf0a115263eb8f
