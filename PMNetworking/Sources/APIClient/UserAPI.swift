@@ -259,7 +259,7 @@ public final class UserInfo : NSObject {
     var maxSpace: Int64
     var usedSpace: Int64
     var maxUpload: Int64
-    var userId: String
+    public var userId: String
     
     var userKeys: [Key] //user key
     

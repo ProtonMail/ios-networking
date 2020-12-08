@@ -44,9 +44,11 @@ class DoHMail : DoH, DoHConfig {
 
 class TestDoHMail : DoH, DoHConfig {
     //defind your default host
-    var defaultHost: String = "https://protonmail.blue"
+//    var defaultHost: String = "https://protonmail.blue"
+    var defaultHost: String = "https://proton.dev"
     //defind your default captcha host
-    var captchaHost: String = "mail.protonmail.blue"
+//    var captchaHost: String = "mail.protonmail.blue"
+    var captchaHost: String = "https://proton.dev"
     //defind your query host
     var apiHost : String = "dmfygsltqojxxi33onvqws3bomnua.protonpro.xyz"
         
@@ -92,7 +94,7 @@ class MainViewController: UIViewController {
     
     /// simulate the cache of auth credential
     var authCredential : AuthCredential? = nil
-    var blueAuthCredential : AuthCredential? = nil
+    var testAuthCredential : AuthCredential? = nil
     
     func testFramework() {
         if self.authCredential != nil {
@@ -119,7 +121,7 @@ class MainViewController: UIViewController {
             case .success(.ask2FA(let context)): // success but need 2FA
                 print(context)
             case .success(.newCredential(let credential, let passwordMode)): // success without 2FA
-                //self.authCredential = credential
+                self.authCredential = AuthCredential(credential)
                 print("pwd mode: \(passwordMode)")
                 self.testAccessToken()
                 break
@@ -155,7 +157,9 @@ class MainViewController: UIViewController {
         testApi.humanDelegate = HumanCheckHelper(apiService: testApi, supportURL: url, navigationController: self.navigationController!, responseDelegate: self)
 
         let authApi: Authenticator = Authenticator(api: testApi)
-        authApi.authenticate(username: "feng2", password: "123") { result in
+        // blue - user: feng2, pass: 123
+        // dev  - user: greg,  pass: a
+        authApi.authenticate(username: "greg", password: "a") { result in
             switch result {
             case .failure(Authenticator.Errors.serverError(let error)): // error response returned by server
                 print(error)
@@ -174,7 +178,7 @@ class MainViewController: UIViewController {
             case .success(.ask2FA(let context)): // success but need 2FA
                 print(context)
             case .success(.newCredential(let credential, let passwordMode)): // success without 2FA
-               // self.blueAuthCredential = credential
+                self.testAuthCredential = AuthCredential(credential)
                 print("pwd mode: \(passwordMode)")
                 self.processHumanVerifyTest()
                 break
@@ -240,8 +244,8 @@ extension MainViewController : AuthDelegate {
     
     func getToken(bySessionUID uid: String) -> AuthCredential? {
         print("looking for auth UID: " + uid)
-        print("compare cache with index: \(uid == blueAuthCredential?.sessionID ?? "") ")
-        return self.blueAuthCredential
+        print("compare cache with index: \(uid == testAuthCredential?.sessionID ?? "") ")
+        return self.testAuthCredential
     }
     
     func onUpdate(auth: Credential) {
