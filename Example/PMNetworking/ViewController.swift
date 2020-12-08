@@ -76,14 +76,6 @@ class MainViewController: UIViewController {
         // set auth delegate
         apiService.authDelegate = self
         
-        // set force upgrade delegate
-        let forceUrl = URL(string: "itms-apps://itunes.apple.com/app/id979659905")!
-        apiService.forceUpgradeDelegate = ForceUpgradeHelper(config: .mobile(forceUrl), responseDelegate: self)
-        
-        // set human delegate
-        let humanUrl = URL(string: "https://protonmail.com/support/knowledge-base/human-verification/")!
-        apiService.humanDelegate = HumanCheckHelper(apiService: apiService, supportURL: humanUrl, navigationController: self.navigationController!)
-        
         // set service event delegate
         apiService.serviceDelegate = self
     }
@@ -97,12 +89,14 @@ class MainViewController: UIViewController {
     var testAuthCredential : AuthCredential? = nil
     
     func testFramework() {
-        if self.authCredential != nil {
+        if self.testAuthCredential != nil {
             self.testAccessToken()
             return
         }
         let authApi: Authenticator = Authenticator(api: testApi)
-        authApi.authenticate(username: "unittest100", password: "unittest100") { result in
+        // blue - user: unittest100, pass: unittest100
+        // dev  - user: greg,  pass: a
+        authApi.authenticate(username: "greg", password: "a") { result in
             switch result {
             case .failure(Authenticator.Errors.serverError(let error)): // error response returned by server
                 print(error)
@@ -121,7 +115,7 @@ class MainViewController: UIViewController {
             case .success(.ask2FA(let context)): // success but need 2FA
                 print(context)
             case .success(.newCredential(let credential, let passwordMode)): // success without 2FA
-                self.authCredential = AuthCredential(credential)
+                self.testAuthCredential = AuthCredential(credential)
                 print("pwd mode: \(passwordMode)")
                 self.testAccessToken()
                 break
@@ -133,19 +127,21 @@ class MainViewController: UIViewController {
     }
     
     func testAccessToken() {
-        let request = UserAPI.Router.checkUsername("unittest100")
-        apiService.exec(route: request) { (task, response) in
+        let request = UserAPI.Router.checkUsername("greg")
+        testApi.exec(route: request) { (task, response) in
             print(response.code as Any)
         }
         let request2 = UserAPI.Router.checkUsername("sflkjaslkfjaslkdjf")
-        apiService.exec(route: request2) { (task, response) in
+        testApi.exec(route: request2) { (task, response) in
             print(response.code as Any)
         }
         let request3 = UserAPI.Router.userInfo
-        apiService.exec(route: request3) { (task, response: GetUserInfoResponse) in
+        testApi.exec(route: request3) { (task, response: GetUserInfoResponse) in
             print(response.code as Any)
         }
     }
+    
+    var humanVerificationDelegate: HumanVerifyDelegate?
     
     @IBAction func humanVerificationAction(_ sender: Any) {
         TestDoHMail.default.status = .off
@@ -154,7 +150,8 @@ class MainViewController: UIViewController {
         
         //set the human verification delegation
         let url = URL(string: "https://protonmail.com/support/knowledge-base/human-verification/")!
-        testApi.humanDelegate = HumanCheckHelper(apiService: testApi, supportURL: url, navigationController: self.navigationController!, responseDelegate: self)
+        humanVerificationDelegate = HumanCheckHelper(apiService: testApi, supportURL: url, navigationController: self.navigationController!, responseDelegate: self)
+        testApi.humanDelegate = humanVerificationDelegate
 
         let authApi: Authenticator = Authenticator(api: testApi)
         // blue - user: feng2, pass: 123
@@ -197,8 +194,11 @@ class MainViewController: UIViewController {
         }
     }
     
+    var forceUpgradeServiceDelegate: APIServiceDelegate?
+    var forceUpgradeDelegate: ForceUpgradeDelegate?
+    
     @IBAction func forceUpgradeAction(_ sender: Any) {
-        apiService.serviceDelegate = {
+        forceUpgradeServiceDelegate = {
             class TestDelegate: APIServiceDelegate {
                 var userAgent: String? = ""
                 func onUpdate(serverTime: Int64) {}
@@ -212,9 +212,12 @@ class MainViewController: UIViewController {
             return TestDelegate()
         }()
         
+        apiService.serviceDelegate = forceUpgradeServiceDelegate
+        
         //set the human verification delegation
         let url = URL(string: "itms-apps://itunes.apple.com/app/id979659905")!
-        apiService.forceUpgradeDelegate = ForceUpgradeHelper(config: .mobile(url), responseDelegate: self)
+        forceUpgradeDelegate = ForceUpgradeHelper(config: .mobile(url), responseDelegate: self)
+        apiService.forceUpgradeDelegate = forceUpgradeDelegate
         
         // TODO: update to a PMAuthentication version that depends on PMNetworking
         let authApi: Authenticator = Authenticator(api: apiService)
