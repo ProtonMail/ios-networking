@@ -11,6 +11,7 @@ lint:
   tags:
     - iOS
   script:
+    - cd Example
     - Pods/SwiftLint/swiftlint --reporter junit > swiftlint.xml
   allow_failure: false
   artifacts:
