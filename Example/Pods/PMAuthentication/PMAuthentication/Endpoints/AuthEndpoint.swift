@@ -49,10 +49,10 @@ extension AuthService {
     }
     
     struct AuthEndpoint: Request {
-        let username: String;
-        let ephemeral: Data;
-        let proof: Data;
-        let session: String;
+        let username: String
+        let ephemeral: Data
+        let proof: Data
+        let session: String
         init(username: String,
              ephemeral: Data,
              proof: Data,
@@ -63,7 +63,6 @@ extension AuthService {
             self.session = session
         }
         
-        
         var path: String {
             return "/auth"
         }
@@ -72,7 +71,7 @@ extension AuthService {
             return .post
         }
         
-        var parameters: [String : Any]? {
+        var parameters: [String: Any]? {
             return [
                 "Username": username,
                 "ClientEphemeral": ephemeral.base64EncodedString(),

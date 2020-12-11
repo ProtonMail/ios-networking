@@ -23,7 +23,6 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonMail.  If not, see <https://www.gnu.org/licenses/>.
 
-
 import Foundation
 import PMCommon
 
@@ -46,7 +45,7 @@ extension AuthService {
     
     struct UserAvailableEndpoint: Request {
         
-        let username : String
+        let username: String
         
         init(username: String)  {
             self.username = username

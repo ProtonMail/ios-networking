@@ -36,7 +36,7 @@ extension AuthService {
         var method: HTTPMethod {
             return .delete
         }
-        var parameters: [String : Any]? = nil
+        var parameters: [String: Any]?
       
         var isAuth: Bool {
             return true
@@ -48,7 +48,7 @@ extension AuthService {
         
         var authCredential: AuthCredential?
         
-        init(auth :AuthCredential?) {
+        init(auth: AuthCredential?) {
             self.authCredential = auth
         }
     }

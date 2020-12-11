@@ -20,7 +20,6 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonMail.  If not, see <https://www.gnu.org/licenses/>.
 
-
 import Foundation
 
 extension String {
@@ -36,17 +35,17 @@ extension String {
     "]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-" +
     "9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21" +
     "-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])"
-    static let emailTest = NSPredicate(format:"SELF MATCHES[c] %@", String.emailRegEx)
-    
+    static let emailTest = NSPredicate(format: "SELF MATCHES[c] %@", String.emailRegEx)
+
     func isValidEmail() -> Bool {
         return String.emailTest.evaluate(with: self)
     }
-    
+
     func sixDigits() -> Bool {
-        let regex = NSPredicate(format:"SELF MATCHES[c] %@", "\\d{6}")
+        let regex = NSPredicate(format: "SELF MATCHES[c] %@", "\\d{6}")
         return regex.evaluate(with: self)
     }
-    
+
     /**
      String extension for remove the whitespaces begain&end
      
@@ -57,5 +56,5 @@ extension String {
     func trim() -> String {
         return self.trimmingCharacters(in: .whitespacesAndNewlines)
     }
-    
+
 }

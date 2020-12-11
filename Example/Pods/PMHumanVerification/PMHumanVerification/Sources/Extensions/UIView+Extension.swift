@@ -20,12 +20,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonMail.  If not, see <https://www.gnu.org/licenses/>.
 
-
 #if canImport(UIKit)
 import UIKit
 
 extension UIView {
-    @discardableResult func loadFromNib<T : UIView>() -> T? {
+    @discardableResult func loadFromNib<T: UIView>() -> T? {
         let name = String(describing: type(of: self))
         let nib = UINib(nibName: name, bundle: Common.bundle)
 
@@ -40,11 +39,11 @@ extension UIView {
         subview.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
         return subview
     }
-    
+
     enum BorderSide: String {
         case top, bottom, left, right
     }
-    
+
     func roundCorners(radius: CGFloat? = nil) {
         layer.cornerRadius = radius ?? 4.0
         clipsToBounds = true

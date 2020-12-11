@@ -19,46 +19,45 @@
 //
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonMail.  If not, see <https://www.gnu.org/licenses/>.
-    
 
 import Foundation
 
 public class DeepLink {
-    
+
     class Node {
         //
         var next: Node?
         weak var previous: Node?
-        
+
         //
-        var name : String
+        var name: String
         var value: String?
-        
+
         init(name: String, value: String? = nil) {
             self.name = name
             self.value = value
         }
-        
+
         convenience init<T>(name: String, value: T? = nil) where T: RawRepresentable, T.RawValue == String {
             self.init(name: name, value: value?.rawValue)
         }
-        
+
         required init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             self.name = try container.decode(String.self, forKey: .destination)
             self.value = try? container.decode(String.self, forKey: .sender)
         }
     }
-    
+
     init(_ dest: String, sender: String? = nil) {
         let node = Node(name: dest, value: sender)
         self.append(node)
     }
-    
+
     required public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let elements = try container.decode(Array<Node>.self, forKey: .elements)
-        
+
         self.head = elements.first
         for (index, element) in elements.enumerated() {
             if index - 1 >= 0 {
@@ -69,10 +68,10 @@ public class DeepLink {
             }
         }
     }
-    
+
     /// The head of the Linked List
     private(set) var head: Node?
-    
+
     func append(_ path: Node) {
         let newNode = path
         if let lastNode = last {
@@ -82,51 +81,43 @@ public class DeepLink {
             head = newNode
         }
     }
-    
+
     var last: Node? {
-        get {
-            guard var node = head else {
-                return nil
-            }
-            
-            while let next = node.next {
-                node = next
-            }
-            return node
+        guard var node = head else {
+            return nil
         }
+
+        while let next = node.next {
+            node = next
+        }
+        return node
     }
-    
+
     var empty: Bool {
         return head == nil
     }
-    
+
     var first: Node? {
-        get {
-            return head
-        }
+        return head
     }
-    
+
     /// Removes one from head and returns it
     var popFirst: Node? {
-        get {
-            return removeTop()
-        }
+        return removeTop()
     }
-    
+
     /// Removes one from head and returns it
     var popLast: Node? {
-        get {
-            return removeBottom()
-        }
+        return removeBottom()
     }
-    
+
     func cut(until path: Node) {
         guard self.contains(path) else { return }
         while self.last != path && self.head?.next != nil {
             _ = self.removeBottom()
         }
     }
-    
+
     func contains(_ path: Node) -> Bool {
         var current = self.head
         while let next = current?.next {
@@ -137,7 +128,7 @@ public class DeepLink {
         }
         return current == path
     }
-    
+
     private func removeTop() -> Node? {
         if let head = head {
             self.remove(path: head)
@@ -145,7 +136,7 @@ public class DeepLink {
         }
         return nil
     }
-    
+
     private func removeBottom() -> Node? {
         var current = self.head
         while let next = current?.next {
@@ -159,14 +150,14 @@ public class DeepLink {
     private func remove(path: Node) {
         let prev = path.previous
         let next = path.next
-        
+
         if let prev = prev {
             prev.next = next
         } else {
             head = next
         }
         next?.previous = prev
-        
+
         path.previous = nil
         path.next = nil
     }
@@ -187,8 +178,8 @@ extension DeepLink.Node: Equatable {
 
 extension DeepLink: CustomDebugStringConvertible {
     public var debugDescription: String {
-        var steps: Array<String> = []
-        
+        var steps: [String] = []
+
         var current = head
         while current != nil {
             steps.append(current!.debugDescription)
@@ -216,14 +207,14 @@ extension DeepLink: Codable {
     public func encode(to encoder: Encoder) throws {
         var containter = encoder.container(keyedBy: CodingKeys.self)
         guard let head = self.head else { throw Errors.empty }
-        
-        var elements: Array<Node> = [head]
+
+        var elements: [Node] = [head]
         var current = head
         while let next = current.next {
             elements.append(next)
             current = next
         }
-        
+
         try containter.encode(elements, forKey: .elements)
     }
 }

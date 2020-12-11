@@ -24,20 +24,20 @@
 import UIKit
 import PMUIFoundations
 
-class HelpTableViewCell : UITableViewCell {
-    
+class HelpTableViewCell: UITableViewCell {
+
     // MARK: - Outlets
-    
+
     @IBOutlet weak var leftImage: UIImageView!
     @IBOutlet weak var rightImage: UIImageView!
     @IBOutlet weak var topLabel: UILabel!
     @IBOutlet weak var detailLabel: UILabel!
-    
+
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
         self.zeroMargin()
     }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         imageView?.contentMode = .scaleAspectFit
@@ -46,8 +46,8 @@ class HelpTableViewCell : UITableViewCell {
         backgroundColor = UIColorManager.BackgroundNorm
         leftImage.tintColor = UIColorManager.IconNorm
     }
-    
-    func ConfigCell(top: String, details: String, left: UIImage) {
+
+    func configCell(top: String, details: String, left: UIImage) {
         self.topLabel.text = top
         self.detailLabel.text = details
         self.leftImage.image = left

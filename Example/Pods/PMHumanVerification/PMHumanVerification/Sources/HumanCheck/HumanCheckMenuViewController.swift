@@ -28,18 +28,18 @@ import PMUIFoundations
 import PMCoreTranslation
 
 final public class HumanCheckMenuViewController: UIViewController, ViewModelProtocol, PMUICommon.Coordinated {
-    
+
     // MARK: - Outlets
-    
+
     @IBOutlet weak var helpBarButtonItem: UIBarButtonItem!
     @IBOutlet weak var segmentControl: UISegmentedControl!
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var closeBarButtonItem: UIBarButtonItem!
-    
-    public typealias viewModelType = HumanCheckViewModel
-    public typealias coordinatorType = HumanCheckMenuCoordinator
+
+    public typealias ViewModelType = HumanCheckViewModel
+    public typealias CoordinatorType = HumanCheckMenuCoordinator
     private var viewModel: HumanCheckViewModel!
-    private var coordinator: coordinatorType?
+    private var coordinator: CoordinatorType?
     public func getCoordinator() -> PMUICommon.Coordinator? {
         return self.coordinator
     }
@@ -49,40 +49,40 @@ final public class HumanCheckMenuViewController: UIViewController, ViewModelProt
     public func set(viewModel: HumanCheckViewModel) {
         self.viewModel = viewModel
     }
-    
+
     fileprivate let kSegueToRecaptcha = "check_menu_to_recaptcha_verify_segue"
     fileprivate let kSegueToEmailVerify = "check_menu_to_email_verify_segue"
     fileprivate let kSegueToPhoneVerify = "check_menu_to_phone_verify_segue"
     fileprivate let kSegueToHelp = "check_menu_to_help_segue"
 
-    public func setViewModel(viewModel : HumanCheckViewModel) {
+    public func setViewModel(viewModel: HumanCheckViewModel) {
         self.viewModel = viewModel
     }
-    
+
     // MARK: View controller life cycle
-    
+
     public override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
     }
-    
+
     // MARK: - Actions
-    
+
     @IBAction func unwindSegue( _ seg: UIStoryboardSegue) {
         configureUI()
     }
-    
+
     @IBAction func helpAction(_ sender: Any) {
         self.performSegue(withIdentifier: self.kSegueToHelp, sender: self)
     }
-    
+
     @IBAction func closeAction(_ sender: Any) {
         viewModel.close()
-        let _ = self.navigationController?.popViewController(animated: true)
+        _ = self.navigationController?.popViewController(animated: true)
     }
-    
+
     // MARK: - Private Interface
-    
+
     fileprivate func configureUI() {
         closeBarButtonItem.tintColor = UIColorManager.IconNorm
         view.backgroundColor = UIColorManager.BackgroundNorm
@@ -98,7 +98,7 @@ final public class HumanCheckMenuViewController: UIViewController, ViewModelProt
         } else {
             segmentControl.tintColor = UIColorManager.BackgroundNorm
         }
-        
+
         for (index, value) in self.viewModel.verifyTypes.enumerated() {
             segmentControl.insertSegment(withTitle: value.localizedTitle, at: index, animated: false)
         }
@@ -109,7 +109,7 @@ final public class HumanCheckMenuViewController: UIViewController, ViewModelProt
         navigationController?.hideBackground()
         updateView()
     }
-    
+
     private var capcha: RecaptchaViewController {
         // Load Storyboard
         let bundle = Common.bundle
@@ -131,7 +131,7 @@ final public class HumanCheckMenuViewController: UIViewController, ViewModelProt
         self.add(asChildViewController: customViewController)
         return customViewController
     }()
-    
+
     private lazy var sms: PhoneVerifyViewController = {
         // Load Storyboard
         let bundle = Common.bundle
@@ -142,19 +142,19 @@ final public class HumanCheckMenuViewController: UIViewController, ViewModelProt
         self.add(asChildViewController: customViewController)
         return customViewController
     }()
-    
+
     @objc fileprivate func selectionDidChange(_ sender: UISegmentedControl) {
         updateView()
     }
-    
+
     var lastViewController: UIViewController?
-    
+
     fileprivate func updateView() {
         let index = segmentControl.selectedSegmentIndex
         let item = self.viewModel.verifyTypes[index]
-        if let vc = lastViewController {
-            vc.dismiss(animated: false)
-            self.remove(asChildViewController: vc)
+        if let viewController = lastViewController {
+            viewController.dismiss(animated: false)
+            self.remove(asChildViewController: viewController)
             lastViewController = nil
         }
         switch item {
@@ -167,11 +167,11 @@ final public class HumanCheckMenuViewController: UIViewController, ViewModelProt
         default:
             break
         }
-        if let vc = children.last {
-            lastViewController = vc
+        if let viewController = children.last {
+            lastViewController = viewController
         }
     }
-    
+
     fileprivate func remove(asChildViewController viewController: UIViewController) {
         // Notify Child View Controller
         viewController.willMove(toParent: nil)
@@ -180,7 +180,7 @@ final public class HumanCheckMenuViewController: UIViewController, ViewModelProt
         // Notify Child View Controller
         viewController.removeFromParent()
     }
-    
+
     fileprivate func add(asChildViewController viewController: UIViewController) {
         // Add Child View Controller
         addChild(viewController)
@@ -193,16 +193,16 @@ final public class HumanCheckMenuViewController: UIViewController, ViewModelProt
         // Notify Child View Controller
         viewController.didMove(toParent: self)
     }
-    
-    public override var preferredStatusBarStyle : UIStatusBarStyle {
-        return UIStatusBarStyle.default;
+
+    public override var preferredStatusBarStyle: UIStatusBarStyle {
+        return UIStatusBarStyle.default
     }
-    
+
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: true)
     }
-    
+
     public override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == kSegueToHelp {
             let viewController = segue.destination as! HumanCheckHelpViewController
@@ -212,7 +212,7 @@ final public class HumanCheckMenuViewController: UIViewController, ViewModelProt
 }
 
 extension VerifyMethod {
-    var localizedTitle : String {
+    var localizedTitle: String {
         switch self {
         case .sms:
             return CoreString._hv_sms_method_name

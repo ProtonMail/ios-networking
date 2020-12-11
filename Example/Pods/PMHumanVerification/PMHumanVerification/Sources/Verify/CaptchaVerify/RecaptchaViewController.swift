@@ -27,36 +27,36 @@ import PMUIFoundations
 import PMCoreTranslation
 
 class RecaptchaViewController: UIViewController, UIWebViewDelegate {
-    
+
     @IBOutlet weak var webView: UIWebView!
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var verifyingLabel: UILabel!
     @IBOutlet weak var webViewHeightConstraint: NSLayoutConstraint!
-    
+
     fileprivate var startVerify: Bool = false
     fileprivate var finalToken: String?
-    
+
     var viewModel: HumanCheckViewModel!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         view.backgroundColor = UIColorManager.BackgroundNorm
         webView.scrollView.isScrollEnabled = false
         stackView.isHidden = true
         loadNewCaptcha()
     }
-    
+
     func loadNewCaptcha() {
         URLCache.shared.removeAllCachedResponses()
         let requestObj = URLRequest(url: viewModel.getCaptchaURL())
         webView.loadRequest(requestObj)
     }
 
-    override var preferredStatusBarStyle : UIStatusBarStyle {
+    override var preferredStatusBarStyle: UIStatusBarStyle {
         return UIStatusBarStyle.default
     }
-    
+
     func checkCaptcha() {
         guard let finalToken = self.finalToken else { return }
         stackView.isHidden = false
@@ -64,7 +64,7 @@ class RecaptchaViewController: UIViewController, UIWebViewDelegate {
             DispatchQueue.main.async {
                 self.stackView.isHidden = true
                 if res {
-                    let _ = self.navigationController?.popViewController(animated: true)
+                    _ = self.navigationController?.popViewController(animated: true)
                 } else {
                     if let error = error {
                         let banner = PMBanner(message: error.localizedDescription, style: PMBannerNewStyle.error, dismissDuration: Double.infinity)
@@ -78,7 +78,7 @@ class RecaptchaViewController: UIViewController, UIWebViewDelegate {
             }
         })
     }
-    
+
     func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebView.NavigationType) -> Bool {
         let urlString = request.url?.absoluteString
 
@@ -108,39 +108,38 @@ class RecaptchaViewController: UIViewController, UIWebViewDelegate {
             return false
         }
 
-        if let _ = urlString?.range(of: "https://secure.protonmail.com/expired_recaptcha_response://") {
+        if urlString?.range(of: "https://secure.protonmail.com/expired_recaptcha_response://") != nil {
             resetWebviewHeight()
             webView.reload()
             return false
-        }
-        else if let _ = urlString?.range(of: "https://secure.protonmail.com/captcha/recaptcha_response://") {
+        } else if urlString?.range(of: "https://secure.protonmail.com/captcha/recaptcha_response://") != nil {
             if let token = urlString?.replacingOccurrences(of: "https://secure.protonmail.com/captcha/recaptcha_response://", with: "", options: NSString.CompareOptions.widthInsensitive, range: nil) {
                 self.finalToken = token
             }
             resetWebviewHeight()
             checkCaptcha()
-            return false    
+            return false
         }
         return true
     }
-    
+
     func webViewDidFinishLoad(_ webView: UIWebView) {
         if startVerify {
-            if let _ = webView.stringByEvaluatingJavaScript(from: "document.body.scrollHeight;") {
+            if webView.stringByEvaluatingJavaScript(from: "document.body.scrollHeight;") != nil {
                 let height = CGFloat(500)
                 webViewHeightConstraint.constant = height
             }
             startVerify = false
         }
     }
-    
+
     func resetWebviewHeight() {
-        if let _ = webView.stringByEvaluatingJavaScript(from: "document.body.scrollHeight;") {
+        if webView.stringByEvaluatingJavaScript(from: "document.body.scrollHeight;") != nil {
             let height = CGFloat(85)
             webViewHeightConstraint.constant = height
         }
     }
-    
+
     @IBAction func tapAction(_ sender: UITapGestureRecognizer) {
 
     }

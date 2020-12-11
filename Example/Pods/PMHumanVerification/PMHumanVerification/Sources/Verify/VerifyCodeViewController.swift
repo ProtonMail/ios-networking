@@ -26,56 +26,56 @@ import PMUIFoundations
 import PMCoreTranslation
 
 class VerifyCodeViewController: UIViewController {
-    
+
     // MARK: - Outlets
-    
+
     @IBOutlet weak var topTitleLabel: UILabel!
     @IBOutlet weak var verifyCodeTextFieldView: PMTextField!
     @IBOutlet weak var continueButton: ProtonButton!
     @IBOutlet weak var newCodeButton: ProtonButton!
     @IBOutlet weak var backBarbuttonItem: UIBarButtonItem!
     @IBOutlet weak var scrollBottomPaddingConstraint: NSLayoutConstraint!
-    
+
     fileprivate let kSegueToHelp = "check_menu_to_help_segue"
     fileprivate let kSegueUnwind = "UnwindSegue"
-    
+
     var viewModel: HumanCheckViewModel!
-    
+
     // MARK: - View controller life cycle
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
     }
-    
-    override var preferredStatusBarStyle : UIStatusBarStyle {
-        return UIStatusBarStyle.default;
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return UIStatusBarStyle.default
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         NotificationCenter.default.addKeyboardObserver(self)
         _ = verifyCodeTextFieldView.becomeFirstResponder()
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         NotificationCenter.default.removeKeyboardObserver(self)
     }
-    
+
     public override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == kSegueToHelp {
             let viewController = segue.destination as! HumanCheckHelpViewController
             viewController.viewModel = self.viewModel
         }
     }
-    
+
     // MARK: - Actions
-    
+
     @IBAction func verifyCodeAction(_ sender: Any) {
         sendCode()
     }
-    
+
     @IBAction func requestReplacementAction(_ sender: Any) {
         let alert = UIAlertController(title: CoreString._hv_verification_new_alert_title, message: String(format: CoreString._hv_verification_new_alert_message, self.viewModel.getDestination()), preferredStyle: .alert)
         alert.addAction(.init(title: CoreString._hv_verification_new_alert_button, style: .default, handler: { _ in
@@ -84,18 +84,18 @@ class VerifyCodeViewController: UIViewController {
         alert.addAction(.init(title: CoreString._hv_cancel_button, style: .cancel))
         present(alert, animated: true, completion: nil)
     }
-    
+
     @IBAction func tapAction(_ sender: UITapGestureRecognizer) {
         updateButtonStatus()
         dismissKeyboard()
     }
-    
+
     @IBAction func backButtonAction(_ sender: UIBarButtonItem) {
         navigationController?.popViewController(animated: true)
     }
-    
+
     // MARK: - Private interface
-    
+
     fileprivate func configureUI() {
         backBarbuttonItem.tintColor = UIColorManager.IconNorm
         view.backgroundColor = UIColorManager.BackgroundNorm
@@ -123,11 +123,11 @@ class VerifyCodeViewController: UIViewController {
         newCodeButton.setMode(mode: .text)
         self.updateButtonStatus()
     }
-    
+
     fileprivate func sendCode() {
         let code = verifyCodeTextFieldView.value.trim()
         guard viewModel.isValidCodeFormat(code: code) else { return }
-        
+
         continueButton.isSelected = true
         verifyCodeTextFieldView.isError = false
         continueButton.setTitle(CoreString._hv_verification_verifying_button, for: .normal)
@@ -148,7 +148,7 @@ class VerifyCodeViewController: UIViewController {
             }
         }
     }
-    
+
     fileprivate func showErrorAlert(error: NSError) {
         if error.code == 12087 {
             // Invalid verification code
@@ -162,27 +162,27 @@ class VerifyCodeViewController: UIViewController {
             banner.show(at: .topCustom(.baner), on: self)
         }
     }
-    
+
     fileprivate func showInvalidVerificationCodeAlert() {
         let title = CoreString._hv_verification_error_alert_title
         let message = CoreString._hv_verification_error_alert_message
         let leftButton = CoreString._hv_verification_error_alert_resend
         let rightButton = CoreString._hv_verification_error_alert_other_method
-        
+
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: leftButton, style: .default, handler: { action in
+        alert.addAction(UIAlertAction(title: leftButton, style: .default, handler: { _ in
             self.resendCode()
         }))
-        alert.addAction(UIAlertAction(title: rightButton, style: .cancel, handler: { action in
+        alert.addAction(UIAlertAction(title: rightButton, style: .cancel, handler: { _ in
             self.performSegue(withIdentifier: self.kSegueUnwind, sender: self)
         }))
         present(alert, animated: true, completion: nil)
     }
-    
+
     fileprivate func resendCode() {
         self.continueButton.isEnabled = false
         self.newCodeButton.isEnabled = false
-        self.viewModel.sendVerifyCode (self.viewModel.type) { (isOK, error) -> Void in
+        self.viewModel.sendVerifyCode(self.viewModel.type) { (isOK, error) -> Void in
             self.updateButtonStatus()
             self.newCodeButton.isEnabled = true
             if isOK {
@@ -199,15 +199,15 @@ class VerifyCodeViewController: UIViewController {
             }
         }
     }
-    
+
     @objc fileprivate func helpButtonTapped(sender: UIBarButtonItem) {
         self.performSegue(withIdentifier: self.kSegueToHelp, sender: self)
     }
-    
+
     fileprivate func dismissKeyboard() {
         _ = verifyCodeTextFieldView.resignFirstResponder()
     }
-    
+
     fileprivate func updateButtonStatus() {
         let verifyCode = verifyCodeTextFieldView.value.trim()
         if viewModel.isValidCodeFormat(code: verifyCode) {
@@ -224,14 +224,14 @@ extension VerifyCodeViewController: PMTextFieldDelegate {
     func didChangeValue(_ textField: PMTextField, value: String) {
         updateButtonStatus()
     }
-    
+
     func textFieldShouldReturn(_ textField: PMTextField) -> Bool {
         updateButtonStatus()
         dismissKeyboard()
         sendCode()
         return true
     }
-    
+
     func didEndEditing(textField: PMTextField) {
         updateButtonStatus()
     }

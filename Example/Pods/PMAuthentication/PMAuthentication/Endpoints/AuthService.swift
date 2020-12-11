@@ -23,7 +23,7 @@
 import Foundation
 import PMCommon
 
-public class AuthService : Client {
+public class AuthService: Client {
     public var apiService: APIService
     public init(api: APIService) {
         self.apiService = api
@@ -37,7 +37,7 @@ public class AuthService : Client {
     func auth(username: String,
                      ephemeral: Data,
                      proof: Data,
-                     session: String, complete: @escaping(_ response: Result<AuthService.AuthRouteResponse,Error>) -> Void) {
+                     session: String, complete: @escaping(_ response: Result<AuthService.AuthRouteResponse, Error>) -> Void) {
         let route = AuthEndpoint(username: username, ephemeral: ephemeral, proof: proof, session: session)
         self.apiService.exec(route: route, complete: complete)
     }

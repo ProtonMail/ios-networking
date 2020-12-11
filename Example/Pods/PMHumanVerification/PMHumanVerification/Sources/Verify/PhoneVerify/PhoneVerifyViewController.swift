@@ -26,41 +26,41 @@ import PMUIFoundations
 import PMCoreTranslation
 
 class PhoneVerifyViewController: UIViewController {
-    
+
     // MARK: Outlets
-    
+
     @IBOutlet weak var phoneNumberTextFieldView: PMTextFieldCombo!
     @IBOutlet weak var sendCodeButton: ProtonButton!
     @IBOutlet weak var continueButton: ProtonButton!
     @IBOutlet weak var scrollBottomPaddingConstraint: NSLayoutConstraint!
     @IBOutlet weak var topTitleLabel: UILabel!
-    
+
     fileprivate let kSegueToCountryPicker = "phone_verify_to_country_picker_segue"
     fileprivate let kSegueToVerifyCode = "phone_verify_to_verify_code_segue"
-    
+
     fileprivate var verifyClicked = false
     fileprivate var countryCode: String = ""
-    
+
     var viewModel: HumanCheckViewModel!
     var countryCodeViewModel: CountryCodeViewModel!
-    
+
     // MARK: View controller life cycle
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
     }
-    
+
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return UIStatusBarStyle.default
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         NotificationCenter.default.addKeyboardObserver(self)
         _ = phoneNumberTextFieldView.becomeFirstResponder()
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         NotificationCenter.default.removeKeyboardObserver(self)
@@ -77,29 +77,29 @@ class PhoneVerifyViewController: UIViewController {
             popup.delegate = self
         }
     }
-    
+
     @IBAction func haveCodeAction(_ sender: Any) {
         guard phoneNumberTextFieldView.value != "" else { return }
         let buildPhonenumber = "\(countryCode)\(phoneNumberTextFieldView.value)"
         self.viewModel.setEmail(email: buildPhonenumber)
         self.performSegue(withIdentifier: self.kSegueToVerifyCode, sender: self)
     }
-    
+
     @IBAction func sendCodeAction(_ sender: UIButton) {
         self.sendCode()
     }
-    
+
     @IBAction func tapAction(_ sender: UITapGestureRecognizer) {
         updateButtonStatus()
         dismissKeyboard()
     }
-    
+
     // MARK: Private interface
-    
+
     fileprivate func dismissKeyboard() {
         _ = phoneNumberTextFieldView.resignFirstResponder()
     }
-    
+
     fileprivate func configureUI() {
         view.backgroundColor = UIColorManager.BackgroundNorm
         topTitleLabel.text = CoreString._hv_sms_enter_label
@@ -120,12 +120,12 @@ class PhoneVerifyViewController: UIViewController {
         continueButton.setMode(mode: .text)
         updateButtonStatus()
     }
-    
-    fileprivate func updateCountryCode(_ code : Int) {
+
+    fileprivate func updateCountryCode(_ code: Int) {
         countryCode = "+\(code)"
         phoneNumberTextFieldView.buttonTitleText = countryCode
     }
-    
+
     fileprivate func updateButtonStatus() {
         let phoneNumber = phoneNumberTextFieldView.value.trim()
         sendCodeButton.isSelected = false
@@ -137,17 +137,17 @@ class PhoneVerifyViewController: UIViewController {
             continueButton.isEnabled = true
         }
     }
-    
+
     fileprivate func sendCode() {
         guard !verifyClicked else { return }
         verifyClicked = true
         dismissKeyboard()
-        
+
         let buildPhonenumber = "\(countryCode)\(phoneNumberTextFieldView.value)"
         self.viewModel.setEmail(email: buildPhonenumber)
         sendCodeButton.isSelected = true
         continueButton.isEnabled = false
-        self.viewModel.sendVerifyCode (.sms) { (isOK, error) -> Void in
+        self.viewModel.sendVerifyCode(.sms) { (isOK, error) -> Void in
             self.verifyClicked = false
             self.continueButton.isEnabled = true
             self.sendCodeButton.isSelected = false
@@ -167,11 +167,11 @@ class PhoneVerifyViewController: UIViewController {
 }
 
 extension PhoneVerifyViewController: CountryPickerViewControllerDelegate {
-    
+
     func dismissed() {
-        
+
     }
-    
+
     func apply(_ country: CountryCode) {
         self.updateCountryCode(country.phone_code)
     }
@@ -183,11 +183,11 @@ extension PhoneVerifyViewController: PMTextFieldComboDelegate {
     func didChangeValue(_ textField: PMTextFieldCombo, value: String) {
         updateButtonStatus()
     }
-    
+
     func didEndEditing(textField: PMTextFieldCombo) {
         updateButtonStatus()
     }
-    
+
     func textFieldShouldReturn(_ textField: PMTextFieldCombo) -> Bool {
         updateButtonStatus()
         dismissKeyboard()
@@ -222,4 +222,3 @@ extension PhoneVerifyViewController: NSNotificationCenterKeyboardObserverProtoco
 }
 
 #endif
-

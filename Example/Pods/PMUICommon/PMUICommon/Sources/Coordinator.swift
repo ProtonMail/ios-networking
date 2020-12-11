@@ -19,38 +19,37 @@
 //
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonMail.  If not, see <https://www.gnu.org/licenses/>.
-    
+
 #if canImport(UIKit)
 import UIKit
-
 
 public protocol CoordinatorDelegate: class {
     func willStop(in coordinator: Coordinator)
     func didStop(in coordinator: Coordinator)
 }
 
-public protocol CoordinatedBase : AnyObject {
+public protocol CoordinatedBase: AnyObject {
     func getCoordinator() -> Coordinator?
 }
 
 /// Used typically on view controllers to refer to it's coordinator
-public protocol Coordinated : CoordinatedBase where coordinatorType: Coordinator {
-    associatedtype coordinatorType
-    func set(coordinator: coordinatorType)
+public protocol Coordinated: CoordinatedBase where CoordinatorType: Coordinator {
+    associatedtype CoordinatorType
+    func set(coordinator: CoordinatorType)
 }
 
 public protocol CoordinatedAlerts {
     func controller(notFount dest: String)
 }
 
-public protocol Coordinator : AnyObject {
+public protocol Coordinator: AnyObject {
     /// Triggers navigation to the corresponding controller
     /// set viewmodel and coordinator when call start
     func start()
-    
+
     /// Stops corresponding controller and returns back to previous one
     func stop()
-    
+
     /// Called when segue navigation form corresponding controller to different controller is about to start and should handle this navigation
     func navigate(from source: UIViewController, to destination: UIViewController, with identifier: String?, and sender: AnyObject?) -> Bool
 }
@@ -60,40 +59,38 @@ extension Coordinator {
     public func navigate(from source: UIViewController, to destination: UIViewController, with identifier: String?, and sender: AnyObject?) -> Bool {
         return false
     }
-    
+
     public func stop() {
-        
+
     }
 }
 
-
 /// The default coordinator is for the segue perform handled by system. need to return true in navigat function to trigger. if return false, need to push in the start().
 public protocol DefaultCoordinator: Coordinator {
-    associatedtype VC: UIViewController
-    var viewController: VC? { get set }
-    
+    associatedtype ViewController: UIViewController
+    var viewController: ViewController? { get set }
+
     var animated: Bool { get }
     var delegate: CoordinatorDelegate? { get }
-    
+
     var services: ServiceFactory {get}
-    
+
     func follow(_ deepLink: DeepLink)
     func processDeepLink()
 }
 
-
 public protocol PushCoordinator: DefaultCoordinator {
-    var configuration: ((VC) -> ())? { get }
+    var configuration: ((ViewController) -> Void)? { get }
     var navigationController: UINavigationController? { get }
 }
 
-extension PushCoordinator where VC: UIViewController, VC: Coordinated {
+extension PushCoordinator where ViewController: UIViewController, ViewController: Coordinated {
     public func start() {
         guard let viewController = viewController else {
             return
         }
         configuration?(viewController)
-        viewController.set(coordinator: self as! Self.VC.coordinatorType)
+        viewController.set(coordinator: self as! Self.ViewController.CoordinatorType)
         if let navigationController = navigationController {
             navigationController.pushViewController(viewController, animated: animated)
         } else {
@@ -101,7 +98,7 @@ extension PushCoordinator where VC: UIViewController, VC: Coordinated {
             window?.rootViewController?.show(viewController, sender: self)
         }
     }
-    
+
     public func stop() {
         delegate?.willStop(in: self)
         navigationController?.popViewController(animated: animated)
@@ -110,20 +107,20 @@ extension PushCoordinator where VC: UIViewController, VC: Coordinated {
 }
 
 public protocol ModalCoordinator: DefaultCoordinator {
-    var configuration: ((VC) -> ())? { get }
+    var configuration: ((ViewController) -> Void)? { get }
     var navigationController: UINavigationController? { get }
     var destinationNavigationController: UINavigationController? { get }
 }
 
-extension ModalCoordinator where VC: UIViewController, VC: Coordinated {
+extension ModalCoordinator where ViewController: UIViewController, ViewController: Coordinated {
     public func start() {
         guard let viewController = viewController else {
             return
         }
-        
+
         configuration?(viewController)
-        viewController.set(coordinator: self as! Self.VC.coordinatorType)
-        
+        viewController.set(coordinator: self as! Self.ViewController.CoordinatorType)
+
         if let destinationNavigationController = destinationNavigationController {
             // wrapper navigation controller given, present it
             navigationController?.present(destinationNavigationController, animated: animated, completion: nil)
@@ -132,7 +129,7 @@ extension ModalCoordinator where VC: UIViewController, VC: Coordinated {
             navigationController?.present(viewController, animated: animated, completion: nil)
         }
     }
-    
+
     public func stop() {
         delegate?.willStop(in: self)
         viewController?.dismiss(animated: true, completion: {
@@ -141,9 +138,8 @@ extension ModalCoordinator where VC: UIViewController, VC: Coordinated {
     }
 }
 
-
 protocol PushModalCoordinator: DefaultCoordinator {
-    var configuration: ((VC) -> ())? { get }
+    var configuration: ((ViewController) -> Void)? { get }
     var navigationController: UINavigationController? { get }
     var destinationNavigationController: UINavigationController? { get }
 }
@@ -151,28 +147,24 @@ protocol PushModalCoordinator: DefaultCoordinator {
 extension DefaultCoordinator {
     // default implementation if not overriden
     public var animated: Bool {
-        get {
-            return true
-        }
+        return true
     }
-    
+
     // default implementation of nil delegate, should be overriden when needed
     weak var delegate: CoordinatorDelegate? {
-        get {
-            return nil
-        }
+        return nil
     }
-    
+
     /// optional go with deeplink
     ///
     /// - Parameter deepLink: deepLipublic nk
     public func follow(_ deepLink: DeepLink) {
-        
+
     }
-    
+
     /// if add deeplinks could handle here
     public func processDeepLink() {
-        
+
     }
 }
 #endif

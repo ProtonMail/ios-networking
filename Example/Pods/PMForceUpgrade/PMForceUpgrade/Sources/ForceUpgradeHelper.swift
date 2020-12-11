@@ -1,5 +1,5 @@
 //
-//  HumanCheckHelper.swift
+//  ForceUpgradeHelper.swift
 //  ProtonMail - Created on 23/10/20.
 //
 //

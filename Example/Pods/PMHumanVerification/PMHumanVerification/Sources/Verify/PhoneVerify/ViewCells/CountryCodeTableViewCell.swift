@@ -25,11 +25,11 @@ import UIKit
 import PMUIFoundations
 
 class CountryCodeTableViewCell: UITableViewCell {
-    
+
     @IBOutlet weak var flagImageView: UIImageView!
     @IBOutlet weak var countryLabel: UILabel!
     @IBOutlet weak var codeLabel: UILabel!
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         imageView?.contentMode = .scaleAspectFit
@@ -38,8 +38,8 @@ class CountryCodeTableViewCell: UITableViewCell {
         countryLabel.textColor = UIColorManager.TextNorm
         codeLabel.textColor = UIColorManager.TextWeak
     }
-    
-    func ConfigCell(_ countryCode : CountryCode) {
+
+    func configCell(_ countryCode: CountryCode) {
         let image = UIImage(named: "flags-\(countryCode.country_code)", in: Common.bundle, compatibleWith: nil)
         flagImageView.image = image
         countryLabel.text = countryCode.country_en

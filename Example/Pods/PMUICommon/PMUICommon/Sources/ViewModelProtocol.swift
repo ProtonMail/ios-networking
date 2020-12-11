@@ -20,33 +20,31 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonMail.  If not, see <https://www.gnu.org/licenses/>.
 
-
 #if canImport(UIKit)
 import UIKit
 import PMCommon
 
-public protocol ViewModelProtocolBase : AnyObject {
-    func setModel(vm: Any)
-    func inactiveViewModel() -> Void
+public protocol ViewModelProtocolBase: AnyObject {
+    func setModel(viewModel: Any)
+    func inactiveViewModel()
 }
 
-public protocol ViewModelProtocol : ViewModelProtocolBase {
+public protocol ViewModelProtocol: ViewModelProtocolBase {
     /// typedefine - view model -- if the class name defined in set function. the sub class could ignore viewModelType
-    associatedtype viewModelType
-    
-    func set(viewModel: viewModelType) -> Void
-}
+    associatedtype ViewModelType
 
+    func set(viewModel: ViewModelType)
+}
 
 public extension ViewModelProtocol {
-    func setModel(vm: Any) {
-        guard let viewModel = vm as? viewModelType else {
+    func setModel(viewModel: Any) {
+        guard let viewModel = viewModel as? ViewModelType else {
             fatalError("This view model type doesn't match") //this shouldn't happend
         }
         self.set(viewModel: viewModel)
     }
     /// optional
-    func inactiveViewModel() { 
+    func inactiveViewModel() {
     }
 }
 

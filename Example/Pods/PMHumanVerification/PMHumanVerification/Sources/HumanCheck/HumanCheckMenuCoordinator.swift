@@ -19,29 +19,28 @@
 //
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonMail.  If not, see <https://www.gnu.org/licenses/>.
-    
 
 #if canImport(UIKit)
 import UIKit
 import PMUICommon
 
 public class HumanCheckMenuCoordinator: PushCoordinator {
-    public typealias VC = HumanCheckMenuViewController
-    fileprivate let viewModel : HumanCheckViewModel
-    
-    lazy public var configuration: ((HumanCheckMenuViewController) -> ())? = { vc in
-        vc.set(coordinator: self)
-        vc.set(viewModel: self.viewModel)
+    public typealias ViewController = HumanCheckMenuViewController
+    fileprivate let viewModel: HumanCheckViewModel
+
+    lazy public var configuration: ((HumanCheckMenuViewController) -> Void)? = { viewController in
+        viewController.set(coordinator: self)
+        viewController.set(viewModel: self.viewModel)
     }
     public var navigationController: UINavigationController?
-    public weak var viewController: VC?
+    public weak var viewController: ViewController?
     public var services: ServiceFactory
-    public var delegate: CoordinatorDelegate? = nil
-    
-    public init?(nav: UINavigationController?, vm: HumanCheckViewModel, services: ServiceFactory, scene: AnyObject? = nil) {
-        if let _ = NSClassFromString("XCTest") { return nil }
+    public weak var delegate: CoordinatorDelegate?
+
+    public init?(nav: UINavigationController?, viewModel: HumanCheckViewModel, services: ServiceFactory, scene: AnyObject? = nil) {
+        if NSClassFromString("XCTest") != nil { return nil }
         self.navigationController = nav
-        self.viewModel = vm
+        self.viewModel = viewModel
         self.services = services
 
         let storyboard = UIStoryboard.init(name: "HumanVerify", bundle: Common.bundle)

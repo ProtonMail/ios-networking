@@ -1,5 +1,5 @@
 //
-//  HumanCheckHelper.swift
+//  Common.swift
 //  ProtonMail - Created on 28/10/20.
 //
 //

@@ -24,16 +24,16 @@
 import UIKit
 
 extension UITableView {
-    
+
     fileprivate struct Constant {
         static let animationDuration: TimeInterval = 1
     }
-    
+
     func hideLoadingFooter(replaceWithView view: UIView? = UIView(frame: CGRect.zero)) {
         UIView.animate(withDuration: Constant.animationDuration, animations: { () -> Void in
             self.tableFooterView?.alpha = 0
             return
-        }, completion: { (finished) -> Void in
+        }, completion: { (_) -> Void in
             UIView.animate(withDuration: Constant.animationDuration, animations: { () -> Void in
                 self.tableFooterView = view
             })
@@ -43,26 +43,24 @@ extension UITableView {
     func noSeparatorsBelowFooter() {
         tableFooterView = UIView(frame: CGRect.zero)
     }
-    
+
     /**
      reset table view inset and margins to .zero
      **/
     func zeroMargin() {
-        if (self.responds(to: #selector(setter: UITableViewCell.separatorInset))) {
+        if self.responds(to: #selector(setter: UITableViewCell.separatorInset)) {
             self.separatorInset = .zero
         }
-        
-        if (self.responds(to: #selector(setter: UIView.layoutMargins))) {
+
+        if self.responds(to: #selector(setter: UIView.layoutMargins)) {
             self.layoutMargins = .zero
         }
     }
 }
 
-
-
 extension UITableView {
-    
-    func RegisterCell(_ cellID : String) {
+
+    func registerCell(_ cellID: String) {
         self.register(UINib(nibName: cellID, bundle: nil), forCellReuseIdentifier: cellID)
     }
 }

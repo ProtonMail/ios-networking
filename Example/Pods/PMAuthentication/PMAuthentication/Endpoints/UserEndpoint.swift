@@ -23,7 +23,6 @@
 import Foundation
 import PMCommon
 
-
 extension AuthService {
     
     struct UserResponse: Codable {
@@ -38,16 +37,14 @@ extension AuthService {
         var method: HTTPMethod {
             return .get
         }
-        var parameters: [String : Any]? = nil
+        var parameters: [String: Any]?
         
         var isAuth: Bool {
             return true
         }
         var auth: AuthCredential?
         var authCredential: AuthCredential? {
-            get {
-                return self.auth
-            }
+            return self.auth
         }
     }
 }

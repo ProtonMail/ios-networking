@@ -41,7 +41,7 @@ extension AuthService {
             return .post
         }
         
-        var parameters: [String : Any]? {
+        var parameters: [String: Any]? {
             return  [
                 "TwoFactorCode": code
             ]
@@ -50,16 +50,14 @@ extension AuthService {
             return true
         }
         
-        let code : String
+        let code: String
         init(code: String)  {
             self.code = code
         }
         
         var auth: AuthCredential?
         var authCredential: AuthCredential? {
-            get {
-                return self.auth
-            }
+            return self.auth
         }
     }
 }

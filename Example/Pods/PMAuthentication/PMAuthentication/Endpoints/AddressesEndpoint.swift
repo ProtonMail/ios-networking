@@ -46,13 +46,11 @@ extension AuthService {
             return true
         }
 
-        var parameters: [String : Any]? = nil
+        var parameters: [String: Any]?
         
         var auth: AuthCredential?
         var authCredential: AuthCredential? {
-            get {
-                return self.auth
-            }
+            return self.auth
         }
     }
 }

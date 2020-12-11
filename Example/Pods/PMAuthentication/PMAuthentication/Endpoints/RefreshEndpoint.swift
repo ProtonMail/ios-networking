@@ -43,12 +43,12 @@ extension AuthService {
             return .post
         }
         
-        var parameters: [String : Any]? {
+        var parameters: [String: Any]? {
             let body = [
                 "ResponseType": "token",
                 "GrantType": "refresh_token",
                 "RefreshToken": refreshToken,
-                "RedirectURI":  "http://protonmail.ch"
+                "RedirectURI": "http://protonmail.ch"
             ]
             return body
         }
@@ -61,7 +61,7 @@ extension AuthService {
         }
 
         var credential: AuthCredential?
-        let refreshToken : String
+        let refreshToken: String
         init(authCredential: AuthCredential) {
             self.credential = authCredential
             self.refreshToken = authCredential.refreshToken

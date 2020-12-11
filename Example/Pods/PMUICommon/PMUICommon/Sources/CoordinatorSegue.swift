@@ -28,12 +28,12 @@ import UIKit
 class CoordinatorSegue: UIStoryboardSegue {
     /// keep the @objc key word. the setSender will not work without it.
     @objc open var sender: AnyObject?
-    
+
     override func perform() {
         guard let coordinated = self.source as? CoordinatedBase else {
             return
         }
-        
+
         if let ret = coordinated.getCoordinator()?.navigate(from: self.source,
                                                             to: destination,
                                                             with: identifier,

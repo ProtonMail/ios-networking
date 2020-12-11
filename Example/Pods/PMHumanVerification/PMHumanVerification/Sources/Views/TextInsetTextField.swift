@@ -25,11 +25,11 @@ import UIKit
 
 class TextInsetTextField: UITextField {
     var inset: CGFloat = 0
-    
+
     override func editingRect(forBounds bounds: CGRect) -> CGRect {
         return super.editingRect(forBounds: bounds).insetBy(dx: inset, dy: 0)
     }
-    
+
     override func textRect(forBounds bounds: CGRect) -> CGRect {
         return super.textRect(forBounds: bounds).insetBy(dx: inset, dy: 0)
     }

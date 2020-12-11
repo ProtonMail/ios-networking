@@ -19,7 +19,7 @@
 //
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonMail.  If not, see <https://www.gnu.org/licenses/>.
-    
+
 #if canImport(UIKit)
 import UIKit
 
@@ -27,26 +27,6 @@ protocol Deeplinkable: class {
     var deeplinkNode: DeepLink.Node { get }
     var deeplinkStorage: DeepLink? { get set }
 }
-
-//extension Deeplinkable where Self: UIViewController {
-//    var deeplinkStorage: DeepLink? {
-//        get {
-//            if #available(iOS 13.0, *) {
-//                return self.view.window?.windowScene?.deeplink
-//            } else {
-//                // FIXME: userDefaults
-//                return nil
-//            }
-//        }
-//        set {
-//            if #available(iOS 13.0, *), let deeplink = newValue {
-//                self.view.window?.windowScene?.deeplink = deeplink
-//            } else {
-//                // FIXME: userDefaults
-//            }
-//        }
-//    }
-//}
 
 extension Coordinated where Self: Deeplinkable {
     func appendDeeplink(path: DeepLink.Node) {
@@ -61,20 +41,4 @@ extension Coordinated where Self: Deeplinkable {
     }
 }
 
-//@available(iOS 13.0, *)
-//extension UIWindowScene {
-//    var deeplink: DeepLink {
-//        get {
-//            var saved = self.session.userInfo?["deeplink"] as? DeepLink
-//            if saved == nil {
-//                saved = DeepLink(String(describing: MenuViewController.self))
-//                self.deeplink = saved!
-//            }
-//            return saved!
-//        }
-//        set {
-//            self.session.userInfo?["deeplink"] = newValue
-//        }
-//    }
-//}
 #endif

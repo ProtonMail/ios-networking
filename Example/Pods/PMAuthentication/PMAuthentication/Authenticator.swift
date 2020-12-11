@@ -34,7 +34,7 @@ public class Authenticator: NSObject {
         case updatedCredential(Credential)
     }
     
-    public var apiService : APIService!
+    public var apiService: APIService!
     public init(api: APIService) {
         self.apiService = api
         super.init()
@@ -115,7 +115,7 @@ public class Authenticator: NSObject {
     }
     
     /// Continue clear login flow with 2FA code
-    public func confirm2FA(_ twoFactorCode:  String,
+    public func confirm2FA(_ twoFactorCode: String,
                            context: TwoFactorContext, completion: @escaping Completion)  {
         var route = AuthService.TwoFAEndpoint(code: twoFactorCode)
         route.auth = AuthCredential(context.credential) //TODO:: fix me. this is temp
@@ -152,7 +152,37 @@ public class Authenticator: NSObject {
             switch result {
             case .failure(let error):
                 completion(.failure(error))
-            case .success(_):
+            case .success:
+                completion(.success(()))
+            }
+        }
+    }
+
+    public func setUsername(_ credential: Credential? = nil, username: String, completion: @escaping (Result<(), Error>) -> Void) {
+        var route = AuthService.SetUsernameEndpoint(username: username)
+        if let auth = credential {
+            route.auth = AuthCredential(auth)
+        }
+        self.apiService.exec(route: route) { (result: Result<AuthService.SetUsernameResponse, Error>) in
+            switch result {
+            case .failure(let error):
+                completion(.failure(error))
+            case .success:
+                completion(.success(()))
+            }
+        }
+    }
+
+    public func createAddress(_ credential: Credential? = nil, domain: String, displayName: String? = nil, siganture: String? = nil, completion: @escaping (Result<(), Error>) -> Void) {
+        var route = AuthService.CreateAddressEndpoint(domain: domain, displayName: displayName, signature: siganture)
+        if let auth = credential {
+            route.auth = AuthCredential(auth)
+        }
+        self.apiService.exec(route: route) { (result: Result<AuthService.CreateAddressEndpointResponse, Error>) in
+            switch result {
+            case .failure(let error):
+                completion(.failure(error))
+            case .success:
                 completion(.success(()))
             }
         }

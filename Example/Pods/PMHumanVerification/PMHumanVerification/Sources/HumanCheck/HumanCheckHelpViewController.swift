@@ -26,44 +26,44 @@ import PMUIFoundations
 import PMCoreTranslation
 
 final public class HumanCheckHelpViewController: UIViewController {
-    
+
     // MARK: - Outlets
-    
+
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var headerLabel: UILabel!
     @IBOutlet weak var closeBarButtonItem: UIBarButtonItem!
-    
+
     var viewModel: HumanCheckViewModel!
-    
+
     // MARK: - View controller life cycle
-    
+
     public override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
     }
-    
+
     public override var preferredStatusBarStyle: UIStatusBarStyle {
-        return UIStatusBarStyle.default;
+        return UIStatusBarStyle.default
     }
-    
+
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: true)
     }
-    
+
     public override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         self.tableView.zeroMargin()
     }
-    
+
     // MARK: - Actions
-    
+
     @IBAction func closeAction(_ sender: UIBarButtonItem) {
-        let _ = self.navigationController?.popViewController(animated: true)
+        _ = self.navigationController?.popViewController(animated: true)
     }
-    
+
     // MARK: - Private Interface
-    
+
     fileprivate func configureUI() {
         closeBarButtonItem.tintColor = UIColorManager.IconNorm
         view.backgroundColor = UIColorManager.BackgroundNorm
@@ -82,24 +82,24 @@ extension HumanCheckHelpViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 2
     }
-    
+
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "help_cell", for: indexPath) as! HelpTableViewCell
         cell.selectionStyle = .default
         if indexPath.row == 0 {
             let image = UIImage(named: "ic-check-circle", in: Common.bundle, compatibleWith: nil)!
-            cell.ConfigCell(top: CoreString._hv_help_request_item_title,
+            cell.configCell(top: CoreString._hv_help_request_item_title,
                             details: CoreString._hv_help_request_item_message,
                             left: image)
-        } else  {
+        } else {
             let image = UIImage(named: "ic-lightbulp", in: Common.bundle, compatibleWith: nil)!
-            cell.ConfigCell(top: CoreString._hv_help_visit_item_title,
+            cell.configCell(top: CoreString._hv_help_visit_item_title,
                             details: CoreString._hv_help_visit_item_message,
                             left: image)
         }
         return cell
     }
-    
+
     public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.zeroMargin()
     }
@@ -108,7 +108,7 @@ extension HumanCheckHelpViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 
 extension HumanCheckHelpViewController: UITableViewDelegate {
-    
+
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.tableView.deselectRow(at: indexPath, animated: true)
         var url: URL?

@@ -31,7 +31,7 @@ public class HumanCheckHelper: HumanVerifyDelegate {
     fileprivate let apiService: APIService
     fileprivate let supportURL: URL
     internal var viewModel: HumanCheckViewModelImpl?
-    
+
     public init(apiService: APIService, supportURL: URL, navigationController: UINavigationController? = nil, responseDelegate: HumanVerifyResponseDelegate? = nil) {
         self.apiService = apiService
         self.supportURL = supportURL
@@ -39,18 +39,18 @@ public class HumanCheckHelper: HumanVerifyDelegate {
         self.responseDelegate = responseDelegate
     }
 
-    public func onHumanVerify(methods: [VerifyMethod], completion: (@escaping (HumanVerifyHeader, HumanVerifyIsClosed, SendVerificationCodeBlock?) -> (Void))) {
+    public func onHumanVerify(methods: [VerifyMethod], completion: (@escaping (HumanVerifyHeader, HumanVerifyIsClosed, SendVerificationCodeBlock?) -> Void)) {
         viewModel = HumanCheckViewModelImpl(types: methods, api: apiService)
-        guard let vm = viewModel else { return }
-        let coordinator = HumanCheckMenuCoordinator(nav: navController, vm: vm,
+        guard let viewModel = viewModel else { return }
+        let coordinator = HumanCheckMenuCoordinator(nav: navController, viewModel: viewModel,
                                                     services: ServiceFactory.default)
         coordinator?.start()
         self.responseDelegate?.onHumanVerifyStart()
-        
-        vm.onVerificationCodeBlock = { verificationCodeBlock in
-            let (dest, type, token) = vm.getToken()
+
+        viewModel.onVerificationCodeBlock = { verificationCodeBlock in
+            let tokenType = viewModel.getToken()
             let client = TestApiClient(api: self.apiService)
-            let route = client.triggerHumanVerifyRoute(destination: dest, type: type, token: token)
+            let route = client.triggerHumanVerifyRoute(destination: tokenType.destination, type: tokenType.verifyMethod, token: tokenType.token)
             completion(route.header, false, { result, error in
                 verificationCodeBlock(result, error)
                 if result {
@@ -58,13 +58,13 @@ public class HumanCheckHelper: HumanVerifyDelegate {
                 }
             })
         }
-        
-        vm.onCloseBlock = {
+
+        viewModel.onCloseBlock = {
             completion([:], true, nil)
             self.responseDelegate?.onHumanVerifyEnd(result: .cancel)
         }
     }
-    
+
     public func getSupportURL() -> URL {
         return supportURL
     }

@@ -20,20 +20,25 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonMail.  If not, see <https://www.gnu.org/licenses/>.
 
-
 #if canImport(UIKit)
 import UIKit
 import PMCommon
 import PMCoreTranslation
 
+public struct TokenType {
+    let destination: String?
+    let verifyMethod: VerifyMethod?
+    let token: String?
+}
+
 public protocol HumanCheckViewModel: class {
-    var verifyTypes : [VerifyMethod] { get set }
+    var verifyTypes: [VerifyMethod] { get set }
     var type: VerifyMethod { get set }
     var supportURL: URL? { get }
-    
+
     func finalToken(token: String, complete: @escaping SendVerificationCodeBlock)
     func close()
-    func getToken() -> (String?, VerifyMethod?, String?)
+    func getToken() -> TokenType
     func setEmail(email: String)
     func getDestination() -> String
     func sendVerifyCode(_ type: VerifyMethod, complete: @escaping SendVerificationCodeBlock)
@@ -49,9 +54,9 @@ public protocol HumanCheckViewModel: class {
     public var onVerificationCodeBlock: ((@escaping SendVerificationCodeBlock) -> Void)?
     public var onCloseBlock: (() -> Void)?
 
-    var token : String?
-    var tokenType : VerifyMethod?
-    
+    var token: String?
+    var tokenType: VerifyMethod?
+
     public func finalToken(token: String, complete: @escaping SendVerificationCodeBlock) {
         self.token = token
         self.tokenType = self.type
@@ -59,15 +64,15 @@ public protocol HumanCheckViewModel: class {
             complete(res, error)
         })
     }
-    
+
     public func close() {
         self.onCloseBlock?()
     }
-    
-    public func getToken() -> (String?, VerifyMethod?, String?) {
-        return (self.destination, tokenType, token)
+
+    public func getToken() -> TokenType {
+        return TokenType(destination: self.destination, verifyMethod: tokenType, token: token)
     }
-    
+
     public func getTitle() -> String {
         if type == .sms {
             return String(format: CoreString._hv_verification_enter_sms_code, self.destination)
@@ -77,44 +82,44 @@ public protocol HumanCheckViewModel: class {
             return ""
         }
     }
-    
+
     public func getMsg() -> String {
         return String(format: CoreString._hv_verification_sent_banner, self.destination)
     }
-    
+
     public func getCaptchaURL() -> URL {
         let host = apiService.doh.getCaptchaHostUrl()
         return URL(string: "https://secure.protonmail.com/captcha/captcha.html?token=signup&client=ios&host=\(host)")!
     }
-    
+
     public var type: VerifyMethod = .captcha
-    
+
     public var supportURL: URL? {
         return self.apiService.humanDelegate?.getSupportURL()
     }
-    
+
     public func getDestination() -> String {
         return self.destination
     }
-    
+
     public var verifyTypes: [VerifyMethod] = []
     var apiService: APIService
     var destination: String = ""
-    
+
     public init(types: [VerifyMethod], api: APIService) {
         self.verifyTypes = types
         self.apiService = api
     }
-    
+
     public func setEmail(email: String) {
         self.destination = email
     }
-    
+
     public func sendVerifyCode(_ type: VerifyMethod, complete: @escaping SendVerificationCodeBlock) {
-        
-        let t: HumanVerificationToken.TokenType = type == .email ? .email : .sms
-        let route = UserAPI.Router.code(type: t, receiver: destination)
-        self.apiService.exec(route: route) { (task, response) in
+
+        let newType: HumanVerificationToken.TokenType = type == .email ? .email : .sms
+        let route = UserAPI.Router.code(type: newType, receiver: destination)
+        self.apiService.exec(route: route) { (_, response) in
             if response.code != APIErrorCode.responseOK {
                 complete(false, response.error)
             } else {
@@ -122,11 +127,11 @@ public protocol HumanCheckViewModel: class {
             }
         }
     }
-    
+
     public func isValidCodeFormat(code: String) -> Bool {
         return code.sixDigits()
     }
-    
+
     public func isValidEmail(email: String) -> Bool {
         return email.isValidEmail()
     }

@@ -25,14 +25,14 @@ import PMCommon
 
 extension AuthService {
     
-    final public class AuthInfoResponse : Response {
-        public var modulus : String?
-        public var serverEphemeral : String?
-        public var version : Int = 0
-        public var salt : String?
-        public var srpSession : String?
+    public final class AuthInfoResponse: Response {
+        public var modulus: String?
+        public var serverEphemeral: String?
+        public var version: Int = 0
+        public var salt: String?
+        public var srpSession: String?
         
-        public override func ParseResponse(_ response: [String : Any]!) -> Bool {
+        override public func ParseResponse(_ response: [String: Any]!) -> Bool {
             self.modulus         = response["Modulus"] as? String
             self.serverEphemeral = response["ServerEphemeral"] as? String
             self.version         = response["Version"] as? Int ?? 0
@@ -69,7 +69,7 @@ extension AuthService {
             return .post
         }
         
-        var parameters: [String : Any]? {
+        var parameters: [String: Any]? {
             return [Key.userName: username]
         }
         
