@@ -37,7 +37,7 @@ extension NSError {
     convenience init(_ serverError: ErrorResponse) {
         let userInfo = [NSLocalizedDescriptionKey: serverError.error,
                         NSLocalizedFailureReasonErrorKey: serverError.errorDescription]
-        
+
         self.init(domain: "PMAuthentication", code: serverError.code, userInfo: userInfo)
     }
 }

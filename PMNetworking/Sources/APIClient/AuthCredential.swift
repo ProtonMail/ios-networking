@@ -20,7 +20,6 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonMail.  If not, see <https://www.gnu.org/licenses/>.
 
-
 import Foundation
 
 final public class AuthCredential: NSObject, NSCoding {
@@ -32,11 +31,11 @@ final public class AuthCredential: NSObject, NSCoding {
         self.privateKey = privateKey
         self.passwordKeySalt = passwordKeySalt
     }
-    
+
     struct Key {
         static let keychainStore = "keychainStoreKeyProtectedWithMainKey"
     }
-    
+
     struct CoderKey {
         static let accessToken   = "accessTokenCoderKey"
         static let refreshToken  = "refreshTokenCoderKey"
@@ -46,14 +45,14 @@ final public class AuthCredential: NSObject, NSCoding {
         static let plainToken    = "plainCoderKey"
         static let pwd           = "pwdKey"
         static let salt          = "passwordKeySalt"
-        
+
         static let userID        = "AuthCredential.UserID"
         static let password      = "AuthCredential.Password"
         static let userName      = "AuthCredential.UserName"
     }
-    
+
 //    static var none: AuthCredential = AuthCredential.init(res: AuthResponse() )
-    
+
     // user session id, this change in every login
     public var sessionID: String
     // plain text accessToken
@@ -62,12 +61,12 @@ final public class AuthCredential: NSObject, NSCoding {
     public var refreshToken: String
     // the expiration time
     public var expiration: Date
-    
+
     // the login private key, ususally it is first userkey
-    private(set) var privateKey : String?
-    private(set) var passwordKeySalt : String?
+    private(set) var privateKey: String?
+    private(set) var passwordKeySalt: String?
     private(set) var mailboxpassword: String = ""
-    
+
     public override var description: String {
         return """
         AccessToken: \(accessToken)
@@ -76,7 +75,7 @@ final public class AuthCredential: NSObject, NSCoding {
         SessionID: \(sessionID)
         """
     }
-    
+
     var isExpired: Bool {
         return Date().compare(expiration) != .orderedAscending
     }
@@ -84,7 +83,7 @@ final public class AuthCredential: NSObject, NSCoding {
     func expire() {
         expiration = Date.distantPast
     }
-    
+
     public func update(salt: String?, privateKey: String?) {
         self.privateKey = privateKey
         self.passwordKeySalt = salt
@@ -93,25 +92,24 @@ final public class AuthCredential: NSObject, NSCoding {
     public func udpate (password: String) {
         self.mailboxpassword = password
     }
-    
+
     public func udpate(sessionID: String,
-                accessToken: String,
-                refreshToken: String,
-                expiration: Date)
-    {
+                       accessToken: String,
+                       refreshToken: String,
+                       expiration: Date) {
         self.sessionID = sessionID
         self.accessToken = accessToken
         self.refreshToken = refreshToken
         self.expiration = expiration
     }
-    
-    required init(res : AuthResponse) {
+
+    required init(res: AuthResponse) {
         self.sessionID = res.sessionID ?? ""
         self.accessToken = res.accessToken
         self.refreshToken = res.refreshToken
         self.expiration =  Date(timeIntervalSinceNow: res.expiresIn )
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         guard
             let token = aDecoder.decodeObject(forKey: CoderKey.accessToken) as? String,
@@ -121,7 +119,7 @@ final public class AuthCredential: NSObject, NSCoding {
         {
                 return nil
         }
-        
+
         self.accessToken = token
         self.sessionID = sessionID
         self.refreshToken = refreshToken
@@ -131,10 +129,10 @@ final public class AuthCredential: NSObject, NSCoding {
         self.passwordKeySalt = aDecoder.decodeObject(forKey: CoderKey.salt) as? String
         self.mailboxpassword = aDecoder.decodeObject(forKey: CoderKey.password) as? String ?? ""
     }
-    
+
     public class func unarchive(data: NSData?) -> AuthCredential? {
         guard let data = data as Data? else { return nil }
-        
+
         // Looks like this is necessary for cases when AuthCredential was updated and saved by one target, and unarchived by another. For example, Share extension updates token from server, archives AuthCredential with its prefix, and after a while main target should unarchive it - and should know that prefix
         NSKeyedUnarchiver.setClass(AuthCredential.classForKeyedUnarchiver(), forClassName: "ProtonMail.AuthCredential")
         NSKeyedUnarchiver.setClass(AuthCredential.classForKeyedUnarchiver(), forClassName: "ProtonMailDev.AuthCredential")
@@ -142,18 +140,18 @@ final public class AuthCredential: NSObject, NSCoding {
         NSKeyedUnarchiver.setClass(AuthCredential.classForKeyedUnarchiver(), forClassName: "ShareDev.AuthCredential")
         NSKeyedUnarchiver.setClass(AuthCredential.classForKeyedUnarchiver(), forClassName: "PushService.AuthCredential")
         NSKeyedUnarchiver.setClass(AuthCredential.classForKeyedUnarchiver(), forClassName: "PushServiceDev.AuthCredential")
-        
+
         return NSKeyedUnarchiver.unarchiveObject(with: data) as? AuthCredential
     }
-    
-    // MARK - Class methods
-    
+
+    // MARK: - Class methods
+
     public func archive() -> Data {
         return NSKeyedArchiver.archivedData(withRootObject: self)
     }
-    
+
     public func encode(with aCoder: NSCoder) {
-        aCoder.encode(sessionID, forKey:  CoderKey.sessionID)
+        aCoder.encode(sessionID, forKey: CoderKey.sessionID)
         aCoder.encode(accessToken, forKey: CoderKey.accessToken)
         aCoder.encode(refreshToken, forKey: CoderKey.refreshToken)
         aCoder.encode(expiration, forKey: CoderKey.expiration)

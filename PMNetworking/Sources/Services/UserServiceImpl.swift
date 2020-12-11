@@ -22,31 +22,21 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonMail.  If not, see <https://www.gnu.org/licenses/>.
 
-
 import Foundation
-
 
 class UserServiceImpl: MessageService {
     var service: APIService
-    
-    
+
     init(service: APIService) {
         self.service = service
     }
-    
+
     func someFeature() -> String {
-        
+
         //apiClient.exec()/apiClient.ayncExec()
             // ....
-        let _ = self.service.exec(route: UserAPI.Router.checkUsername("tedst")) as? TestResponse
-        
-        
-        
+        _ = self.service.exec(route: UserAPI.Router.checkUsername("tedst")) as? TestResponse
+
         return ""
     }
 }
-
-
-    
-
-

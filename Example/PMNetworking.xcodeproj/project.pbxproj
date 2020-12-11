@@ -349,6 +349,7 @@
 				607FACCE1AFB9204008FA782 /* Resources */,
 				1A38A049E57E46ECB6635180 /* [CP] Embed Pods Frameworks */,
 				75E196EA249396CB00A31655 /* Embed Frameworks */,
+				37FA5E3E25835F47000400AD /* SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -576,6 +577,24 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PMNetworking_Example/Pods-PMNetworking_Example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		37FA5E3E25835F47000400AD /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint\n";
 		};
 		7DC181885E6AEF8B4CA51D30 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;

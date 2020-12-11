@@ -20,7 +20,6 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonMail.  If not, see <https://www.gnu.org/licenses/>.
 
-
 import Foundation
 
 #if canImport(PromiseKit)
@@ -33,7 +32,6 @@ enum DoHProvider {
     case quad9
 }
 
-
 public protocol DoHProviderPublic {
     func fetch(sync host: String) -> [DNS]?
     func fetch(async host: String)
@@ -42,12 +40,11 @@ public protocol DoHProviderPublic {
     #endif
 }
 
-protocol DoHProviderInternal : DoHProviderPublic {
+protocol DoHProviderInternal: DoHProviderPublic {
     func query(host: String) -> String
     func parse(response: String) -> DNS?
     func parse(data response: Data) -> [DNS]?
 }
-
 
 extension DoHProviderInternal {
     public func fetch(sync host: String) -> [DNS]? {
@@ -61,11 +58,11 @@ extension DoHProviderInternal {
         }
         return dns
     }
-    
+
     public func fetch(async host: String) {
-        
+
     }
-    
+
     #if canImport(PromiseKit)
     public func fetch(host: String) -> Promise<DNS?> {
         return async {
@@ -73,5 +70,5 @@ extension DoHProviderInternal {
         }
     }
     #endif
-    
+
 }

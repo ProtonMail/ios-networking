@@ -20,7 +20,6 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonMail.  If not, see <https://www.gnu.org/licenses/>.
 
-
 import Foundation
 
 public struct DNS {
@@ -28,13 +27,11 @@ public struct DNS {
     public let ttl: Int
 }
 
-enum DNSType : Int {
+enum DNSType: Int {
     case txt = 16
 }
-
 
 enum Type {
     case wireformat
     case json
 }
-

@@ -72,6 +72,7 @@ PODS:
     - PromiseKit/CorePromise
   - PromiseKit/UIKit (6.13.1):
     - PromiseKit/CorePromise
+  - SwiftLint (0.41.0)
   - TrustKit (1.6.2)
 
 DEPENDENCIES:
@@ -86,6 +87,7 @@ DEPENDENCIES:
   - "PMUICommon (from `git@gitlab.protontech.ch:apple/shared/pmuicommon.git`, branch `develop`)"
   - "PMUIFoundations (from `git@gitlab.protontech.ch:apple/shared/PMUIFoundations.git`, branch `master`)"
   - PromiseKit (~> 6.0)
+  - SwiftLint
   - TrustKit (= 1.6.2)
 
 SPEC REPOS:
@@ -94,6 +96,7 @@ SPEC REPOS:
     - AwaitKit
     - OHHTTPStubs
     - PromiseKit
+    - SwiftLint
     - TrustKit
 
 EXTERNAL SOURCES:
@@ -157,8 +160,9 @@ SPEC CHECKSUMS:
   PMUICommon: a55d8aad94373e3939f7cf618ac98366ff86585e
   PMUIFoundations: 741e3317f3658cb01b9964109527c09600c1af95
   PromiseKit: 28fda91c973cc377875d8c0ea4f973013c05b6db
+  SwiftLint: c585ebd615d9520d7fbdbe151f527977b0534f1e
   TrustKit: 0a64b37d31518f16e344ceaf27e129dde624ce75
 
-PODFILE CHECKSUM: e80d21688798d7fa0329fea384c4f5776a35f3d3
+PODFILE CHECKSUM: be2a6275e9467059a6367ff7d38b08d020e70a02
 
 COCOAPODS: 1.10.0

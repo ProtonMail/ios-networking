@@ -22,6 +22,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonMail.  If not, see <https://www.gnu.org/licenses/>.
 
+// swiftlint:disable identifier_name
 
 import Foundation
 
@@ -40,7 +41,7 @@ public enum HTTPMethod {
     case get
     case post
     case put
-    
+
     func toString() -> String {
         switch self {
         case .delete:
@@ -56,15 +57,15 @@ public enum HTTPMethod {
 }
 
 //APIClient is the api client base
-public protocol Request : Package {
+public protocol Request: Package {
     // those functions shdould be overrided
     var version: Int { get }
     var path: String { get }
-    var header: [String : Any]  { get }
+    var header: [String: Any] { get }
     var method: HTTPMethod { get }
-    
+
     var isAuth: Bool { get }
-    
+
     var authCredential: AuthCredential? {get }
     var autoRetry: Bool { get }
 }
@@ -82,43 +83,37 @@ public protocol Request : Package {
 //}
 
 extension Request {
-    public var isAuth : Bool {
-        get {
-            return true
-        }
-    }
-    
-    public var autoRetry : Bool {
+    public var isAuth: Bool {
         return true
     }
-    
-    public var header : [String : Any] {
+
+    public var autoRetry: Bool {
+        return true
+    }
+
+    public var header: [String: Any] {
         return [:]
     }
-    
+
     public var authCredential: AuthCredential? {
         return nil
     }
-    
+
     public var method: HTTPMethod {
         return .get
     }
-    
-    public var parameters: [String : Any]? {
+
+    public var parameters: [String: Any]? {
         return nil
     }
 }
 
-
-fileprivate let v_default : Int = 3
+private let v_default: Int = 3
 public extension Request {
      var version: Int {
-        get {
-            return v_default
-        }
+        return v_default
     }
 }
-
 
 //public protocol Router: URLRequestConvertible {
 //    

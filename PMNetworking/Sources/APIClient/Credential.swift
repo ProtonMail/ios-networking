@@ -19,13 +19,13 @@ public enum PasswordMode: Int, Codable {
 public struct Credential {
     public typealias BackendScope = CredentialConvertible.Scope
     public typealias Scope = [String]
-    
+
     public var UID: String
     public var accessToken: String
     public var refreshToken: String
     public var expiration: Date
     public var scope: Scope
-    
+
     public init(UID: String, accessToken: String, refreshToken: String, expiration: Date, scope: Credential.Scope) {
         self.UID = UID
         self.accessToken = accessToken
@@ -33,7 +33,7 @@ public struct Credential {
         self.expiration = expiration
         self.scope = scope
     }
-    
+
     public init(res: CredentialConvertible, UID: String = "") {
         self.UID = res.UID ?? res.sessionID ?? UID
         self.accessToken = res.accessToken
@@ -41,7 +41,7 @@ public struct Credential {
         self.expiration = Date(timeIntervalSinceNow: res.expiresIn)
         self.scope = res.scope.components(separatedBy: " ")
     }
-    
+
     public mutating func updateScope(_ newScope: BackendScope) {
         self.scope = newScope.components(separatedBy: " ")
     }
@@ -50,7 +50,7 @@ public struct Credential {
 @dynamicMemberLookup
 public protocol CredentialConvertible {
     typealias Scope = String
-    
+
     var code: Int { get }
     var accessToken: String { get }
     var expiresIn: TimeInterval { get }

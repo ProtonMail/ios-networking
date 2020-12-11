@@ -31,16 +31,16 @@ extension JSONDecoder.KeyDecodingStrategy {
             if lastKey.intValue != nil {
                 return lastKey
             }
-            
+
             // let's hope server will not return unicode glyphs as JSON keys
             let originalKey: String = lastKey.stringValue
             if CharacterSet.decimalDigits.contains(originalKey.unicodeScalars.first!) {
                 // we will just add _ in the beginning if first character is a digit (like 2FA)
                 return BasicCodingKey(stringValue: "_" + originalKey)!
             }
-            
+
             let prefix = originalKey.prefix(while: { $0.unicodeScalars.first(where: { CharacterSet.uppercaseLetters.contains($0) }) != nil })
-            
+
             if prefix.count == 1 {
                 // we will transform only keys starting with one uppercase letter (like Code or UserID)
                 let modifiedKey = String(prefix).lowercased() + originalKey.dropFirst(prefix.count)

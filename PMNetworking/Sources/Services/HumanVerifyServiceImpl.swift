@@ -22,30 +22,27 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonMail.  If not, see <https://www.gnu.org/licenses/>.
 
-
 import Foundation
 
 class HumanVerifyServiceImpl: MessageService {
     var service: APIService
-    
-    
+
     init(service: APIService) {
         self.service = service
     }
-    
+
     func someFeature() -> String {
         //...prepare data
         //...
         //var apiClient = MessageFetchAPI(self.service)
-        
-    
+
         return ""
     }
 }
 
 //
 //
-//// mock for testing
+// mock for testing
 //class MessageServiceMock: Service {
 //    init(service: APIService) {
 //        super.init(...)
