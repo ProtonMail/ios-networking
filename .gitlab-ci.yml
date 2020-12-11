@@ -27,6 +27,7 @@ unit_tests:
   dependencies: []
   stage: unit_tests
   script:
-    - xcodebuild -workspace Example/PMNetworking.xcworkspace -scheme PMCommon-iOS-Unit-Tests -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 11' test | xcpretty
+    - cd Example/Pods
+    - xcodebuild -project Pods.xcodeproj -scheme PMCommon-iOS-Unit-Tests -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 11' test | xcpretty
   tags:
     - iOS
