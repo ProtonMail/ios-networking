@@ -20,22 +20,24 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonMail.  If not, see <https://www.gnu.org/licenses/>.
 
+// swiftlint:disable identifier_name type_body_length cyclomatic_complexity function_body_length force_try function_parameter_count todo
+
 import Foundation
 //REMOVE the networking ref
 import AFNetworking
 
 public class APIErrorCode {
     static public let responseOK = 1000
-    
+
     static public let HTTP503 = 503
     static public let HTTP504 = 504
     static public let HTTP404 = 404
-    
+
     static public let badParameter = 1
     static public let badPath = 2
     static public let unableToParseResponse = 3
     static public let badResponse = 4
-    
+
     public struct AuthErrorCode {
         static public let credentialExpired = 10
         static public let credentialInvalid = 20
@@ -48,14 +50,14 @@ public class APIErrorCode {
         static public let authUnableToGenerateSRP = 90
         static public let authUnableToGeneratePwd = 100
         static public let authInValidKeySalt = 110
-        
+
         static public let authCacheLocked = 665
-        
+
         static public let Cache_PasswordEmpty = 0x10000001
     }
-    
+
     static public let API_offline = 7001
-    
+
     public struct UserErrorCode {
         static public let userNameExsit = 12011
         static public let currentWrong = 12021
@@ -63,45 +65,44 @@ public class APIErrorCode {
         static public let pwdUpdateFailed = 12023
         static public let pwdEmpty = 12024
     }
-    
+
     static public let badAppVersion = 5003
     static public let badApiVersion = 5005
     static public let humanVerificationRequired = 9001
 }
 
-
 //This need move to a common framwork
 extension NSError {
-    
+
     convenience init(domain: String, code: Int, localizedDescription: String, localizedFailureReason: String? = nil, localizedRecoverySuggestion: String? = nil) {
-        var userInfo = [NSLocalizedDescriptionKey : localizedDescription]
-        
+        var userInfo = [NSLocalizedDescriptionKey: localizedDescription]
+
         if let localizedFailureReason = localizedFailureReason {
             userInfo[NSLocalizedFailureReasonErrorKey] = localizedFailureReason
         }
-        
+
         if let localizedRecoverySuggestion = localizedRecoverySuggestion {
             userInfo[NSLocalizedRecoverySuggestionErrorKey] = localizedRecoverySuggestion
         }
-        
+
         self.init(domain: domain, code: code, userInfo: userInfo)
     }
-    
+
     class func protonMailError(_ code: Int, localizedDescription: String, localizedFailureReason: String? = nil, localizedRecoverySuggestion: String? = nil) -> NSError {
         return NSError(domain: protonMailErrorDomain(), code: code, localizedDescription: localizedDescription, localizedFailureReason: localizedFailureReason, localizedRecoverySuggestion: localizedRecoverySuggestion)
     }
-    
+
     class func protonMailErrorDomain(_ subdomain: String? = nil) -> String {
         var domain = Bundle.main.bundleIdentifier ?? "ch.protonmail"
-        
+
         if let subdomain = subdomain {
             domain += ".\(subdomain)"
         }
         return domain
     }
-    
+
     func getCode() -> Int {
-        var defaultCode : Int = code;
+        var defaultCode: Int = code
         if defaultCode == Int.max {
             if let detail = self.userInfo["com.alamofire.serialization.response.error.response"] as? HTTPURLResponse {
                 defaultCode = detail.statusCode
@@ -109,10 +110,10 @@ extension NSError {
         }
         return defaultCode
     }
-    
+
     func isInternetError() -> Bool {
         var isInternetIssue = false
-        if let _ = self.userInfo ["com.alamofire.serialization.response.error.response"] as? HTTPURLResponse {
+        if self.userInfo ["com.alamofire.serialization.response.error.response"] as? HTTPURLResponse != nil {
         } else {
             //                        if(error?.code == -1001) {
             //                            // request timed out
@@ -123,17 +124,15 @@ extension NSError {
         }
         return isInternetIssue
     }
-    
-    
-}
 
+}
 
 final class UserAgent {
     public static let `default` : UserAgent = UserAgent()
-    
-    private var cachedUS : String?
+
+    private var cachedUS: String?
     private init () { }
-    
+
     //eg. Darwin/16.3.0
     private func DarwinVersion() -> String {
         var sysinfo = utsname()
@@ -150,7 +149,7 @@ final class UserAgent {
         let version = dictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
         return "CFNetwork/\(version)"
     }
-    
+
     //eg. iOS/10_1
     private func deviceVersion() -> String {
         #if canImport(UIKit)
@@ -180,66 +179,62 @@ final class UserAgent {
         let name = dictionary["CFBundleName"] as? String ?? "Unknown"
         return "\(name)/\(version)"
     }
-    
+
     private func UAString() -> String {
         return "\(appNameAndVersion()) \(deviceName()) \(deviceVersion()) \(CFNetworkVersion()) \(DarwinVersion())"
     }
-    
-    var ua : String? {
-        get {
-            if cachedUS == nil {
-                cachedUS = self.UAString()
-            }
-            return cachedUS
+
+    var ua: String? {
+        if cachedUS == nil {
+            cachedUS = self.UAString()
         }
+        return cachedUS
     }
 }
-
 
 public let APIServiceErrorDomain = NSError.protonMailErrorDomain("APIService")
 
 //Protonmail api serivce. all the network requestion must go with this.
-public class PMAPIService : APIService {
-    
+public class PMAPIService: APIService {
+
     /// ForceUpgradeDelegate
-    public var forceUpgradeDelegate: ForceUpgradeDelegate?
-    
+    public weak var forceUpgradeDelegate: ForceUpgradeDelegate?
+
     /// HumanVerifyDelegate
-    public var humanDelegate: HumanVerifyDelegate?
-    
+    public weak var humanDelegate: HumanVerifyDelegate?
+
     /// AuthDelegate
     public weak var authDelegate: AuthDelegate?
-    
+
     ///
     public weak var serviceDelegate: APIServiceDelegate?
-    
+
     /// synchronize locks
     private var mutex = pthread_mutex_t()
     private var humanVerificationMutex = pthread_mutex_t()
-    
+
     //    /// the user id
     //    public var userID : String = ""
-    
+
     /// the session ID. this can be changed
-    public var sessionUID : String = ""
-    
+    public var sessionUID: String = ""
+
     /// doh with service config
-    public var doh : DoH
-    
+    public var doh: DoH
+
     /// network config
     //    let serverConfig : APIServerConfig
-    
-    
+
     /// api session manager
     private var sessionManager: AFHTTPSessionManager
-    
+
     /// refresh token failed count
     private var refreshTokenFailedCount = 0
-    
+
     private var isHumanVerifyUIPresented = false
-    
+
     private var isForceUpgradeUIPresented = false
-    
+
     var tokenExpired = false
     let serialQueue = DispatchQueue(label: "com.proton.common")
     func tokenExpire() -> Bool {
@@ -256,9 +251,7 @@ public class PMAPIService : APIService {
             self.tokenExpired = false
         }
     }
-    
-    
-    
+
     //    var network : NetworkLayer
     //    var vpn : VPNInterface
     //    var doh:  DoH //depends on NetworkLayer.
@@ -268,7 +261,7 @@ public class PMAPIService : APIService {
     //    init(networkImpl: NetworkLayer, doh, vpn?, apiServiceDelegate?, authDelegate) {
     //        ///
     //    }
-    
+
     // MARK: - Internal methods
     /// by default will create a non auth api service. after calling the auth function, it will set the session. then use the delation to fetch the auth data  for this session.
     public required init(doh: DoH, sessionUID: String = "") {
@@ -276,33 +269,33 @@ public class PMAPIService : APIService {
         pthread_mutex_init(&mutex, nil)
         self.doh = doh
         doh.status = .off //userCachedStatus.isDohOn ? .on : .off
-        
+
         // human verification lock
         pthread_mutex_init(&humanVerificationMutex, nil)
-        
+
         // set config
         //self.serverConfig = config
         self.sessionUID = sessionUID
-        
+
         //
         // clear all response cache
         URLCache.shared.removeAllCachedResponses()
-        
+
         // ----- this part need move the networking wrapper
         let apiHostUrl = self.doh.getHostUrl() // self.serverConfig.hostUrl
         sessionManager = AFHTTPSessionManager(baseURL: URL(string: apiHostUrl)!)
         sessionManager.requestSerializer = AFJSONRequestSerializer()
         sessionManager.requestSerializer.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData  //.ReloadIgnoringCacheData
         sessionManager.requestSerializer.stringEncoding = String.Encoding.utf8.rawValue
-        
+
         sessionManager.responseSerializer.acceptableContentTypes?.insert("text/html")
         sessionManager.securityPolicy.allowInvalidCertificates = false
         sessionManager.securityPolicy.validatesDomainName = false
         #if DEBUG
         sessionManager.securityPolicy.allowInvalidCertificates = true
         #endif
-        
-        sessionManager.setSessionDidReceiveAuthenticationChallenge { session, challenge, credential -> URLSession.AuthChallengeDisposition in
+
+        sessionManager.setSessionDidReceiveAuthenticationChallenge { _, challenge, credential -> URLSession.AuthChallengeDisposition in
             let dispositionToReturn: URLSession.AuthChallengeDisposition = .performDefaultHandling
             if let dis = self.serviceDelegate?.onChallenge(challenge: challenge, credential: credential) {
                 return dis
@@ -310,19 +303,19 @@ public class PMAPIService : APIService {
             return dispositionToReturn
         }
     }
-    
+
     private func enableDoH() {
-        
+
     }
-    
+
     private func disableDoH() {
-        
+
     }
-    
+
     public func setSessionUID(uid: String) {
         self.sessionUID = uid
     }
-    
+
     internal typealias AuthTokenBlock = (String?, String?, NSError?) -> Void
     internal func fetchAuthCredential(_ completion: @escaping AuthTokenBlock) {
         //TODO:: fix me. this is wrong. concurruncy
@@ -370,22 +363,20 @@ public class PMAPIService : APIService {
                 }
                 return
             }
-            
+
             pthread_mutex_unlock(&self.mutex)
             // renew
             self.tokenReset()
             completion(credential.accessToken, self.sessionUID == "" ? credential.sessionID : self.sessionUID, nil)
         }
     }
-    
-    
-    
+
     internal func expireCredential() {
-        
+
         guard self.tokenExpire() == false else {
             return
         }
-        
+
         pthread_mutex_lock(&self.mutex)
         defer {
             pthread_mutex_unlock(&self.mutex)
@@ -394,26 +385,26 @@ public class PMAPIService : APIService {
             print("token is empty")
             return
         }
-        
+
         //TODO:: fix me.  to aline the auth framwork Credential object with Networking Credential object
         authCredential.expire()
         self.authDelegate?.onUpdate(auth: Credential( authCredential))
     }
-    
+
     public func request(method: HTTPMethod, path: String,
-                        parameters: Any?, headers: [String : Any]?,
-                        authenticated: Bool, autoRetry : Bool, customAuthCredential: AuthCredential?, completion: CompletionBlock?) {
-        
+                        parameters: Any?, headers: [String: Any]?,
+                        authenticated: Bool, autoRetry: Bool, customAuthCredential: AuthCredential?, completion: CompletionBlock?) {
+
         self.request(method: method, path: path, parameters: parameters,
                      headers: headers, authenticated: authenticated, authRetry: autoRetry, authRetryRemains: 10,
                      customAuthCredential: customAuthCredential, completion: completion)
-        
+
     }
     //new requestion function
     func request(method: HTTPMethod,
                  path: String,
                  parameters: Any?,
-                 headers: [String : Any]?,
+                 headers: [String: Any]?,
                  authenticated: Bool = true,
                  authRetry: Bool = true,
                  authRetryRemains: Int = 5,
@@ -428,14 +419,13 @@ public class PMAPIService : APIService {
                     if let error = error as NSError? {
                         self.debugError(error)
                         //PMLog.D(api: error)
-                        var httpCode : Int = 200
+                        var httpCode: Int = 200
                         if let detail = error.userInfo["com.alamofire.serialization.response.error.response"] as? HTTPURLResponse {
                             httpCode = detail.statusCode
-                        }
-                        else {
+                        } else {
                             httpCode = error.code
                         }
-                        
+
                         if authenticated && httpCode == 401 && authRetry {
                             self.expireCredential()
                             if path.isRefreshPath { //tempery no need later
@@ -463,9 +453,9 @@ public class PMAPIService : APIService {
                         } else if authenticated && httpCode == 422 && authRetry && path.isRefreshPath {
                             completion?(nil, nil, error)
                             self.authDelegate?.onLogout(sessionUID: self.sessionUID)
-                        } else if let responseDict = response as? [String : Any], let responseCode = responseDict["Code"] as? Int {
+                        } else if let responseDict = response as? [String: Any], let responseCode = responseDict["Code"] as? Int {
                             let errorMessage = responseDict["Error"] as? String ?? ""
-                            let displayError : NSError = NSError.protonMailError(responseCode,
+                            let displayError: NSError = NSError.protonMailError(responseCode,
                                                                                  localizedDescription: errorMessage,
                                                                                  localizedFailureReason: errorMessage,
                                                                                  localizedRecoverySuggestion: nil)
@@ -498,9 +488,9 @@ public class PMAPIService : APIService {
                     } else {
                         if response == nil {
                             completion?(task, [:], nil)
-                        } else if let responseDictionary = response as? [String : Any],
+                        } else if let responseDictionary = response as? [String: Any],
                             let responseCode = responseDictionary["Code"] as? Int {
-                            var error : NSError?
+                            var error: NSError?
                             if responseCode != 1000 && responseCode != 1001 {
                                 let errorMessage = responseDictionary["Error"] as? String
                                 error = NSError.protonMailError(responseCode,
@@ -508,7 +498,7 @@ public class PMAPIService : APIService {
                                                                 localizedFailureReason: errorMessage,
                                                                 localizedRecoverySuggestion: nil)
                             }
-                            
+
                             if authenticated && responseCode == 401 {
                                 if token == nil {
 //                                    Analytics.shared.debug(message: .logout, extra: [
@@ -568,7 +558,7 @@ public class PMAPIService : APIService {
                 }
                 // let url = self.doh.getHostUrl() + path
                 let url = self.doh.getHostUrl() + path
-                
+
                 do {
                     let accessToken = token ?? ""
                     if authenticated && accessToken.isEmpty {
@@ -579,7 +569,7 @@ public class PMAPIService : APIService {
                         completion?(nil, nil, localerror)
                         return
                     }
-                    
+
                     let request = try self.sessionManager.requestSerializer.request(withMethod: method.toString(),
                                                                                     urlString: url,
                                                                                     parameters: parameters)
@@ -592,31 +582,31 @@ public class PMAPIService : APIService {
                     if let userid = userID {
                         request.setValue(userid, forHTTPHeaderField: "x-pm-uid")
                     }
-                    
+
                     // move to delegte
                     let appversion = self.serviceDelegate?.appVersion ?? "iOS_\(Bundle.main.majorVersion)"
                     request.setValue("application/vnd.protonmail.v1+json", forHTTPHeaderField: "Accept")
                     request.setValue(appversion, forHTTPHeaderField: "x-pm-appversion")
-                    
+
                     // todo
                     //let clanguage = LanguageManager.currentLanguageEnum()
                     //request.setValue(clanguage.localeString, forHTTPHeaderField: "x-pm-locale")
-                    
+
                     if let ua = self.serviceDelegate?.userAgent ?? UserAgent.default.ua {
                         request.setValue(ua, forHTTPHeaderField: "User-Agent")
                     }
-                    
-                    var task: URLSessionDataTask? = nil
-                    task = self.sessionManager.dataTask(with: request as URLRequest, uploadProgress: { (progress) in
+
+                    var task: URLSessionDataTask?
+                    task = self.sessionManager.dataTask(with: request as URLRequest, uploadProgress: { (_) in
                         //TODO::add later
-                        
-                    }, downloadProgress: { (progress) in
+
+                    }, downloadProgress: { (_) in
                         //TODO::add later
                         print("in progress")
                     }, completionHandler: { (urlresponse, res, error) in
                         self.debugError(error)
                         if let urlres = urlresponse as? HTTPURLResponse,
-                            let allheader = urlres.allHeaderFields as? [String : Any] {
+                            let allheader = urlres.allHeaderFields as? [String: Any] {
                             //PMLog.D("\(allheader.json(prettyPrinted: true))")
                             if let strData = allheader["Date"] as? String {
                                 // create dateFormatter with UTC time format
@@ -630,7 +620,7 @@ public class PMAPIService : APIService {
                                 }
                             }
                         }
-                        
+
                         if self.doh.handleError(host: url, error: error) {
                             //retry here
                             //PMLog.D(" DOH Retry: " + url)
@@ -648,37 +638,37 @@ public class PMAPIService : APIService {
                         }
                     })
                     task!.resume()
-                    
+
                 } catch let error {
                     completion?(nil, nil, error as NSError)
                 }
             }
         }
-        
+
         if authenticated && customAuthCredential == nil {
             fetchAuthCredential(authBlock)
         } else {
             authBlock(customAuthCredential?.accessToken, customAuthCredential?.sessionID, nil)
         }
     }
-    
+
     func upload (byPath path: String,
-                 parameters: [String:String],
-                 keyPackets : Data,
-                 dataPacket : Data,
-                 signature : Data?,
-                 headers: [String : Any]?,
+                 parameters: [String: String],
+                 keyPackets: Data,
+                 dataPacket: Data,
+                 signature: Data?,
+                 headers: [String: Any]?,
                  authenticated: Bool = true,
                  customAuthCredential: AuthCredential? = nil,
                  completion: @escaping CompletionBlock) {
-        
+
         let url = self.doh.getHostUrl() + path
         let authBlock: AuthTokenBlock = { token, userID, error in
             if let error = error {
                 self.debugError(error)
                 completion(nil, nil, error)
             } else {
-                
+
                 let accessToken = token ?? ""
                 if authenticated && accessToken.isEmpty {
                     let localerror = NSError.protonMailError(401,
@@ -687,7 +677,7 @@ public class PMAPIService : APIService {
                                                              localizedRecoverySuggestion: nil)
                     return completion(nil, nil, localerror)
                 }
-                
+
                 let request = self.sessionManager.requestSerializer.multipartFormRequest(withMethod: "POST",
                                                                                          urlString: url, parameters: parameters,
                                                                                          constructingBodyWith: { (formData) -> Void in
@@ -698,7 +688,7 @@ public class PMAPIService : APIService {
                                                                                                 data.appendPart(withFileData: sign, name: "Signature", fileName: "Signature.txt", mimeType: "" )
                                                                                             }
                                                                                          }, error: nil)
-                
+
                 if let header = headers {
                     for (k, v) in header {
                         request.setValue("\(v)", forHTTPHeaderField: k)
@@ -708,28 +698,27 @@ public class PMAPIService : APIService {
                 if let userid = userID {
                     request.setValue(userid, forHTTPHeaderField: "x-pm-uid")
                 }
-                
+
                 let appversion = "iOS_\(Bundle.main.majorVersion)"
                 request.setValue("application/vnd.protonmail.v1+json", forHTTPHeaderField: "Accept")
                 request.setValue(appversion, forHTTPHeaderField: "x-pm-appversion")
-                
+
                 //TODO:: fix the local
                 //let clanguage = LanguageManager.currentLanguageEnum()
                 //request.setValue(clanguage.localeString, forHTTPHeaderField: "x-pm-locale")
                 if let ua = self.serviceDelegate?.userAgent ?? UserAgent.default.ua {
                     request.setValue(ua, forHTTPHeaderField: "User-Agent")
                 }
-                
-                var uploadTask: URLSessionDataTask? = nil
-                uploadTask = self.sessionManager.uploadTask(withStreamedRequest: request as URLRequest, progress: { (progress) in
+
+                var uploadTask: URLSessionDataTask?
+                uploadTask = self.sessionManager.uploadTask(withStreamedRequest: request as URLRequest, progress: { (_) in
                     // nothing
-                }, completionHandler: { (response, responseObject, error) in
+                }, completionHandler: { (_, responseObject, error) in
                     self.debugError(error)
-                    
+
                     // reachability temporarily failed because was switching from WiFi to Cellular
                     if (error as NSError?)?.code == -1005,
-                       self.serviceDelegate?.isReachable() == true
-                    {
+                       self.serviceDelegate?.isReachable() == true {
                         // retry task asynchonously
                         DispatchQueue.global(qos: .utility).async {
                             self.upload(byPath: url,
@@ -744,25 +733,24 @@ public class PMAPIService : APIService {
                         }
                         return
                     }
-                    
-                    let resObject = responseObject as? [String : Any]
+
+                    let resObject = responseObject as? [String: Any]
                     completion(uploadTask, resObject, error as NSError?)
                 })
                 uploadTask?.resume()
             }
         }
-        
+
         if authenticated && customAuthCredential == nil {
             fetchAuthCredential(authBlock)
         } else {
             authBlock(customAuthCredential?.accessToken, customAuthCredential?.sessionID, nil)
         }
     }
-    
-    
+
     internal func download(byUrl url: String,
                            destinationDirectoryURL: URL,
-                           headers: [String : Any]?,
+                           headers: [String: Any]?,
                            authenticated: Bool = true,
                            customAuthCredential: AuthCredential? = nil,
                            downloadTask: ((URLSessionDownloadTask) -> Void)?,
@@ -781,7 +769,7 @@ public class PMAPIService : APIService {
                     completion(nil, nil, localerror)
                     return
                 }
-                
+
                 let request = try! self.sessionManager.requestSerializer.request(withMethod: HTTPMethod.get.toString(),
                                                                                  urlString: url,
                                                                                  parameters: nil)
@@ -794,20 +782,20 @@ public class PMAPIService : APIService {
                 if let userID = userID {
                     request.setValue(userID, forHTTPHeaderField: "x-pm-uid")
                 }
-                
+
                 let appversion = "iOS_\(Bundle.main.majorVersion)"
                 request.setValue("application/vnd.protonmail.v1+json", forHTTPHeaderField: "Accept")
                 request.setValue(appversion, forHTTPHeaderField: "x-pm-appversion")
-                
+
 //                let clanguage = LanguageManager.currentLanguageEnum()
 //                request.setValue(clanguage.localeString, forHTTPHeaderField: "x-pm-locale")
                 if let ua = self.serviceDelegate?.userAgent ?? UserAgent.default.ua {
                     request.setValue(ua, forHTTPHeaderField: "User-Agent")
                 }
-                
-                let sessionDownloadTask = self.sessionManager.downloadTask(with: request as URLRequest, progress: { (progress) in
-                    
-                }, destination: { (targetURL, response) -> URL in
+
+                let sessionDownloadTask = self.sessionManager.downloadTask(with: request as URLRequest, progress: { (_) in
+
+                }, destination: { (_, _) -> URL in
                     return destinationDirectoryURL
                 }, completionHandler: { (response, url, error) in
                     self.debugError(error)
@@ -817,14 +805,14 @@ public class PMAPIService : APIService {
                 sessionDownloadTask.resume()
             }
         }
-        
+
         if authenticated && customAuthCredential == nil {
             fetchAuthCredential(authBlock)
         } else {
             authBlock(customAuthCredential?.accessToken, customAuthCredential?.sessionID, nil)
         }
     }
-    
+
     func debugError(_ error: NSError?) {
         #if DEBUG
         // nothing
@@ -835,12 +823,12 @@ public class PMAPIService : APIService {
         // nothing
         #endif
     }
-    
+
     func humanVerificationHandler(
         method: HTTPMethod,
         path: String,
         parameters: Any?,
-        headers: [String : Any]?,
+        headers: [String: Any]?,
         authenticated: Bool = true,
         authRetry: Bool = true,
         authRetryRemains: Int = 10,
@@ -848,9 +836,9 @@ public class PMAPIService : APIService {
         error: NSError?,
         response: Any?,
         task: URLSessionDataTask?,
-        responseDict: [String : Any],
+        responseDict: [String: Any],
         completion: CompletionBlock?) {
-        
+
         // human verification required
         if self.isHumanVerifyUIPresented == true {
             // wait until ongoing human verification is finished
@@ -889,7 +877,7 @@ public class PMAPIService : APIService {
         method: HTTPMethod,
         path: String,
         parameters: Any?,
-        headers: [String : Any]?,
+        headers: [String: Any]?,
         authenticated: Bool = true,
         authRetry: Bool = true,
         authRetryRemains: Int = 10,
@@ -897,25 +885,25 @@ public class PMAPIService : APIService {
         error: NSError?,
         response: Any?,
         task: URLSessionDataTask?,
-        responseDict: [String : Any],
+        responseDict: [String: Any],
         completion: CompletionBlock?) {
-        
+
         // get human verification methods
         let hvResponse = HumanVerificationResponse()
         if let error = error {
-            hvResponse.ParseHttpError(error, response: response as? [String : Any])
+            hvResponse.ParseHttpError(error, response: response as? [String: Any])
         }
-        if let response = response as? [String : Any] {
-            let _ = hvResponse.ParseResponse(response)
+        if let response = response as? [String: Any] {
+            _ = hvResponse.ParseResponse(response)
         }
         self.isHumanVerifyUIPresented = true
-        
+
         // human verification required delegate
         DispatchQueue.global(qos: .default).async {
             pthread_mutex_lock(&self.humanVerificationMutex)
             DispatchQueue.main.async {
                 self.humanDelegate?.onHumanVerify(methods: hvResponse.supported) { header, isClosed, verificationCodeBlock in
-                    
+
                     // close human verification UI
                     if isClosed {
                         // finish request with existing completion block
@@ -924,7 +912,7 @@ public class PMAPIService : APIService {
                         pthread_mutex_unlock(&self.humanVerificationMutex)
                         return
                     }
-                    
+
                     // human verification completion
                     let hvCompletion: CompletionBlock = { task, response, error in
                         if let error = error {
@@ -937,11 +925,11 @@ public class PMAPIService : APIService {
                             pthread_mutex_unlock(&self.humanVerificationMutex)
                         }
                     }
-                    
+
                     // merge headers
                     var newHeaders = headers ?? [:]
                     newHeaders.merge(header) { (_, new) in new }
-                    
+
                     // retry request
                     self.request(method: method,
                                  path: path,
@@ -956,8 +944,8 @@ public class PMAPIService : APIService {
             }
         }
     }
-    
-    func forceUpgradeHandler(responseDictionary: [String : Any]) {
+
+    func forceUpgradeHandler(responseDictionary: [String: Any]) {
         let errorMessage = responseDictionary["Error"] as? String ?? ""
         if let delegate = forceUpgradeDelegate, isForceUpgradeUIPresented == false {
             isForceUpgradeUIPresented = true

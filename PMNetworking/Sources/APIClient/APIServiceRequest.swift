@@ -20,6 +20,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonMail.  If not, see <https://www.gnu.org/licenses/>.
 
+// swiftlint:disable identifier_name todo
 
 import Foundation
 import PromiseKit
@@ -34,25 +35,18 @@ public protocol ApiPackage {
     func toDictionary() -> [String: Any]?
 }
 
-
-//Protocol-Oriented-Networking
-protocol APIDelegate {
-    
-}
-
-
 //abstract api request base class
-open class ApiRequest<T : ApiResponse> : ApiPackage {
-    
+open class ApiRequest<T: ApiResponse>: ApiPackage {
+
     init () { }
-    
+
     //add error response
-    public typealias ResponseCompletionBlock = (_ task: URLSessionDataTask?, _ response: T?, _ hasError : Bool) -> Void
-    
-    public func toDictionary() -> [String : Any]? {
+    public typealias ResponseCompletionBlock = (_ task: URLSessionDataTask?, _ response: T?, _ hasError: Bool) -> Void
+
+    public func toDictionary() -> [String: Any]? {
         return nil
     }
-    
+
     /**
      get current api request
      
@@ -61,12 +55,11 @@ open class ApiRequest<T : ApiResponse> : ApiPackage {
     func apiVersion() -> Int {
         return 1
     }
-    
-    
-    func getHeaders() -> [String : Any] {
-        return [String : Any]()
+
+    func getHeaders() -> [String: Any] {
+        return [String: Any]()
     }
-    
+
     /**
      get is current function need auth check
      
@@ -75,13 +68,13 @@ open class ApiRequest<T : ApiResponse> : ApiPackage {
     func getIsAuthFunction() -> Bool {
         return true
     }
-    
+
     func authRetry() -> Bool {
         return true
     }
-    
+
     var authCredential: AuthCredential?
-    
+
     /**
      get request path
      
@@ -90,43 +83,43 @@ open class ApiRequest<T : ApiResponse> : ApiPackage {
     func path() -> String {
         fatalError("This method must be overridden")
     }
-    
+
     public func method() -> HTTPMethod {
         return .get
     }
-    
+
     func call(api: API, _ complete: ResponseCompletionBlock?) {
         // 1 make a request , 2 wait for the respons async 3. valid response 4. parse data into response 5. some data need save into database.
-        let completionWrapper:  CompletionBlock = { task, res, error in
+        let completionWrapper: CompletionBlock = { task, res, error in
             let realType = T.self
             let apiRes = realType.init()
-            
+
             if error != nil {
                 //TODO check error
                 apiRes.ParseHttpError(error!, response: res)
                 complete?(task, apiRes, true)
                 return
             }
-            
+
             if res == nil {
                 // TODO check res
                 apiRes.error = NSError.badResponse()
                 complete?(task, apiRes, true)
                 return
             }
-            
+
             var hasError = apiRes.ParseResponseError(res!)
             if !hasError {
                 hasError = !apiRes.ParseResponse(res!)
             }
             complete?(task, apiRes, hasError)
         }
-        
+
         var header = self.getHeaders()
         if self.apiVersion() != -1 {
             header["x-pm-apiversion"] = self.apiVersion()
         }
-        
+
         api.request(method: self.method(),
                     path: self.path(),
                     parameters: self.toDictionary(),
@@ -135,16 +128,15 @@ open class ApiRequest<T : ApiResponse> : ApiPackage {
                     customAuthCredential: self.authCredential,
                     completion: completionWrapper)
     }
-    
-    
+
     public func syncCall(api: API) throws -> T? {
-        var ret_res : T? = nil
-        var ret_error : NSError? = nil
-        let sema = DispatchSemaphore(value: 0);
+        var ret_res: T?
+        var ret_error: NSError?
+        let sema = DispatchSemaphore(value: 0)
         //TODO :: 1 make a request , 2 wait for the respons async 3. valid response 4. parse data into response 5. some data need save into database.
-        let completionWrapper: CompletionBlock = { task, res, error in
+        let completionWrapper: CompletionBlock = { _, res, error in
             defer {
-                sema.signal();
+                sema.signal()
             }
             let realType = T.self
             let apiRes = realType.init()
@@ -154,14 +146,14 @@ open class ApiRequest<T : ApiResponse> : ApiPackage {
                 ret_error = apiRes.error
                 return
             }
-            
+
             if res == nil {
                 // TODO check res
                 apiRes.error = NSError.badResponse()
                 ret_error = apiRes.error
                 return
             }
-            
+
             var hasError = apiRes.ParseResponseError(res!)
             if !hasError {
                 hasError = !apiRes.ParseResponse(res!)
@@ -172,15 +164,14 @@ open class ApiRequest<T : ApiResponse> : ApiPackage {
             }
             ret_res = apiRes
         }
-        
-        
+
         //TODO:: missing auth
         api.request(method: self.method(), path: self.path(),
                     parameters: self.toDictionary(), headers: [HTTPHeader.apiVersion: self.apiVersion()],
                     authenticated: self.getIsAuthFunction(), autoRetry: self.authRetry(), customAuthCredential: self.authCredential, completion: completionWrapper)
-        
+
         //wait operations
-        let _ = sema.wait(timeout: DispatchTime.distantFuture)
+        _ = sema.wait(timeout: DispatchTime.distantFuture)
         if let e = ret_error {
             throw e
         }
@@ -188,21 +179,20 @@ open class ApiRequest<T : ApiResponse> : ApiPackage {
     }
 }
 
-
 //abstract api request base class
-open class ApiRequestNew<T : ApiResponse> : ApiPackage {
-    
+open class ApiRequestNew<T: ApiResponse>: ApiPackage {
+
     public init (api: API) {
         self.apiService = api
     }
-    
+
     //add error response
     //public typealias ResponseCompletionBlock = (_ task: URLSessionDataTask?, _ response: T?, _ hasError : Bool) -> Void
-    
-    open func toDictionary() -> [String : Any]? {
+
+    open func toDictionary() -> [String: Any]? {
         return nil
     }
-    
+
     /**
      get current api request
      
@@ -211,7 +201,7 @@ open class ApiRequestNew<T : ApiResponse> : ApiPackage {
     open func apiVersion() -> Int {
         return 1
     }
-    
+
     /**
      get is current function need auth check
      
@@ -220,15 +210,15 @@ open class ApiRequestNew<T : ApiResponse> : ApiPackage {
     open func getIsAuthFunction() -> Bool {
         return true
     }
-    
+
     open func authRetry() -> Bool {
         return true
     }
-    
+
     open var authCredential: AuthCredential?
-    
+
     private let apiService: API
-    
+
     /**
      get request path
      
@@ -237,18 +227,18 @@ open class ApiRequestNew<T : ApiResponse> : ApiPackage {
     open func path() -> String {
         fatalError("This method must be overridden")
     }
-    
+
     open func method() -> HTTPMethod {
         return .get
     }
-    
+
     open func run() -> Promise<T> {
         // 1 make a request , 2 wait for the respons async 3. valid response 4. parse data into response 5. some data need save into database.
         let deferred = Promise<T>.pending()
-        let completionWrapper:  CompletionBlock = { task, res, error in
+        let completionWrapper: CompletionBlock = { _, res, error in
             let realType = T.self
             let apiRes = realType.init()
-            
+
             if error != nil {
 //                #if DEBUG
 //                if let res = res {
@@ -260,13 +250,13 @@ open class ApiRequestNew<T : ApiResponse> : ApiPackage {
                 deferred.resolver.reject(error!)
                 return
             }
-            
+
             if res == nil {
                 // TODO check res
                 deferred.resolver.reject(NSError.badResponse())
                 return
             }
-            
+
             var hasError = apiRes.ParseResponseError(res!)
             if !hasError {
                 hasError = !apiRes.ParseResponse(res!)
@@ -277,14 +267,14 @@ open class ApiRequestNew<T : ApiResponse> : ApiPackage {
                 deferred.resolver.fulfill(apiRes)
             }
         }
-        
+
         //TODO:: missing auth
         apiService.request(method: self.method(), path: self.path(),
                     parameters: self.toDictionary(), headers: [HTTPHeader.apiVersion: self.apiVersion()],
                     authenticated: self.getIsAuthFunction(), autoRetry: self.authRetry(), customAuthCredential: self.authCredential, completion: completionWrapper)
-        
+
         return deferred.promise
-        
+
     }
 }
 
@@ -297,7 +287,7 @@ extension NSError {
             localizedFailureReason: localizedFailureReason,
             localizedRecoverySuggestion: localizedRecoverySuggestion)
     }
-    
+
     public class func badResponse() -> NSError {
         return apiServiceError(
             code: APIErrorCode.badResponse,
@@ -305,7 +295,3 @@ extension NSError {
             localizedFailureReason: "Bad response")
     }
 }
-
-
-
-

@@ -22,56 +22,53 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonMail.  If not, see <https://www.gnu.org/licenses/>.
 
+// swiftlint:disable identifier_name todo
 
 import Foundation
 
 open class Response {
     required public init() {}
-    
-    public var code : Int = 1000
-    public var errorMessage : String?
-    var internetCode : Int? //only use when error happend.
-    
-    public var error : NSError?
-    
+
+    public var code: Int = 1000
+    public var errorMessage: String?
+    var internetCode: Int? //only use when error happend.
+
+    public var error: NSError?
+
     func CheckHttpStatus() -> Bool {
         return code == 200 || code == 1000
     }
-    
+
     func CheckBodyStatus () -> Bool {
         return code == 1000
     }
-    
-    func ParseResponseError (_ response: [String : Any]) -> Bool {
+
+    func ParseResponseError (_ response: [String: Any]) -> Bool {
         code = response["Code"] as? Int ?? 0
         errorMessage = response["Error"] as? String
-        if code == nil {
-            return false
-        }
-        
+
         if code != 1000 && code != 1001 {
-            self.error = NSError.protonMailError(code ?? 1000,
+            self.error = NSError.protonMailError(code,
                                                  localizedDescription: errorMessage ?? "",
                                                  localizedFailureReason: nil,
                                                  localizedRecoverySuggestion: nil)
         }
         return code != 1000 && code != 1001
     }
-    
-    func ParseHttpError (_ error: NSError, response: [String : Any]? = nil) {//TODO::need refactor.
+
+    func ParseHttpError (_ error: NSError, response: [String: Any]? = nil) {//TODO::need refactor.
         self.code = 404
         if let detail = error.userInfo["com.alamofire.serialization.response.error.response"] as? HTTPURLResponse {
             self.code = detail.statusCode
-        }
-        else {
+        } else {
             internetCode = error.code
             self.code = internetCode ?? 0
         }
         self.errorMessage = error.localizedDescription
         self.error = error
     }
-    
-    open func ParseResponse (_ response: [String : Any]) -> Bool {
+
+    open func ParseResponse (_ response: [String: Any]) -> Bool {
         return true
     }
 }

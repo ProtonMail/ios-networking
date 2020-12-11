@@ -26,6 +26,8 @@
 // ***********************************************************
 //
 
+// swiftlint:disable identifier_name
+
 import Foundation
 import CommonCrypto
 
@@ -33,31 +35,31 @@ public extension String {
     var md5: String {
         return HMAC.hash(self, algo: HMACAlgo.md5)
     }
-    
+
     var md5_byte: Data? {
         return HMAC.hash(self, algo: HMACAlgo.md5)
     }
-    
+
     var sha1: String {
         return HMAC.hash(self, algo: HMACAlgo.sha1)
     }
-    
+
     var sha224: String {
         return HMAC.hash(self, algo: HMACAlgo.sha224)
     }
-    
+
     var sha256: String {
         return HMAC.hash(self, algo: HMACAlgo.sha256)
     }
-    
+
     var sha384: String {
         return HMAC.hash(self, algo: HMACAlgo.sha384)
     }
-    
+
     var sha512: String {
         return HMAC.hash(self, algo: HMACAlgo.sha512)
     }
-    
+
     var sha512_byte: Data? {
         return HMAC.hash(self, algo: HMACAlgo.sha512)
     }
@@ -70,25 +72,25 @@ extension Data {
 }
 
 public struct HMAC {
-    
+
     static func hash(_ inp: String, algo: HMACAlgo) -> String {
         if let stringData = inp.data(using: String.Encoding.utf8, allowLossyConversion: false) {
             return hexStringFromData(digest(stringData, algo: algo))
         }
         return ""
     }
-    
+
     static func hash(_ inp: String, algo: HMACAlgo) -> Data? {
         if let stringData = inp.data(using: String.Encoding.utf8, allowLossyConversion: false) {
             return digest(stringData, algo: algo)
         }
         return nil
     }
-    
+
     static func hash(_ inp: Data, algo: HMACAlgo) -> Data {
         return digest(inp, algo: algo)
     }
-    
+
     fileprivate static func digest(_ input: Data, algo: HMACAlgo) -> Data {
         let digestLength = algo.digestLength()
         var hash = [UInt8](repeating: 0, count: digestLength)
@@ -108,23 +110,23 @@ public struct HMAC {
         }
         return Data(bytes: UnsafePointer<UInt8>(hash), count: digestLength)
     }
-    
+
     public static func hexStringFromData(_ input: Data) -> String {
         var bytes = [UInt8](repeating: 0, count: input.count)
         (input as NSData).getBytes(&bytes, length: input.count)
-        
+
         var hexString = ""
         for byte in bytes {
             hexString += String(format: "%02x", UInt8(byte))
         }
-        
+
         return hexString
     }
 }
 
 enum HMACAlgo {
     case md5, sha1, sha224, sha256, sha384, sha512
-    
+
     func digestLength() -> Int {
         var result: CInt = 0
         switch self {

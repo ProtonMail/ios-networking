@@ -20,31 +20,31 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonMail.  If not, see <https://www.gnu.org/licenses/>.
 
+// swiftlint:disable identifier_name todo
 
 import Foundation
 
-
 open class ApiResponse {
     required public init() {}
-    
-    open var code : Int! = 1000
-    open var errorMessage : String?
-    open var internetCode : Int? //only use when error happend.
-    
-    open var error : NSError?
-    
+
+    open var code: Int! = 1000
+    open var errorMessage: String?
+    open var internetCode: Int? //only use when error happend.
+
+    open var error: NSError?
+
     open func CheckHttpStatus() -> Bool {
         return code == 200 || code == 1000
     }
-    
+
     open func CheckBodyStatus () -> Bool {
         return code == 1000
     }
-    
-    open func ParseResponseError (_ response: [String : Any]) -> Bool {
+
+    open func ParseResponseError (_ response: [String: Any]) -> Bool {
         code = response["Code"] as? Int
         errorMessage = response["Error"] as? String
-        
+
         if code == nil {
             return false
         }
@@ -57,21 +57,20 @@ open class ApiResponse {
         }
         return code != 1000 && code != 1001
     }
-    
-    open func ParseHttpError (_ error: NSError, response: [String : Any]? = nil) {//TODO::need refactor.
+
+    open func ParseHttpError (_ error: NSError, response: [String: Any]? = nil) {//TODO::need refactor.
         self.code = 404
         if let detail = error.userInfo["com.alamofire.serialization.response.error.response"] as? HTTPURLResponse {
             self.code = detail.statusCode
-        }
-        else {
+        } else {
             internetCode = error.code
             self.code = internetCode
         }
         self.errorMessage = error.localizedDescription
         self.error = error
     }
-    
-    open func ParseResponse (_ response: [String : Any]) -> Bool {
+
+    open func ParseResponse (_ response: [String: Any]) -> Bool {
         return true
     }
 }

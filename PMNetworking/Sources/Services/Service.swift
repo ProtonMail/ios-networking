@@ -22,14 +22,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonMail.  If not, see <https://www.gnu.org/licenses/>.
 
-
 import Foundation
 
 /// service base, hold the service instance in order to make requests
 public protocol Service {
-    var service : APIService {get}
+    var service: APIService {get}
 }
 
 extension Service {
-    
+
 }

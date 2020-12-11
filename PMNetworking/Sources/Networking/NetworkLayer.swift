@@ -22,7 +22,6 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonMail.  If not, see <https://www.gnu.org/licenses/>.
 
-
 //////////
 /////predefind input funcs for callbacks, for example
 //typealias CallBackBlocks = (() -> Void)
@@ -45,20 +44,19 @@ protocol NetworkLayer {
 //                 customAuthCredential: AuthCredential?,
 //                 completion: CompletionBlock?)
     func initSession()
-    
+
     func hookupSSLPining()
 }
 
-
-class AFNetworkingWarpper : NetworkLayer {
+class AFNetworkingWarpper: NetworkLayer {
     func initSession() {
-        
+
     }
-    
+
     func hookupSSLPining() {
-        
+
     }
-    
+
     /// response for delevey data to the third party lib
     init() {
         //setup session manager
@@ -66,12 +64,6 @@ class AFNetworkingWarpper : NetworkLayer {
         //etc
     }
 }
-
-
-
-
-
-
 
 //class MailDoh : DoH {
 //    //Doh config

@@ -22,14 +22,12 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonMail.  If not, see <https://www.gnu.org/licenses/>.
 
-
 import Foundation
 
-
 public protocol APIClient {
- 
+
 }
 
 public protocol Client {
-    var apiService : APIService { get }
+    var apiService: APIService { get }
 }

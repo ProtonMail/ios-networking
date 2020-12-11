@@ -20,42 +20,43 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonMail.  If not, see <https://www.gnu.org/licenses/>.
 
+// swiftlint:disable todo
 
 import Foundation
 
 //Txt record only
-public struct Google : DoHProviderInternal {
+public struct Google: DoHProviderInternal {
     public init() {
         //TODO:: remove public later
     }
-    
+
     let supported: [Int] = [DNSType.txt.rawValue]
-    
+
     public let url = "https://dns.google.com"
-    
+
     func query(host: String) -> String {
         return self.url + "/resolve?type=TXT&name=" + host
     }
-    
+
     func parse(response: String) -> DNS? {
         return nil
     }
-    
+
     func parse(data response: Data) -> [DNS]? {
         do {
             let jsonStr = String(decoding: response, as: UTF8.self)
             print(jsonStr)
-            guard let dictRes = try JSONSerialization.jsonObject(with: response, options:JSONSerialization.ReadingOptions.allowFragments) as? [String: Any] else {
+            guard let dictRes = try JSONSerialization.jsonObject(with: response, options: JSONSerialization.ReadingOptions.allowFragments) as? [String: Any] else {
                 //throw error
                 return nil
             }
-            
+
             guard let answers = dictRes["Answer"] as? [[String: Any]] else {
                 //throw error
                 return nil
             }
-            
-            var addrList : [String] = []
+
+            var addrList: [String] = []
             var ttl = -1
             for answer in answers {
                 if let type = answer["type"] as? Int, supported.contains(type) {
@@ -69,9 +70,9 @@ public struct Google : DoHProviderInternal {
                 }
             }
             if ttl>0 && addrList.count > 0 {
-                var dnsList : [DNS] = []
+                var dnsList: [DNS] = []
                 for addr in addrList {
-                    dnsList.append(DNS(url: addr, ttl:  ttl))
+                    dnsList.append(DNS(url: addr, ttl: ttl))
                 }
                 return dnsList
             }
@@ -82,5 +83,5 @@ public struct Google : DoHProviderInternal {
             return nil
         }
     }
-    
+
 }
