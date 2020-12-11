@@ -42,7 +42,7 @@ class HumanVerifyServiceImpl: MessageService {
 
 //
 //
-//// mock for testing
+// mock for testing
 //class MessageServiceMock: Service {
 //    init(service: APIService) {
 //        super.init(...)
