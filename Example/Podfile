@@ -27,6 +27,7 @@ target 'PMNetworking_Example' do
   pod 'TrustKit', '1.6.2'
   pod 'PromiseKit', '~> 6.0'
   pod 'AwaitKit', '~> 5.0.0'
+  pod 'SwiftLint'
   
   target 'PMNetworking_Tests' do
     inherit! :search_paths
