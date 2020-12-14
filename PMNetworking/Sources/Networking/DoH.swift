@@ -47,18 +47,20 @@ public enum DoHStatus {
     case auto //mix don't know yet
 }
 
-public protocol DoHConfig {
+public protocol ServerConfig {
     var apiHost: String { get }
     var defaultHost: String { get }
     var captchaHost: String { get }
     var defaultPath: String { get }
+    // default signup domain for this server url
+    var signupDomain: String { get }
 
     /// debug mode vars
     var debugMode: Bool { get }
     var blockList: [String: Int] { get }
 }
 
-public extension DoHConfig {
+public extension ServerConfig {
     var defaultPath: String {
         return ""
     }
@@ -96,7 +98,7 @@ open class DoH: DoHInterface {
         defer {
             pthread_mutex_unlock(&self.hostUrlMutex)
         }
-        let config = self as! DoHConfig
+        let config = self as! ServerConfig
         switch status {
         case .on, .auto:
             if let found = self.cache(get: config.apiHost) {
@@ -123,8 +125,13 @@ open class DoH: DoHInterface {
     }
 
     public func getCaptchaHostUrl() -> String {
-        let config = self as! DoHConfig
+        let config = self as! ServerConfig
         return config.captchaHost
+    }
+
+    public func getSignUpString() -> String {
+        let config = self as! ServerConfig
+        return config.signupDomain
     }
 
     func fetchAll(host: String) {
@@ -146,7 +153,7 @@ open class DoH: DoHInterface {
     public init() throws {
         pthread_mutex_init(&mutex, nil)
         pthread_mutex_init(&hostUrlMutex, nil)
-        guard let config = self as? DoHConfig else {
+        guard let config = self as? ServerConfig else {
             throw RuntimeError("Class didn't extend DoHConfig")
         }
 
@@ -249,7 +256,7 @@ open class DoH: DoHInterface {
         pthread_mutex_lock(&self.mutex)
         defer { pthread_mutex_unlock(&self.mutex) }
 
-        let config = self as! DoHConfig
+        let config = self as! ServerConfig
         var tmp: [DNSCache] = []
         let newurl = URL(string: config.defaultHost)!
         let host = newurl.host!
@@ -267,7 +274,7 @@ open class DoH: DoHInterface {
             return false
         }
 
-        guard let config = self as? DoHConfig else {
+        guard let config = self as? ServerConfig else {
             return false
         }
 
@@ -323,7 +330,7 @@ open class DoH: DoHInterface {
     }
 
     func debugModeLogic(host: String) -> Bool {
-        guard let config = self as? DoHConfig else {
+        guard let config = self as? ServerConfig else {
             return false
         }
 

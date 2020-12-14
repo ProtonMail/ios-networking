@@ -40,7 +40,8 @@ class ForceUpgradeAPITests: XCTestCase {
     
     // Test configuration
     
-    class DoHMail: DoH, DoHConfig {
+    class DoHMail: DoH, ServerConfig {
+        var signupDomain: String = "protonmail.blue"
         //defind your default host
         var defaultHost: String = "https://protonmail.blue"
         //defind your default captcha host

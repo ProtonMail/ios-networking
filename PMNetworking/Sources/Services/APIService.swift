@@ -201,6 +201,7 @@ public protocol APIService: API {
     var authDelegate: AuthDelegate? {get set}
     var humanDelegate: HumanVerifyDelegate? {get set}
     var doh: DoH { get set}
+    var signUpDomain: String { get }
 }
 
 class TestResponse: Response {

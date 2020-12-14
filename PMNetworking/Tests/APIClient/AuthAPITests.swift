@@ -29,7 +29,8 @@ import PMCommon
 
 class AuthAPITests: XCTestCase {
     
-    class DoHMail : DoH, DoHConfig {
+    class DoHMail : DoH, ServerConfig {
+        var signupDomain: String = "protonmail.com"
         //defind your default host
         var defaultHost: String = "https://test.protonmail.ch"
         //defind your default captcha host

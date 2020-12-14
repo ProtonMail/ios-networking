@@ -31,7 +31,10 @@ import PMHumanVerification
 import PMUICommon
 
 ///Defind your doh settings
-class DoHMail : DoH, DoHConfig {
+class DoHMail : DoH, ServerConfig {
+    
+    var signupDomain: String = "protonmail.com"
+    
     //defind your default host
     var defaultHost: String = "https://api.protonmail.ch"
     //defind your default captcha host
@@ -42,7 +45,9 @@ class DoHMail : DoH, DoHConfig {
     static let `default` = try! DoHMail()
 }
 
-class TestDoHMail : DoH, DoHConfig {
+class TestDoHMail : DoH, ServerConfig {
+    var signupDomain: String = "proton.dev"
+    
     //defind your default host
 //    var defaultHost: String = "https://protonmail.blue"
     var defaultHost: String = "https://proton.dev"
