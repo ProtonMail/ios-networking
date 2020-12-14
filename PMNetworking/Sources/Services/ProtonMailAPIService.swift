@@ -222,6 +222,10 @@ public class PMAPIService: APIService {
     /// doh with service config
     public var doh: DoH
 
+    public var signUpDomain: String {
+        return self.doh.getSignUpString()
+    }
+
     /// network config
     //    let serverConfig : APIServerConfig
 

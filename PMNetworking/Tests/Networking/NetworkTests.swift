@@ -80,7 +80,8 @@ class NetworkTests: XCTestCase {
         }
     }
 
-    class DoHMail : DoH, DoHConfig {
+    class DoHMail : DoH, ServerConfig {
+        var signupDomain: String = "protonmail.com"
         //defind your default host
         var defaultHost: String = "https://test.protonmail.ch"
         //defind your default captcha host
@@ -93,6 +94,11 @@ class NetworkTests: XCTestCase {
         override init() throws {
             
         }
+    }
+    
+    func testDefaultSignupDomain() {
+        let api : APIService = PMAPIService(doh: DoHMail.default, sessionUID: "testSessionUID")
+        XCTAssertEqual(api.signUpDomain, DoHMail.default.signupDomain)
     }
 
     func testUserAvailable() {
