@@ -78,7 +78,7 @@ final public class HumanCheckMenuViewController: UIViewController, ViewModelProt
 
     @IBAction func closeAction(_ sender: Any) {
         viewModel.close()
-        _ = self.navigationController?.popViewController(animated: true)
+        navigationController?.dismiss(animated: true, completion: nil)
     }
 
     // MARK: - Private Interface
@@ -153,8 +153,8 @@ final public class HumanCheckMenuViewController: UIViewController, ViewModelProt
         let index = segmentControl.selectedSegmentIndex
         let item = self.viewModel.verifyTypes[index]
         if let viewController = lastViewController {
-            viewController.dismiss(animated: false)
             self.remove(asChildViewController: viewController)
+            viewController.dismiss(animated: false)
             lastViewController = nil
         }
         switch item {

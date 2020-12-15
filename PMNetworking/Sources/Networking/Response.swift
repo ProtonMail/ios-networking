@@ -31,7 +31,7 @@ open class Response {
 
     public var code: Int = 1000
     public var errorMessage: String?
-    var internetCode: Int? //only use when error happend.
+    var internetCode: Int? // only use when error happend.
 
     public var error: NSError?
 
@@ -56,7 +56,7 @@ open class Response {
         return code != 1000 && code != 1001
     }
 
-    func ParseHttpError (_ error: NSError, response: [String: Any]? = nil) {//TODO::need refactor.
+    func ParseHttpError (_ error: NSError, response: [String: Any]? = nil) {// TODO::need refactor.
         self.code = 404
         if let detail = error.userInfo["com.alamofire.serialization.response.error.response"] as? HTTPURLResponse {
             self.code = detail.statusCode

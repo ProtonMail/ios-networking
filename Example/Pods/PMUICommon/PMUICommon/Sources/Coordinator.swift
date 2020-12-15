@@ -91,17 +91,52 @@ extension PushCoordinator where ViewController: UIViewController, ViewController
         }
         configuration?(viewController)
         viewController.set(coordinator: self as! Self.ViewController.CoordinatorType)
-        if let navigationController = navigationController {
-            navigationController.pushViewController(viewController, animated: animated)
-        } else {
-            let window = UIApplication.shared.windows.filter({ $0.isKeyWindow }).first
-            window?.rootViewController?.show(viewController, sender: self)
-        }
+        navigationController?.pushViewController(viewController, animated: animated)
     }
 
     public func stop() {
         delegate?.willStop(in: self)
         navigationController?.popViewController(animated: animated)
+        delegate?.didStop(in: self)
+    }
+}
+
+public protocol ModalVCBasedCoordinator: DefaultCoordinator {
+    var configuration: ((ViewController) -> Void)? { get }
+    var rootViewController: UIViewController? { get }
+}
+
+extension ModalVCBasedCoordinator where ViewController: UIViewController, ViewController: Coordinated {
+    public func start() {
+        guard let viewController = viewController else {
+            return
+        }
+        configuration?(viewController)
+        viewController.set(coordinator: self as! Self.ViewController.CoordinatorType)
+        if let rootViewController = rootViewController {
+            let nav = UINavigationController()
+            nav.modalPresentationStyle = .fullScreen
+            nav.viewControllers = [viewController]
+            rootViewController.present(nav, animated: animated)
+        } else {
+            var topViewController: UIViewController?
+            let keyWindow = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+            if var top = keyWindow?.rootViewController {
+                while let presentedViewController = top.presentedViewController {
+                    top = presentedViewController
+                }
+                topViewController = top
+            }
+            let nav = UINavigationController()
+            nav.modalPresentationStyle = .fullScreen
+            nav.viewControllers = [viewController]
+            topViewController?.present(nav, animated: animated)
+        }
+    }
+
+    public func stop() {
+        delegate?.willStop(in: self)
+        rootViewController?.dismiss(animated: animated, completion: nil)
         delegate?.didStop(in: self)
     }
 }

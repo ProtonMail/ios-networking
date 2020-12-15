@@ -24,9 +24,9 @@
 
 //////////
 /////predefind input funcs for callbacks, for example
-//typealias CallBackBlocks = (() -> Void)
+// typealias CallBackBlocks = (() -> Void)
 protocol NetworkLayer {
-    //generci interfaces to support Http requests
+    // generci interfaces to support Http requests
 //    func request(_ request: URLRequestConvertible,
 //                 success: @escaping (() -> Void),
 //                 failure: @escaping ((Error) -> Void))
@@ -59,24 +59,24 @@ class AFNetworkingWarpper: NetworkLayer {
 
     /// response for delevey data to the third party lib
     init() {
-        //setup session manager
-        //setup pining
-        //etc
+        // setup session manager
+        // setup pining
+        // etc
     }
 }
 
-//class MailDoh : DoH {
+// class MailDoh : DoH {
 //    //Doh config
-//}
+// }
 //
 //
-//---------------------- notes ----------------------
+// ---------------------- notes ----------------------
 //
 ///// general flow
-//1. Defind your APIClient. example.  -  GetSomething: APIClient
-//2. Definde YourService extend on Service interface, and hold the instance of the PMAPIService.
-//3. when your service business logic trying to reach API. just create a APIClient impliment GetSomething and pass in APIService
-//3. each APIClient has routes of the server end point. devs only need to set the vars defind in the interface
-//4. when app start, need to init the PMAPIService by passing in DohConfig, AuthDelegate, APIServiceDelegate and the NetworkWrapperImpl
+// 1. Defind your APIClient. example.  -  GetSomething: APIClient
+// 2. Definde YourService extend on Service interface, and hold the instance of the PMAPIService.
+// 3. when your service business logic trying to reach API. just create a APIClient impliment GetSomething and pass in APIService
+// 3. each APIClient has routes of the server end point. devs only need to set the vars defind in the interface
+// 4. when app start, need to init the PMAPIService by passing in DohConfig, AuthDelegate, APIServiceDelegate and the NetworkWrapperImpl
 //
-//The Demo code is coming this week.
+// The Demo code is coming this week.

@@ -56,7 +56,7 @@ public enum HTTPMethod {
     }
 }
 
-//APIClient is the api client base
+// APIClient is the api client base
 public protocol Request: Package {
     // those functions shdould be overrided
     var version: Int { get }
@@ -70,17 +70,17 @@ public protocol Request: Package {
     var autoRetry: Bool { get }
 }
 
-//open class DefaultRequest : Request {
-//    public var path: String = ""
+// open class DefaultRequest : Request {
+//     public var path: String = ""
 //    
-//    public var auth: AuthCredential?
+//     public var auth: AuthCredential?
 //    
-//    public var authCredential: AuthCredential? {
-//        get {
-//            return self.auth
-//        }
-//    }
-//}
+//     public var authCredential: AuthCredential? {
+//         get {
+//             return self.auth
+//         }
+//     }
+// }
 
 extension Request {
     public var isAuth: Bool {
@@ -115,7 +115,7 @@ public extension Request {
     }
 }
 
-//public protocol Router: URLRequestConvertible {
+// public protocol Router: URLRequestConvertible {
 //    
 //    var path: String { get }
 //    var version: String { get }
@@ -129,4 +129,4 @@ public extension Request {
 //    var parameterEncoding: ParameterEncoding { get }
 //    
 //    func asURLRequest() throws -> URLRequest
-//}
+// }

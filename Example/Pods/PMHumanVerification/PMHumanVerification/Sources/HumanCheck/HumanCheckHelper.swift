@@ -26,23 +26,23 @@ import PMCommon
 import PMUICommon
 
 public class HumanCheckHelper: HumanVerifyDelegate {
-    fileprivate let navController: UINavigationController?
+    fileprivate let rootViewController: UIViewController?
     fileprivate weak var responseDelegate: HumanVerifyResponseDelegate?
     fileprivate let apiService: APIService
     fileprivate let supportURL: URL
     internal var viewModel: HumanCheckViewModelImpl?
 
-    public init(apiService: APIService, supportURL: URL, navigationController: UINavigationController? = nil, responseDelegate: HumanVerifyResponseDelegate? = nil) {
+    public init(apiService: APIService, supportURL: URL, viewController: UIViewController? = nil, responseDelegate: HumanVerifyResponseDelegate? = nil) {
         self.apiService = apiService
         self.supportURL = supportURL
-        self.navController = navigationController
+        self.rootViewController = viewController
         self.responseDelegate = responseDelegate
     }
 
     public func onHumanVerify(methods: [VerifyMethod], completion: (@escaping (HumanVerifyHeader, HumanVerifyIsClosed, SendVerificationCodeBlock?) -> Void)) {
         viewModel = HumanCheckViewModelImpl(types: methods, api: apiService)
         guard let viewModel = viewModel else { return }
-        let coordinator = HumanCheckMenuCoordinator(nav: navController, viewModel: viewModel,
+        let coordinator = HumanCheckMenuCoordinator(rootViewController: rootViewController, viewModel: viewModel,
                                                     services: ServiceFactory.default)
         coordinator?.start()
         self.responseDelegate?.onHumanVerifyStart()

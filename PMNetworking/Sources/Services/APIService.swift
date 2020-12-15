@@ -48,15 +48,15 @@ extension Bundle {
     }
 }
 
-//struct ErrorResponse: Codable {
+// struct ErrorResponse: Codable {
 //    var code: Int
 //    var error: String
 //    var errorDescription: String
-//}
+// }
 
 ///
 public protocol APIServerConfig {
-    //host name    xxx.xxxxxxx.com
+    // host name    xxx.xxxxxxx.com
     var host: String { get }
     // http https ws wss etc ...
     var `protocol` : String {get}
@@ -72,19 +72,19 @@ extension APIServerConfig {
     }
 }
 
-//Predefined servers, could also add the serverlist load from config env later
+// Predefined servers, could also add the serverlist load from config env later
 public enum Server: APIServerConfig {
-    case live //"api.protonmail.ch"
-    case testlive //"test-api.protonmail.ch"
+    case live // "api.protonmail.ch"
+    case testlive // "test-api.protonmail.ch"
 
-    case dev1 //"dev.protonmail.com"
-    case dev2 //"dev-api.protonmail.ch"
+    case dev1 // "dev.protonmail.com"
+    case dev2 // "dev-api.protonmail.ch"
 
-    case blue //"protonmail.blue"
-    case midnight //"midnight.protonmail.blue"
+    case blue // "protonmail.blue"
+    case midnight // "midnight.protonmail.blue"
 
-    //local test
-    //static let URL_HOST : String = "http://127.0.0.1"  //http
+    // local test
+    // static let URL_HOST : String = "http://127.0.0.1"  //http
 
     public var host: String {
         switch self {
@@ -118,10 +118,10 @@ public enum Server: APIServerConfig {
 
 }
 
-//enum <T> {
-//    case failure(Error)
-//    case success(T)
-//}
+// enum <T> {
+//     case failure(Error)
+//     case success(T)
+// }
 
 public typealias CompletionBlock = (_ task: URLSessionDataTask?, _ response: [String: Any]?, _ error: NSError?) -> Void
 
@@ -136,9 +136,9 @@ public protocol API {
 /// this is auth UI related
 public protocol APIServiceDelegate: class {
     func onUpdate(serverTime: Int64)
-    //func onError(error: NSError)
+    // func onError(error: NSError)
 
-    //check if server reachable or check if network avaliable
+    // check if server reachable or check if network avaliable
     func isReachable() -> Bool
 
     var appVersion: String { get }
@@ -190,10 +190,10 @@ public protocol AuthDelegate: class {
 }
 
 public protocol APIService: API {
-    //var network : NetworkLayer {get}
-    //var vpn : VPNInterface {get}
-    //var doh:  DoH  {get}//depends on NetworkLayer. {get}
-    //var queue : [Request] {get}
+    // var network : NetworkLayer {get}
+    // var vpn : VPNInterface {get}
+    // var doh:  DoH  {get}//depends on NetworkLayer. {get}
+    // var queue : [Request] {get}
 
     func setSessionUID(uid: String)
 
@@ -211,12 +211,12 @@ class TestResponse: Response {
 typealias RequestComplete = (_ task: URLSessionDataTask?, _ response: Response) -> Void
 
 public extension APIService {
-    //init
+    // init
     func exec<T>(route: Request) -> T? where T: Response {
         var ret_res: T?
         var ret_error: NSError?
         let sema = DispatchSemaphore(value: 0)
-        //TODO :: 1 make a request , 2 wait for the respons async 3. valid response 4. parse data into response 5. some data need save into database.
+        // TODO :: 1 make a request , 2 wait for the respons async 3. valid response 4. parse data into response 5. some data need save into database.
         let completionWrapper: CompletionBlock = { _, res, error in
             defer {
                 sema.signal()
@@ -224,7 +224,7 @@ public extension APIService {
             let realType = T.self
             let apiRes = realType.init()
             if error != nil {
-                //TODO check error
+                // TODO check error
                 apiRes.ParseHttpError(error!)
                 ret_error = apiRes.error
                 return
@@ -232,7 +232,7 @@ public extension APIService {
 
             if res == nil {
                 // TODO:: check res
-                //apiRes.error = NSError.badResponse()
+                // apiRes.error = NSError.badResponse()
                 ret_error = apiRes.error
                 return
             }
@@ -247,7 +247,7 @@ public extension APIService {
             }
             ret_res = apiRes
         }
-        //TODO:: missing auth
+        // TODO:: missing auth
         var header = route.header
         header[HTTPHeader.apiVersion] = route.version
         self.request(method: route.method, path: route.path,
@@ -258,10 +258,10 @@ public extension APIService {
                      customAuthCredential: route.authCredential,
                      completion: completionWrapper)
 
-        //wait operations
+        // wait operations
         _ = sema.wait(timeout: DispatchTime.distantFuture)
         if let e = ret_error {
-            //TODO::fix me
+            // TODO::fix me
             print(e.localizedDescription)
         }
         return ret_res
@@ -285,7 +285,7 @@ public extension APIService {
 
             if res == nil {
                 // TODO:: check res
-                //apiRes.error = NSError.badResponse()
+                // apiRes.error = NSError.badResponse()
                 complete(task, apiRes)
                 return
             }
@@ -315,7 +315,7 @@ public extension APIService {
             let realType = T.self
             let apiRes = realType.init()
             if error != nil {
-                //TODO check error
+                // TODO check error
                 apiRes.ParseHttpError(error!, response: res)
                 if let resRaw = res {
                     _ = apiRes.ParseResponse(resRaw)
@@ -325,8 +325,8 @@ public extension APIService {
             }
 
             if res == nil {
-                //TODO:: check res
-                //apiRes.error = NSError.badResponse()
+                // TODO:: check res
+                // apiRes.error = NSError.badResponse()
                 complete(apiRes)
                 return
             }
@@ -355,7 +355,7 @@ public extension APIService {
         let completionWrapper: CompletionBlock = { task, res, error in
             do {
                 if let res = res {
-                    //this is a workaround for afnetworking, will change it
+                    // this is a workaround for afnetworking, will change it
                     let responseData = try JSONSerialization.data(withJSONObject: res, options: .prettyPrinted)
 
                     let decoder = JSONDecoder()
@@ -392,7 +392,7 @@ public extension APIService {
         let completionWrapper: CompletionBlock = { _, res, error in
             do {
                 if let res = res {
-                    //this is a workaround for afnetworking, will change it
+                    // this is a workaround for afnetworking, will change it
                     let responseData = try JSONSerialization.data(withJSONObject: res, options: .prettyPrinted)
 
                     let decoder = JSONDecoder()

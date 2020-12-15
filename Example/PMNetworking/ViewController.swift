@@ -155,7 +155,7 @@ class MainViewController: UIViewController {
         
         //set the human verification delegation
         let url = URL(string: "https://protonmail.com/support/knowledge-base/human-verification/")!
-        humanVerificationDelegate = HumanCheckHelper(apiService: testApi, supportURL: url, navigationController: self.navigationController!, responseDelegate: self)
+        humanVerificationDelegate = HumanCheckHelper(apiService: testApi, supportURL: url, viewController: self, responseDelegate: self)
         testApi.humanDelegate = humanVerificationDelegate
 
         let authApi: Authenticator = Authenticator(api: testApi)

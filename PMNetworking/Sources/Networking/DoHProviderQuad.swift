@@ -27,7 +27,7 @@ import Foundation
 struct Quad9: DoHProviderInternal {
 
     public init() {
-        //TODO:: remove public later
+        // TODO:: remove public later
     }
 
     let supported: [Int] = [DNSType.txt.rawValue]
@@ -47,12 +47,12 @@ struct Quad9: DoHProviderInternal {
             let jsonStr = String(decoding: response, as: UTF8.self)
             print(jsonStr)
             guard let dictRes = try JSONSerialization.jsonObject(with: response, options: JSONSerialization.ReadingOptions.allowFragments) as? [String: Any] else {
-                //throw error
+                // throw error
                 return nil
             }
 
             guard let answers = dictRes["Answer"] as? [[String: Any]] else {
-                //throw error
+                // throw error
                 return nil
             }
 
@@ -79,7 +79,7 @@ struct Quad9: DoHProviderInternal {
             return nil
         } catch {
             print("parse error: \(error)")
-            //throw error
+            // throw error
             return nil
         }
     }

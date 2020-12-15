@@ -24,7 +24,7 @@
 import UIKit
 import PMUICommon
 
-public class HumanCheckMenuCoordinator: PushCoordinator {
+public class HumanCheckMenuCoordinator: ModalVCBasedCoordinator {
     public typealias ViewController = HumanCheckMenuViewController
     fileprivate let viewModel: HumanCheckViewModel
 
@@ -32,14 +32,14 @@ public class HumanCheckMenuCoordinator: PushCoordinator {
         viewController.set(coordinator: self)
         viewController.set(viewModel: self.viewModel)
     }
-    public var navigationController: UINavigationController?
+    public var rootViewController: UIViewController?
     public weak var viewController: ViewController?
     public var services: ServiceFactory
     public weak var delegate: CoordinatorDelegate?
 
-    public init?(nav: UINavigationController?, viewModel: HumanCheckViewModel, services: ServiceFactory, scene: AnyObject? = nil) {
+    public init?(rootViewController: UIViewController?, viewModel: HumanCheckViewModel, services: ServiceFactory, scene: AnyObject? = nil) {
         if NSClassFromString("XCTest") != nil { return nil }
-        self.navigationController = nav
+        self.rootViewController = rootViewController
         self.viewModel = viewModel
         self.services = services
 

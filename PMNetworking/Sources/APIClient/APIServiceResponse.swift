@@ -29,7 +29,7 @@ open class ApiResponse {
 
     open var code: Int! = 1000
     open var errorMessage: String?
-    open var internetCode: Int? //only use when error happend.
+    open var internetCode: Int? // only use when error happend.
 
     open var error: NSError?
 
@@ -58,7 +58,7 @@ open class ApiResponse {
         return code != 1000 && code != 1001
     }
 
-    open func ParseHttpError (_ error: NSError, response: [String: Any]? = nil) {//TODO::need refactor.
+    open func ParseHttpError (_ error: NSError, response: [String: Any]? = nil) {// TODO::need refactor.
         self.code = 404
         if let detail = error.userInfo["com.alamofire.serialization.response.error.response"] as? HTTPURLResponse {
             self.code = detail.statusCode

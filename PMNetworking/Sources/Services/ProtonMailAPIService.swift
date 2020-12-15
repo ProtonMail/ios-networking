@@ -23,7 +23,7 @@
 // swiftlint:disable identifier_name type_body_length cyclomatic_complexity function_body_length force_try function_parameter_count todo
 
 import Foundation
-//REMOVE the networking ref
+// REMOVE the networking ref
 import AFNetworking
 
 public class APIErrorCode {
@@ -71,7 +71,7 @@ public class APIErrorCode {
     static public let humanVerificationRequired = 9001
 }
 
-//This need move to a common framwork
+// This need move to a common framwork
 extension NSError {
 
     convenience init(domain: String, code: Int, localizedDescription: String, localizedFailureReason: String? = nil, localizedRecoverySuggestion: String? = nil) {
@@ -118,7 +118,7 @@ extension NSError {
             //                        if(error?.code == -1001) {
             //                            // request timed out
             //                        }
-            if self.code == -1009 || self.code == -1004 || self.code == -1001 { //internet issue
+            if self.code == -1009 || self.code == -1004 || self.code == -1001 { // internet issue
                 isInternetIssue = true
             }
         }
@@ -133,7 +133,7 @@ final class UserAgent {
     private var cachedUS: String?
     private init () { }
 
-    //eg. Darwin/16.3.0
+    // eg. Darwin/16.3.0
     private func DarwinVersion() -> String {
         var sysinfo = utsname()
         uname(&sysinfo)
@@ -143,14 +143,14 @@ final class UserAgent {
         }
         return ""
     }
-    //eg. CFNetwork/808.3
+    // eg. CFNetwork/808.3
     private func CFNetworkVersion() -> String {
         let dictionary = Bundle(identifier: "com.apple.CFNetwork")?.infoDictionary
         let version = dictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
         return "CFNetwork/\(version)"
     }
 
-    //eg. iOS/10_1
+    // eg. iOS/10_1
     private func deviceVersion() -> String {
         #if canImport(UIKit)
         let currentDevice = UIDevice.current
@@ -161,7 +161,7 @@ final class UserAgent {
         return ""
         #endif
     }
-    //eg. iPhone5,2
+    // eg. iPhone5,2
     private func deviceName() -> String {
         var sysinfo = utsname()
         uname(&sysinfo)
@@ -172,7 +172,7 @@ final class UserAgent {
         }
         return "Unknown"
     }
-    //eg. MyApp/1
+    // eg. MyApp/1
     private func appNameAndVersion() -> String {
         let dictionary = Bundle.main.infoDictionary!
         let version = dictionary["CFBundleShortVersionString"] as? String ?? "Unknown"
@@ -194,7 +194,7 @@ final class UserAgent {
 
 public let APIServiceErrorDomain = NSError.protonMailErrorDomain("APIService")
 
-//Protonmail api serivce. all the network requestion must go with this.
+// Protonmail api serivce. all the network requestion must go with this.
 public class PMAPIService: APIService {
 
     /// ForceUpgradeDelegate
@@ -272,13 +272,13 @@ public class PMAPIService: APIService {
         // init lock
         pthread_mutex_init(&mutex, nil)
         self.doh = doh
-        doh.status = .off //userCachedStatus.isDohOn ? .on : .off
+        doh.status = .off // userCachedStatus.isDohOn ? .on : .off
 
         // human verification lock
         pthread_mutex_init(&humanVerificationMutex, nil)
 
         // set config
-        //self.serverConfig = config
+        // self.serverConfig = config
         self.sessionUID = sessionUID
 
         //
@@ -289,7 +289,7 @@ public class PMAPIService: APIService {
         let apiHostUrl = self.doh.getHostUrl() // self.serverConfig.hostUrl
         sessionManager = AFHTTPSessionManager(baseURL: URL(string: apiHostUrl)!)
         sessionManager.requestSerializer = AFJSONRequestSerializer()
-        sessionManager.requestSerializer.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData  //.ReloadIgnoringCacheData
+        sessionManager.requestSerializer.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData  // .ReloadIgnoringCacheData
         sessionManager.requestSerializer.stringEncoding = String.Encoding.utf8.rawValue
 
         sessionManager.responseSerializer.acceptableContentTypes?.insert("text/html")
@@ -322,7 +322,7 @@ public class PMAPIService: APIService {
 
     internal typealias AuthTokenBlock = (String?, String?, NSError?) -> Void
     internal func fetchAuthCredential(_ completion: @escaping AuthTokenBlock) {
-        //TODO:: fix me. this is wrong. concurruncy
+        // TODO:: fix me. this is wrong. concurruncy
         DispatchQueue.global(qos: .default).async {
             pthread_mutex_lock(&self.mutex)
             guard let delegate = self.authDelegate else {
@@ -343,15 +343,15 @@ public class PMAPIService: APIService {
                     if let err = error, err.domain == APIServiceErrorDomain && err.code == APIErrorCode.AuthErrorCode.invalidGrant {
                         pthread_mutex_unlock(&self.mutex)
                         DispatchQueue.main.async {
-                            //NSError.alertBadTokenToast()
+                            // NSError.alertBadTokenToast()
                             completion(newCredential?.accessToken, self.sessionUID, err)
                             self.authDelegate?.onLogout(sessionUID: self.sessionUID)
-                            //NotificationCenter.default.post(name: .didReovke, object: nil, userInfo: ["uid": self.sessionUID ])error
+                            // NotificationCenter.default.post(name: .didReovke, object: nil, userInfo: ["uid": self.sessionUID ])error
                         }
                     } else if let err = error, err.domain == APIServiceErrorDomain && err.code == APIErrorCode.AuthErrorCode.localCacheBad {
                         pthread_mutex_unlock(&self.mutex)
                         DispatchQueue.main.async {
-                            //NSError.alertBadTokenToast()
+                            // NSError.alertBadTokenToast()
                             self.fetchAuthCredential(completion)
                         }
                     } else {
@@ -390,7 +390,7 @@ public class PMAPIService: APIService {
             return
         }
 
-        //TODO:: fix me.  to aline the auth framwork Credential object with Networking Credential object
+        // TODO:: fix me.  to aline the auth framwork Credential object with Networking Credential object
         authCredential.expire()
         self.authDelegate?.onUpdate(auth: Credential( authCredential))
     }
@@ -404,7 +404,7 @@ public class PMAPIService: APIService {
                      customAuthCredential: customAuthCredential, completion: completion)
 
     }
-    //new requestion function
+    // new requestion function
     func request(method: HTTPMethod,
                  path: String,
                  parameters: Any?,
@@ -422,7 +422,7 @@ public class PMAPIService: APIService {
                 let parseBlock: (_ task: URLSessionDataTask?, _ response: Any?, _ error: Error?) -> Void = { task, response, error in
                     if let error = error as NSError? {
                         self.debugError(error)
-                        //PMLog.D(api: error)
+                        // PMLog.D(api: error)
                         var httpCode: Int = 200
                         if let detail = error.userInfo["com.alamofire.serialization.response.error.response"] as? HTTPURLResponse {
                             httpCode = detail.statusCode
@@ -432,13 +432,13 @@ public class PMAPIService: APIService {
 
                         if authenticated && httpCode == 401 && authRetry {
                             self.expireCredential()
-                            if path.isRefreshPath { //tempery no need later
+                            if path.isRefreshPath { // tempery no need later
                                 completion?(nil, nil, error)
                                 self.authDelegate?.onLogout(sessionUID: self.sessionUID)
-                                //self.delegate?.onError(error: error)
-                                //UserTempCachedStatus.backup()
+                                // self.delegate?.onError(error: error)
+                                // UserTempCachedStatus.backup()
                                 ////sharedUserDataService.signOut(true);
-                                //userCachedStatus.signOut()
+                                // userCachedStatus.signOut()
                             } else {
                                 if authRetryRemains > 0 {
                                     self.request(method: method,
@@ -451,7 +451,7 @@ public class PMAPIService: APIService {
                                                  completion: completion)
                                 } else {
                                     self.authDelegate?.onLogout(sessionUID: self.sessionUID)
-                                    //NotificationCenter.default.post(name: .didReovke, object: nil, userInfo: ["uid": userID ?? ""])
+                                    // NotificationCenter.default.post(name: .didReovke, object: nil, userInfo: ["uid": userID ?? ""])
                                 }
                             }
                         } else if authenticated && httpCode == 422 && authRetry && path.isRefreshPath {
@@ -511,7 +511,7 @@ public class PMAPIService: APIService {
 //                                    ])
                                 }
                                 self.expireCredential()
-                                if path.contains("https://api.protonmail.ch/refresh") { //tempery no need later
+                                if path.contains("https://api.protonmail.ch/refresh") { // tempery no need later
                                     completion?(nil, nil, error)
                                     self.authDelegate?.onLogout(sessionUID: self.sessionUID)
                                 } else {
@@ -526,7 +526,7 @@ public class PMAPIService: APIService {
                                                      completion: completion)
                                     } else {
                                         self.authDelegate?.onLogout(sessionUID: self.sessionUID)
-                                        //NotificationCenter.default.post(name: .didReovke, object: nil, userInfo: ["uid": userID ?? ""])
+                                        // NotificationCenter.default.post(name: .didReovke, object: nil, userInfo: ["uid": userID ?? ""])
                                     }
                                 }
                             } else if responseCode == APIErrorCode.humanVerificationRequired {
@@ -593,8 +593,8 @@ public class PMAPIService: APIService {
                     request.setValue(appversion, forHTTPHeaderField: "x-pm-appversion")
 
                     // todo
-                    //let clanguage = LanguageManager.currentLanguageEnum()
-                    //request.setValue(clanguage.localeString, forHTTPHeaderField: "x-pm-locale")
+                    // let clanguage = LanguageManager.currentLanguageEnum()
+                    // request.setValue(clanguage.localeString, forHTTPHeaderField: "x-pm-locale")
 
                     if let ua = self.serviceDelegate?.userAgent ?? UserAgent.default.ua {
                         request.setValue(ua, forHTTPHeaderField: "User-Agent")
@@ -602,16 +602,16 @@ public class PMAPIService: APIService {
 
                     var task: URLSessionDataTask?
                     task = self.sessionManager.dataTask(with: request as URLRequest, uploadProgress: { (_) in
-                        //TODO::add later
+                        // TODO::add later
 
                     }, downloadProgress: { (_) in
-                        //TODO::add later
+                        // TODO::add later
                         print("in progress")
                     }, completionHandler: { (urlresponse, res, error) in
                         self.debugError(error)
                         if let urlres = urlresponse as? HTTPURLResponse,
                             let allheader = urlres.allHeaderFields as? [String: Any] {
-                            //PMLog.D("\(allheader.json(prettyPrinted: true))")
+                            // PMLog.D("\(allheader.json(prettyPrinted: true))")
                             if let strData = allheader["Date"] as? String {
                                 // create dateFormatter with UTC time format
                                 let dateFormatter = DateFormatter()
@@ -626,8 +626,8 @@ public class PMAPIService: APIService {
                         }
 
                         if self.doh.handleError(host: url, error: error) {
-                            //retry here
-                            //PMLog.D(" DOH Retry: " + url)
+                            // retry here
+                            // PMLog.D(" DOH Retry: " + url)
                             self.request(method: method,
                                          path: path,
                                          parameters: parameters,
@@ -707,9 +707,9 @@ public class PMAPIService: APIService {
                 request.setValue("application/vnd.protonmail.v1+json", forHTTPHeaderField: "Accept")
                 request.setValue(appversion, forHTTPHeaderField: "x-pm-appversion")
 
-                //TODO:: fix the local
-                //let clanguage = LanguageManager.currentLanguageEnum()
-                //request.setValue(clanguage.localeString, forHTTPHeaderField: "x-pm-locale")
+                // TODO:: fix the local
+                // let clanguage = LanguageManager.currentLanguageEnum()
+                // request.setValue(clanguage.localeString, forHTTPHeaderField: "x-pm-locale")
                 if let ua = self.serviceDelegate?.userAgent ?? UserAgent.default.ua {
                     request.setValue(ua, forHTTPHeaderField: "User-Agent")
                 }
@@ -842,6 +842,12 @@ public class PMAPIService: APIService {
         task: URLSessionDataTask?,
         responseDict: [String: Any],
         completion: CompletionBlock?) {
+
+        // return completion if humanDelegate in not present
+        if self.humanDelegate == nil {
+            completion?(task, responseDict, error)
+            return
+        }
 
         // human verification required
         if self.isHumanVerifyUIPresented == true {
