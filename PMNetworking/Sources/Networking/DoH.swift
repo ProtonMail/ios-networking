@@ -44,7 +44,7 @@ struct DNSCache {
 public enum DoHStatus {
     case on
     case off
-    case auto //mix don't know yet
+    case auto // mix don't know yet
 }
 
 public protocol ServerConfig {
@@ -135,7 +135,7 @@ open class DoH: DoHInterface {
     }
 
     func fetchAll(host: String) {
-        //doing google for now. will add others
+        // doing google for now. will add others
         if let dns = Google().fetch(sync: host) {
             self.cache(set: host, dnsList: dns)
         }
@@ -320,7 +320,7 @@ open class DoH: DoHInterface {
             }
         }
 
-        //temp workaround
+        // temp workaround
         if status != .off && found.count == 1 && firstTime == 0 {
             firstTime += 1
             return true

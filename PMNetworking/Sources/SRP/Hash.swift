@@ -108,7 +108,7 @@ public struct HMAC {
         case .sha512:
             CC_SHA512((input as NSData).bytes, UInt32(input.count), &hash)
         }
-        return Data(bytes: UnsafePointer<UInt8>(hash), count: digestLength)
+        return Data(bytes: hash, count: digestLength)
     }
 
     public static func hexStringFromData(_ input: Data) -> String {

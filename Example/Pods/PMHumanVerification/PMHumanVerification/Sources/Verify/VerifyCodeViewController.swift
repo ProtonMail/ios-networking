@@ -139,7 +139,7 @@ class VerifyCodeViewController: UIViewController {
                 self.continueButton.setTitle(CoreString._hv_verification_verify_button, for: .normal)
                 if res {
                     self.verifyCodeTextFieldView.isError = false
-                    self.navigationController?.popToRootViewController(animated: true)
+                    self.navigationController?.dismiss(animated: true, completion: nil)
                 } else {
                     if let error = error {
                         self.showErrorAlert(error: error)

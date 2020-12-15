@@ -95,8 +95,8 @@ public struct UserProperties {
     }
 }
 
-//Users API
-//Doc: https://github.com/ProtonMail/Slim-API/blob/develop/api-spec/pm_api_users.md
+// Users API
+// Doc: https://github.com/ProtonMail/Slim-API/blob/develop/api-spec/pm_api_users.md
 
 public class UserAPI: APIClient {
 
@@ -236,10 +236,10 @@ struct ShowImages: OptionSet {
 @objc(UserInfo)
 public final class UserInfo: NSObject {
 
-    //1.9.0 phone local cache
+    // 1.9.0 phone local cache
     var language: String
 
-    //1.9.1 user object
+    // 1.9.1 user object
     var delinquent: Int
     var role: Int
     var maxSpace: Int64
@@ -247,13 +247,13 @@ public final class UserInfo: NSObject {
     var maxUpload: Int64
     public var userId: String
 
-    var userKeys: [Key] //user key
+    var userKeys: [Key] // user key
 
     // 1.11.12 user object
     var credit: Int
     var currency: String
 
-    //1.9.1 mail settings
+    // 1.9.1 mail settings
     var displayName: String = ""
     var defaultSignature: String = ""
     var autoSaveContact: Int = 0
@@ -266,14 +266,14 @@ public final class UserInfo: NSObject {
     var attachPublicKey: Int = 0
     var sign: Int = 0
 
-    //1.9.1 user settings
+    // 1.9.1 user settings
     var notificationEmail: String = ""
     var notify: Int = 0
 
-    //1.9.0 get from addresses route
+    // 1.9.0 get from addresses route
     var userAddresses: [Address] = [Address]()
 
-    //1.12.0
+    // 1.12.0
     var passwordMode: Int = 1
     var twoFactor: Int = 0
 
@@ -292,8 +292,8 @@ public final class UserInfo: NSObject {
     required init(
         displayName: String?, maxSpace: Int64?, notificationEmail: String?, signature: String?,
         usedSpace: Int64?, userAddresses: [Address]?,
-        autoSC: Int?, language: String?, maxUpload: Int64?, notify: Int?, showImage: Int?,  //v1.0.8
-        swipeL: Int?, swipeR: Int?,  //v1.1.4
+        autoSC: Int?, language: String?, maxUpload: Int64?, notify: Int?, showImage: Int?,  // v1.0.8
+        swipeL: Int?, swipeR: Int?,  // v1.1.4
         role: Int?,
         delinquent: Int?,
         keys: [Key]?,
@@ -617,7 +617,7 @@ extension UserInfo: NSCoding {
         aCoder.encode(delinquent, forKey: CoderKey.delinquent)
         aCoder.encode(userKeys, forKey: CoderKey.userKeys)
 
-        //get from mail settings
+        // get from mail settings
         aCoder.encode(displayName, forKey: CoderKey.displayName)
         aCoder.encode(defaultSignature, forKey: CoderKey.signature)
         aCoder.encode(autoSaveContact, forKey: CoderKey.autoSaveContact)
@@ -646,11 +646,11 @@ final class Key: NSObject {
     var is_updated: Bool = false
     var keyflags: Int = 0
 
-    //key migration step 1 08/01/2019
+    // key migration step 1 08/01/2019
     var token: String?
     var signature: String?
 
-    //old activetion flow
+    // old activetion flow
     var activation: String? // armed pgp msg, token encrypted by user's public key and
 
     required init(key_id: String?, private_key: String?,
@@ -721,14 +721,14 @@ extension Key: NSCoding {
         aCoder.encode(key_id, forKey: CoderKey.keyID)
         aCoder.encode(private_key, forKey: CoderKey.privateKey)
 
-        //new added
+        // new added
         aCoder.encode(token, forKey: CoderKey.Token)
         aCoder.encode(signature, forKey: CoderKey.Signature)
 
         //
         aCoder.encode(activation, forKey: CoderKey.Activation)
 
-        //TODO:: fingerprintKey is deprecated, need to "remove and clean"
+        // TODO:: fingerprintKey is deprecated, need to "remove and clean"
         aCoder.encode("", forKey: CoderKey.fingerprintKey)
     }
 }
@@ -810,7 +810,7 @@ extension Address: NSCoding {
         return NSKeyedUnarchiver.unarchiveObject(with: data) as? Address
     }
 
-    //the keys all messed up but it works ( don't copy paste there looks really bad)
+    // the keys all messed up but it works ( don't copy paste there looks really bad)
     fileprivate struct CoderKey {
         static let addressID    = "displayName"
         static let email        = "maxSpace"

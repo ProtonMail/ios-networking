@@ -32,9 +32,9 @@ class MessageServiceImpl: MessageService {
     }
 
     func someFeature() -> String {
-        //...prepare data
-        //...
-        //var apiClient = MessageFetchAPI(self.service)
+        // ...prepare data
+        // ...
+        // var apiClient = MessageFetchAPI(self.service)
 
         return ""
     }
@@ -42,14 +42,14 @@ class MessageServiceImpl: MessageService {
 
 //
 //
-//mock for testing
-//class MessageServiceMock: Service {
-//    init(service: APIService) {
-//        super.init(...)
-//    }
-//    func someFeature() -> String {
-//        return "fake data"
-//    }
-//}
+// mock for testing
+// class MessageServiceMock: Service {
+//     init(service: APIService) {
+//         super.init(...)
+//     }
+//     func someFeature() -> String {
+//         return "fake data"
+//     }
+// }
 //
 //

@@ -35,12 +35,12 @@ public protocol ApiPackage {
     func toDictionary() -> [String: Any]?
 }
 
-//abstract api request base class
+// abstract api request base class
 open class ApiRequest<T: ApiResponse>: ApiPackage {
 
     init () { }
 
-    //add error response
+    // add error response
     public typealias ResponseCompletionBlock = (_ task: URLSessionDataTask?, _ response: T?, _ hasError: Bool) -> Void
 
     public func toDictionary() -> [String: Any]? {
@@ -95,7 +95,7 @@ open class ApiRequest<T: ApiResponse>: ApiPackage {
             let apiRes = realType.init()
 
             if error != nil {
-                //TODO check error
+                // TODO check error
                 apiRes.ParseHttpError(error!, response: res)
                 complete?(task, apiRes, true)
                 return
@@ -133,7 +133,7 @@ open class ApiRequest<T: ApiResponse>: ApiPackage {
         var ret_res: T?
         var ret_error: NSError?
         let sema = DispatchSemaphore(value: 0)
-        //TODO :: 1 make a request , 2 wait for the respons async 3. valid response 4. parse data into response 5. some data need save into database.
+        // TODO :: 1 make a request , 2 wait for the respons async 3. valid response 4. parse data into response 5. some data need save into database.
         let completionWrapper: CompletionBlock = { _, res, error in
             defer {
                 sema.signal()
@@ -141,7 +141,7 @@ open class ApiRequest<T: ApiResponse>: ApiPackage {
             let realType = T.self
             let apiRes = realType.init()
             if error != nil {
-                //TODO check error
+                // TODO check error
                 apiRes.ParseHttpError(error!)
                 ret_error = apiRes.error
                 return
@@ -165,12 +165,12 @@ open class ApiRequest<T: ApiResponse>: ApiPackage {
             ret_res = apiRes
         }
 
-        //TODO:: missing auth
+        // TODO:: missing auth
         api.request(method: self.method(), path: self.path(),
                     parameters: self.toDictionary(), headers: [HTTPHeader.apiVersion: self.apiVersion()],
                     authenticated: self.getIsAuthFunction(), autoRetry: self.authRetry(), customAuthCredential: self.authCredential, completion: completionWrapper)
 
-        //wait operations
+        // wait operations
         _ = sema.wait(timeout: DispatchTime.distantFuture)
         if let e = ret_error {
             throw e
@@ -179,15 +179,15 @@ open class ApiRequest<T: ApiResponse>: ApiPackage {
     }
 }
 
-//abstract api request base class
+// abstract api request base class
 open class ApiRequestNew<T: ApiResponse>: ApiPackage {
 
     public init (api: API) {
         self.apiService = api
     }
 
-    //add error response
-    //public typealias ResponseCompletionBlock = (_ task: URLSessionDataTask?, _ response: T?, _ hasError : Bool) -> Void
+    // add error response
+    // public typealias ResponseCompletionBlock = (_ task: URLSessionDataTask?, _ response: T?, _ hasError : Bool) -> Void
 
     open func toDictionary() -> [String: Any]? {
         return nil
@@ -245,7 +245,7 @@ open class ApiRequestNew<T: ApiResponse>: ApiPackage {
 //                    PMLog.D(res.json(prettyPrinted: true))
 //                }
 //                #endif
-                //TODO check error
+                // TODO check error
                 apiRes.ParseHttpError(error!)
                 deferred.resolver.reject(error!)
                 return
@@ -268,7 +268,7 @@ open class ApiRequestNew<T: ApiResponse>: ApiPackage {
             }
         }
 
-        //TODO:: missing auth
+        // TODO:: missing auth
         apiService.request(method: self.method(), path: self.path(),
                     parameters: self.toDictionary(), headers: [HTTPHeader.apiVersion: self.apiVersion()],
                     authenticated: self.getIsAuthFunction(), autoRetry: self.authRetry(), customAuthCredential: self.authCredential, completion: completionWrapper)

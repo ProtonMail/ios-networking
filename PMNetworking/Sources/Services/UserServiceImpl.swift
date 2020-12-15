@@ -33,7 +33,7 @@ class UserServiceImpl: MessageService {
 
     func someFeature() -> String {
 
-        //apiClient.exec()/apiClient.ayncExec()
+        // apiClient.exec()/apiClient.ayncExec()
             // ....
         _ = self.service.exec(route: UserAPI.Router.checkUsername("tedst")) as? TestResponse
 

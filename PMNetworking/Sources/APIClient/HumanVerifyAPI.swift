@@ -24,8 +24,8 @@
 
 import Foundation
 
-//Users API
-//Doc: https://github.com/ProtonMail/Slim-API/blob/develop/api-spec/pm_api_users.md
+// Users API
+// Doc: https://github.com/ProtonMail/Slim-API/blob/develop/api-spec/pm_api_users.md
 
 public class HumanVerifyAPI: APIClient {
 

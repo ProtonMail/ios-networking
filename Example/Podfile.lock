@@ -32,23 +32,23 @@ PODS:
   - PMAuthentication (1.3.1):
     - PMCommon
     - PMCrypto
-  - PMCommon (0.1.0):
-    - PMCommon/Default (= 0.1.0)
-  - PMCommon/APIClient (0.1.0):
+  - PMCommon (1.1.2):
+    - PMCommon/Default (= 1.1.2)
+  - PMCommon/APIClient (1.1.2):
     - PMCommon/Networking
-  - PMCommon/Default (0.1.0):
+  - PMCommon/Default (1.1.2):
     - PMCommon/APIClient
     - PMCommon/Networking
     - PMCommon/Services
     - PMCommon/SRP
-  - PMCommon/Networking (0.1.0):
+  - PMCommon/Networking (1.1.2):
     - AFNetworking (~> 4.0)
     - AwaitKit (~> 5.0.0)
     - PromiseKit (~> 6.0)
-  - PMCommon/Services (0.1.0):
+  - PMCommon/Services (1.1.2):
     - PMCommon/APIClient
-  - PMCommon/SRP (0.1.0)
-  - PMCommon/Tests (0.1.0):
+  - PMCommon/SRP (1.1.2)
+  - PMCommon/Tests (1.1.2):
     - OHHTTPStubs/Swift
   - PMCoreTranslation (1.0.0)
   - PMCrypto (1.1.0)
@@ -72,7 +72,7 @@ PODS:
     - PromiseKit/CorePromise
   - PromiseKit/UIKit (6.13.1):
     - PromiseKit/CorePromise
-  - SwiftLint (0.41.0)
+  - SwiftLint (0.42.0)
   - TrustKit (1.6.2)
 
 DEPENDENCIES:
@@ -138,10 +138,10 @@ CHECKOUT OPTIONS:
     :commit: e4fb67d068aa84f714aed885234c5369ba97ec2e
     :git: "git@gitlab.protontech.ch:apple/shared/pmforceupgrade.git"
   PMHumanVerification:
-    :commit: dd9787893156022fca6efc0da7b35fbd1694146d
+    :commit: 2d02033674775bd65361b671a3ad289e53873d33
     :git: "git@gitlab.protontech.ch:apple/shared/pmhumanverification.git"
   PMUICommon:
-    :commit: 6320b8f5da23a85ffe0cda26e9a971bee6563db0
+    :commit: eddb6ce3da4438c6686e74c70f83f8c82558ab34
     :git: "git@gitlab.protontech.ch:apple/shared/pmuicommon.git"
   PMUIFoundations:
     :commit: e53121af353120906edfbe5a10edbab1eee359b4
@@ -152,7 +152,7 @@ SPEC CHECKSUMS:
   AwaitKit: a6d0b0b6d603cedda8ef1c1c249b8d6730359917
   OHHTTPStubs: 90eac6d8f2c18317baeca36698523dc67c513831
   PMAuthentication: 34795d10a276ca957250452749d424f017a50a3a
-  PMCommon: 445682918717601b6c81917efdecb7c1bc0e0988
+  PMCommon: 293fabb461efffdcaa8f99d68f195484abfdaa53
   PMCoreTranslation: 221df023e0a50c73bdadd07ce8917e053f69a859
   PMCrypto: 70361d6a49e834bfae377b3b4524c2b305fb95c4
   PMForceUpgrade: f494aa7192a45e642ef190a1c8d58ab746eaa515
@@ -160,7 +160,7 @@ SPEC CHECKSUMS:
   PMUICommon: a55d8aad94373e3939f7cf618ac98366ff86585e
   PMUIFoundations: 741e3317f3658cb01b9964109527c09600c1af95
   PromiseKit: 28fda91c973cc377875d8c0ea4f973013c05b6db
-  SwiftLint: c585ebd615d9520d7fbdbe151f527977b0534f1e
+  SwiftLint: 4fa9579c63416865179bc416f0a92d55f009600d
   TrustKit: 0a64b37d31518f16e344ceaf27e129dde624ce75
 
 PODFILE CHECKSUM: be2a6275e9467059a6367ff7d38b08d020e70a02

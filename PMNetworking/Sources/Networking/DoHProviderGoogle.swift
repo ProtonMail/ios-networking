@@ -24,10 +24,10 @@
 
 import Foundation
 
-//Txt record only
+// Txt record only
 public struct Google: DoHProviderInternal {
     public init() {
-        //TODO:: remove public later
+        // TODO:: remove public later
     }
 
     let supported: [Int] = [DNSType.txt.rawValue]
@@ -47,12 +47,12 @@ public struct Google: DoHProviderInternal {
             let jsonStr = String(decoding: response, as: UTF8.self)
             print(jsonStr)
             guard let dictRes = try JSONSerialization.jsonObject(with: response, options: JSONSerialization.ReadingOptions.allowFragments) as? [String: Any] else {
-                //throw error
+                // throw error
                 return nil
             }
 
             guard let answers = dictRes["Answer"] as? [[String: Any]] else {
-                //throw error
+                // throw error
                 return nil
             }
 
@@ -79,7 +79,7 @@ public struct Google: DoHProviderInternal {
             return nil
         } catch {
             print("parse error: \(error)")
-            //throw error
+            // throw error
             return nil
         }
     }
