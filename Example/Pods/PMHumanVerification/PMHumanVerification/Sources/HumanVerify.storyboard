@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="kN8-ZJ-W2a">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="kN8-ZJ-W2a">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -12,7 +12,7 @@
         <!--Recaptcha View Controller-->
         <scene sceneID="kRk-yJ-4cz">
             <objects>
-                <viewController storyboardIdentifier="RecaptchaViewController" id="XYV-2Y-X0C" customClass="RecaptchaViewController" customModule="Resources_HV" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="RecaptchaViewController" id="XYV-2Y-X0C" customClass="RecaptchaViewController" customModule="PMHumanVerification" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="feB-ed-vnj"/>
                         <viewControllerLayoutGuide type="bottom" id="mrD-f4-jir"/>
@@ -107,7 +107,7 @@
         <!--Human Check Help View Controller-->
         <scene sceneID="uZK-2E-JjV">
             <objects>
-                <viewController id="YIP-X7-8Un" customClass="HumanCheckHelpViewController" customModule="Resources_HV" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="YIP-X7-8Un" customClass="HumanCheckHelpViewController" customModule="PMHumanVerification" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="otL-Uf-ci6"/>
                         <viewControllerLayoutGuide type="bottom" id="qC9-rT-nvM"/>
@@ -130,72 +130,10 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="QcB-kh-Klu">
-                                    <rect key="frame" x="0.0" y="251" width="327" height="44"/>
+                                    <rect key="frame" x="0.0" y="61" width="327" height="44"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 </view>
-                                <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="help_cell" rowHeight="134" id="5pS-E3-X2d" customClass="HelpTableViewCell" customModule="Resources_HV" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="89" width="327" height="134"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="5pS-E3-X2d" id="y2y-wu-cTX">
-                                            <rect key="frame" x="0.0" y="0.0" width="327" height="134"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1SH-jy-8Bu">
-                                                    <rect key="frame" x="58" y="23" width="232" height="21"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="21" id="tMI-uK-pyX"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U0B-DX-6xR">
-                                                    <rect key="frame" x="58" y="44" width="253" height="79"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jAI-ku-Vd9">
-                                                    <rect key="frame" x="17" y="26" width="24" height="24"/>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="24" id="ARU-8y-TH8"/>
-                                                        <constraint firstAttribute="width" constant="24" id="Qor-Da-Kdb"/>
-                                                    </constraints>
-                                                </imageView>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic-arrow-right" highlightedImage="ic-arrow-right" translatesAutoresizingMaskIntoConstraints="NO" id="aF3-5O-H4e" userLabel="right image">
-                                                    <rect key="frame" x="294" y="26" width="16" height="16"/>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="16" id="0JS-u9-Xa9"/>
-                                                        <constraint firstAttribute="width" constant="16" id="k03-FO-DTl"/>
-                                                    </constraints>
-                                                </imageView>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="jAI-ku-Vd9" firstAttribute="leading" secondItem="y2y-wu-cTX" secondAttribute="leading" constant="17" id="2XL-Lr-RV9"/>
-                                                <constraint firstItem="U0B-DX-6xR" firstAttribute="top" secondItem="1SH-jy-8Bu" secondAttribute="bottom" id="8gL-Hm-z64"/>
-                                                <constraint firstItem="aF3-5O-H4e" firstAttribute="top" secondItem="y2y-wu-cTX" secondAttribute="topMargin" constant="15" id="FFl-Ye-aVV"/>
-                                                <constraint firstItem="jAI-ku-Vd9" firstAttribute="top" secondItem="y2y-wu-cTX" secondAttribute="topMargin" constant="15" id="I0x-wG-Ded"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="U0B-DX-6xR" secondAttribute="trailing" id="JqP-OS-Gwx"/>
-                                                <constraint firstItem="1SH-jy-8Bu" firstAttribute="leading" secondItem="jAI-ku-Vd9" secondAttribute="trailing" constant="17" id="MYH-9K-3CL"/>
-                                                <constraint firstItem="U0B-DX-6xR" firstAttribute="leading" secondItem="1SH-jy-8Bu" secondAttribute="leading" id="STx-8f-6B3"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="U0B-DX-6xR" secondAttribute="bottom" id="axi-Xk-U7Y"/>
-                                                <constraint firstItem="aF3-5O-H4e" firstAttribute="leading" secondItem="1SH-jy-8Bu" secondAttribute="trailing" constant="4" id="ctT-S1-jTj"/>
-                                                <constraint firstAttribute="trailing" secondItem="aF3-5O-H4e" secondAttribute="trailing" constant="17" id="qGA-LK-nw3"/>
-                                                <constraint firstItem="1SH-jy-8Bu" firstAttribute="top" secondItem="y2y-wu-cTX" secondAttribute="topMargin" constant="12" id="y3s-a6-7oL"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="detailLabel" destination="U0B-DX-6xR" id="49o-VA-oS3"/>
-                                            <outlet property="leftImage" destination="jAI-ku-Vd9" id="dOX-KN-dm8"/>
-                                            <outlet property="rightImage" destination="aF3-5O-H4e" id="HSY-p5-rac"/>
-                                            <outlet property="topLabel" destination="1SH-jy-8Bu" id="Rek-hu-n4u"/>
-                                        </connections>
-                                    </tableViewCell>
-                                </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="YIP-X7-8Un" id="Yyc-b3-wjx"/>
                                     <outlet property="delegate" destination="YIP-X7-8Un" id="cNn-KZ-DYS"/>
@@ -235,7 +173,7 @@
         <!--Email Verify View Controller-->
         <scene sceneID="WC9-tU-sDP">
             <objects>
-                <viewController storyboardIdentifier="EmailVerifyViewController" id="KEE-gK-nEU" customClass="EmailVerifyViewController" customModule="Resources_HV" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="EmailVerifyViewController" id="KEE-gK-nEU" customClass="EmailVerifyViewController" customModule="PMHumanVerification" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="4AX-hs-bj2"/>
                         <viewControllerLayoutGuide type="bottom" id="AlA-mt-19f"/>
@@ -359,7 +297,7 @@
         <!--Phone Verify View Controller-->
         <scene sceneID="uET-gQ-lki">
             <objects>
-                <viewController storyboardIdentifier="PhoneVerifyViewController" id="72v-cj-LoN" customClass="PhoneVerifyViewController" customModule="Resources_HV" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PhoneVerifyViewController" id="72v-cj-LoN" customClass="PhoneVerifyViewController" customModule="PMHumanVerification" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="BDR-Ma-NjU"/>
                         <viewControllerLayoutGuide type="bottom" id="iY8-6F-XMZ"/>
@@ -486,7 +424,7 @@
         <!--Country Picker View Controller-->
         <scene sceneID="gFH-05-P8X">
             <objects>
-                <viewController storyboardIdentifier="CountryPickerViewController" modalTransitionStyle="crossDissolve" id="jlT-c5-bVR" customClass="CountryPickerViewController" customModule="Resources_HV" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CountryPickerViewController" modalTransitionStyle="crossDissolve" id="jlT-c5-bVR" customClass="CountryPickerViewController" customModule="PMHumanVerification" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="3rM-PF-1ZH"/>
                         <viewControllerLayoutGuide type="bottom" id="6A6-R9-4S3"/>
@@ -534,7 +472,7 @@
                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         </view>
                                         <prototypes>
-                                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="country_code_table_cell" rowHeight="44" id="KK0-qX-D2O" customClass="CountryCodeTableViewCell" customModule="Resources_HV" customModuleProvider="target">
+                                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="country_code_table_cell" rowHeight="44" id="KK0-qX-D2O" customClass="CountryCodeTableViewCell" customModule="PMHumanVerification" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KK0-qX-D2O" id="znd-i8-G90">
@@ -646,7 +584,7 @@
         <!--Title-->
         <scene sceneID="SMW-e4-KW9">
             <objects>
-                <viewController storyboardIdentifier="HumanCheckMenuViewController" id="Wxg-Gt-OHZ" customClass="HumanCheckMenuViewController" customModule="Resources_HV" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HumanCheckMenuViewController" id="Wxg-Gt-OHZ" customClass="HumanCheckMenuViewController" customModule="PMHumanVerification" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="gTo-Gj-Owp"/>
                         <viewControllerLayoutGuide type="bottom" id="9S1-d3-Gr5"/>
@@ -718,7 +656,7 @@
         <!--Verify Code View Controller-->
         <scene sceneID="k5a-2I-8xh">
             <objects>
-                <viewController storyboardIdentifier="VerifyCodeViewController" id="5GO-eP-O0i" customClass="VerifyCodeViewController" customModule="Resources_HV" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="VerifyCodeViewController" id="5GO-eP-O0i" customClass="VerifyCodeViewController" customModule="PMHumanVerification" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="2cx-Mc-yXf"/>
                         <viewControllerLayoutGuide type="bottom" id="Y34-Hf-miM"/>
@@ -859,7 +797,6 @@
     <resources>
         <image name="flags-CH" width="32" height="32"/>
         <image name="ic-arrow-left" width="24" height="24"/>
-        <image name="ic-arrow-right" width="16" height="16"/>
         <image name="ic-close" width="24" height="24"/>
         <namedColor name="IconNorm">
             <color red="0.10999999940395355" green="0.090000003576278687" blue="0.097000002861022949" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

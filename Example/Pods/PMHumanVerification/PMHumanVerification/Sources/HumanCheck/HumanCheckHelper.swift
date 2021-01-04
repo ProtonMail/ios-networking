@@ -39,8 +39,8 @@ public class HumanCheckHelper: HumanVerifyDelegate {
         self.responseDelegate = responseDelegate
     }
 
-    public func onHumanVerify(methods: [VerifyMethod], completion: (@escaping (HumanVerifyHeader, HumanVerifyIsClosed, SendVerificationCodeBlock?) -> Void)) {
-        viewModel = HumanCheckViewModelImpl(types: methods, api: apiService)
+    public func onHumanVerify(methods: [VerifyMethod], startToken: String?, completion: (@escaping (HumanVerifyHeader, HumanVerifyIsClosed, SendVerificationCodeBlock?) -> Void)) {
+        viewModel = HumanCheckViewModelImpl(types: methods, startToken: startToken, api: apiService)
         guard let viewModel = viewModel else { return }
         let coordinator = HumanCheckMenuCoordinator(rootViewController: rootViewController, viewModel: viewModel,
                                                     services: ServiceFactory.default)

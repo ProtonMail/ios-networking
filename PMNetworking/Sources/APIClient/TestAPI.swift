@@ -109,7 +109,10 @@ public class TestApiClient: Client {
             }
         }
         public var parameters: [String: Any]? {
-            return [:]
+            switch self {
+            case .humanverify:
+                return ["Purpose": "signup"]
+            }
         }
     }
 }
@@ -139,9 +142,13 @@ class TestApi: Request {
 
 public class HumanVerificationResponse: Response {
     public var supported: [VerifyMethod] = []
+    public var startToken: String?
 
     public override func ParseResponse(_ response: [String: Any]) -> Bool {
         if let details  = response["Details"] as? [String: Any] {
+            if let hvToken = details["HumanVerificationToken"] as? String {
+                startToken = hvToken
+            }
             if let support = details["HumanVerificationMethods"] as? [String] {
                 for item in support {
                     if let method = VerifyMethod(rawValue: item) {

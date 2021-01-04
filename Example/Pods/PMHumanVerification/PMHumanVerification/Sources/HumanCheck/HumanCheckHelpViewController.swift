@@ -39,6 +39,7 @@ final public class HumanCheckHelpViewController: UIViewController {
 
     public override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.register(PMCell.nib, forCellReuseIdentifier: PMCell.reuseIdentifier)
         configureUI()
     }
 
@@ -84,18 +85,18 @@ extension HumanCheckHelpViewController: UITableViewDataSource {
     }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "help_cell", for: indexPath) as! HelpTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: PMCell.reuseIdentifier, for: indexPath) as! PMCell
         cell.selectionStyle = .default
         if indexPath.row == 0 {
             let image = UIImage(named: "ic-check-circle", in: Common.bundle, compatibleWith: nil)!
-            cell.configCell(top: CoreString._hv_help_request_item_title,
-                            details: CoreString._hv_help_request_item_message,
-                            left: image)
+            cell.title = CoreString._hv_help_request_item_title
+            cell.icon = image
+            cell.subtitle = CoreString._hv_help_request_item_message
         } else {
             let image = UIImage(named: "ic-lightbulp", in: Common.bundle, compatibleWith: nil)!
-            cell.configCell(top: CoreString._hv_help_visit_item_title,
-                            details: CoreString._hv_help_visit_item_message,
-                            left: image)
+            cell.title = CoreString._hv_help_visit_item_title
+            cell.icon = image
+            cell.subtitle = CoreString._hv_help_visit_item_message
         }
         return cell
     }

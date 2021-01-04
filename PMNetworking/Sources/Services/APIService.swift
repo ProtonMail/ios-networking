@@ -155,7 +155,7 @@ public protocol HumanVerifyDelegate: class {
     typealias HumanVerifyHeader = [String: Any]
     typealias HumanVerifyIsClosed = Bool
 
-    func onHumanVerify(methods: [VerifyMethod], completion: (@escaping (HumanVerifyHeader, HumanVerifyIsClosed, SendVerificationCodeBlock?) -> Void))
+    func onHumanVerify(methods: [VerifyMethod], startToken: String?, completion: (@escaping (HumanVerifyHeader, HumanVerifyIsClosed, SendVerificationCodeBlock?) -> Void))
     func getSupportURL() -> URL
 }
 
