@@ -392,6 +392,7 @@ extension MainViewController {
         let loginAction = UIAlertAction(title: "Log in", style: .default) { action -> Void in
             result(usernameTextField!.text!, passwordTextField!.text!)
         }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alertController.addTextField { txtUsername -> Void in
             usernameTextField = txtUsername
             usernameTextField!.placeholder = "Username"
@@ -402,6 +403,7 @@ extension MainViewController {
             passwordTextField?.placeholder = "Password"
         }
         alertController.addAction(loginAction)
+        alertController.addAction(cancelAction)
         present(alertController, animated: true, completion: nil)
     }
     
