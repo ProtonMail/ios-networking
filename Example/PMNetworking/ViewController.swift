@@ -31,10 +31,40 @@ import PMHumanVerification
 import PMUICommon
 
 ///Defind your doh settings
-class DoHMail : DoH, ServerConfig {
-    
+
+class DevDoHMail: DoH, ServerConfig {
+    //defind your signup domain
+    var signupDomain: String = "proton.dev"
+    //defind your default host
+    var defaultHost: String = "https://proton.dev"
+    //defind your default captcha host
+    var captchaHost: String = "proton.dev"
+    //defind your query host
+    var apiHost : String = "dmfygsltqojxxi33onvqws3bomnua.protonpro.xyz"
+    //defind your default path
+    var defaultPath: String = "/api"
+    //singleton
+    static let `default` = try! DevDoHMail()
+}
+
+class BlueDoHMail: DoH, ServerConfig {
+    //defind your signup domain
+    var signupDomain: String = "proton.blue"
+    //defind your default host
+    var defaultHost: String = "https://protonmail.blue"
+    //defind your default captcha host
+    var captchaHost: String = "mail.protonmail.blue"
+    //defind your query host
+    var apiHost : String = "dmfygsltqojxxi33onvqws3bomnua.protonpro.xyz"
+    //defind your default path
+    var defaultPath: String = "/api"
+    //singleton
+    static let `default` = try! BlueDoHMail()
+}
+
+class ProdDoHMail: DoH, ServerConfig {
+    //defind your signup domain
     var signupDomain: String = "protonmail.com"
-    
     //defind your default host
     var defaultHost: String = "https://api.protonmail.ch"
     //defind your default captcha host
@@ -42,68 +72,75 @@ class DoHMail : DoH, ServerConfig {
     //defind your query host
     var apiHost : String = "dmfygsltqojxxi33onvqws3bomnua.protonpro.xyz"
     //singleton
-    static let `default` = try! DoHMail()
-}
-
-class TestDoHMail : DoH, ServerConfig {
-    var signupDomain: String = "proton.dev"
-    
-    //defind your default host
-//    var defaultHost: String = "https://protonmail.blue"
-    var defaultHost: String = "https://proton.dev"
-    //defind your default captcha host
-//    var captchaHost: String = "mail.protonmail.blue"
-    var captchaHost: String = "https://proton.dev"
-    //defind your query host
-    var apiHost : String = "dmfygsltqojxxi33onvqws3bomnua.protonpro.xyz"
-        
-    var defaultPath: String = "/api"
-    
-    //singleton
-    static let `default` = try! TestDoHMail()
+    static let `default` = try! ProdDoHMail()
 }
 
 
 ///each user will have one api service  & you can create more than one unauthed apiService
 ///session/auth data are controlled by a central manager. it needs to extend & implment the API service delegates.
-let apiService = PMAPIService(doh: DoHMail.default)
 
 // e.g. we use main view controller as a central manager. it could be any management class instance
 class MainViewController: UIViewController {
-    let testApi = PMAPIService(doh: TestDoHMail.default, sessionUID: "testSessionUID")
+    @IBOutlet weak var envSegmentedControl: UISegmentedControl!
+    
+    var testApi = PMAPIService(doh: DevDoHMail.default, sessionUID: "testSessionUID")
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // start a
         TrustKitWrapper.start(delegate: self)
-        
+        setupEnv()
+    }
+    
+    func setupEnv() {
+        testApi = PMAPIService(doh: currentEnv, sessionUID: "testSessionUID")
         // set auth delegate
-        apiService.authDelegate = self
-        
+        testApi.authDelegate = self
         // set service event delegate
-        apiService.serviceDelegate = self
+        testApi.serviceDelegate = self
+    }
+    
+    var currentEnv: DoH {
+        switch envSegmentedControl.selectedSegmentIndex {
+        case 0: return DevDoHMail.default
+        case 1: return BlueDoHMail.default
+        case 2: return ProdDoHMail.default
+        default: return DevDoHMail.default
+        }
+    }
+    
+    @IBAction func onEnvSegmentedControlTap(_ sender: UISegmentedControl) {
+        setupEnv()
     }
     
     @IBAction func authAction(_ sender: Any) {
-        self.testFramework()
+        getCredentialsAlertView { userName, password in
+            self.testFramework(userName: userName, password: password)
+        }
+    }
+    
+    @IBAction func forceUpgradeAction(_ sender: Any) {
+        forceUpgrade()
+    }
+    
+    @IBAction func humanVerificationAction(_ sender: Any) {
+        getCredentialsAlertView { userName, password in
+            self.humanVerification(userName: userName, password: password)
+        }
     }
     
     /// simulate the cache of auth credential
-    var authCredential : AuthCredential? = nil
     var testAuthCredential : AuthCredential? = nil
     
-    func testFramework() {
+    func testFramework(userName: String, password: String) {
         if self.testAuthCredential != nil {
-            self.testAccessToken()
+            self.testAccessToken(userName: userName)
             return
         }
         let authApi: Authenticator = Authenticator(api: testApi)
-        // blue - user: unittest100, pass: unittest100
-        // dev  - user: greg,  pass: a
-        authApi.authenticate(username: "greg", password: "a") { result in
+        authApi.authenticate(username: userName, password: password) { result in
             switch result {
             case .failure(Authenticator.Errors.serverError(let error)): // error response returned by server
+                self.showAlertView(title: "Error", message: error.localizedDescription)
                 print(error)
             case .failure(Authenticator.Errors.emptyServerSrpAuth):
                 print("")
@@ -122,7 +159,8 @@ class MainViewController: UIViewController {
             case .success(.newCredential(let credential, let passwordMode)): // success without 2FA
                 self.testAuthCredential = AuthCredential(credential)
                 print("pwd mode: \(passwordMode)")
-                self.testAccessToken()
+                self.testAccessToken(userName: userName)
+                self.showAlertView(title: "Success")
                 break
             case .success(.updatedCredential):
                 assert(false, "Should never happen in this flow")
@@ -131,8 +169,8 @@ class MainViewController: UIViewController {
         }
     }
     
-    func testAccessToken() {
-        let request = UserAPI.Router.checkUsername("greg")
+    func testAccessToken(userName: String) {
+        let request = UserAPI.Router.checkUsername(userName)
         testApi.exec(route: request) { (task, response) in
             print(response.code as Any)
         }
@@ -148,8 +186,8 @@ class MainViewController: UIViewController {
     
     var humanVerificationDelegate: HumanVerifyDelegate?
     
-    @IBAction func humanVerificationAction(_ sender: Any) {
-        TestDoHMail.default.status = .off
+    func humanVerification(userName: String, password: String) {
+        currentEnv.status = .off
         testApi.serviceDelegate = self
         testApi.authDelegate = self
         
@@ -159,11 +197,10 @@ class MainViewController: UIViewController {
         testApi.humanDelegate = humanVerificationDelegate
 
         let authApi: Authenticator = Authenticator(api: testApi)
-        // blue - user: feng2, pass: 123
-        // dev  - user: greg,  pass: a
-        authApi.authenticate(username: "greg", password: "a") { result in
+        authApi.authenticate(username: userName, password: password) { result in
             switch result {
             case .failure(Authenticator.Errors.serverError(let error)): // error response returned by server
+                self.showAlertView(title: "Error", message: error.localizedDescription)
                 print(error)
             case .failure(Authenticator.Errors.emptyServerSrpAuth):
                 print("")
@@ -202,7 +239,7 @@ class MainViewController: UIViewController {
     var forceUpgradeServiceDelegate: APIServiceDelegate?
     var forceUpgradeDelegate: ForceUpgradeDelegate?
     
-    @IBAction func forceUpgradeAction(_ sender: Any) {
+    func forceUpgrade() {
         forceUpgradeServiceDelegate = {
             class TestDelegate: APIServiceDelegate {
                 var userAgent: String? = ""
@@ -217,16 +254,16 @@ class MainViewController: UIViewController {
             return TestDelegate()
         }()
         
-        apiService.serviceDelegate = forceUpgradeServiceDelegate
+        testApi.serviceDelegate = forceUpgradeServiceDelegate
         
         //set the human verification delegation
         let url = URL(string: "itms-apps://itunes.apple.com/app/id979659905")!
         forceUpgradeDelegate = ForceUpgradeHelper(config: .mobile(url), responseDelegate: self)
-        apiService.forceUpgradeDelegate = forceUpgradeDelegate
+        testApi.forceUpgradeDelegate = forceUpgradeDelegate
         
         // TODO: update to a PMAuthentication version that depends on PMNetworking
-        let authApi: Authenticator = Authenticator(api: apiService)
-        authApi.authenticate(username: "feng2", password: "123") { result in
+        let authApi: Authenticator = Authenticator(api: testApi)
+        authApi.authenticate(username: "test", password: "test") { result in
             print (result)
         }
     }
@@ -342,6 +379,38 @@ extension MainViewController: HumanVerifyResponseDelegate {
         case .cancel:
             print ("Human verify cancel")
         }
+    }
+}
+
+extension MainViewController {
+    func getCredentialsAlertView(result: @escaping ((String, String) -> Void)) {
+        var usernameTextField: UITextField?
+        var passwordTextField: UITextField?
+
+        let alertController = UIAlertController(title: "Log in", message: "Enter your credentials", preferredStyle: .alert)
+
+        let loginAction = UIAlertAction(title: "Log in", style: .default) { action -> Void in
+            result(usernameTextField!.text!, passwordTextField!.text!)
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertController.addTextField { txtUsername -> Void in
+            usernameTextField = txtUsername
+            usernameTextField!.placeholder = "Username"
+        }
+        alertController.addTextField { txtPassword -> Void in
+            passwordTextField = txtPassword
+            passwordTextField?.isSecureTextEntry = true
+            passwordTextField?.placeholder = "Password"
+        }
+        alertController.addAction(loginAction)
+        alertController.addAction(cancelAction)
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    func showAlertView(title: String, message: String? = nil) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        present(alertController, animated: true, completion: nil)
     }
 
 }

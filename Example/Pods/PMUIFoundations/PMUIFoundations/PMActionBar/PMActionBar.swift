@@ -208,7 +208,7 @@ extension PMActionBar {
                 }
             case .button:
                 var btn: UIButton!
-                if let _ = item.icon {
+                if item.icon != nil {
                     btn = createIconButton(item: item, idx: idx)
                 } else {
                     btn = createPlainButton(item: item, idx: idx)

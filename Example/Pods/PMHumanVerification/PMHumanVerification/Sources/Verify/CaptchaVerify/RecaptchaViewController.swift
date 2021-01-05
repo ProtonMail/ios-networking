@@ -64,7 +64,7 @@ class RecaptchaViewController: UIViewController, UIWebViewDelegate {
             DispatchQueue.main.async {
                 self.stackView.isHidden = true
                 if res {
-                    _ = self.navigationController?.popViewController(animated: true)
+                    self.navigationController?.dismiss(animated: true, completion: nil)
                 } else {
                     if let error = error {
                         let banner = PMBanner(message: error.localizedDescription, style: PMBannerNewStyle.error, dismissDuration: Double.infinity)

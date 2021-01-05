@@ -128,8 +128,8 @@ public class ProtonButton: UIButton {
 
     fileprivate func showLoading() {
         contentEdgeInsets = UIEdgeInsets(top: contentEdgeInsets.top, left: 40, bottom: contentEdgeInsets.bottom, right: 40)
-        if let _ = activityIndicator {
-            activityIndicator?.startAnimating()
+        if let activityIndicator = activityIndicator {
+            activityIndicator.startAnimating()
         } else {
             createActivityIndicator()
         }

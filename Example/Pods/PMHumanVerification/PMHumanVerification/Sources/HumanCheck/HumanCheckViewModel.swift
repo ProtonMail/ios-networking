@@ -89,7 +89,7 @@ public protocol HumanCheckViewModel: class {
 
     public func getCaptchaURL() -> URL {
         let host = apiService.doh.getCaptchaHostUrl()
-        return URL(string: "https://secure.protonmail.com/captcha/captcha.html?token=signup&client=ios&host=\(host)")!
+        return URL(string: "https://secure.protonmail.com/captcha/captcha.html?token=\(startToken ?? "")&client=ios&host=\(host)")!
     }
 
     public var type: VerifyMethod = .captcha
@@ -105,10 +105,12 @@ public protocol HumanCheckViewModel: class {
     public var verifyTypes: [VerifyMethod] = []
     var apiService: APIService
     var destination: String = ""
+    let startToken: String?
 
-    public init(types: [VerifyMethod], api: APIService) {
+    public init(types: [VerifyMethod], startToken: String?, api: APIService) {
         self.verifyTypes = types
         self.apiService = api
+        self.startToken = startToken
     }
 
     public func setEmail(email: String) {
