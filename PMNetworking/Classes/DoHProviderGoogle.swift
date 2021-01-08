@@ -41,7 +41,7 @@ public struct Google : DoHProviderInternal {
         return nil
     }
     
-    func parse(data response: Data) -> DNS? {
+    func parse(data response: Data) -> [DNS]? {
         do {
             let jsonStr = String(decoding: response, as: UTF8.self)
             print(jsonStr)
@@ -69,7 +69,11 @@ public struct Google : DoHProviderInternal {
                 }
             }
             if ttl>0 && addrList.count > 0 {
-                return DNS(url: addrList[0], ttl:  ttl)
+                var dnsList : [DNS] = []
+                for addr in addrList {
+                    dnsList.append(DNS(url: addr, ttl:  ttl))
+                }
+                return dnsList
             }
             return nil
         } catch {

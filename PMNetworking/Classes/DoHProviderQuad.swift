@@ -25,23 +25,24 @@ import Foundation
 
 
 struct Quad9 : DoHProviderInternal {
+    
     public init() {
         //TODO:: remove public later
     }
 
     let supported: [Int] = [DNSType.txt.rawValue]
     
-    public let url = "https://dns.google.com"
-
+    public let url = "https://dns11.quad9.net:5053"
+    
     func query(host: String) -> String {
-        return self.url + "/resolve?type=TXT&name=" + host
+        return self.url + "/dns-query?type=TXT&name=" + host
     }
     
     func parse(response: String) -> DNS? {
         return nil
     }
     
-    func parse(data response: Data) -> DNS? {
+    func parse(data response: Data) -> [DNS]? {
         do {
             let jsonStr = String(decoding: response, as: UTF8.self)
             print(jsonStr)
@@ -60,7 +61,8 @@ struct Quad9 : DoHProviderInternal {
             for answer in answers {
                 if let type = answer["type"] as? Int, supported.contains(type) {
                     if let addr = answer["data"] as? String {
-                        addrList.append(addr)
+                        let pureAddr = addr.replacingOccurrences(of: "\"", with: "")
+                        addrList.append(pureAddr)
                     }
                     if let timeout = answer["TTL"] as? Int {
                         ttl = timeout
@@ -68,7 +70,11 @@ struct Quad9 : DoHProviderInternal {
                 }
             }
             if ttl>0 && addrList.count > 0 {
-                return DNS(url: addrList[0], ttl:  ttl)
+                var dnsList : [DNS] = []
+                for addr in addrList {
+                    dnsList.append(DNS(url: addr, ttl:  ttl))
+                }
+                return dnsList
             }
             return nil
         } catch {
