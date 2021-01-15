@@ -32,7 +32,7 @@
                                 </connections>
                             </segmentedControl>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="xIf-uf-9eG">
-                                <rect key="frame" x="16" y="115" width="343" height="140"/>
+                                <rect key="frame" x="16" y="115" width="343" height="178"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yi2-BB-2UJ">
                                         <rect key="frame" x="140" y="0.0" width="63" height="26"/>
@@ -54,15 +54,23 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QuA-PY-RXK">
-                                        <rect key="frame" x="91" y="72" width="161" height="30"/>
+                                        <rect key="frame" x="74" y="72" width="195" height="30"/>
                                         <color key="backgroundColor" systemColor="systemGray6Color"/>
-                                        <state key="normal" title="Human Verification test"/>
+                                        <state key="normal" title="Human Verification auth test"/>
                                         <connections>
-                                            <action selector="humanVerificationAction:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="ABu-ty-YCI"/>
+                                            <action selector="humanVerificationAuthAction:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="JOb-nv-GUt"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IrQ-vp-gLY">
+                                        <rect key="frame" x="65.5" y="110" width="212" height="30"/>
+                                        <color key="backgroundColor" systemColor="systemGray6Color"/>
+                                        <state key="normal" title="Human Verification unauth test"/>
+                                        <connections>
+                                            <action selector="humanVerificationUnauthAction:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="MlE-cN-vhE"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CTQ-sa-1gr">
-                                        <rect key="frame" x="145.5" y="110" width="52" height="30"/>
+                                        <rect key="frame" x="145.5" y="148" width="52" height="30"/>
                                         <color key="backgroundColor" systemColor="systemGray6Color"/>
                                         <state key="normal" title="DOH UI"/>
                                         <connections>

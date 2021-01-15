@@ -32,7 +32,6 @@ class EmailVerifyViewController: UIViewController {
     @IBOutlet weak var topTitleLabel: UILabel!
     @IBOutlet weak var emailTextFieldView: PMTextField!
     @IBOutlet weak var sendCodeButton: ProtonButton!
-    @IBOutlet weak var continueButton: ProtonButton!
     @IBOutlet weak var scrollBottomPaddingConstraint: NSLayoutConstraint!
 
     fileprivate let kSegueToVerifyCode = "email_verify_to_verify_code_segue"
@@ -72,13 +71,6 @@ class EmailVerifyViewController: UIViewController {
 
     // MARK: Actions
 
-    @IBAction func haveCodeAction(_ sender: Any) {
-        guard let emailaddress = validateEmailAddress else { return }
-        dismissKeyboard()
-        self.viewModel.setEmail(email: emailaddress)
-        self.performSegue(withIdentifier: self.kSegueToVerifyCode, sender: self)
-    }
-
     @IBAction func sendCodeAction(_ sender: UIButton) {
         self.sendEmail()
     }
@@ -104,8 +96,6 @@ class EmailVerifyViewController: UIViewController {
         emailTextFieldView.spellCheckingType = .no
         sendCodeButton.setMode(mode: .solid)
         sendCodeButton.setTitle(CoreString._hv_email_verification_button, for: .normal)
-        continueButton.setMode(mode: .text)
-        continueButton.setTitle(CoreString._hv_email_have_code_button, for: .normal)
         updateButtonStatus()
     }
 
@@ -116,10 +106,8 @@ class EmailVerifyViewController: UIViewController {
         dismissKeyboard()
         self.viewModel.setEmail(email: email)
         sendCodeButton.isSelected = true
-        continueButton.isEnabled = false
         self.viewModel.sendVerifyCode(.email) { (isOK, error) -> Void in
             self.verifyClicked = false
-            self.continueButton.isEnabled = true
             self.sendCodeButton.isSelected = false
             if isOK {
                 self.performSegue(withIdentifier: self.kSegueToVerifyCode, sender: self)
@@ -142,10 +130,8 @@ class EmailVerifyViewController: UIViewController {
     fileprivate func updateButtonStatus() {
         if validateEmailAddress != nil {
             sendCodeButton.isEnabled = true
-            continueButton.isEnabled = true
         } else {
             sendCodeButton.isEnabled = false
-            continueButton.isEnabled = false
         }
     }
 

@@ -122,10 +122,14 @@ class MainViewController: UIViewController {
         forceUpgrade()
     }
     
-    @IBAction func humanVerificationAction(_ sender: Any) {
+    @IBAction func humanVerificationAuthAction(_ sender: Any) {
         getCredentialsAlertView { userName, password in
             self.humanVerification(userName: userName, password: password)
         }
+    }
+    
+    @IBAction func humanVerificationUnauthAction(_ sender: Any) {
+        self.humanVerification()
     }
     
     /// simulate the cache of auth credential
@@ -186,7 +190,8 @@ class MainViewController: UIViewController {
     
     var humanVerificationDelegate: HumanVerifyDelegate?
     
-    func humanVerification(userName: String, password: String) {
+    func setupHumanVerification() {
+        testAuthCredential = nil
         currentEnv.status = .off
         testApi.serviceDelegate = self
         testApi.authDelegate = self
@@ -195,7 +200,10 @@ class MainViewController: UIViewController {
         let url = URL(string: "https://protonmail.com/support/knowledge-base/human-verification/")!
         humanVerificationDelegate = HumanCheckHelper(apiService: testApi, supportURL: url, viewController: self, responseDelegate: self)
         testApi.humanDelegate = humanVerificationDelegate
-
+    }
+    
+    func humanVerification(userName: String, password: String) {
+        setupHumanVerification()
         let authApi: Authenticator = Authenticator(api: testApi)
         authApi.authenticate(username: userName, password: password) { result in
             switch result {
@@ -228,10 +236,15 @@ class MainViewController: UIViewController {
         }
     }
     
+    func humanVerification() {
+        setupHumanVerification()
+        processHumanVerifyTest()
+    }
+
     func processHumanVerifyTest(dest: String? = nil, type: VerifyMethod? = nil, token: String? = nil) {
         // Human Verify request with empty token just to provoke human verification error
         let client = TestApiClient(api: self.testApi)
-        client.triggerHumanVerify(destination: dest, type: type, token: token) { (_, response) in
+        client.triggerHumanVerify(destination: dest, type: type, token: token, isAuth: getToken(bySessionUID: "") != nil) { (_, response) in
             print("Human verify test result: \(response.error?.description as Any)")
         }
     }

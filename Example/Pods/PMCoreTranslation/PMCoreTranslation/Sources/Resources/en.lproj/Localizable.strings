@@ -16,7 +16,6 @@
 "Your email will only be used for this one-time verification." = "Your email will only be used for this one-time verification.";
 "Email" = "Email";
 "Get verification code" = "Get verification code";
-"I already have a code" = "I already have a code";
 
 // SMS method
 
@@ -133,7 +132,7 @@
 "Use two-factor code" = "Use two-factor code";
 "Two-factor authentication" = "Two-factor authentication";
 "Recovery code" = "Recovery code";
-"Enter a 8-character recovery code." = "Enter a 8-character recovery code.";
+"Enter an 8-character recovery code." = "Enter an 8-character recovery code.";
 "Two-factor code" = "Two-factor code";
 "Enter the 6-digit code." = "Enter the 6-digit code.";
 
@@ -165,3 +164,25 @@
 "Please log in to the ProtonMail account you're upgrading the service plan for so we can complete the service plan activation." = "Please log in to the ProtonMail account you're upgrading the service plan for so we can complete the service plan activation.";
 "Contact support@protonvpn.com to complete your purchase." = "Contact support@protonvpn.com to complete your purchase.";
 "Wrong payment token status. Please relaunch the app. If error persists, contact support." = "Wrong payment token status. Please relaunch the app. If error persists, contact support.";
+
+/**
+ * Login upgrade username-only account
+ */
+
+"Change your password" = "Change your password";
+"To use the Proton app as a member of an organization, you first need to change your password by signing into Proton through a browser." = "To use the Proton app as a member of an organization, you first need to change your password by signing into Proton through a browser.";
+"Change password" = "Change password";
+
+/*
+ *  Account Manager
+ */
+"switch to" = "switch to";
+"Manage accounts" = "Manage accounts";
+"Signed in to ProtonMail" = "Signed in to ProtonMail";
+"Signed out of Protonmail" = "Signed out of Protonmail";
+"Sign out" = "Sign out";
+"Remove account" = "Remove account";
+"You will be signed out and all the data associated with this account will be removed from this device." = "You will be signed out and all the data associated with this account will be removed from this device.";
+"Remove" = "Remove";
+"Sign out %@" = "Sign out %@";
+"Are you sure you want to sign out?" = "Are you sure you want to sign out?";
