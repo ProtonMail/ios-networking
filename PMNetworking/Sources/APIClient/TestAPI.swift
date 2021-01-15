@@ -78,7 +78,7 @@ public class TestApiClient: Client {
     }
     static let route: String = "/internal/tests"
     public enum Router: Request {
-        case humanverify(destination: String?, type: VerifyMethod?, token: String?)
+        case humanverify(destination: String?, type: VerifyMethod?, token: String?, isAuth: Bool)
         public var path: String {
             switch self {
             case .humanverify:
@@ -86,11 +86,14 @@ public class TestApiClient: Client {
             }
         }
         public var isAuth: Bool {
-            return true
+            switch self {
+            case .humanverify(_, _, _, let auth):
+                return auth
+            }
         }
         public var header: [String: Any] {
             switch self {
-            case .humanverify(let destination, let type, let token):
+            case .humanverify(let destination, let type, let token, _):
                 if let dest = destination, let typ = type, let str = token {
                     let dict = ["x-pm-human-verification-token-type": typ.toString,
                                 "x-pm-human-verification-token": dest == "" ? str : "\(dest):\(str)"]
@@ -110,8 +113,12 @@ public class TestApiClient: Client {
         }
         public var parameters: [String: Any]? {
             switch self {
-            case .humanverify:
-                return ["Purpose": "signup"]
+            case .humanverify(_, _, _, let isAuth):
+                // Possible values:
+                // - "verify" - already authenticated
+                // - "signup" - unauthenticated
+                // Due to a bug on the BE side, currently only "signup" works well
+                return ["Purpose": isAuth == true ? "signup" : "signup"]
             }
         }
     }
@@ -122,14 +129,14 @@ extension TestApiClient {
     //  1. primise kit
     //  2. delaget
     //  3. combin
-    public func triggerHumanVerify(destination: String?, type: VerifyMethod?, token: String?,
+    public func triggerHumanVerify(destination: String?, type: VerifyMethod?, token: String?, isAuth: Bool = true,
                                    complete: @escaping  (_ task: URLSessionDataTask?, _ response: HumanVerificationResponse) -> Void) {
-        let route = Router.humanverify(destination: destination, type: type, token: token)
+        let route = Router.humanverify(destination: destination, type: type, token: token, isAuth: isAuth)
         self.apiService.exec(route: route, complete: complete)
     }
 
-    public func triggerHumanVerifyRoute(destination: String?, type: VerifyMethod?, token: String?) -> Router {
-        return Router.humanverify(destination: destination, type: type, token: token)
+    public func triggerHumanVerifyRoute(destination: String?, type: VerifyMethod?, token: String?, isAuth: Bool = true) -> Router {
+        return Router.humanverify(destination: destination, type: type, token: token, isAuth: isAuth)
     }
 }
 
