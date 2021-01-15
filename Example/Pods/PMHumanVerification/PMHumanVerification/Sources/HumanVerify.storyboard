@@ -186,7 +186,7 @@
                                 <rect key="frame" x="0.0" y="44" width="375" height="623"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pe0-rH-dCh" userLabel="Content View">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="294"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="252"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your email will only be used for this one-time verification." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qwp-pA-b7V">
                                                 <rect key="frame" x="24" y="24" width="327" height="36"/>
@@ -194,22 +194,6 @@
                                                 <color key="textColor" red="0.31372549020000001" green="0.31372549020000001" blue="0.3803921569" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="05y-zb-VWq" customClass="ProtonButton" customModule="PMUIFoundations">
-                                                <rect key="frame" x="24" y="236" width="327" height="34"/>
-                                                <color key="tintColor" red="0.41511026020000003" green="0.49069678779999998" blue="0.86671131850000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                <state key="normal" title="I already have a code"/>
-                                                <state key="disabled">
-                                                    <color key="titleColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
-                                                </state>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                        <integer key="value" value="6"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
-                                                <connections>
-                                                    <action selector="haveCodeAction:" destination="KEE-gK-nEU" eventType="touchUpInside" id="A9p-yy-i9y"/>
-                                                </connections>
-                                            </button>
                                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bbK-y4-wPa" customClass="ProtonButton" customModule="PMUIFoundations">
                                                 <rect key="frame" x="24" y="194" width="327" height="34"/>
                                                 <color key="backgroundColor" red="0.396078431372549" green="0.49411764705882355" blue="0.89411764705882346" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -240,15 +224,12 @@
                                         <constraints>
                                             <constraint firstItem="bbK-y4-wPa" firstAttribute="top" secondItem="v60-J9-kIW" secondAttribute="bottom" constant="26" id="0is-ZW-zvo"/>
                                             <constraint firstItem="v60-J9-kIW" firstAttribute="trailing" secondItem="qwp-pA-b7V" secondAttribute="trailing" id="GVF-DQ-zQf"/>
-                                            <constraint firstItem="05y-zb-VWq" firstAttribute="top" secondItem="bbK-y4-wPa" secondAttribute="bottom" constant="8" id="GZa-UQ-AKJ"/>
                                             <constraint firstItem="qwp-pA-b7V" firstAttribute="leading" secondItem="pe0-rH-dCh" secondAttribute="leading" constant="24" id="Gxg-jL-YdB"/>
                                             <constraint firstItem="bbK-y4-wPa" firstAttribute="leading" secondItem="v60-J9-kIW" secondAttribute="leading" id="MWf-ZT-y1a"/>
                                             <constraint firstItem="v60-J9-kIW" firstAttribute="leading" secondItem="qwp-pA-b7V" secondAttribute="leading" id="SSI-JC-0dt"/>
-                                            <constraint firstItem="05y-zb-VWq" firstAttribute="leading" secondItem="bbK-y4-wPa" secondAttribute="leading" id="UqH-QL-6Yw"/>
-                                            <constraint firstItem="05y-zb-VWq" firstAttribute="trailing" secondItem="bbK-y4-wPa" secondAttribute="trailing" id="bD0-Iu-JFv"/>
                                             <constraint firstAttribute="trailing" secondItem="qwp-pA-b7V" secondAttribute="trailing" constant="24" id="bsL-ea-RsD"/>
+                                            <constraint firstAttribute="bottom" secondItem="bbK-y4-wPa" secondAttribute="bottom" constant="24" id="e3t-ei-I91"/>
                                             <constraint firstItem="v60-J9-kIW" firstAttribute="top" secondItem="qwp-pA-b7V" secondAttribute="bottom" constant="33" id="j6o-7V-yPe"/>
-                                            <constraint firstAttribute="bottom" secondItem="05y-zb-VWq" secondAttribute="bottom" constant="24" id="mTb-Vu-8C1"/>
                                             <constraint firstItem="bbK-y4-wPa" firstAttribute="trailing" secondItem="v60-J9-kIW" secondAttribute="trailing" id="n0l-61-tNX"/>
                                             <constraint firstItem="qwp-pA-b7V" firstAttribute="top" secondItem="pe0-rH-dCh" secondAttribute="top" constant="24" id="s9d-5U-h5k"/>
                                             <constraint firstAttribute="centerX" secondItem="qwp-pA-b7V" secondAttribute="centerX" id="w1N-8V-iam"/>
@@ -277,7 +258,6 @@
                     </view>
                     <navigationItem key="navigationItem" id="NP2-CC-3mY"/>
                     <connections>
-                        <outlet property="continueButton" destination="05y-zb-VWq" id="6F4-5Y-OX7"/>
                         <outlet property="emailTextFieldView" destination="v60-J9-kIW" id="ZDg-Xe-vm2"/>
                         <outlet property="scrollBottomPaddingConstraint" destination="Npa-HX-Niq" id="Swi-mK-Sex"/>
                         <outlet property="sendCodeButton" destination="bbK-y4-wPa" id="gNI-mN-Kt8"/>
@@ -310,7 +290,7 @@
                                 <rect key="frame" x="0.0" y="44" width="375" height="623"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1P4-co-P8M" userLabel="Content View">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="303"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="265"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your phone number will only be used for this one-time verification." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mAA-zc-Xiy">
                                                 <rect key="frame" x="24" y="24" width="327" height="36"/>
@@ -318,23 +298,6 @@
                                                 <color key="textColor" red="0.31372549020000001" green="0.31372549020000001" blue="0.3803921569" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lNF-QJ-adk" customClass="ProtonButton" customModule="PMUIFoundations">
-                                                <rect key="frame" x="24" y="249" width="327" height="30"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                <color key="tintColor" red="0.41511026020000003" green="0.49069678779999998" blue="0.86671131850000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                <state key="normal" title="I already have a code"/>
-                                                <state key="disabled">
-                                                    <color key="titleColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
-                                                </state>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                        <integer key="value" value="6"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                </userDefinedRuntimeAttributes>
-                                                <connections>
-                                                    <action selector="haveCodeAction:" destination="72v-cj-LoN" eventType="touchUpInside" id="zMo-iJ-sXS"/>
-                                                </connections>
-                                            </button>
                                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hpx-h5-Gvz" customClass="ProtonButton" customModule="PMUIFoundations">
                                                 <rect key="frame" x="24" y="208" width="327" height="33"/>
                                                 <color key="backgroundColor" red="0.41511026020000003" green="0.49069678779999998" blue="0.86671131850000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -365,16 +328,13 @@
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="centerX" secondItem="hpx-h5-Gvz" secondAttribute="centerX" id="4ko-dc-dYE"/>
-                                            <constraint firstAttribute="bottom" secondItem="lNF-QJ-adk" secondAttribute="bottom" constant="24" id="6Xb-Rp-dSX"/>
                                             <constraint firstItem="Wcm-5M-vp5" firstAttribute="top" secondItem="mAA-zc-Xiy" secondAttribute="bottom" constant="33" id="E8O-je-czG"/>
+                                            <constraint firstAttribute="bottom" secondItem="hpx-h5-Gvz" secondAttribute="bottom" constant="24" id="G45-ti-Bo7"/>
                                             <constraint firstItem="hpx-h5-Gvz" firstAttribute="leading" secondItem="Wcm-5M-vp5" secondAttribute="leading" id="HUl-mP-JYN"/>
                                             <constraint firstAttribute="trailing" secondItem="mAA-zc-Xiy" secondAttribute="trailing" constant="24" id="MuV-iA-VLg"/>
-                                            <constraint firstItem="lNF-QJ-adk" firstAttribute="top" secondItem="hpx-h5-Gvz" secondAttribute="bottom" constant="8" id="P0g-iG-dUq"/>
                                             <constraint firstItem="Wcm-5M-vp5" firstAttribute="leading" secondItem="mAA-zc-Xiy" secondAttribute="leading" id="aAA-Q0-3sT"/>
                                             <constraint firstItem="Wcm-5M-vp5" firstAttribute="trailing" secondItem="mAA-zc-Xiy" secondAttribute="trailing" id="ass-Qe-PPP"/>
-                                            <constraint firstItem="lNF-QJ-adk" firstAttribute="trailing" secondItem="hpx-h5-Gvz" secondAttribute="trailing" id="bEJ-nn-z77"/>
                                             <constraint firstItem="mAA-zc-Xiy" firstAttribute="leading" secondItem="1P4-co-P8M" secondAttribute="leading" constant="24" id="bwc-9Z-rYv"/>
-                                            <constraint firstItem="lNF-QJ-adk" firstAttribute="leading" secondItem="hpx-h5-Gvz" secondAttribute="leading" id="hTg-dR-pwp"/>
                                             <constraint firstItem="hpx-h5-Gvz" firstAttribute="trailing" secondItem="Wcm-5M-vp5" secondAttribute="trailing" id="i7r-85-6zu"/>
                                             <constraint firstItem="hpx-h5-Gvz" firstAttribute="top" secondItem="Wcm-5M-vp5" secondAttribute="bottom" constant="40" id="laJ-EO-h9Y"/>
                                             <constraint firstItem="mAA-zc-Xiy" firstAttribute="top" secondItem="1P4-co-P8M" secondAttribute="top" constant="24" id="rGT-LL-Jdp"/>
@@ -403,7 +363,6 @@
                     </view>
                     <navigationItem key="navigationItem" id="nuu-fk-oz7"/>
                     <connections>
-                        <outlet property="continueButton" destination="lNF-QJ-adk" id="awb-xH-1Dk"/>
                         <outlet property="phoneNumberTextFieldView" destination="Wcm-5M-vp5" id="82p-sN-xmS"/>
                         <outlet property="scrollBottomPaddingConstraint" destination="lUw-za-tIZ" id="N3e-iO-CzX"/>
                         <outlet property="sendCodeButton" destination="hpx-h5-Gvz" id="gbN-uZ-KyN"/>

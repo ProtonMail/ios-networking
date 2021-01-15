@@ -31,7 +31,6 @@ class PhoneVerifyViewController: UIViewController {
 
     @IBOutlet weak var phoneNumberTextFieldView: PMTextFieldCombo!
     @IBOutlet weak var sendCodeButton: ProtonButton!
-    @IBOutlet weak var continueButton: ProtonButton!
     @IBOutlet weak var scrollBottomPaddingConstraint: NSLayoutConstraint!
     @IBOutlet weak var topTitleLabel: UILabel!
 
@@ -78,13 +77,6 @@ class PhoneVerifyViewController: UIViewController {
         }
     }
 
-    @IBAction func haveCodeAction(_ sender: Any) {
-        guard phoneNumberTextFieldView.value != "" else { return }
-        let buildPhonenumber = "\(countryCode)\(phoneNumberTextFieldView.value)"
-        self.viewModel.setEmail(email: buildPhonenumber)
-        self.performSegue(withIdentifier: self.kSegueToVerifyCode, sender: self)
-    }
-
     @IBAction func sendCodeAction(_ sender: UIButton) {
         self.sendCode()
     }
@@ -105,7 +97,6 @@ class PhoneVerifyViewController: UIViewController {
         topTitleLabel.text = CoreString._hv_sms_enter_label
         topTitleLabel.textColor = UIColorManager.TextWeak
         sendCodeButton.setTitle(CoreString._hv_email_verification_button, for: UIControl.State())
-        continueButton.setTitle(CoreString._hv_email_have_code_button, for: UIControl.State())
         countryCodeViewModel = CountryCodeViewModel()
         updateCountryCode(countryCodeViewModel.getPhoneCodeFromName(NSLocale.current.regionCode))
         phoneNumberTextFieldView.title = CoreString._hv_sms_label
@@ -117,7 +108,6 @@ class PhoneVerifyViewController: UIViewController {
         phoneNumberTextFieldView.autocapitalizationType = .none
         phoneNumberTextFieldView.spellCheckingType = .no
         sendCodeButton.setMode(mode: .solid)
-        continueButton.setMode(mode: .text)
         updateButtonStatus()
     }
 
@@ -131,10 +121,8 @@ class PhoneVerifyViewController: UIViewController {
         sendCodeButton.isSelected = false
         if phoneNumber.isEmpty {
             sendCodeButton.isEnabled = false
-            continueButton.isEnabled = false
         } else {
             sendCodeButton.isEnabled = true
-            continueButton.isEnabled = true
         }
     }
 
@@ -146,10 +134,8 @@ class PhoneVerifyViewController: UIViewController {
         let buildPhonenumber = "\(countryCode)\(phoneNumberTextFieldView.value)"
         self.viewModel.setEmail(email: buildPhonenumber)
         sendCodeButton.isSelected = true
-        continueButton.isEnabled = false
         self.viewModel.sendVerifyCode(.sms) { (isOK, error) -> Void in
             self.verifyClicked = false
-            self.continueButton.isEnabled = true
             self.sendCodeButton.isSelected = false
             if isOK {
                 self.performSegue(withIdentifier: self.kSegueToVerifyCode, sender: self)

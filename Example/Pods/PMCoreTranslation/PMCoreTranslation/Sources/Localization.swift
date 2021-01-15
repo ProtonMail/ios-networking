@@ -62,9 +62,6 @@ public class LocalizedString {
     /// Email  verification button
     public lazy var _hv_email_verification_button = NSLocalizedString("Get verification code", bundle: Common.bundle, comment: "Verification button")
 
-    /// Email  have code button
-    public lazy var _hv_email_have_code_button = NSLocalizedString("I already have a code", bundle: Common.bundle, comment: "Habe code button")
-
     // Human verification - sms method
 
     /// SMS enter label
@@ -290,7 +287,7 @@ public class LocalizedString {
     public lazy var _ls_login_2fa_field_info = NSLocalizedString("Enter the 6-digit code.", bundle: Common.bundle, comment: "2FA screen field info")
 
     /// 2FA screen recovery field info
-    public lazy var _ls_login_2fa_recovery_field_info = NSLocalizedString("Enter a 8-character recovery code.", bundle: Common.bundle, comment: "2FA screen recovery field info")
+    public lazy var _ls_login_2fa_recovery_field_info = NSLocalizedString("Enter an 8-character recovery code.", bundle: Common.bundle, comment: "2FA screen recovery field info")
 
     // Payments
 
@@ -345,4 +342,37 @@ public class LocalizedString {
     public lazy var _error_credits_applied = NSLocalizedString("Contact support@protonvpn.com to complete your purchase.", bundle: Common.bundle, comment: "In App Purchase error")
 
     public lazy var _error_wrong_token_status = NSLocalizedString("Wrong payment token status. Please relaunch the app. If error persists, contact support.", bundle: Common.bundle, comment: "In App Purchase error")
+
+    //  Login upgrade username-only account
+
+    /// Dialog title for organization user first login
+    public lazy var _login_username_org_dialog_title = NSLocalizedString("Change your password", bundle: Common.bundle, comment: "Dialog title for organization user first login")
+
+    /// Dialog action button title for organization user first login
+    public lazy var _login_username_org_dialog_action_button = NSLocalizedString("Change password", bundle: Common.bundle, comment: "Dialog action button title for organization user first login")
+
+    /// Dialog message for organization user first login
+    public lazy var _login_username_org_dialog_message = NSLocalizedString("To use the Proton app as a member of an organization, you first need to change your password by signing into Proton through a browser.", bundle: Common.bundle, comment: "Dialog message for organization user first login")
+    
+    /// Account manager
+    
+    public lazy var _am_switch_to_title = NSLocalizedString("switch to", bundle: Common.bundle, comment: "Section title of account switcher")
+    
+    public lazy var _am_manage_accounts = NSLocalizedString("Manage accounts", bundle: Common.bundle, comment: "Manage accounts button")
+    
+    public lazy var _am_signed_in_to_protonmail = NSLocalizedString("Signed in to ProtonMail", bundle: Common.bundle, comment: "Section title of account manager")
+    
+    public lazy var _am_signed_out_of_protonmail = NSLocalizedString("Signed out of Protonmail", bundle: Common.bundle, comment: "Section title of account manager")
+    
+    public lazy var _am_signout = NSLocalizedString("Sign out", bundle: Common.bundle, comment: "Sign out button")
+    
+    public lazy var _am_remove_account = NSLocalizedString("Remove account", bundle: Common.bundle, comment: "remove account button")
+    
+    public lazy var _am_remove_account_alert_text = NSLocalizedString("You will be signed out and all the data associated with this account will be removed from this device.", bundle: Common.bundle, comment: "Alert message of remove account")
+    
+    public lazy var _am_remove_button = NSLocalizedString("Remove", bundle: Common.bundle, comment: "Remove button")
+    
+    public lazy var _am_signout_title = NSLocalizedString("Sign out %@", bundle: Common.bundle, comment: "Alert title, sign out a mail address")
+    
+    public lazy var _am_signout_alert_text = NSLocalizedString("Are you sure you want to sign out?", bundle: Common.bundle, comment: "Alert message of sign out")
 }
