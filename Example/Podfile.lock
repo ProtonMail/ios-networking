@@ -58,7 +58,6 @@ PODS:
   - PMHumanVerification (1.0.0):
     - PMCommon
     - PMCoreTranslation
-    - PMUICommon
     - PMUIFoundations
   - PMUICommon (1.0.0):
     - PMCommon
@@ -138,7 +137,7 @@ CHECKOUT OPTIONS:
     :commit: e4fb67d068aa84f714aed885234c5369ba97ec2e
     :git: "git@gitlab.protontech.ch:apple/shared/pmforceupgrade.git"
   PMHumanVerification:
-    :commit: 5a216c91787921709fee4c21b5e18a596dde22eb
+    :commit: 33d8993365b5c4d590e1aef5014db2b1650a62ed
     :git: "git@gitlab.protontech.ch:apple/shared/pmhumanverification.git"
   PMUICommon:
     :commit: eddb6ce3da4438c6686e74c70f83f8c82558ab34
@@ -156,7 +155,7 @@ SPEC CHECKSUMS:
   PMCoreTranslation: 221df023e0a50c73bdadd07ce8917e053f69a859
   PMCrypto: 70361d6a49e834bfae377b3b4524c2b305fb95c4
   PMForceUpgrade: f494aa7192a45e642ef190a1c8d58ab746eaa515
-  PMHumanVerification: 40038fa59db6b39cc6422a12eb5b9432e0b4d9d9
+  PMHumanVerification: ba7ccf6a4045285a417e6c08971efe3714a4ed09
   PMUICommon: a55d8aad94373e3939f7cf618ac98366ff86585e
   PMUIFoundations: 741e3317f3658cb01b9964109527c09600c1af95
   PromiseKit: 28fda91c973cc377875d8c0ea4f973013c05b6db

@@ -20,10 +20,11 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonMail.  If not, see <https://www.gnu.org/licenses/>.
 
+// swiftlint:disable identifier_name
+
 import Foundation
 
-// swiftlint:disable identifier_name
-public struct CountryCode: Decodable {
+struct CountryCode: Decodable {
     public let country_code: String
     public let country_en: String
     public let phone_code: Int

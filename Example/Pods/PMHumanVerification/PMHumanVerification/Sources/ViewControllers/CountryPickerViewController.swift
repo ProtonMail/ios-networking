@@ -26,11 +26,11 @@ import PMUIFoundations
 import PMCoreTranslation
 
 protocol CountryPickerViewControllerDelegate: class {
-    func dismissed()
-    func apply(_ country: CountryCode)
+    func didCountryPickerClose()
+    func didSelectCountryCode(countryCode: CountryCode)
 }
 
-class CountryPickerViewController: UIViewController {
+class CountryPickerViewController: BaseUIViewController {
 
     // MARK: Outlets
 
@@ -40,8 +40,8 @@ class CountryPickerViewController: UIViewController {
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var tableBottomConstraint: NSLayoutConstraint!
 
-    fileprivate let contryCodeCell = "country_code_table_cell"
-    fileprivate let countryCodeHeader = "CountryCodeTableHeaderView"
+    private let contryCodeCell = "country_code_table_cell"
+    private let countryCodeHeader = "CountryCodeTableHeaderView"
     weak var delegate: CountryPickerViewControllerDelegate?
     var viewModel: CountryCodeViewModel! { didSet { viewModel.searchText() } }
 
@@ -49,7 +49,6 @@ class CountryPickerViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        NotificationCenter.default.addKeyboardObserver(self)
         configureUI()
     }
 
@@ -57,16 +56,17 @@ class CountryPickerViewController: UIViewController {
         return UIStatusBarStyle.lightContent
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        NotificationCenter.default.removeKeyboardObserver(self)
+    override var bottomPaddingConstraint: CGFloat {
+        didSet {
+            tableBottomConstraint.constant = bottomPaddingConstraint
+        }
     }
 
     // MARK: Actions
 
     @IBAction func cancelAction(_ sender: UIButton) {
-        delegate?.dismissed()
-        self.dismiss(animated: true, completion: nil)
+        delegate?.didCountryPickerClose()
+        dismiss(animated: true, completion: nil)
     }
 
     @IBAction func tapAction(_ sender: UITapGestureRecognizer) {
@@ -75,11 +75,11 @@ class CountryPickerViewController: UIViewController {
 
     // MARK: Private interface
 
-    fileprivate func dismissKeyboard() {
+    private func dismissKeyboard() {
         view.endEditing(true)
     }
 
-    fileprivate func configureUI() {
+    private func configureUI() {
         cancelButton.tintColor = UIColorManager.IconNorm
         contentView.layer.cornerRadius = 4
         searchBar.placeholder = CoreString._hv_sms_search_placeholder
@@ -90,7 +90,6 @@ class CountryPickerViewController: UIViewController {
         let nib = UINib(nibName: countryCodeHeader, bundle: Common.bundle)
         tableView.register(nib, forHeaderFooterViewReuseIdentifier: countryCodeHeader)
     }
-
 }
 
 // MARK: - UITableViewDataSource
@@ -105,8 +104,7 @@ extension CountryPickerViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let countryCell = tableView.dequeueReusableCell(withIdentifier: self.contryCodeCell,
-                                                        for: indexPath) as! CountryCodeTableViewCell
+        let countryCell = tableView.dequeueReusableCell(withIdentifier: contryCodeCell, for: indexPath) as! CountryCodeTableViewCell
         if let country = viewModel.getCountryCode(indexPath: indexPath) {
             countryCell.configCell(country)
         }
@@ -136,13 +134,15 @@ extension CountryPickerViewController: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let country = viewModel.getCountryCode(indexPath: indexPath) {
-            delegate?.apply(country)
+        if let countryCode = viewModel.getCountryCode(indexPath: indexPath) {
+            delegate?.didSelectCountryCode(countryCode: countryCode)
         }
-        self.dismiss(animated: true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
 
 }
+
+// MARK: - UISearchBarDelegate
 
 extension CountryPickerViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -152,27 +152,6 @@ extension CountryPickerViewController: UISearchBarDelegate {
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         dismissKeyboard()
-    }
-}
-
-// MARK: - NSNotificationCenterKeyboardObserverProtocol
-
-extension CountryPickerViewController: NSNotificationCenterKeyboardObserverProtocol {
-    func keyboardWillHideNotification(_ notification: Notification) {
-        let keyboardInfo = notification.keyboardInfo
-        self.tableBottomConstraint.constant = 0.0
-        UIView.animate(withDuration: keyboardInfo.duration, delay: 0, options: keyboardInfo.animationOption, animations: { () -> Void in
-        }, completion: nil)
-    }
-
-    func keyboardWillShowNotification(_ notification: Notification) {
-        let keyboardInfo = notification.keyboardInfo
-        let info: NSDictionary = notification.userInfo! as NSDictionary
-        UIView.animate(withDuration: keyboardInfo.duration, delay: 0, options: keyboardInfo.animationOption, animations: { () -> Void in
-            if let keyboardSize = (info[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-                self.tableBottomConstraint.constant = keyboardSize.height - UIEdgeInsets.saveAreaBottom
-            }
-        }, completion: nil)
     }
 }
 

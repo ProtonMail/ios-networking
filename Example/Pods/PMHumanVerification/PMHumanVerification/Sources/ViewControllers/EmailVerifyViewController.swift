@@ -23,9 +23,14 @@
 #if canImport(UIKit)
 import UIKit
 import PMUIFoundations
+import PMCommon
 import PMCoreTranslation
 
-class EmailVerifyViewController: UIViewController {
+protocol EmailVerifyViewControllerDelegate: class {
+    func didVerifyEmailCode(method: VerifyMethod, destination: String)
+}
+
+class EmailVerifyViewController: BaseUIViewController {
 
     // MARK: Outlets
 
@@ -34,10 +39,8 @@ class EmailVerifyViewController: UIViewController {
     @IBOutlet weak var sendCodeButton: ProtonButton!
     @IBOutlet weak var scrollBottomPaddingConstraint: NSLayoutConstraint!
 
-    fileprivate let kSegueToVerifyCode = "email_verify_to_verify_code_segue"
-    fileprivate var verifyClicked = false
-
-    var viewModel: HumanCheckViewModel!
+    weak var delegate: EmailVerifyViewControllerDelegate?
+    var viewModel: VerifyViewModel!
 
     // MARK: View controller life cycle
 
@@ -52,27 +55,19 @@ class EmailVerifyViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        NotificationCenter.default.addKeyboardObserver(self)
         _ = emailTextFieldView.becomeFirstResponder()
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        NotificationCenter.default.removeKeyboardObserver(self)
-    }
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == self.kSegueToVerifyCode {
-            let viewController = segue.destination as! VerifyCodeViewController
-            self.viewModel.type = .email
-            viewController.viewModel = self.viewModel
+    override var bottomPaddingConstraint: CGFloat {
+        didSet {
+            scrollBottomPaddingConstraint.constant = bottomPaddingConstraint
         }
     }
 
     // MARK: Actions
 
     @IBAction func sendCodeAction(_ sender: UIButton) {
-        self.sendEmail()
+        sendEmail()
     }
 
     @IBAction func tapAction(_ sender: UITapGestureRecognizer) {
@@ -82,7 +77,7 @@ class EmailVerifyViewController: UIViewController {
 
     // MARK: Private interface
 
-    fileprivate func configureUI() {
+    private func configureUI() {
         view.backgroundColor = UIColorManager.BackgroundNorm
         topTitleLabel.text = CoreString._hv_email_enter_label
         topTitleLabel.textColor = UIColorManager.TextWeak
@@ -99,18 +94,14 @@ class EmailVerifyViewController: UIViewController {
         updateButtonStatus()
     }
 
-    fileprivate func sendEmail() {
-        guard !verifyClicked else { return }
+    private func sendEmail() {
         guard let email = validateEmailAddress else { return }
-        verifyClicked = true
         dismissKeyboard()
-        self.viewModel.setEmail(email: email)
         sendCodeButton.isSelected = true
-        self.viewModel.sendVerifyCode(.email) { (isOK, error) -> Void in
-            self.verifyClicked = false
+        viewModel.sendVerifyCode(method: .email, destination: email) { (isOK, error) -> Void in
             self.sendCodeButton.isSelected = false
             if isOK {
-                self.performSegue(withIdentifier: self.kSegueToVerifyCode, sender: self)
+                self.delegate?.didVerifyEmailCode(method: .email, destination: email)
             } else {
                 if let description = error?.localizedDescription {
                     let banner = PMBanner(message: description, style: PMBannerNewStyle.error, dismissDuration: Double.infinity)
@@ -123,11 +114,11 @@ class EmailVerifyViewController: UIViewController {
         }
     }
 
-    fileprivate func dismissKeyboard() {
+    private func dismissKeyboard() {
         _ = emailTextFieldView.resignFirstResponder()
     }
 
-    fileprivate func updateButtonStatus() {
+    private func updateButtonStatus() {
         if validateEmailAddress != nil {
             sendCodeButton.isEnabled = true
         } else {
@@ -135,9 +126,9 @@ class EmailVerifyViewController: UIViewController {
         }
     }
 
-    fileprivate var validateEmailAddress: String? {
+    private var validateEmailAddress: String? {
         let emailaddress = emailTextFieldView.value
-        guard emailaddress != "", viewModel.isValidEmail(email: emailaddress) else { return nil }
+        guard viewModel.isValidEmail(email: emailaddress) else { return nil }
         return emailaddress
     }
 }
@@ -158,27 +149,6 @@ extension EmailVerifyViewController: PMTextFieldDelegate {
 
     func didEndEditing(textField: PMTextField) {
         updateButtonStatus()
-    }
-}
-
-// MARK: - NSNotificationCenterKeyboardObserverProtocol
-
-extension EmailVerifyViewController: NSNotificationCenterKeyboardObserverProtocol {
-    func keyboardWillHideNotification(_ notification: Notification) {
-        let keyboardInfo = notification.keyboardInfo
-        UIView.animate(withDuration: keyboardInfo.duration, delay: 0, options: keyboardInfo.animationOption, animations: { () -> Void in
-            self.scrollBottomPaddingConstraint.constant = 0.0
-        }, completion: nil)
-    }
-
-    func keyboardWillShowNotification(_ notification: Notification) {
-        let keyboardInfo = notification.keyboardInfo
-        let info: NSDictionary = notification.userInfo! as NSDictionary
-        UIView.animate(withDuration: keyboardInfo.duration, delay: 0, options: keyboardInfo.animationOption, animations: { () -> Void in
-            if let keyboardSize = (info[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-                self.scrollBottomPaddingConstraint.constant = keyboardSize.height - UIEdgeInsets.saveAreaBottom
-            }
-        }, completion: nil)
     }
 }
 

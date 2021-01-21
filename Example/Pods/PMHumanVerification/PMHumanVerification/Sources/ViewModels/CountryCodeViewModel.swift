@@ -24,10 +24,11 @@ import Foundation
 
 class CountryCodeViewModel {
 
-    // MARK: Public interface
+    private (set) var sectionNames: [String] = []
+    private var countryCodes: [CountryCode] = []
+    private var sectionCountryCodes: [String: [CountryCode]] = [:]
 
-    fileprivate (set) var sectionNames: [String] = []
-    fileprivate var countryCodes: [CountryCode] = []
+    // MARK: Public interface
 
     init() {
         countryCodes = getCountryCodes()
@@ -56,9 +57,7 @@ class CountryCodeViewModel {
 
     // MARK: Private methods
 
-    fileprivate var sectionCountryCodes: [String: [CountryCode]] = [:]
-
-    fileprivate func getCountryCodes() -> [CountryCode] {
+    private func getCountryCodes() -> [CountryCode] {
         let bundleInstance = Common.bundle
         let urlFile = bundleInstance.url(forResource: "phone_country_code", withExtension: "geojson")!
         var countryCodes: [CountryCode] = []
@@ -71,7 +70,7 @@ class CountryCodeViewModel {
         return countryCodes
     }
 
-    fileprivate func prepareData(searchText: String = "") {
+    private func prepareData(searchText: String = "") {
         sectionCountryCodes.removeAll()
         var searchCountryCodes = countryCodes
 
@@ -93,7 +92,7 @@ class CountryCodeViewModel {
         sectionNames = sectionCountryCodes.keys.sorted { $0 < $1 }
     }
 
-    fileprivate func getCountryCodeFromName(_ name: String) -> CountryCode? {
+    private func getCountryCodeFromName(_ name: String) -> CountryCode? {
         return countryCodes.first { $0.country_code == name }
     }
 

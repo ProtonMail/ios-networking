@@ -23,9 +23,15 @@
 #if canImport(UIKit)
 import UIKit
 import PMUIFoundations
+import PMCommon
 import PMCoreTranslation
 
-class PhoneVerifyViewController: UIViewController {
+protocol PhoneVerifyViewControllerDelegate: class {
+    func didVerifyPhoneCode(method: VerifyMethod, destination: String)
+    func didSelectCountryPicker()
+}
+
+class PhoneVerifyViewController: BaseUIViewController {
 
     // MARK: Outlets
 
@@ -34,13 +40,10 @@ class PhoneVerifyViewController: UIViewController {
     @IBOutlet weak var scrollBottomPaddingConstraint: NSLayoutConstraint!
     @IBOutlet weak var topTitleLabel: UILabel!
 
-    fileprivate let kSegueToCountryPicker = "phone_verify_to_country_picker_segue"
-    fileprivate let kSegueToVerifyCode = "phone_verify_to_verify_code_segue"
+    private var countryCode: String = ""
 
-    fileprivate var verifyClicked = false
-    fileprivate var countryCode: String = ""
-
-    var viewModel: HumanCheckViewModel!
+    weak var delegate: PhoneVerifyViewControllerDelegate?
+    var viewModel: VerifyViewModel!
     var countryCodeViewModel: CountryCodeViewModel!
 
     // MARK: View controller life cycle
@@ -56,29 +59,17 @@ class PhoneVerifyViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        NotificationCenter.default.addKeyboardObserver(self)
         _ = phoneNumberTextFieldView.becomeFirstResponder()
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        NotificationCenter.default.removeKeyboardObserver(self)
-    }
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == self.kSegueToVerifyCode {
-            let viewController = segue.destination as! VerifyCodeViewController
-            self.viewModel.type = .sms
-            viewController.viewModel = self.viewModel
-        } else if segue.identifier == kSegueToCountryPicker {
-            let popup = segue.destination as! CountryPickerViewController
-            popup.viewModel = countryCodeViewModel
-            popup.delegate = self
+    override var bottomPaddingConstraint: CGFloat {
+        didSet {
+            scrollBottomPaddingConstraint.constant = bottomPaddingConstraint
         }
     }
 
     @IBAction func sendCodeAction(_ sender: UIButton) {
-        self.sendCode()
+        sendCode()
     }
 
     @IBAction func tapAction(_ sender: UITapGestureRecognizer) {
@@ -86,18 +77,22 @@ class PhoneVerifyViewController: UIViewController {
         dismissKeyboard()
     }
 
+    func updateCountryCode(_ code: Int) {
+        countryCode = "+\(code)"
+        phoneNumberTextFieldView.buttonTitleText = countryCode
+    }
+
     // MARK: Private interface
 
-    fileprivate func dismissKeyboard() {
+    private func dismissKeyboard() {
         _ = phoneNumberTextFieldView.resignFirstResponder()
     }
 
-    fileprivate func configureUI() {
+    private func configureUI() {
         view.backgroundColor = UIColorManager.BackgroundNorm
         topTitleLabel.text = CoreString._hv_sms_enter_label
         topTitleLabel.textColor = UIColorManager.TextWeak
         sendCodeButton.setTitle(CoreString._hv_email_verification_button, for: UIControl.State())
-        countryCodeViewModel = CountryCodeViewModel()
         updateCountryCode(countryCodeViewModel.getPhoneCodeFromName(NSLocale.current.regionCode))
         phoneNumberTextFieldView.title = CoreString._hv_sms_label
         phoneNumberTextFieldView.placeholder = "XX XXX XX XX"
@@ -111,14 +106,8 @@ class PhoneVerifyViewController: UIViewController {
         updateButtonStatus()
     }
 
-    fileprivate func updateCountryCode(_ code: Int) {
-        countryCode = "+\(code)"
-        phoneNumberTextFieldView.buttonTitleText = countryCode
-    }
-
-    fileprivate func updateButtonStatus() {
+    private func updateButtonStatus() {
         let phoneNumber = phoneNumberTextFieldView.value.trim()
-        sendCodeButton.isSelected = false
         if phoneNumber.isEmpty {
             sendCodeButton.isEnabled = false
         } else {
@@ -126,19 +115,14 @@ class PhoneVerifyViewController: UIViewController {
         }
     }
 
-    fileprivate func sendCode() {
-        guard !verifyClicked else { return }
-        verifyClicked = true
+    private func sendCode() {
         dismissKeyboard()
-
         let buildPhonenumber = "\(countryCode)\(phoneNumberTextFieldView.value)"
-        self.viewModel.setEmail(email: buildPhonenumber)
         sendCodeButton.isSelected = true
-        self.viewModel.sendVerifyCode(.sms) { (isOK, error) -> Void in
-            self.verifyClicked = false
+        viewModel.sendVerifyCode(method: .sms, destination: buildPhonenumber) { (isOK, error) -> Void in
             self.sendCodeButton.isSelected = false
             if isOK {
-                self.performSegue(withIdentifier: self.kSegueToVerifyCode, sender: self)
+                self.delegate?.didVerifyPhoneCode(method: .sms, destination: buildPhonenumber)
             } else {
                 if let description = error?.localizedDescription {
                     let banner = PMBanner(message: description, style: PMBannerNewStyle.error, dismissDuration: Double.infinity)
@@ -149,17 +133,6 @@ class PhoneVerifyViewController: UIViewController {
                 }
             }
         }
-    }
-}
-
-extension PhoneVerifyViewController: CountryPickerViewControllerDelegate {
-
-    func dismissed() {
-
-    }
-
-    func apply(_ country: CountryCode) {
-        self.updateCountryCode(country.phone_code)
     }
 }
 
@@ -182,28 +155,7 @@ extension PhoneVerifyViewController: PMTextFieldComboDelegate {
     }
 
     func userDidRequestDataSelection(button: UIButton) {
-        self.performSegue(withIdentifier: kSegueToCountryPicker, sender: self)
-    }
-}
-
-// MARK: - NSNotificationCenterKeyboardObserverProtocol
-
-extension PhoneVerifyViewController: NSNotificationCenterKeyboardObserverProtocol {
-    func keyboardWillHideNotification(_ notification: Notification) {
-        let keyboardInfo = notification.keyboardInfo
-        UIView.animate(withDuration: keyboardInfo.duration, delay: 0, options: keyboardInfo.animationOption, animations: { () -> Void in
-            self.scrollBottomPaddingConstraint.constant = 0.0
-        }, completion: nil)
-    }
-
-    func keyboardWillShowNotification(_ notification: Notification) {
-        let keyboardInfo = notification.keyboardInfo
-        let info: NSDictionary = notification.userInfo! as NSDictionary
-        UIView.animate(withDuration: keyboardInfo.duration, delay: 0, options: keyboardInfo.animationOption, animations: { () -> Void in
-            if let keyboardSize = (info[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-                self.scrollBottomPaddingConstraint.constant = keyboardSize.height - UIEdgeInsets.saveAreaBottom
-            }
-        }, completion: nil)
+        delegate?.didSelectCountryPicker()
     }
 }
 

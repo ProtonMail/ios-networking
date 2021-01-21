@@ -1,9 +1,9 @@
 //
-//  TextInsetTextField.swift
-//  ProtonMail
+//  HelpViewModel.swift
+//  ProtonMail - Created on 20/01/21.
 //
 //
-//  Copyright (c) 2019 Proton Technologies AG
+//  Copyright (c) 2021 Proton Technologies AG
 //
 //  This file is part of ProtonMail.
 //
@@ -23,15 +23,30 @@
 #if canImport(UIKit)
 import UIKit
 
-class TextInsetTextField: UITextField {
-    var inset: CGFloat = 0
+class HelpViewModel {
 
-    override func editingRect(forBounds bounds: CGRect) -> CGRect {
-        return super.editingRect(forBounds: bounds).insetBy(dx: inset, dy: 0)
+    // MARK: - Private properties
+
+    private let supportURL: URL?
+
+    // MARK: - Public properties and methods
+
+    struct HumanItem {
+        let title: String
+        let subtitle: String
+        let image: UIImage
+        let url: URL?
     }
 
-    override func textRect(forBounds bounds: CGRect) -> CGRect {
-        return super.textRect(forBounds: bounds).insetBy(dx: inset, dy: 0)
+    var helpMenuItems: [HumanItem] {
+        return HumanHelpItem.allCases.map {
+            HumanItem(title: $0.title, subtitle: $0.subtitle, image: $0.image, url: ($0 == .visitHelpCenter ? supportURL : $0.url))
+        }
+    }
+
+    init(url: URL?) {
+        self.supportURL = url
     }
 }
+
 #endif
