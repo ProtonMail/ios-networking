@@ -119,6 +119,10 @@ extension CountryPickerViewController: UITableViewDataSource {
         return cell
     }
 
+    func sectionIndexTitles(for tableView: UITableView) -> [String]? {
+        return viewModel.sectionNames
+    }
+
 }
 
 // MARK: - UITableViewDelegate
