@@ -405,13 +405,16 @@ public class PMAPIService: APIService {
 
     }
     // new requestion function
+    // TODO:: the retry count need to improved
+    //         -- retry count should depends on what error you receive.
+    //         -- auth retry should seperate from normal retry.
     func request(method: HTTPMethod,
                  path: String,
                  parameters: Any?,
                  headers: [String: Any]?,
                  authenticated: Bool = true,
                  authRetry: Bool = true,
-                 authRetryRemains: Int = 5,
+                 authRetryRemains: Int = 3,
                  customAuthCredential: AuthCredential? = nil,
                  completion: CompletionBlock?) {
         let authBlock: AuthTokenBlock = { token, userID, error in
@@ -435,10 +438,6 @@ public class PMAPIService: APIService {
                             if path.isRefreshPath { // tempery no need later
                                 completion?(nil, nil, error)
                                 self.authDelegate?.onLogout(sessionUID: self.sessionUID)
-                                // self.delegate?.onError(error: error)
-                                // UserTempCachedStatus.backup()
-                                ////sharedUserDataService.signOut(true);
-                                // userCachedStatus.signOut()
                             } else {
                                 if authRetryRemains > 0 {
                                     self.request(method: method,
@@ -450,6 +449,7 @@ public class PMAPIService: APIService {
                                                  customAuthCredential: customAuthCredential,
                                                  completion: completion)
                                 } else {
+                                    completion?(nil, nil, error)
                                     self.authDelegate?.onLogout(sessionUID: self.sessionUID)
                                     // NotificationCenter.default.post(name: .didReovke, object: nil, userInfo: ["uid": userID ?? ""])
                                 }
@@ -525,6 +525,7 @@ public class PMAPIService: APIService {
                                                      customAuthCredential: customAuthCredential,
                                                      completion: completion)
                                     } else {
+                                        completion?(nil, nil, error)
                                         self.authDelegate?.onLogout(sessionUID: self.sessionUID)
                                         // NotificationCenter.default.post(name: .didReovke, object: nil, userInfo: ["uid": userID ?? ""])
                                     }
@@ -835,7 +836,7 @@ public class PMAPIService: APIService {
         headers: [String: Any]?,
         authenticated: Bool = true,
         authRetry: Bool = true,
-        authRetryRemains: Int = 10,
+        authRetryRemains: Int = 3,
         customAuthCredential: AuthCredential? = nil,
         error: NSError?,
         response: Any?,
@@ -890,7 +891,7 @@ public class PMAPIService: APIService {
         headers: [String: Any]?,
         authenticated: Bool = true,
         authRetry: Bool = true,
-        authRetryRemains: Int = 10,
+        authRetryRemains: Int = 3,
         customAuthCredential: AuthCredential? = nil,
         error: NSError?,
         response: Any?,
