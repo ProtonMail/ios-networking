@@ -203,7 +203,7 @@ extension NetworkingViewModel: AuthDelegate {
 
 extension NetworkingViewModel: APIServiceDelegate {
     var userAgent: String? {
-        return ""
+        return ""//need to be set
     }
 
     func isReachable() -> Bool {

@@ -323,7 +323,7 @@ extension MainViewController : AuthDelegate {
 
 extension MainViewController : APIServiceDelegate {
     var userAgent: String? {
-        return ""
+        return "" //need to be set
     }
     
     func isReachable() -> Bool {
