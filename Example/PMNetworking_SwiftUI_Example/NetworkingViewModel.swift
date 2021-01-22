@@ -1,10 +1,26 @@
 //
 //  NetworkingViewModel.swift
-//  PMNetworking_SwiftUI_Example
+//  PMNetworking
 //
-//  Created by Greg on 22.01.21.
-//  Copyright © 2021 CocoaPods. All rights reserved.
+//  Created on 22/01/2021.
 //
+//
+//  Copyright (c) 2021 Proton Technologies AG
+//
+//  This file is part of ProtonMail.
+//
+//  ProtonMail is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  ProtonMail is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with ProtonMail.  If not, see <https://www.gnu.org/licenses/>.
 
 import SwiftUI
 import PMCommon
@@ -12,37 +28,11 @@ import PMAuthentication
 import PMForceUpgrade
 import PMHumanVerification
 
-class DevDoHMail: DoH, ServerConfig {
-    var signupDomain: String = "proton.dev"
-    var defaultHost: String = "https://proton.dev"
-    var captchaHost: String = "proton.dev"
-    var apiHost : String = "dmfygsltqojxxi33onvqws3bomnua.protonpro.xyz"
-    var defaultPath: String = "/api"
-    static let `default` = try! DevDoHMail()
-}
-
-class BlueDoHMail: DoH, ServerConfig {
-    var signupDomain: String = "proton.blue"
-    var defaultHost: String = "https://protonmail.blue"
-    var captchaHost: String = "mail.protonmail.blue"
-    var apiHost : String = "dmfygsltqojxxi33onvqws3bomnua.protonpro.xyz"
-    var defaultPath: String = "/api"
-    static let `default` = try! BlueDoHMail()
-}
-
-class ProdDoHMail: DoH, ServerConfig {
-    var signupDomain: String = "protonmail.com"
-    var defaultHost: String = "https://api.protonmail.ch"
-    var captchaHost: String = "https://api.protonmail.ch"
-    var apiHost : String = "dmfygsltqojxxi33onvqws3bomnua.protonpro.xyz"
-    static let `default` = try! ProdDoHMail()
-}
-
 class NetworkingViewModel: ObservableObject {
 
-    var testApi = PMAPIService(doh: DevDoHMail.default, sessionUID: "testSessionUID")
-    var testAuthCredential : AuthCredential? = nil
-    var humanVerificationDelegate: HumanVerifyDelegate?
+    private var testApi = PMAPIService(doh: DevDoHMail.default, sessionUID: "testSessionUID")
+    private var testAuthCredential : AuthCredential? = nil
+    private var humanVerificationDelegate: HumanVerifyDelegate?
 
     init() {
         TrustKitWrapper.start(delegate: self)
@@ -52,23 +42,19 @@ class NetworkingViewModel: ObservableObject {
     var env = ["Dev env.", "Blue env.", "Prod env."]
     var selectedIndex: Int = 0 { didSet { setupEnv() } }
     
-    func setupEnv() {
+    private func setupEnv() {
         testApi = PMAPIService(doh: currentEnv, sessionUID: "testSessionUID")
         testApi.authDelegate = self
         testApi.serviceDelegate = self
     }
     
-    var currentEnv: DoH {
+    private var currentEnv: DoH {
         switch selectedIndex {
         case 0: return DevDoHMail.default
         case 1: return BlueDoHMail.default
         case 2: return ProdDoHMail.default
         default: return DevDoHMail.default
         }
-    }
-    
-    func authAction() {
-        auth(userName: "greg", password: "a")
     }
 
     func humanVerificationUnauthAction() {
@@ -80,7 +66,7 @@ class NetworkingViewModel: ObservableObject {
         forceUpgrade()
     }
     
-    func forceUpgrade() {
+    private func forceUpgrade() {
         forceUpgradeServiceDelegate = {
             class TestDelegate: APIServiceDelegate {
                 var userAgent: String? = ""
@@ -109,10 +95,10 @@ class NetworkingViewModel: ObservableObject {
         }
     }
     
-    var forceUpgradeServiceDelegate: APIServiceDelegate?
-    var forceUpgradeDelegate: ForceUpgradeDelegate?
+    private var forceUpgradeServiceDelegate: APIServiceDelegate?
+    private var forceUpgradeDelegate: ForceUpgradeDelegate?
     
-    func setupHumanVerification() {
+    private func setupHumanVerification() {
         testAuthCredential = nil
         currentEnv.status = .off
         testApi.serviceDelegate = self
@@ -124,49 +110,13 @@ class NetworkingViewModel: ObservableObject {
         testApi.humanDelegate = humanVerificationDelegate
     }
 
-    func processHumanVerifyTest(dest: String? = nil, type: VerifyMethod? = nil, token: String? = nil) {
+    private func processHumanVerifyTest(dest: String? = nil, type: VerifyMethod? = nil, token: String? = nil) {
         // Human Verify request with empty token just to provoke human verification error
         let client = TestApiClient(api: self.testApi)
         client.triggerHumanVerify(destination: dest, type: type, token: token, isAuth: getToken(bySessionUID: "") != nil) { (_, response) in
             print("Human verify test result: \(response.error?.description as Any)")
         }
     }
-    
-    func auth(userName: String, password: String) {
-        currentEnv.status = .off
-        let authApi: Authenticator = Authenticator(api: testApi)
-        authApi.authenticate(username: userName, password: password) { result in
-            switch result {
-            case .failure(Authenticator.Errors.serverError(let error)): // error response returned by server
-//                self.showAlertView(title: "Error", message: error.localizedDescription)
-                print(error)
-            case .failure(Authenticator.Errors.emptyServerSrpAuth):
-                print("")
-            case .failure(Authenticator.Errors.emptyClientSrpAuth):
-                print("")
-            case .failure(Authenticator.Errors.wrongServerProof):
-                print("")
-            case .failure(Authenticator.Errors.emptyAuthResponse):
-                print("")
-            case .failure(Authenticator.Errors.emptyAuthInfoResponse):
-                print("")
-            case .failure(let error): // network or parsing error
-                print(error)
-            case .success(.ask2FA(let context)): // success but need 2FA
-                print(context)
-            case .success(.newCredential(let credential, let passwordMode)): // success without 2FA
-                self.testAuthCredential = AuthCredential(credential)
-                print("pwd mode: \(passwordMode)")
-//                self.showAlertView(title: "Success")
-                break
-            case .success(.updatedCredential):
-                assert(false, "Should never happen in this flow")
-            }
-            print(result)
-        }
-    }
-
-    
 }
 
 extension NetworkingViewModel: AuthDelegate {

@@ -22,6 +22,8 @@
 		37BE4D7125BB04FD00F3F8F6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37BE4D6F25BB04FD00F3F8F6 /* LaunchScreen.storyboard */; };
 		37BE4D8125BB052300F3F8F6 /* NetworkingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BE4D8025BB052300F3F8F6 /* NetworkingViewModel.swift */; };
 		37BE4F9B25BB20BE00F3F8F6 /* TrustKitConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752CC08924AB554800537C44 /* TrustKitConfiguration.swift */; };
+		37BE4FB325BB405000F3F8F6 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BE4FB225BB405000F3F8F6 /* Environment.swift */; };
+		37BE4FB925BB40A200F3F8F6 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BE4FB225BB405000F3F8F6 /* Environment.swift */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
@@ -107,6 +109,7 @@
 		37BE4D7025BB04FD00F3F8F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		37BE4D7225BB04FD00F3F8F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		37BE4D8025BB052300F3F8F6 /* NetworkingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingViewModel.swift; sourceTree = "<group>"; };
+		37BE4FB225BB405000F3F8F6 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		40AC8A21773C51C77BD1BFD3 /* Pods-PMNetworking_Mac_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PMNetworking_Mac_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-PMNetworking_Mac_Example/Pods-PMNetworking_Mac_Example.release.xcconfig"; sourceTree = "<group>"; };
 		4DF16153C174C8E7C3352EA4 /* Pods_PMNetworking_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PMNetworking_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		550C7FA671F41D6229D5562C /* Pods-PMNetworking_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PMNetworking_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PMNetworking_Example/Pods-PMNetworking_Example.debug.xcconfig"; sourceTree = "<group>"; };
@@ -307,6 +310,7 @@
 				375CB5BB254C4A38005455CE /* Assets */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
 				752CC08924AB554800537C44 /* TrustKitConfiguration.swift */,
+				37BE4FB225BB405000F3F8F6 /* Environment.swift */,
 			);
 			name = "Example for PMNetworking";
 			path = PMNetworking;
@@ -868,6 +872,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				37BE4D8125BB052300F3F8F6 /* NetworkingViewModel.swift in Sources */,
+				37BE4FB925BB40A200F3F8F6 /* Environment.swift in Sources */,
 				37BE4F9B25BB20BE00F3F8F6 /* TrustKitConfiguration.swift in Sources */,
 				37BE4D6525BB04FC00F3F8F6 /* AppDelegate.swift in Sources */,
 				37BE4D6725BB04FC00F3F8F6 /* SceneDelegate.swift in Sources */,
@@ -883,6 +888,7 @@
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				375CB557254C45A8005455CE /* IBDesignableLabeled.swift in Sources */,
 				375CB554254C45A8005455CE /* NetworkTroubleShootViewController.swift in Sources */,
+				37BE4FB325BB405000F3F8F6 /* Environment.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 				375CB555254C45A8005455CE /* NetworkTroubleShootViewModel.swift in Sources */,
 				752CC08A24AB554800537C44 /* TrustKitConfiguration.swift in Sources */,
