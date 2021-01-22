@@ -72,6 +72,16 @@
                ReferencedContainer = "container:Pods/Pods.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "751B8AFE245AB30F006A9195"
+               BuildableName = "PMNetworking_Mac_ExampleUITests.xctest"
+               BlueprintName = "PMNetworking_Mac_ExampleUITests"
+               ReferencedContainer = "container:PMNetworking.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
