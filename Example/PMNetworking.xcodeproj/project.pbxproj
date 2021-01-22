@@ -21,7 +21,7 @@
 		37BE4D6E25BB04FD00F3F8F6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 37BE4D6D25BB04FD00F3F8F6 /* Preview Assets.xcassets */; };
 		37BE4D7125BB04FD00F3F8F6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37BE4D6F25BB04FD00F3F8F6 /* LaunchScreen.storyboard */; };
 		37BE4D8125BB052300F3F8F6 /* NetworkingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BE4D8025BB052300F3F8F6 /* NetworkingViewModel.swift */; };
-		37BE4F9025BB0E2B00F3F8F6 /* TrustKitConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752CC08924AB554800537C44 /* TrustKitConfiguration.swift */; };
+		37BE4F9B25BB20BE00F3F8F6 /* TrustKitConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752CC08924AB554800537C44 /* TrustKitConfiguration.swift */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
@@ -868,7 +868,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				37BE4D8125BB052300F3F8F6 /* NetworkingViewModel.swift in Sources */,
-				37BE4F9025BB0E2B00F3F8F6 /* TrustKitConfiguration.swift in Sources */,
+				37BE4F9B25BB20BE00F3F8F6 /* TrustKitConfiguration.swift in Sources */,
 				37BE4D6525BB04FC00F3F8F6 /* AppDelegate.swift in Sources */,
 				37BE4D6725BB04FC00F3F8F6 /* SceneDelegate.swift in Sources */,
 				37BE4D6925BB04FC00F3F8F6 /* ContentView.swift in Sources */,

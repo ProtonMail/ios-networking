@@ -12,33 +12,33 @@ import PMAuthentication
 import PMForceUpgrade
 import PMHumanVerification
 
+class DevDoHMail: DoH, ServerConfig {
+    var signupDomain: String = "proton.dev"
+    var defaultHost: String = "https://proton.dev"
+    var captchaHost: String = "proton.dev"
+    var apiHost : String = "dmfygsltqojxxi33onvqws3bomnua.protonpro.xyz"
+    var defaultPath: String = "/api"
+    static let `default` = try! DevDoHMail()
+}
+
+class BlueDoHMail: DoH, ServerConfig {
+    var signupDomain: String = "proton.blue"
+    var defaultHost: String = "https://protonmail.blue"
+    var captchaHost: String = "mail.protonmail.blue"
+    var apiHost : String = "dmfygsltqojxxi33onvqws3bomnua.protonpro.xyz"
+    var defaultPath: String = "/api"
+    static let `default` = try! BlueDoHMail()
+}
+
+class ProdDoHMail: DoH, ServerConfig {
+    var signupDomain: String = "protonmail.com"
+    var defaultHost: String = "https://api.protonmail.ch"
+    var captchaHost: String = "https://api.protonmail.ch"
+    var apiHost : String = "dmfygsltqojxxi33onvqws3bomnua.protonpro.xyz"
+    static let `default` = try! ProdDoHMail()
+}
+
 class NetworkingViewModel: ObservableObject {
-    
-    class DevDoHMail: DoH, ServerConfig {
-        var signupDomain: String = "proton.dev"
-        var defaultHost: String = "https://proton.dev"
-        var captchaHost: String = "proton.dev"
-        var apiHost : String = "dmfygsltqojxxi33onvqws3bomnua.protonpro.xyz"
-        var defaultPath: String = "/api"
-        static let `default` = try! DevDoHMail()
-    }
-
-    class BlueDoHMail: DoH, ServerConfig {
-        var signupDomain: String = "proton.blue"
-        var defaultHost: String = "https://protonmail.blue"
-        var captchaHost: String = "mail.protonmail.blue"
-        var apiHost : String = "dmfygsltqojxxi33onvqws3bomnua.protonpro.xyz"
-        var defaultPath: String = "/api"
-        static let `default` = try! BlueDoHMail()
-    }
-
-    class ProdDoHMail: DoH, ServerConfig {
-        var signupDomain: String = "protonmail.com"
-        var defaultHost: String = "https://api.protonmail.ch"
-        var captchaHost: String = "https://api.protonmail.ch"
-        var apiHost : String = "dmfygsltqojxxi33onvqws3bomnua.protonpro.xyz"
-        static let `default` = try! ProdDoHMail()
-    }
 
     var testApi = PMAPIService(doh: DevDoHMail.default, sessionUID: "testSessionUID")
     var testAuthCredential : AuthCredential? = nil
@@ -46,13 +46,17 @@ class NetworkingViewModel: ObservableObject {
 
     init() {
         TrustKitWrapper.start(delegate: self)
+        setupEnv()
+    }
+    
+    var env = ["Dev env.", "Blue env.", "Prod env."]
+    var selectedIndex: Int = 0 { didSet { setupEnv() } }
+    
+    func setupEnv() {
         testApi = PMAPIService(doh: currentEnv, sessionUID: "testSessionUID")
         testApi.authDelegate = self
         testApi.serviceDelegate = self
     }
-    
-    var env = ["Dev env.", "Blue env.", "Prod env."]
-    var selectedIndex: Int = 0
     
     var currentEnv: DoH {
         switch selectedIndex {
@@ -62,6 +66,10 @@ class NetworkingViewModel: ObservableObject {
         default: return DevDoHMail.default
         }
     }
+    
+    func authAction() {
+        auth(userName: "greg", password: "a")
+    }
 
     func humanVerificationUnauthAction() {
         setupHumanVerification()
@@ -69,6 +77,10 @@ class NetworkingViewModel: ObservableObject {
     }
 
     func forceUpgradeAction() {
+        forceUpgrade()
+    }
+    
+    func forceUpgrade() {
         forceUpgradeServiceDelegate = {
             class TestDelegate: APIServiceDelegate {
                 var userAgent: String? = ""
@@ -119,6 +131,41 @@ class NetworkingViewModel: ObservableObject {
             print("Human verify test result: \(response.error?.description as Any)")
         }
     }
+    
+    func auth(userName: String, password: String) {
+        currentEnv.status = .off
+        let authApi: Authenticator = Authenticator(api: testApi)
+        authApi.authenticate(username: userName, password: password) { result in
+            switch result {
+            case .failure(Authenticator.Errors.serverError(let error)): // error response returned by server
+//                self.showAlertView(title: "Error", message: error.localizedDescription)
+                print(error)
+            case .failure(Authenticator.Errors.emptyServerSrpAuth):
+                print("")
+            case .failure(Authenticator.Errors.emptyClientSrpAuth):
+                print("")
+            case .failure(Authenticator.Errors.wrongServerProof):
+                print("")
+            case .failure(Authenticator.Errors.emptyAuthResponse):
+                print("")
+            case .failure(Authenticator.Errors.emptyAuthInfoResponse):
+                print("")
+            case .failure(let error): // network or parsing error
+                print(error)
+            case .success(.ask2FA(let context)): // success but need 2FA
+                print(context)
+            case .success(.newCredential(let credential, let passwordMode)): // success without 2FA
+                self.testAuthCredential = AuthCredential(credential)
+                print("pwd mode: \(passwordMode)")
+//                self.showAlertView(title: "Success")
+                break
+            case .success(.updatedCredential):
+                assert(false, "Should never happen in this flow")
+            }
+            print(result)
+        }
+    }
+
     
 }
 

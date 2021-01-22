@@ -19,12 +19,15 @@ struct ContentView: View {
                     Text(viewModel.env[index]).tag(index)
                 }
             }.pickerStyle(SegmentedPickerStyle()).padding()
+            Button("Auth test", action: {
+                viewModel.authAction()
+            }).padding(.top)
             Button("Force Upgrade test", action: {
                 viewModel.forceUpgradeAction()
             }).padding(.top)
             Button("Human Verification unauth test", action: {
                 viewModel.humanVerificationUnauthAction()
-            }).padding()
+            }).padding(.top)
             Spacer()
         }
     }
