@@ -1,5 +1,5 @@
 //
-//  HumanCheckMenuViewController.swift
+//  HelpViewController.swift
 //  ProtonMail - Created on 2/1/16.
 //
 //
@@ -25,7 +25,11 @@ import UIKit
 import PMUIFoundations
 import PMCoreTranslation
 
-final public class HumanCheckHelpViewController: UIViewController {
+protocol HelpViewControllerDelegate: class {
+    func didDismissHelpViewController()
+}
+
+public class HelpViewController: UIViewController {
 
     // MARK: - Outlets
 
@@ -33,7 +37,8 @@ final public class HumanCheckHelpViewController: UIViewController {
     @IBOutlet weak var headerLabel: UILabel!
     @IBOutlet weak var closeBarButtonItem: UIBarButtonItem!
 
-    var viewModel: HumanCheckViewModel!
+    weak var delegate: HelpViewControllerDelegate?
+    var viewModel: HelpViewModel!
 
     // MARK: - View controller life cycle
 
@@ -60,12 +65,12 @@ final public class HumanCheckHelpViewController: UIViewController {
     // MARK: - Actions
 
     @IBAction func closeAction(_ sender: UIBarButtonItem) {
-        _ = self.navigationController?.popViewController(animated: true)
+        delegate?.didDismissHelpViewController()
     }
 
     // MARK: - Private Interface
 
-    fileprivate func configureUI() {
+    private func configureUI() {
         closeBarButtonItem.tintColor = UIColorManager.IconNorm
         view.backgroundColor = UIColorManager.BackgroundNorm
         tableView.backgroundColor = UIColorManager.BackgroundNorm
@@ -79,25 +84,18 @@ final public class HumanCheckHelpViewController: UIViewController {
 
 // MARK: - UITableViewDataSource
 
-extension HumanCheckHelpViewController: UITableViewDataSource {
+extension HelpViewController: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return viewModel.helpMenuItems.count
     }
 
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: PMCell.reuseIdentifier, for: indexPath) as! PMCell
         cell.selectionStyle = .default
-        if indexPath.row == 0 {
-            let image = UIImage(named: "ic-check-circle", in: Common.bundle, compatibleWith: nil)!
-            cell.title = CoreString._hv_help_request_item_title
-            cell.icon = image
-            cell.subtitle = CoreString._hv_help_request_item_message
-        } else {
-            let image = UIImage(named: "ic-lightbulp", in: Common.bundle, compatibleWith: nil)!
-            cell.title = CoreString._hv_help_visit_item_title
-            cell.icon = image
-            cell.subtitle = CoreString._hv_help_visit_item_message
-        }
+        let item = viewModel.helpMenuItems[indexPath.row]
+        cell.icon = item.image
+        cell.title = item.title
+        cell.subtitle = item.subtitle
         return cell
     }
 
@@ -108,18 +106,13 @@ extension HumanCheckHelpViewController: UITableViewDataSource {
 
 // MARK: - UITableViewDelegate
 
-extension HumanCheckHelpViewController: UITableViewDelegate {
+extension HelpViewController: UITableViewDelegate {
 
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.tableView.deselectRow(at: indexPath, animated: true)
-        var url: URL?
-        switch indexPath.row {
-        case 0: url = URL(string: "https://protonmail.com/support-form")
-        case 1: url = viewModel.supportURL
-        default: break
-        }
-        guard let validUrl = url else { return }
-        UIApplication.shared.open(validUrl)
+        tableView.deselectRow(at: indexPath, animated: true)
+        let item = viewModel.helpMenuItems[indexPath.row]
+        guard let url = item.url else { return }
+        UIApplication.shared.open(url)
     }
 }
 

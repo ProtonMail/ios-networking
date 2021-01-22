@@ -25,7 +25,12 @@ import UIKit
 import PMUIFoundations
 import PMCoreTranslation
 
-class VerifyCodeViewController: UIViewController {
+protocol VerifyCodeViewControllerDelegate: class {
+    func didPressAnotherVerifyMethod()
+    func didShowVerifyHelpViewController()
+}
+
+class VerifyCodeViewController: BaseUIViewController {
 
     // MARK: - Outlets
 
@@ -36,10 +41,9 @@ class VerifyCodeViewController: UIViewController {
     @IBOutlet weak var backBarbuttonItem: UIBarButtonItem!
     @IBOutlet weak var scrollBottomPaddingConstraint: NSLayoutConstraint!
 
-    fileprivate let kSegueToHelp = "check_menu_to_help_segue"
-    fileprivate let kSegueUnwind = "UnwindSegue"
-
-    var viewModel: HumanCheckViewModel!
+    weak var delegate: VerifyCodeViewControllerDelegate?
+    var viewModel: VerifyCheckViewModel!
+    var verifyViewModel: VerifyViewModel!
 
     // MARK: - View controller life cycle
 
@@ -54,19 +58,12 @@ class VerifyCodeViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        NotificationCenter.default.addKeyboardObserver(self)
         _ = verifyCodeTextFieldView.becomeFirstResponder()
     }
 
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        NotificationCenter.default.removeKeyboardObserver(self)
-    }
-
-    public override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == kSegueToHelp {
-            let viewController = segue.destination as! HumanCheckHelpViewController
-            viewController.viewModel = self.viewModel
+    override var bottomPaddingConstraint: CGFloat {
+        didSet {
+            scrollBottomPaddingConstraint.constant = bottomPaddingConstraint
         }
     }
 
@@ -77,7 +74,7 @@ class VerifyCodeViewController: UIViewController {
     }
 
     @IBAction func requestReplacementAction(_ sender: Any) {
-        let alert = UIAlertController(title: CoreString._hv_verification_new_alert_title, message: String(format: CoreString._hv_verification_new_alert_message, self.viewModel.getDestination()), preferredStyle: .alert)
+        let alert = UIAlertController(title: CoreString._hv_verification_new_alert_title, message: String(format: CoreString._hv_verification_new_alert_message, viewModel.destination), preferredStyle: .alert)
         alert.addAction(.init(title: CoreString._hv_verification_new_alert_button, style: .default, handler: { _ in
             self.resendCode()
         }))
@@ -96,13 +93,13 @@ class VerifyCodeViewController: UIViewController {
 
     // MARK: - Private interface
 
-    fileprivate func configureUI() {
+    private func configureUI() {
         backBarbuttonItem.tintColor = UIColorManager.IconNorm
         view.backgroundColor = UIColorManager.BackgroundNorm
         title = CoreString._hv_title
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: CoreString._hv_help_button, style: .done, target: self, action: #selector(helpButtonTapped))
         navigationItem.rightBarButtonItem?.tintColor = UIColorManager.BrandNorm
-        topTitleLabel.text = self.viewModel.getTitle()
+        topTitleLabel.text = viewModel.getTitle()
         topTitleLabel.textColor = UIColorManager.TextWeak
         verifyCodeTextFieldView.title = CoreString._hv_verification_code
         verifyCodeTextFieldView.assistiveText = CoreString._hv_verification_code_hint
@@ -121,17 +118,17 @@ class VerifyCodeViewController: UIViewController {
         continueButton.setMode(mode: .solid)
         newCodeButton.setTitle(CoreString._hv_verification_not_receive_code_button, for: .normal)
         newCodeButton.setMode(mode: .text)
-        self.updateButtonStatus()
+        updateButtonStatus()
     }
 
-    fileprivate func sendCode() {
+    private func sendCode() {
         let code = verifyCodeTextFieldView.value.trim()
         guard viewModel.isValidCodeFormat(code: code) else { return }
 
         continueButton.isSelected = true
         verifyCodeTextFieldView.isError = false
         continueButton.setTitle(CoreString._hv_verification_verifying_button, for: .normal)
-        self.viewModel.finalToken(token: code) { (res, error) in
+        viewModel.finalToken(token: code) { (res, error) in
             DispatchQueue.main.async {
                 self.verifyCodeTextFieldView.value = ""
                 self.continueButton.isEnabled = true
@@ -149,11 +146,11 @@ class VerifyCodeViewController: UIViewController {
         }
     }
 
-    fileprivate func showErrorAlert(error: NSError) {
-        if error.code == 12087 {
+    private func showErrorAlert(error: NSError) {
+        if viewModel.isInvalidVerificationCode(error: error) {
             // Invalid verification code
             showInvalidVerificationCodeAlert()
-            self.verifyCodeTextFieldView.isError = true
+            verifyCodeTextFieldView.isError = true
         } else {
             let banner = PMBanner(message: error.localizedDescription, style: PMBannerNewStyle.error, dismissDuration: Double.infinity)
             banner.addButton(text: CoreString._hv_ok_button) { _ in
@@ -163,7 +160,7 @@ class VerifyCodeViewController: UIViewController {
         }
     }
 
-    fileprivate func showInvalidVerificationCodeAlert() {
+    private func showInvalidVerificationCodeAlert() {
         let title = CoreString._hv_verification_error_alert_title
         let message = CoreString._hv_verification_error_alert_message
         let leftButton = CoreString._hv_verification_error_alert_resend
@@ -174,15 +171,15 @@ class VerifyCodeViewController: UIViewController {
             self.resendCode()
         }))
         alert.addAction(UIAlertAction(title: rightButton, style: .cancel, handler: { _ in
-            self.performSegue(withIdentifier: self.kSegueUnwind, sender: self)
+            self.delegate?.didPressAnotherVerifyMethod()
         }))
         present(alert, animated: true, completion: nil)
     }
 
-    fileprivate func resendCode() {
-        self.continueButton.isEnabled = false
-        self.newCodeButton.isEnabled = false
-        self.viewModel.sendVerifyCode(self.viewModel.type) { (isOK, error) -> Void in
+    private func resendCode() {
+        continueButton.isEnabled = false
+        newCodeButton.isEnabled = false
+        verifyViewModel.sendVerifyCode(method: viewModel.method, destination: viewModel.destination) { (isOK, error) -> Void in
             self.updateButtonStatus()
             self.newCodeButton.isEnabled = true
             if isOK {
@@ -200,15 +197,15 @@ class VerifyCodeViewController: UIViewController {
         }
     }
 
-    @objc fileprivate func helpButtonTapped(sender: UIBarButtonItem) {
-        self.performSegue(withIdentifier: self.kSegueToHelp, sender: self)
+    @objc private func helpButtonTapped(sender: UIBarButtonItem) {
+        delegate?.didShowVerifyHelpViewController()
     }
 
-    fileprivate func dismissKeyboard() {
+    private func dismissKeyboard() {
         _ = verifyCodeTextFieldView.resignFirstResponder()
     }
 
-    fileprivate func updateButtonStatus() {
+    private func updateButtonStatus() {
         let verifyCode = verifyCodeTextFieldView.value.trim()
         if viewModel.isValidCodeFormat(code: verifyCode) {
             continueButton.isEnabled = true
@@ -234,28 +231,6 @@ extension VerifyCodeViewController: PMTextFieldDelegate {
 
     func didEndEditing(textField: PMTextField) {
         updateButtonStatus()
-    }
-}
-
-// MARK: - NSNotificationCenterKeyboardObserverProtocol
-
-extension VerifyCodeViewController: NSNotificationCenterKeyboardObserverProtocol {
-    func keyboardWillHideNotification(_ notification: Notification) {
-        let keyboardInfo = notification.keyboardInfo
-        scrollBottomPaddingConstraint.constant = 0.0
-        UIView.animate(withDuration: keyboardInfo.duration, delay: 0, options: keyboardInfo.animationOption, animations: { () -> Void in
-            self.scrollBottomPaddingConstraint.constant = 0.0
-        }, completion: nil)
-    }
-
-    func keyboardWillShowNotification(_ notification: Notification) {
-        let keyboardInfo = notification.keyboardInfo
-        let info: NSDictionary = notification.userInfo! as NSDictionary
-        UIView.animate(withDuration: keyboardInfo.duration, delay: 0, options: keyboardInfo.animationOption, animations: { () -> Void in
-            if let keyboardSize = (info[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-                self.scrollBottomPaddingConstraint.constant = keyboardSize.height - UIEdgeInsets.saveAreaBottom
-            }
-        }, completion: nil)
     }
 }
 

@@ -23,14 +23,14 @@
 #if canImport(UIKit)
 import UIKit
 import PMCommon
-import PMUICommon
 
 public class HumanCheckHelper: HumanVerifyDelegate {
-    fileprivate let rootViewController: UIViewController?
-    fileprivate weak var responseDelegate: HumanVerifyResponseDelegate?
-    fileprivate let apiService: APIService
-    fileprivate let supportURL: URL
-    internal var viewModel: HumanCheckViewModelImpl?
+    private let rootViewController: UIViewController?
+    private weak var responseDelegate: HumanVerifyResponseDelegate?
+    private let apiService: APIService
+    private let supportURL: URL
+    private var verificationCompletion: ((HumanVerifyHeader, HumanVerifyIsClosed, SendVerificationCodeBlock?) -> Void)?
+    var coordinator: HumanCheckMenuCoordinator?
 
     public init(apiService: APIService, supportURL: URL, viewController: UIViewController? = nil, responseDelegate: HumanVerifyResponseDelegate? = nil) {
         self.apiService = apiService
@@ -40,33 +40,34 @@ public class HumanCheckHelper: HumanVerifyDelegate {
     }
 
     public func onHumanVerify(methods: [VerifyMethod], startToken: String?, completion: (@escaping (HumanVerifyHeader, HumanVerifyIsClosed, SendVerificationCodeBlock?) -> Void)) {
-        viewModel = HumanCheckViewModelImpl(types: methods, startToken: startToken, api: apiService)
-        guard let viewModel = viewModel else { return }
-        let coordinator = HumanCheckMenuCoordinator(rootViewController: rootViewController, viewModel: viewModel,
-                                                    services: ServiceFactory.default)
+
+        coordinator = HumanCheckMenuCoordinator(rootViewController: rootViewController, apiService: apiService, methods: methods, startToken: startToken)
+        coordinator?.delegate = self
         coordinator?.start()
-        self.responseDelegate?.onHumanVerifyStart()
-
-        viewModel.onVerificationCodeBlock = { verificationCodeBlock in
-            let tokenType = viewModel.getToken()
-            let client = TestApiClient(api: self.apiService)
-            let route = client.triggerHumanVerifyRoute(destination: tokenType.destination, type: tokenType.verifyMethod, token: tokenType.token)
-            completion(route.header, false, { result, error in
-                verificationCodeBlock(result, error)
-                if result {
-                    self.responseDelegate?.onHumanVerifyEnd(result: .success)
-                }
-            })
-        }
-
-        viewModel.onCloseBlock = {
-            completion([:], true, nil)
-            self.responseDelegate?.onHumanVerifyEnd(result: .cancel)
-        }
+        responseDelegate?.onHumanVerifyStart()
+        verificationCompletion = completion
     }
 
     public func getSupportURL() -> URL {
         return supportURL
+    }
+}
+
+extension HumanCheckHelper: HumanCheckMenuCoordinatorDelegate {
+    func verificationCode(tokenType: TokenType, verificationCodeBlock: @escaping (SendVerificationCodeBlock)) {
+        let client = TestApiClient(api: self.apiService)
+        let route = client.triggerHumanVerifyRoute(destination: tokenType.destination, type: tokenType.verifyMethod, token: tokenType.token)
+        verificationCompletion?(route.header, false, { result, error in
+            verificationCodeBlock(result, error)
+            if result {
+                self.responseDelegate?.onHumanVerifyEnd(result: .success)
+            }
+        })
+    }
+
+    func close() {
+        verificationCompletion?([:], true, nil)
+        self.responseDelegate?.onHumanVerifyEnd(result: .cancel)
     }
 }
 

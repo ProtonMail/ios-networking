@@ -39,7 +39,7 @@
                                 </constraints>
                             </stackView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UaR-Wn-XvY">
-                                <rect key="frame" x="0.0" y="44" width="375" height="623"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x5O-eb-fcJ" userLabel="Content View">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="117"/>
@@ -83,9 +83,6 @@
                             <constraint firstItem="i4x-cs-f9F" firstAttribute="centerX" secondItem="q2W-eQ-QT3" secondAttribute="centerX" id="ktT-4J-BQh"/>
                             <constraint firstItem="UaR-Wn-XvY" firstAttribute="top" secondItem="feB-ed-vnj" secondAttribute="bottom" id="sKh-qO-BRf"/>
                         </constraints>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="uVZ-Xq-sWr" appends="YES" id="7IP-zN-XaO"/>
-                        </connections>
                     </view>
                     <navigationItem key="navigationItem" id="d2z-wT-p3r"/>
                     <connections>
@@ -96,18 +93,13 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BUS-HR-nC2" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="uVZ-Xq-sWr">
-                    <connections>
-                        <action selector="tapAction:" destination="XYV-2Y-X0C" id="Uzh-ld-8I0"/>
-                    </connections>
-                </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="950" y="2295"/>
+            <point key="canvasLocation" x="665" y="2208"/>
         </scene>
-        <!--Human Check Help View Controller-->
+        <!--Help View Controller-->
         <scene sceneID="uZK-2E-JjV">
             <objects>
-                <viewController id="YIP-X7-8Un" customClass="HumanCheckHelpViewController" customModule="PMHumanVerification" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HumanCheckHelpViewController" id="YIP-X7-8Un" customClass="HelpViewController" customModule="PMHumanVerification" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="otL-Uf-ci6"/>
                         <viewControllerLayoutGuide type="bottom" id="qC9-rT-nvM"/>
@@ -120,7 +112,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="J5Y-XM-Jb6">
-                                <rect key="frame" x="24" y="44" width="327" height="623"/>
+                                <rect key="frame" x="24" y="0.0" width="327" height="667"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <label key="tableHeaderView" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Need help with human verification?" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="A6R-hN-ChJ">
                                     <rect key="frame" x="0.0" y="0.0" width="327" height="61"/>
@@ -168,7 +160,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EDR-4o-8hm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-202" y="3061"/>
+            <point key="canvasLocation" x="-202" y="2898"/>
         </scene>
         <!--Email Verify View Controller-->
         <scene sceneID="WC9-tU-sDP">
@@ -183,7 +175,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="32w-b6-Cud">
-                                <rect key="frame" x="0.0" y="44" width="375" height="623"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pe0-rH-dCh" userLabel="Content View">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="252"/>
@@ -262,7 +254,6 @@
                         <outlet property="scrollBottomPaddingConstraint" destination="Npa-HX-Niq" id="Swi-mK-Sex"/>
                         <outlet property="sendCodeButton" destination="bbK-y4-wPa" id="gNI-mN-Kt8"/>
                         <outlet property="topTitleLabel" destination="qwp-pA-b7V" id="OsZ-Me-slq"/>
-                        <segue destination="5GO-eP-O0i" kind="show" identifier="email_verify_to_verify_code_segue" id="PYV-F0-FTL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dWH-Cr-E8l" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -272,7 +263,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="949.60000000000002" y="1592.6536731634185"/>
+            <point key="canvasLocation" x="1428" y="2208"/>
         </scene>
         <!--Phone Verify View Controller-->
         <scene sceneID="uET-gQ-lki">
@@ -287,7 +278,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dDN-fK-XPK">
-                                <rect key="frame" x="0.0" y="44" width="375" height="623"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1P4-co-P8M" userLabel="Content View">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="265"/>
@@ -367,8 +358,6 @@
                         <outlet property="scrollBottomPaddingConstraint" destination="lUw-za-tIZ" id="N3e-iO-CzX"/>
                         <outlet property="sendCodeButton" destination="hpx-h5-Gvz" id="gbN-uZ-KyN"/>
                         <outlet property="topTitleLabel" destination="mAA-zc-Xiy" id="un8-Jm-hye"/>
-                        <segue destination="jlT-c5-bVR" kind="presentation" identifier="phone_verify_to_country_picker_segue" id="Q7u-7l-KAM"/>
-                        <segue destination="5GO-eP-O0i" kind="show" identifier="phone_verify_to_verify_code_segue" id="1JQ-Dz-gqI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Ba-0S-NQc" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -378,7 +367,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="949.60000000000002" y="3025.6371814092954"/>
+            <point key="canvasLocation" x="2190" y="2208"/>
         </scene>
         <!--Country Picker View Controller-->
         <scene sceneID="gFH-05-P8X">
@@ -389,11 +378,11 @@
                         <viewControllerLayoutGuide type="bottom" id="6A6-R9-4S3"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="eN8-3I-evI">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gkN-Cf-t1a">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QtW-UM-qrt">
                                         <rect key="frame" x="8" y="8" width="359" height="64"/>
@@ -422,7 +411,7 @@
                                         </constraints>
                                     </view>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" separatorInsetReference="fromAutomaticInsets" rowHeight="106" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="1Vx-YJ-aJb">
-                                        <rect key="frame" x="0.0" y="72" width="375" height="575"/>
+                                        <rect key="frame" x="0.0" y="72" width="375" height="595"/>
                                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <inset key="separatorInset" minX="24" minY="0.0" maxX="40" maxY="0.0"/>
                                         <view key="tableFooterView" contentMode="scaleToFill" id="RbY-wi-fiR">
@@ -495,7 +484,7 @@
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="6A6-R9-4S3" firstAttribute="top" secondItem="gkN-Cf-t1a" secondAttribute="bottom" id="TZS-Hl-Aur"/>
+                            <constraint firstAttribute="bottom" secondItem="gkN-Cf-t1a" secondAttribute="bottom" id="TZS-Hl-Aur"/>
                             <constraint firstItem="gkN-Cf-t1a" firstAttribute="top" secondItem="3rM-PF-1ZH" secondAttribute="bottom" id="YU3-TW-OxI"/>
                             <constraint firstAttribute="trailing" secondItem="gkN-Cf-t1a" secondAttribute="trailing" id="wq5-5Q-RXS"/>
                             <constraint firstItem="gkN-Cf-t1a" firstAttribute="leading" secondItem="eN8-3I-evI" secondAttribute="leading" id="xwh-rX-B08"/>
@@ -520,7 +509,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="950" y="3754"/>
+            <point key="canvasLocation" x="2190" y="2898"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Bv3-iH-Uqo">
@@ -543,7 +532,7 @@
         <!--Title-->
         <scene sceneID="SMW-e4-KW9">
             <objects>
-                <viewController storyboardIdentifier="HumanCheckMenuViewController" id="Wxg-Gt-OHZ" customClass="HumanCheckMenuViewController" customModule="PMHumanVerification" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HumanCheckMenuViewController" id="Wxg-Gt-OHZ" customClass="MenuViewController" customModule="PMHumanVerification" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="gTo-Gj-Owp"/>
                         <viewControllerLayoutGuide type="bottom" id="9S1-d3-Gr5"/>
@@ -601,10 +590,6 @@
                         <outlet property="containerView" destination="nUY-be-uv0" id="aoA-To-wCU"/>
                         <outlet property="helpBarButtonItem" destination="yYS-ww-kFh" id="PCA-Hh-wNO"/>
                         <outlet property="segmentControl" destination="91H-bP-4XQ" id="R3m-Ag-Y5N"/>
-                        <segue destination="YIP-X7-8Un" kind="show" identifier="check_menu_to_help_segue" id="Xad-pT-hnB"/>
-                        <segue destination="XYV-2Y-X0C" kind="show" identifier="check_menu_to_recaptcha_verify_segue" id="AFu-Ct-nVa"/>
-                        <segue destination="KEE-gK-nEU" kind="show" identifier="check_menu_to_email_verify_segue" id="jXL-Al-rYt"/>
-                        <segue destination="72v-cj-LoN" kind="show" identifier="check_menu_to_phone_verify_segue" id="VmC-LC-u9w"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nMF-5M-AgY" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -625,7 +610,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VC6-kD-XEw">
-                                <rect key="frame" x="0.0" y="44" width="375" height="623"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Yx-38-1fr" userLabel="Content View">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="301"/>
@@ -693,6 +678,7 @@
                                             <constraint firstItem="9O8-Ud-d6E" firstAttribute="leading" secondItem="jNI-r9-0Gm" secondAttribute="leading" id="qeL-la-xXw"/>
                                             <constraint firstAttribute="centerX" secondItem="l1B-Mk-fDQ" secondAttribute="centerX" priority="500" id="r4H-Hz-EM1"/>
                                             <constraint firstItem="l1B-Mk-fDQ" firstAttribute="leading" secondItem="9O8-Ud-d6E" secondAttribute="leading" id="rPb-0u-sXe"/>
+                                            <constraint firstItem="l1B-Mk-fDQ" firstAttribute="trailing" secondItem="9O8-Ud-d6E" secondAttribute="trailing" id="xWD-aa-RLr"/>
                                             <constraint firstAttribute="bottom" secondItem="l1B-Mk-fDQ" secondAttribute="bottom" constant="24" id="xYI-oX-ulO"/>
                                             <constraint firstItem="W6a-Hb-7qs" firstAttribute="leading" secondItem="6Yx-38-1fr" secondAttribute="leading" constant="28" id="yIU-Fi-sBV"/>
                                             <constraint firstItem="W6a-Hb-7qs" firstAttribute="top" secondItem="6Yx-38-1fr" secondAttribute="top" constant="24" id="zfV-5n-9ge"/>
@@ -734,7 +720,6 @@
                         <outlet property="scrollBottomPaddingConstraint" destination="Mg3-k1-itb" id="iFq-d2-7Im"/>
                         <outlet property="topTitleLabel" destination="W6a-Hb-7qs" id="hb6-f4-bXR"/>
                         <outlet property="verifyCodeTextFieldView" destination="jNI-r9-0Gm" id="w0y-Dg-W7R"/>
-                        <segue destination="YIP-X7-8Un" kind="show" identifier="check_menu_to_help_segue" id="OEu-De-UNN"/>
                         <segue destination="4Vo-TH-jrl" kind="unwind" identifier="UnwindSegue" unwindAction="unwindSegue:" id="YVS-ec-QSe"/>
                     </connections>
                 </viewController>
@@ -746,13 +731,9 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="2381.5999999999999" y="1914.6926536731635"/>
+            <point key="canvasLocation" x="2980" y="2208"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="1JQ-Dz-gqI"/>
-        <segue reference="OEu-De-UNN"/>
-    </inferredMetricsTieBreakers>
     <resources>
         <image name="flags-CH" width="32" height="32"/>
         <image name="ic-arrow-left" width="24" height="24"/>

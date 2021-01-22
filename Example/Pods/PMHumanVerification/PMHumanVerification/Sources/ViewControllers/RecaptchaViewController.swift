@@ -26,17 +26,21 @@ import PMCommon
 import PMUIFoundations
 import PMCoreTranslation
 
-class RecaptchaViewController: UIViewController, UIWebViewDelegate {
+class RecaptchaViewController: UIViewController {
+
+    // MARK: Outlets
 
     @IBOutlet weak var webView: UIWebView!
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var verifyingLabel: UILabel!
     @IBOutlet weak var webViewHeightConstraint: NSLayoutConstraint!
 
-    fileprivate var startVerify: Bool = false
-    fileprivate var finalToken: String?
+    private var startVerify: Bool = false
+    private var finalToken: String?
 
-    var viewModel: HumanCheckViewModel!
+    var viewModel: RecaptchaViewModel!
+
+    // MARK: View controller life cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,20 +51,22 @@ class RecaptchaViewController: UIViewController, UIWebViewDelegate {
         loadNewCaptcha()
     }
 
-    func loadNewCaptcha() {
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return UIStatusBarStyle.default
+    }
+
+    // MARK: Private interface
+
+    private func loadNewCaptcha() {
         URLCache.shared.removeAllCachedResponses()
         let requestObj = URLRequest(url: viewModel.getCaptchaURL())
         webView.loadRequest(requestObj)
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return UIStatusBarStyle.default
-    }
-
-    func checkCaptcha() {
-        guard let finalToken = self.finalToken else { return }
+    private func checkCaptcha() {
+        guard let finalToken = finalToken else { return }
         stackView.isHidden = false
-        self.viewModel.finalToken(token: finalToken, complete: { (res, error) in
+        viewModel.finalToken(token: finalToken, complete: { res, error in
             DispatchQueue.main.async {
                 self.stackView.isHidden = true
                 if res {
@@ -78,44 +84,29 @@ class RecaptchaViewController: UIViewController, UIWebViewDelegate {
             }
         })
     }
+}
+
+// MARK: - UIWebViewDelegate
+
+extension RecaptchaViewController: UIWebViewDelegate {
 
     func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebView.NavigationType) -> Bool {
-        let urlString = request.url?.absoluteString
+        guard let urlString = request.url?.absoluteString else { return true }
 
-        if urlString?.contains("https://www.google.com/recaptcha/api2/frame") == true {
+        if viewModel.isStartVerifyPattern(urlString: urlString) {
             startVerify = true
         }
 
-        if urlString?.contains(".com/fc/api/nojs") == true {
-            startVerify = true
-        }
-        if urlString?.contains("fc/apps/canvas") == true {
-            startVerify = true
-        }
-
-        if urlString?.contains("about:blank") == true {
-            startVerify = true
-        }
-
-        if urlString?.contains("https://www.google.com/intl/en/policies/privacy") == true {
+        if viewModel.isResultFalsePattern(urlString: urlString) {
             return false
         }
 
-        if urlString?.contains("how-to-solve-") == true {
-            return false
-        }
-        if urlString?.contains("https://www.google.com/intl/en/policies/terms") == true {
-            return false
-        }
-
-        if urlString?.range(of: "https://secure.protonmail.com/expired_recaptcha_response://") != nil {
+        if viewModel.isExpiredRecaptchaRes(urlString: urlString) {
             resetWebviewHeight()
             webView.reload()
             return false
-        } else if urlString?.range(of: "https://secure.protonmail.com/captcha/recaptcha_response://") != nil {
-            if let token = urlString?.replacingOccurrences(of: "https://secure.protonmail.com/captcha/recaptcha_response://", with: "", options: NSString.CompareOptions.widthInsensitive, range: nil) {
-                self.finalToken = token
-            }
+        } else if viewModel.isRecaptchaRes(urlString: urlString) {
+            self.finalToken = viewModel.getFinalToken(urlString: urlString)
             resetWebviewHeight()
             checkCaptcha()
             return false
@@ -125,7 +116,7 @@ class RecaptchaViewController: UIViewController, UIWebViewDelegate {
 
     func webViewDidFinishLoad(_ webView: UIWebView) {
         if startVerify {
-            if webView.stringByEvaluatingJavaScript(from: "document.body.scrollHeight;") != nil {
+            if viewModel.isDocHeight(webView: webView) {
                 let height = CGFloat(500)
                 webViewHeightConstraint.constant = height
             }
@@ -133,15 +124,11 @@ class RecaptchaViewController: UIViewController, UIWebViewDelegate {
         }
     }
 
-    func resetWebviewHeight() {
-        if webView.stringByEvaluatingJavaScript(from: "document.body.scrollHeight;") != nil {
+    private func resetWebviewHeight() {
+        if viewModel.isDocHeight(webView: webView) {
             let height = CGFloat(85)
             webViewHeightConstraint.constant = height
         }
-    }
-
-    @IBAction func tapAction(_ sender: UITapGestureRecognizer) {
-
     }
 }
 

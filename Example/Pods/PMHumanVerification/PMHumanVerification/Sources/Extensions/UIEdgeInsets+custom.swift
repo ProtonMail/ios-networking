@@ -5,6 +5,7 @@
 //  Created by Greg on 06.11.20.
 //
 
+#if canImport(UIKit)
 import UIKit
 
 public extension UIEdgeInsets {
@@ -16,3 +17,4 @@ public extension UIEdgeInsets {
         return UIApplication.shared.keyWindow?.safeAreaInsets.bottom ?? 0
     }
 }
+#endif
