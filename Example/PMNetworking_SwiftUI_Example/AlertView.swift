@@ -66,7 +66,7 @@ struct LoginAlertView: View {
         }
         .padding()
         .frame(width: screenSize.width * 0.7, height: screenSize.height * 0.3)
-        .background(Color(#colorLiteral(red: 0.9268686175, green: 0.9416290522, blue: 0.9456014037, alpha: 1)))
+        .background(Color(UIColor.systemGray6))
         .clipShape(RoundedRectangle(cornerRadius: 10.0, style: .continuous))
         .offset(y: isShown ? 0 : screenSize.height)
         .animation(.spring())
