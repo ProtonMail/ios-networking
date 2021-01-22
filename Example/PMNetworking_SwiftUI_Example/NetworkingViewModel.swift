@@ -41,6 +41,7 @@ class NetworkingViewModel: ObservableObject {
     
     var env = ["Dev env.", "Blue env.", "Prod env."]
     var selectedIndex: Int = 0 { didSet { setupEnv() } }
+    @Published var showingLoginError = false
     
     private func setupEnv() {
         testApi = PMAPIService(doh: currentEnv, sessionUID: "testSessionUID")
@@ -57,9 +58,15 @@ class NetworkingViewModel: ObservableObject {
         }
     }
 
+    private var forceUpgradeServiceDelegate: APIServiceDelegate?
+    private var forceUpgradeDelegate: ForceUpgradeDelegate?
+    
+    func humanVerificationAuthAction(userName: String, password: String) {
+        humanVerification(userName: userName, password: password)
+    }
+    
     func humanVerificationUnauthAction() {
-        setupHumanVerification()
-        processHumanVerifyTest()
+        humanVerification()
     }
 
     func forceUpgradeAction() {
@@ -95,8 +102,44 @@ class NetworkingViewModel: ObservableObject {
         }
     }
     
-    private var forceUpgradeServiceDelegate: APIServiceDelegate?
-    private var forceUpgradeDelegate: ForceUpgradeDelegate?
+    private func humanVerification(userName: String, password: String) {
+        setupHumanVerification()
+        let authApi: Authenticator = Authenticator(api: testApi)
+        authApi.authenticate(username: userName, password: password) { result in
+            switch result {
+            case .failure(Authenticator.Errors.serverError(let error)): // error response returned by server
+                self.showingLoginError = true
+                print(error)
+            case .failure(Authenticator.Errors.emptyServerSrpAuth):
+                print("")
+            case .failure(Authenticator.Errors.emptyClientSrpAuth):
+                print("")
+            case .failure(Authenticator.Errors.wrongServerProof):
+                print("")
+            case .failure(Authenticator.Errors.emptyAuthResponse):
+                print("")
+            case .failure(Authenticator.Errors.emptyAuthInfoResponse):
+                print("")
+            case .failure(_): // network or parsing error
+                print("")
+            case .success(.ask2FA(let context)): // success but need 2FA
+                print(context)
+            case .success(.newCredential(let credential, let passwordMode)): // success without 2FA
+                self.testAuthCredential = AuthCredential(credential)
+                print("pwd mode: \(passwordMode)")
+                self.processHumanVerifyTest()
+                break
+            case .success(.updatedCredential):
+                assert(false, "Should never happen in this flow")
+            }
+            print(result)
+        }
+    }
+    
+    private func humanVerification() {
+        setupHumanVerification()
+        processHumanVerifyTest()
+    }
     
     private func setupHumanVerification() {
         testAuthCredential = nil

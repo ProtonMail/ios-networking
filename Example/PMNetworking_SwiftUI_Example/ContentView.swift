@@ -27,21 +27,35 @@ import SwiftUI
 struct ContentView: View {
     
     @ObservedObject var viewModel = NetworkingViewModel()
+    @State private var isLoginPresented: Bool = false
     
     var body: some View {
-        VStack {
-            Picker(selection: $viewModel.selectedIndex, label: Text("")) {
-                ForEach(0..<viewModel.env.count) { index in
-                    Text(viewModel.env[index]).tag(index)
-                }
-            }.pickerStyle(SegmentedPickerStyle()).padding()
-            Button("Force Upgrade test", action: {
-                viewModel.forceUpgradeAction()
-            }).padding(.top)
-            Button("Human Verification unauth test", action: {
-                viewModel.humanVerificationUnauthAction()
-            }).padding(.top)
-            Spacer()
+        ZStack {
+            VStack {
+                Picker(selection: $viewModel.selectedIndex, label: Text("")) {
+                    ForEach(0..<viewModel.env.count) { index in
+                        Text(viewModel.env[index]).tag(index)
+                    }
+                }.pickerStyle(SegmentedPickerStyle()).padding()
+                Button("Force Upgrade test", action: {
+                    viewModel.forceUpgradeAction()
+                }).padding(.top)
+                Button("Human Verification auth test", action: {
+                    isLoginPresented = true
+                }).padding(.top)
+                Button("Human Verification unauth test", action: {
+                    viewModel.humanVerificationUnauthAction()
+                }).padding(.top)
+                Spacer()
+            }
+            LoginAlertView(isShown: $isLoginPresented) { userName, password in
+                viewModel.humanVerificationAuthAction(userName: userName, password: password)
+            }
+            .alert(isPresented:$viewModel.showingLoginError) {
+                Alert(title: Text("Error"), message: Text("Wrong login credentials"), dismissButton: .cancel(Text("OK")) {
+                    viewModel.showingLoginError = false
+                })
+            }
         }
     }
 }
