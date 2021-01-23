@@ -14,6 +14,17 @@
 		375CB558254C45A8005455CE /* NetworkTroubleShootCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375CB553254C45A7005455CE /* NetworkTroubleShootCoordinator.swift */; };
 		375CB5BF254C4A38005455CE /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 375CB5BC254C4A38005455CE /* .gitkeep */; };
 		375CB5C0254C4A38005455CE /* Alerts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 375CB5BE254C4A38005455CE /* Alerts.storyboard */; };
+		37BE4D6525BB04FC00F3F8F6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BE4D6425BB04FC00F3F8F6 /* AppDelegate.swift */; };
+		37BE4D6725BB04FC00F3F8F6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BE4D6625BB04FC00F3F8F6 /* SceneDelegate.swift */; };
+		37BE4D6925BB04FC00F3F8F6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BE4D6825BB04FC00F3F8F6 /* ContentView.swift */; };
+		37BE4D6B25BB04FD00F3F8F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 37BE4D6A25BB04FD00F3F8F6 /* Assets.xcassets */; };
+		37BE4D6E25BB04FD00F3F8F6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 37BE4D6D25BB04FD00F3F8F6 /* Preview Assets.xcassets */; };
+		37BE4D7125BB04FD00F3F8F6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37BE4D6F25BB04FD00F3F8F6 /* LaunchScreen.storyboard */; };
+		37BE4D8125BB052300F3F8F6 /* NetworkingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BE4D8025BB052300F3F8F6 /* NetworkingViewModel.swift */; };
+		37BE4F9B25BB20BE00F3F8F6 /* TrustKitConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752CC08924AB554800537C44 /* TrustKitConfiguration.swift */; };
+		37BE4FB325BB405000F3F8F6 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BE4FB225BB405000F3F8F6 /* Environment.swift */; };
+		37BE4FB925BB40A200F3F8F6 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BE4FB225BB405000F3F8F6 /* Environment.swift */; };
+		37BE4FC025BB694B00F3F8F6 /* LoginAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BE4FBF25BB694B00F3F8F6 /* LoginAlertView.swift */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
@@ -33,6 +44,7 @@
 		75B21C2924E6526C00D3E4D3 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75B21C2824E6526C00D3E4D3 /* AppKit.framework */; };
 		9947DFE42B957B0253B53876 /* Pods_PMNetworking_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20E5036CD6416E37BA34CD3C /* Pods_PMNetworking_Example.framework */; };
 		A4CD296897B800C92E1DE33F /* Pods_PMNetworking_Mac_ExampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EEC5A8E1D462CE3DA9C8407 /* Pods_PMNetworking_Mac_ExampleTests.framework */; };
+		DBEA2053482594E287E0FE36 /* Pods_PMNetworking_SwiftUI_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19C13040E853A7A55ED81FD4 /* Pods_PMNetworking_SwiftUI_Example.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,7 +87,9 @@
 /* Begin PBXFileReference section */
 		10303C87F33BA30EB19FBBE6 /* Pods-PMNetworking_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PMNetworking_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-PMNetworking_Example/Pods-PMNetworking_Example.release.xcconfig"; sourceTree = "<group>"; };
 		189AB33FE018BA2765C5CDBB /* Pods-PMNetworking_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PMNetworking_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PMNetworking_Tests/Pods-PMNetworking_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		19C13040E853A7A55ED81FD4 /* Pods_PMNetworking_SwiftUI_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PMNetworking_SwiftUI_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		20E5036CD6416E37BA34CD3C /* Pods_PMNetworking_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PMNetworking_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		22CD846A7055D42D598E499D /* Pods-PMNetworking_SwiftUI_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PMNetworking_SwiftUI_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-PMNetworking_SwiftUI_Example/Pods-PMNetworking_SwiftUI_Example.release.xcconfig"; sourceTree = "<group>"; };
 		234AADC52CCA6701130DB864 /* Pods_PMNetworking_Mac_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PMNetworking_Mac_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2EEC5A8E1D462CE3DA9C8407 /* Pods_PMNetworking_Mac_ExampleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PMNetworking_Mac_ExampleTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		305C7A02011F3D0F5D57BB43 /* PMNetworking.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = PMNetworking.podspec; path = ../PMNetworking.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
@@ -86,6 +100,18 @@
 		375CB553254C45A7005455CE /* NetworkTroubleShootCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkTroubleShootCoordinator.swift; sourceTree = "<group>"; };
 		375CB5BC254C4A38005455CE /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		375CB5BE254C4A38005455CE /* Alerts.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Alerts.storyboard; sourceTree = "<group>"; };
+		379A4C4051A8E78ED16B4511 /* Pods-PMNetworking_SwiftUI_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PMNetworking_SwiftUI_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PMNetworking_SwiftUI_Example/Pods-PMNetworking_SwiftUI_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		37BE4D6225BB04FB00F3F8F6 /* PMNetworking_SwiftUI_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PMNetworking_SwiftUI_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		37BE4D6425BB04FC00F3F8F6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		37BE4D6625BB04FC00F3F8F6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		37BE4D6825BB04FC00F3F8F6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		37BE4D6A25BB04FD00F3F8F6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		37BE4D6D25BB04FD00F3F8F6 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		37BE4D7025BB04FD00F3F8F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		37BE4D7225BB04FD00F3F8F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		37BE4D8025BB052300F3F8F6 /* NetworkingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingViewModel.swift; sourceTree = "<group>"; };
+		37BE4FB225BB405000F3F8F6 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
+		37BE4FBF25BB694B00F3F8F6 /* LoginAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginAlertView.swift; sourceTree = "<group>"; };
 		40AC8A21773C51C77BD1BFD3 /* Pods-PMNetworking_Mac_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PMNetworking_Mac_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-PMNetworking_Mac_Example/Pods-PMNetworking_Mac_Example.release.xcconfig"; sourceTree = "<group>"; };
 		4DF16153C174C8E7C3352EA4 /* Pods_PMNetworking_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PMNetworking_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		550C7FA671F41D6229D5562C /* Pods-PMNetworking_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PMNetworking_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PMNetworking_Example/Pods-PMNetworking_Example.debug.xcconfig"; sourceTree = "<group>"; };
@@ -125,6 +151,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		37BE4D5F25BB04FB00F3F8F6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DBEA2053482594E287E0FE36 /* Pods_PMNetworking_SwiftUI_Example.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		607FACCD1AFB9204008FA782 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -197,6 +231,30 @@
 			path = DohUI;
 			sourceTree = "<group>";
 		};
+		37BE4D6325BB04FC00F3F8F6 /* PMNetworking_SwiftUI_Example */ = {
+			isa = PBXGroup;
+			children = (
+				37BE4D6425BB04FC00F3F8F6 /* AppDelegate.swift */,
+				37BE4D6625BB04FC00F3F8F6 /* SceneDelegate.swift */,
+				37BE4D6825BB04FC00F3F8F6 /* ContentView.swift */,
+				37BE4FBF25BB694B00F3F8F6 /* LoginAlertView.swift */,
+				37BE4D8025BB052300F3F8F6 /* NetworkingViewModel.swift */,
+				37BE4D6A25BB04FD00F3F8F6 /* Assets.xcassets */,
+				37BE4D6F25BB04FD00F3F8F6 /* LaunchScreen.storyboard */,
+				37BE4D7225BB04FD00F3F8F6 /* Info.plist */,
+				37BE4D6C25BB04FD00F3F8F6 /* Preview Content */,
+			);
+			path = PMNetworking_SwiftUI_Example;
+			sourceTree = "<group>";
+		};
+		37BE4D6C25BB04FD00F3F8F6 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				37BE4D6D25BB04FD00F3F8F6 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
 		39B487A6593A977C49DAA37F /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -208,6 +266,8 @@
 				40AC8A21773C51C77BD1BFD3 /* Pods-PMNetworking_Mac_Example.release.xcconfig */,
 				BC9940508C02DF6236B158D3 /* Pods-PMNetworking_Mac_ExampleTests.debug.xcconfig */,
 				B987F72DF665314742E0A6B8 /* Pods-PMNetworking_Mac_ExampleTests.release.xcconfig */,
+				379A4C4051A8E78ED16B4511 /* Pods-PMNetworking_SwiftUI_Example.debug.xcconfig */,
+				22CD846A7055D42D598E499D /* Pods-PMNetworking_SwiftUI_Example.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -217,6 +277,7 @@
 			children = (
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				607FACD21AFB9204008FA782 /* Example for PMNetworking */,
+				37BE4D6325BB04FC00F3F8F6 /* PMNetworking_SwiftUI_Example */,
 				607FACE81AFB9204008FA782 /* Tests */,
 				751B8AE1245AB30B006A9195 /* PMNetworking_Mac_Example */,
 				751B8AF7245AB30F006A9195 /* PMNetworking_Mac_ExampleTests */,
@@ -235,6 +296,7 @@
 				751B8AE0245AB30B006A9195 /* PMNetworking_Mac_Example.app */,
 				751B8AF4245AB30F006A9195 /* PMNetworking_Mac_ExampleTests.xctest */,
 				751B8AFF245AB30F006A9195 /* PMNetworking_Mac_ExampleUITests.xctest */,
+				37BE4D6225BB04FB00F3F8F6 /* PMNetworking_SwiftUI_Example.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -251,6 +313,7 @@
 				375CB5BB254C4A38005455CE /* Assets */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
 				752CC08924AB554800537C44 /* TrustKitConfiguration.swift */,
+				37BE4FB225BB405000F3F8F6 /* Environment.swift */,
 			);
 			name = "Example for PMNetworking";
 			path = PMNetworking;
@@ -332,6 +395,7 @@
 				4DF16153C174C8E7C3352EA4 /* Pods_PMNetworking_Tests.framework */,
 				234AADC52CCA6701130DB864 /* Pods_PMNetworking_Mac_Example.framework */,
 				2EEC5A8E1D462CE3DA9C8407 /* Pods_PMNetworking_Mac_ExampleTests.framework */,
+				19C13040E853A7A55ED81FD4 /* Pods_PMNetworking_SwiftUI_Example.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -339,6 +403,25 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		37BE4D6125BB04FB00F3F8F6 /* PMNetworking_SwiftUI_Example */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 37BE4D7525BB04FD00F3F8F6 /* Build configuration list for PBXNativeTarget "PMNetworking_SwiftUI_Example" */;
+			buildPhases = (
+				95B80A5F139626FC3511B1F3 /* [CP] Check Pods Manifest.lock */,
+				37BE4D5E25BB04FB00F3F8F6 /* Sources */,
+				37BE4D5F25BB04FB00F3F8F6 /* Frameworks */,
+				37BE4D6025BB04FB00F3F8F6 /* Resources */,
+				32E75B86655342C5ECFBE6A2 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PMNetworking_SwiftUI_Example;
+			productName = PMNetworking_SwiftUI_Example;
+			productReference = 37BE4D6225BB04FB00F3F8F6 /* PMNetworking_SwiftUI_Example.app */;
+			productType = "com.apple.product-type.application";
+		};
 		607FACCF1AFB9204008FA782 /* PMNetworking_Example */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "PMNetworking_Example" */;
@@ -441,10 +524,15 @@
 		607FACC81AFB9204008FA782 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1140;
+				LastSwiftUpdateCheck = 1230;
 				LastUpgradeCheck = 1150;
 				ORGANIZATIONNAME = CocoaPods;
 				TargetAttributes = {
+					37BE4D6125BB04FB00F3F8F6 = {
+						CreatedOnToolsVersion = 12.3;
+						DevelopmentTeam = 892FR5QQKX;
+						ProvisioningStyle = Automatic;
+					};
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
 						DevelopmentTeam = 2SB5Z68H26;
@@ -488,6 +576,7 @@
 			projectRoot = "";
 			targets = (
 				607FACCF1AFB9204008FA782 /* PMNetworking_Example */,
+				37BE4D6125BB04FB00F3F8F6 /* PMNetworking_SwiftUI_Example */,
 				607FACE41AFB9204008FA782 /* PMNetworking_Tests */,
 				751B8ADF245AB30B006A9195 /* PMNetworking_Mac_Example */,
 				751B8AF3245AB30F006A9195 /* PMNetworking_Mac_ExampleTests */,
@@ -497,6 +586,16 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		37BE4D6025BB04FB00F3F8F6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				37BE4D7125BB04FD00F3F8F6 /* LaunchScreen.storyboard in Resources */,
+				37BE4D6E25BB04FD00F3F8F6 /* Preview Assets.xcassets in Resources */,
+				37BE4D6B25BB04FD00F3F8F6 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		607FACCE1AFB9204008FA782 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -578,6 +677,42 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PMNetworking_Example/Pods-PMNetworking_Example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		32E75B86655342C5ECFBE6A2 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PMNetworking_SwiftUI_Example/Pods-PMNetworking_SwiftUI_Example-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
+				"${BUILT_PRODUCTS_DIR}/AwaitKit-iOS/AwaitKit.framework",
+				"${BUILT_PRODUCTS_DIR}/PMCommon-iOS/PMCommon.framework",
+				"${BUILT_PRODUCTS_DIR}/PMCoreTranslation/PMCoreTranslation.framework",
+				"${BUILT_PRODUCTS_DIR}/PMForceUpgrade/PMForceUpgrade.framework",
+				"${BUILT_PRODUCTS_DIR}/PMHumanVerification/PMHumanVerification.framework",
+				"${BUILT_PRODUCTS_DIR}/PMUICommon/PMUICommon.framework",
+				"${BUILT_PRODUCTS_DIR}/PMUIFoundations/PMUIFoundations.framework",
+				"${BUILT_PRODUCTS_DIR}/PromiseKit/PromiseKit.framework",
+				"${BUILT_PRODUCTS_DIR}/TrustKit-iOS/TrustKit.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AwaitKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PMCommon.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PMCoreTranslation.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PMForceUpgrade.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PMHumanVerification.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PMUICommon.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PMUIFoundations.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PromiseKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TrustKit.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PMNetworking_SwiftUI_Example/Pods-PMNetworking_SwiftUI_Example-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		37FA5E3E25835F47000400AD /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -620,6 +755,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PMNetworking_Mac_Example/Pods-PMNetworking_Mac_Example-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		95B80A5F139626FC3511B1F3 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-PMNetworking_SwiftUI_Example-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		AFBD0B82D002C2EDB1FEEE8E /* [CP] Check Pods Manifest.lock */ = {
@@ -713,6 +870,20 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		37BE4D5E25BB04FB00F3F8F6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				37BE4D8125BB052300F3F8F6 /* NetworkingViewModel.swift in Sources */,
+				37BE4FB925BB40A200F3F8F6 /* Environment.swift in Sources */,
+				37BE4FC025BB694B00F3F8F6 /* LoginAlertView.swift in Sources */,
+				37BE4F9B25BB20BE00F3F8F6 /* TrustKitConfiguration.swift in Sources */,
+				37BE4D6525BB04FC00F3F8F6 /* AppDelegate.swift in Sources */,
+				37BE4D6725BB04FC00F3F8F6 /* SceneDelegate.swift in Sources */,
+				37BE4D6925BB04FC00F3F8F6 /* ContentView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		607FACCC1AFB9204008FA782 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -721,6 +892,7 @@
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				375CB557254C45A8005455CE /* IBDesignableLabeled.swift in Sources */,
 				375CB554254C45A8005455CE /* NetworkTroubleShootViewController.swift in Sources */,
+				37BE4FB325BB405000F3F8F6 /* Environment.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 				375CB555254C45A8005455CE /* NetworkTroubleShootViewModel.swift in Sources */,
 				752CC08A24AB554800537C44 /* TrustKitConfiguration.swift in Sources */,
@@ -783,6 +955,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		37BE4D6F25BB04FD00F3F8F6 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				37BE4D7025BB04FD00F3F8F6 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
 		607FACD91AFB9204008FA782 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -810,6 +990,69 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		37BE4D7325BB04FD00F3F8F6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 379A4C4051A8E78ED16B4511 /* Pods-PMNetworking_SwiftUI_Example.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_ASSET_PATHS = "\"PMNetworking_SwiftUI_Example/Preview Content\"";
+				DEVELOPMENT_TEAM = 892FR5QQKX;
+				ENABLE_PREVIEWS = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = PMNetworking_SwiftUI_Example/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.12.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "test.test.swiftui.PMNetworking-SwiftUI-Example";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		37BE4D7425BB04FD00F3F8F6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 22CD846A7055D42D598E499D /* Pods-PMNetworking_SwiftUI_Example.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"PMNetworking_SwiftUI_Example/Preview Content\"";
+				DEVELOPMENT_TEAM = 892FR5QQKX;
+				ENABLE_PREVIEWS = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = PMNetworking_SwiftUI_Example/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 1.12.0;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "test.test.swiftui.PMNetworking-SwiftUI-Example";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		607FACED1AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1175,6 +1418,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		37BE4D7525BB04FD00F3F8F6 /* Build configuration list for PBXNativeTarget "PMNetworking_SwiftUI_Example" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				37BE4D7325BB04FD00F3F8F6 /* Debug */,
+				37BE4D7425BB04FD00F3F8F6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "PMNetworking" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

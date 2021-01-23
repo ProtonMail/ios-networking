@@ -10,3 +10,7 @@
 #endif
 #endif
 
+
+FOUNDATION_EXPORT double Pods_PMNetworking_SwiftUI_ExampleVersionNumber;
+FOUNDATION_EXPORT const unsigned char Pods_PMNetworking_SwiftUI_ExampleVersionString[];
+

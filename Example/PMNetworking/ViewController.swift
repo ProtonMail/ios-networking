@@ -30,52 +30,6 @@ import PMForceUpgrade
 import PMHumanVerification
 import PMUICommon
 
-///Defind your doh settings
-
-class DevDoHMail: DoH, ServerConfig {
-    //defind your signup domain
-    var signupDomain: String = "proton.dev"
-    //defind your default host
-    var defaultHost: String = "https://proton.dev"
-    //defind your default captcha host
-    var captchaHost: String = "proton.dev"
-    //defind your query host
-    var apiHost : String = "dmfygsltqojxxi33onvqws3bomnua.protonpro.xyz"
-    //defind your default path
-    var defaultPath: String = "/api"
-    //singleton
-    static let `default` = try! DevDoHMail()
-}
-
-class BlueDoHMail: DoH, ServerConfig {
-    //defind your signup domain
-    var signupDomain: String = "proton.blue"
-    //defind your default host
-    var defaultHost: String = "https://protonmail.blue"
-    //defind your default captcha host
-    var captchaHost: String = "mail.protonmail.blue"
-    //defind your query host
-    var apiHost : String = "dmfygsltqojxxi33onvqws3bomnua.protonpro.xyz"
-    //defind your default path
-    var defaultPath: String = "/api"
-    //singleton
-    static let `default` = try! BlueDoHMail()
-}
-
-class ProdDoHMail: DoH, ServerConfig {
-    //defind your signup domain
-    var signupDomain: String = "protonmail.com"
-    //defind your default host
-    var defaultHost: String = "https://api.protonmail.ch"
-    //defind your default captcha host
-    var captchaHost: String = "https://api.protonmail.ch"
-    //defind your query host
-    var apiHost : String = "dmfygsltqojxxi33onvqws3bomnua.protonpro.xyz"
-    //singleton
-    static let `default` = try! ProdDoHMail()
-}
-
-
 ///each user will have one api service  & you can create more than one unauthed apiService
 ///session/auth data are controlled by a central manager. it needs to extend & implment the API service delegates.
 
@@ -323,7 +277,7 @@ extension MainViewController : AuthDelegate {
 
 extension MainViewController : APIServiceDelegate {
     var userAgent: String? {
-        return ""
+        return "" //need to be set
     }
     
     func isReachable() -> Bool {
