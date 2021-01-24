@@ -41,7 +41,9 @@ public final class PMActionBar: UIView {
     /// MULTIPLIER used in case Width.extend
     private let WIDTH_MULTIPLIER: CGFloat = 0.8
     /// Size of button bar item
-    private let BUTTON_SIZE: CGFloat = 32
+    private var BUTTON_SIZE: CGFloat {
+        return self.height - (2 * PADDING)
+    }
 
     // MARK: Variables
     private var items: [PMActionBarItem] = []
@@ -166,8 +168,7 @@ extension PMActionBar {
         self.heightAnchor.constraint(equalToConstant: self.height).isActive = true
         switch self.width {
         case .fit:
-            // decided by contents
-            break
+            self.widthAnchor.constraint(greaterThanOrEqualToConstant: self.height).isActive = true
         case .extend:
             self.widthAnchor.constraint(equalTo: parent.widthAnchor, multiplier: WIDTH_MULTIPLIER).isActive = true
         case .custom(let width):
@@ -208,12 +209,14 @@ extension PMActionBar {
                 }
             case .button:
                 var btn: UIButton!
-                if item.icon != nil {
+                if item.icon != nil && item.text != nil {
+                    btn = createRichButton(item: item, idx: idx)
+                } else if item.icon != nil {
                     btn = createIconButton(item: item, idx: idx)
                 } else {
                     btn = createPlainButton(item: item, idx: idx)
                 }
-                if let _ = stack.arrangedSubviews.last as? UIButton {
+                if (stack.arrangedSubviews.last as? UIButton) != nil {
                     let spacer = self.createSpacer()
                     stack.addArrangedSubview(spacer)
                 }
@@ -249,6 +252,25 @@ extension PMActionBar {
         let btn = UIButton()
         btn.setTitle(item.text, for: .normal)
         btn.titleLabel?.font = .systemFont(ofSize: 15)
+        btn.roundCorner(BUTTON_SIZE / 2)
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        btn.sizeToFit()
+        btn.widthAnchor.constraint(equalToConstant: btn.bounds.size.width + 2 * PADDING).isActive = true
+        btn.tag = TAG_OFFSET + idx
+        let state: UIButton.State = item.isSelected ? .selected: .normal
+        self.setup(button: btn, for: state)
+        btn.addTarget(self, action: #selector(self.clickItem(sender:)), for: .touchUpInside)
+        return btn
+    }
+
+    private func createRichButton(item: PMActionBarItem, idx: Int) -> UIButton {
+        let btn = UIButton()
+        btn.setImage(item.icon!, for: .normal)
+        btn.imageView?.contentMode = .scaleAspectFit
+        btn.tintColor = item.itemColor
+        btn.backgroundColor = item.backgroundColor
+        btn.setTitle(item.text, for: .normal)
+        btn.titleLabel?.font = .systemFont(ofSize: 13.0, weight: .semibold)
         btn.roundCorner(BUTTON_SIZE / 2)
         btn.translatesAutoresizingMaskIntoConstraints = false
         btn.sizeToFit()

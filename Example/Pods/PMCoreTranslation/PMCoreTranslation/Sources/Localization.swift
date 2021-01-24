@@ -354,25 +354,23 @@ public class LocalizedString {
     /// Dialog message for organization user first login
     public lazy var _login_username_org_dialog_message = NSLocalizedString("To use the Proton app as a member of an organization, you first need to change your password by signing into Proton through a browser.", bundle: Common.bundle, comment: "Dialog message for organization user first login")
     
-    /// Account manager
+    /// Account switcher
     
-    public lazy var _am_switch_to_title = NSLocalizedString("switch to", bundle: Common.bundle, comment: "Section title of account switcher")
+    public lazy var _as_switch_to_title = NSLocalizedString("switch to", bundle: Common.bundle, comment: "Section title of account switcher")
     
-    public lazy var _am_manage_accounts = NSLocalizedString("Manage accounts", bundle: Common.bundle, comment: "Manage accounts button")
+    public lazy var _as_manage_accounts = NSLocalizedString("Manage accounts", bundle: Common.bundle, comment: "Manage accounts button")
     
-    public lazy var _am_signed_in_to_protonmail = NSLocalizedString("Signed in to ProtonMail", bundle: Common.bundle, comment: "Section title of account manager")
+    public lazy var _as_signed_in_to_protonmail = NSLocalizedString("Signed in to ProtonMail", bundle: Common.bundle, comment: "Section title of account manager")
     
-    public lazy var _am_signed_out_of_protonmail = NSLocalizedString("Signed out of Protonmail", bundle: Common.bundle, comment: "Section title of account manager")
+    public lazy var _as_signed_out_of_protonmail = NSLocalizedString("Signed out of Protonmail", bundle: Common.bundle, comment: "Section title of account manager")
     
-    public lazy var _am_signout = NSLocalizedString("Sign out", bundle: Common.bundle, comment: "Sign out button")
+    public lazy var _as_signout = NSLocalizedString("Sign out", bundle: Common.bundle, comment: "Sign out button/ title")
     
-    public lazy var _am_remove_account = NSLocalizedString("Remove account", bundle: Common.bundle, comment: "remove account button")
+    public lazy var _as_remove_account = NSLocalizedString("Remove account", bundle: Common.bundle, comment: "remove account button")
     
-    public lazy var _am_remove_account_alert_text = NSLocalizedString("You will be signed out and all the data associated with this account will be removed from this device.", bundle: Common.bundle, comment: "Alert message of remove account")
+    public lazy var _as_remove_account_alert_text = NSLocalizedString("You will be signed out and all the data associated with this account will be removed from this device.", bundle: Common.bundle, comment: "Alert message of remove account")
     
-    public lazy var _am_remove_button = NSLocalizedString("Remove", bundle: Common.bundle, comment: "Remove button")
+    public lazy var _as_remove_button = NSLocalizedString("Remove", bundle: Common.bundle, comment: "Remove button")
     
-    public lazy var _am_signout_title = NSLocalizedString("Sign out %@", bundle: Common.bundle, comment: "Alert title, sign out a mail address")
-    
-    public lazy var _am_signout_alert_text = NSLocalizedString("Are you sure you want to sign out?", bundle: Common.bundle, comment: "Alert message of sign out")
+    public lazy var _as_signout_alert_text = NSLocalizedString("Are you sure you want to sign out %@?", bundle: Common.bundle, comment: "Alert message of sign out the email address")
 }

@@ -66,6 +66,7 @@ public class PMTextField: UIView {
         didSet {
             textField.isSecureTextEntry = isPassword
             textField.textContentType = isPassword ? .password : .none
+            textField.clearButtonMode = .never
         }
     }
 
@@ -159,7 +160,7 @@ public class PMTextField: UIView {
     @IBInspectable public var suffix: String? {
         didSet {
             guard let suffix = suffix, !suffix.isEmpty else {
-                textField.clearButtonMode = .whileEditing
+                textField.clearButtonMode = isPassword ? .never : .whileEditing
                 textField.suffixMarging = 0
                 suffixLabel.isHidden = true
                 return

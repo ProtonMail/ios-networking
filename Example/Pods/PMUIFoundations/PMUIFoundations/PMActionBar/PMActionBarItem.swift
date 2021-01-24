@@ -130,4 +130,37 @@ public struct PMActionBarItem {
         self.type = .button
         self.isSelected = isSelected
     }
+
+    /// Initializer of rich bar item(button type)
+    /// - Parameters:
+    ///   - icon: Icon of bar item
+    ///   - text: Text of bar item
+    ///   - itemColor: Color of bar item content, default value is `AdaptiveTextColors._N1`
+    ///   - selectedItemColor: Color of bar item content when item is selected.
+    ///   - backgroundColor: Background color of bar item, default value is `.clear`
+    ///   - selectedBgColor: Background color when bar item is selected.
+    ///   - isSelected: A Boolean value indicating whether the control is in the selected state.
+    ///   - userInfo: Optional information about the the bar item.
+    ///   - handler: A block to execute when the user selects the action.
+    public init(icon: UIImage,
+                text: String,
+                itemColor: UIColor = AdaptiveTextColors._N1,
+                selectedItemColor: UIColor? = nil,
+                backgroundColor: UIColor = .clear,
+                selectedBgColor: UIColor? = nil,
+                isSelected: Bool = false,
+                userInfo: [String: Any]? = nil,
+                handler: ((PMActionBarItem) -> Void)?) {
+        self.icon = icon
+        self.text = text
+        self.alignment = .center
+        self.itemColor = itemColor
+        self.selectedItemColor = selectedItemColor
+        self.backgroundColor = backgroundColor
+        self.selectedBgColor = selectedBgColor
+        self.userInfo = userInfo
+        self.handler = handler
+        self.type = .button
+        self.isSelected = isSelected
+    }
 }
