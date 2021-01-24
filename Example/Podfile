@@ -5,7 +5,7 @@ target 'PMNetworking_Example' do
   platform :ios, '11.0'
   use_frameworks!
 
-  pod 'PMCrypto', :git => 'git@gitlab.protontech.ch:apple/shared/pmcrypto.git', :tag => '1.1.0'
+  pod 'PMCrypto', :git => 'git@gitlab.protontech.ch:apple/shared/pmcrypto.git', :tag => '2.1.3'
   pod 'PMAuthentication', :git => 'git@gitlab.protontech.ch:apple/shared/pmauthentication.git', :branch => 'develop'
 #  pod 'PMAuthentication', :path => '../../../pmauthentication/', :testspecs => ['Tests']
   pod 'PMCommon', :path => '../', :testspecs => ['Tests']
@@ -20,7 +20,7 @@ target 'PMNetworking_Example' do
 #  pod 'PMUIFoundations', :path => '../../PMUIFoundations'
   pod 'PMCoreTranslation', :git => 'git@gitlab.protontech.ch:apple/shared/pmcoretranslation.git', :branch => 'develop'
 #  pod 'PMCoreTranslation', :path => '../../pmcoretranslation'
-#  pod 'PMAuthentication', :git => 'git@gitlab.protontech.ch:apple/shared/pmcrypto.git', :tag => '1.2.1'
+#  pod 'PMAuthentication', :git => 'git@gitlab.protontech.ch:apple/shared/pmcrypto.git', :tag => '2.1.3'
   #pod 'PMAPIClient', :path => '../', :testspecs => ['Tests']
   #pod 'PMNetworking-Alamofire', :path => '../', :testspecs => ['Tests']
 
@@ -42,7 +42,7 @@ target 'PMNetworking_SwiftUI_Example' do
   platform :ios, '11.0'
   use_frameworks!
 
-  pod 'PMCrypto', :git => 'git@gitlab.protontech.ch:apple/shared/pmcrypto.git', :tag => '1.1.0'
+  pod 'PMCrypto', :git => 'git@gitlab.protontech.ch:apple/shared/pmcrypto.git', :tag => '2.1.3'
   pod 'PMAuthentication', :git => 'git@gitlab.protontech.ch:apple/shared/pmauthentication.git', :branch => 'develop'
 #  pod 'PMAuthentication', :path => '../../../pmauthentication/', :testspecs => ['Tests']
   pod 'PMCommon', :path => '../', :testspecs => ['Tests']
@@ -57,7 +57,7 @@ target 'PMNetworking_SwiftUI_Example' do
 #  pod 'PMUIFoundations', :path => '../../PMUIFoundations'
   pod 'PMCoreTranslation', :git => 'git@gitlab.protontech.ch:apple/shared/pmcoretranslation.git', :branch => 'develop'
 #  pod 'PMCoreTranslation', :path => '../../pmcoretranslation'
-#  pod 'PMAuthentication', :git => 'git@gitlab.protontech.ch:apple/shared/pmcrypto.git', :tag => '1.2.1'
+#  pod 'PMAuthentication', :git => 'git@gitlab.protontech.ch:apple/shared/pmcrypto.git', :tag => '2.1.3'
   #pod 'PMAPIClient', :path => '../', :testspecs => ['Tests']
   #pod 'PMNetworking-Alamofire', :path => '../', :testspecs => ['Tests']
 
@@ -73,7 +73,7 @@ target 'PMNetworking_Mac_Example' do
   platform :osx, '10.14'
   use_frameworks!
   
-  pod 'PMCrypto', :git => 'git@gitlab.protontech.ch:apple/shared/pmcrypto.git', :tag => '1.1.0'
+  pod 'PMCrypto', :git => 'git@gitlab.protontech.ch:apple/shared/pmcrypto.git', :tag => '2.1.3'
 #  pod 'PMCommon', :path => '../', :testspecs => ['Tests']
   pod 'PMAuthentication', :git => 'git@gitlab.protontech.ch:apple/shared/pmauthentication.git', :branch => 'develop'
 #  pod 'PMAuthentication', :path => '../../../pmauthentication/', :testspecs => ['Tests']

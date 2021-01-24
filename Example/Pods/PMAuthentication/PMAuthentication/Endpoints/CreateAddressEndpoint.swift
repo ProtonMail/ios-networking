@@ -12,6 +12,7 @@ import PMCommon
 extension AuthService {
     struct CreateAddressEndpointResponse: Codable {
         let code: Int
+        let address: Address
     }
 
     struct CreateAddressEndpoint: Request {

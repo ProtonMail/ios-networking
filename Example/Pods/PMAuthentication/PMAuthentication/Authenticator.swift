@@ -173,7 +173,7 @@ public class Authenticator: NSObject {
         }
     }
 
-    public func createAddress(_ credential: Credential? = nil, domain: String, displayName: String? = nil, siganture: String? = nil, completion: @escaping (Result<(), Error>) -> Void) {
+    public func createAddress(_ credential: Credential? = nil, domain: String, displayName: String? = nil, siganture: String? = nil, completion: @escaping (Result<Address, Error>) -> Void) {
         var route = AuthService.CreateAddressEndpoint(domain: domain, displayName: displayName, signature: siganture)
         if let auth = credential {
             route.auth = AuthCredential(auth)
@@ -182,8 +182,8 @@ public class Authenticator: NSObject {
             switch result {
             case .failure(let error):
                 completion(.failure(error))
-            case .success:
-                completion(.success(()))
+            case let .success(data):
+                completion(.success(data.address))
             }
         }
     }
@@ -236,5 +236,69 @@ public class Authenticator: NSObject {
     public func closeSession(_ credential: Credential, completion: @escaping (Result<AuthService.EndSessionResponse, Error>) -> Void) {
         let route = AuthService.EndSessionEndpoint(auth: AuthCredential(credential))
         self.apiService.exec(route: route, complete: completion)
+    }
+
+    public func getRandomSRPModulus(completion: @escaping (Result<AuthService.ModulusEndpointResponse, Error>) -> Void) {
+        let route = AuthService.ModulusEndpoint()
+        self.apiService.exec(route: route, complete: completion)
+    }
+
+    public func createAddressKey(_ credential: Credential? = nil, address: Address, password: String, primary: Bool, completion: @escaping (Result<AddressKey, Error>) -> Void) {
+        getRandomSRPModulus { result in
+            switch result {
+            case let .success(data):
+                let keySetup = AddressKeySetup()
+                do {
+                    let key = try keySetup.generateAddressKey(keyName: address.email, email: address.email, password: password)
+                    var route = try keySetup.setupCreateAddressKeyRoute(key: key, modulus: data.modulus, modulusId: data.modulusID, addressId: address.ID, primary: primary)
+                    if let auth = credential {
+                        route.auth = AuthCredential(auth)
+                    }
+                    self.apiService.exec(route: route) { (result: Result<AuthService.CreateAddressKeysEndpointResponse, Error>) in
+                        switch result {
+                        case .failure(let error):
+                            completion(.failure(error))
+                        case let .success(data):
+                            completion(.success(data.key))
+                        }
+                    }
+                } catch {
+                    completion(.failure(error))
+                }
+            case let .failure(error):
+                completion(.failure(error))
+            }
+        }
+    }
+
+    public func setupAccountKeys(_ credential: Credential? = nil, address: Address, password: String, completion: @escaping (Result<(), Error>) -> Void) {
+        getRandomSRPModulus { result in
+            switch result {
+            case let .success(data):
+                // key generation is really slow for account keys, do not block the main thread
+                DispatchQueue.global(qos: .background).async {
+                    let keySetup = AccountKeySetup()
+                    do {
+                        let key = try keySetup.generateAccountKey(keyName: address.email, email: address.email, password: password)
+                        var route = try keySetup.setupSetupKeysRoute(password: password, key: key, modulus: data.modulus, modulusId: data.modulusID, addressId: address.ID)
+                        if let auth = credential {
+                            route.auth = AuthCredential(auth)
+                        }
+                        self.apiService.exec(route: route) { (result: Result<AuthService.SetupKeysEndpointResponse, Error>) in
+                            switch result {
+                            case .failure(let error):
+                                completion(.failure(error))
+                            case .success:
+                                completion(.success(()))
+                            }
+                        }
+                    } catch {
+                        completion(.failure(error))
+                    }
+                }
+            case let .failure(error):
+                completion(.failure(error))
+            }
+        }
     }
 }
