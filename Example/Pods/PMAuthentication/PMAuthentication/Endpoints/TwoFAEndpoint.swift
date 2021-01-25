@@ -59,5 +59,9 @@ extension AuthService {
         var authCredential: AuthCredential? {
             return self.auth
         }
+        
+        var autoRetry: Bool {
+            return false
+        }
     }
 }

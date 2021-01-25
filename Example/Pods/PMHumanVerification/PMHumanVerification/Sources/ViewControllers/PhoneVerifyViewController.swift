@@ -41,6 +41,7 @@ class PhoneVerifyViewController: BaseUIViewController {
     @IBOutlet weak var topTitleLabel: UILabel!
 
     private var countryCode: String = ""
+    private var isBannerShown = false { didSet { updateButtonStatus() } }
 
     weak var delegate: PhoneVerifyViewControllerDelegate?
     var viewModel: VerifyViewModel!
@@ -108,10 +109,10 @@ class PhoneVerifyViewController: BaseUIViewController {
 
     private func updateButtonStatus() {
         let phoneNumber = phoneNumberTextFieldView.value.trim()
-        if phoneNumber.isEmpty {
-            sendCodeButton.isEnabled = false
-        } else {
+        if !phoneNumber.isEmpty, !isBannerShown {
             sendCodeButton.isEnabled = true
+        } else {
+            sendCodeButton.isEnabled = false
         }
     }
 
@@ -127,9 +128,11 @@ class PhoneVerifyViewController: BaseUIViewController {
                 if let description = error?.localizedDescription {
                     let banner = PMBanner(message: description, style: PMBannerNewStyle.error, dismissDuration: Double.infinity)
                     banner.addButton(text: CoreString._hv_ok_button) { _ in
+                        self.isBannerShown = false
                         banner.dismiss()
                     }
                     banner.show(at: .topCustom(.baner), on: self)
+                    self.isBannerShown = true
                 }
             }
         }
@@ -155,6 +158,7 @@ extension PhoneVerifyViewController: PMTextFieldComboDelegate {
     }
 
     func userDidRequestDataSelection(button: UIButton) {
+        guard !isBannerShown else { return }
         delegate?.didSelectCountryPicker()
     }
 }

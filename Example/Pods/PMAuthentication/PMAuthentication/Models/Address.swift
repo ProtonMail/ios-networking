@@ -36,6 +36,32 @@ public struct Address: Codable {
     public let signature: String
     public let hasKeys: Int
     public let keys: [AddressKey]
+
+    public init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        ID = try values.decode(AddressID.self, forKey: .ID)
+        domainID = try values.decodeIfPresent(String.self, forKey: .domainID)
+        email = try values.decode(String.self, forKey: .email)
+        send = try values.decode(Int.self, forKey: .send)
+        receive = try values.decode(Int.self, forKey: .receive)
+        status = try values.decode(Int.self, forKey: .status)
+        type = try values.decode(Int.self, forKey: .type)
+        order = try values.decode(Int.self, forKey: .order)
+        displayName = try values.decode(String.self, forKey: .displayName)
+        signature = try values.decode(String.self, forKey: .signature)
+
+        if let _hasKeys = try values.decodeIfPresent(Int.self, forKey: .hasKeys) {
+            hasKeys = _hasKeys
+        } else {
+            hasKeys = 0
+        }
+
+        if let _keys = try values.decodeIfPresent([AddressKey].self, forKey: .keys) {
+            keys = _keys
+        } else {
+            keys = []
+        }
+    }
 }
 
 public struct AddressKey: Codable {

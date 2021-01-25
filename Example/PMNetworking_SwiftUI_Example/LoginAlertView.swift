@@ -27,8 +27,8 @@ import SwiftUI
 struct LoginAlertView: View {
     let screenSize = UIScreen.main.bounds
     @Binding var isShown: Bool
-    @State var userName: String = ""
-    @State var password: String = ""
+    @State private var userName: String = ""
+    @State private var password: String = ""
     var onDone: (String, String) -> Void = { _,_  in }
     var onCancel: () -> Void = { }
     

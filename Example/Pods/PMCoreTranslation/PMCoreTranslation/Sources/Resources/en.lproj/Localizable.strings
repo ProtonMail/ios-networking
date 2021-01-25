@@ -184,5 +184,4 @@
 "Remove account" = "Remove account";
 "You will be signed out and all the data associated with this account will be removed from this device." = "You will be signed out and all the data associated with this account will be removed from this device.";
 "Remove" = "Remove";
-"Sign out %@" = "Sign out %@";
-"Are you sure you want to sign out?" = "Are you sure you want to sign out?";
+"Are you sure you want to sign out %@?" = "Are you sure you want to sign out %@?";

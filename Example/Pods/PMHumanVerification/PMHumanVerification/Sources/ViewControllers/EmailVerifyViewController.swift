@@ -39,6 +39,8 @@ class EmailVerifyViewController: BaseUIViewController {
     @IBOutlet weak var sendCodeButton: ProtonButton!
     @IBOutlet weak var scrollBottomPaddingConstraint: NSLayoutConstraint!
 
+    private var isBannerShown = false { didSet { updateButtonStatus() } }
+    
     weak var delegate: EmailVerifyViewControllerDelegate?
     var viewModel: VerifyViewModel!
 
@@ -106,9 +108,11 @@ class EmailVerifyViewController: BaseUIViewController {
                 if let description = error?.localizedDescription {
                     let banner = PMBanner(message: description, style: PMBannerNewStyle.error, dismissDuration: Double.infinity)
                     banner.addButton(text: CoreString._hv_ok_button) { _ in
+                        self.isBannerShown = false
                         banner.dismiss()
                     }
                     banner.show(at: .topCustom(.baner), on: self)
+                    self.isBannerShown = true
                 }
             }
         }
@@ -119,7 +123,7 @@ class EmailVerifyViewController: BaseUIViewController {
     }
 
     private func updateButtonStatus() {
-        if validateEmailAddress != nil {
+        if validateEmailAddress != nil, !isBannerShown {
             sendCodeButton.isEnabled = true
         } else {
             sendCodeButton.isEnabled = false
