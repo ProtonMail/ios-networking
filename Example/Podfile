@@ -24,7 +24,7 @@ target 'PMNetworking_Example' do
   #pod 'PMAPIClient', :path => '../', :testspecs => ['Tests']
   #pod 'PMNetworking-Alamofire', :path => '../', :testspecs => ['Tests']
 
-  pod 'TrustKit', '1.6.2'
+  pod 'TrustKit', :git => 'https://github.com/ProtonMail/TrustKit.git', :branch => 'master'
   pod 'PromiseKit', '~> 6.0'
   pod 'AwaitKit', '~> 5.0.0'
   pod 'SwiftLint'
@@ -61,7 +61,7 @@ target 'PMNetworking_SwiftUI_Example' do
   #pod 'PMAPIClient', :path => '../', :testspecs => ['Tests']
   #pod 'PMNetworking-Alamofire', :path => '../', :testspecs => ['Tests']
 
-  pod 'TrustKit', '1.6.2'
+  pod 'TrustKit', :git => 'https://github.com/ProtonMail/TrustKit.git', :branch => 'master'
   pod 'PromiseKit', '~> 6.0'
   pod 'AwaitKit', '~> 5.0.0'
   pod 'SwiftLint'
@@ -80,7 +80,7 @@ target 'PMNetworking_Mac_Example' do
   pod 'PMCommon', :path => '../', :testspecs => ['Tests']
   #pod 'PMAPIClient', :path => '../', :testspecs => ['Tests']
   #pod 'PMNetworking-Alamofire', :path => '../', :testspecs => ['Tests']
-  pod 'TrustKit', '1.6.2'
+  pod 'TrustKit', :git => 'https://github.com/ProtonMail/TrustKit.git', :branch => 'master'
   
   target 'PMNetworking_Mac_ExampleTests' do
     inherit! :search_paths
