@@ -27,7 +27,7 @@ import Foundation
 // Test API
 // Humanverify test: https://gitlab.protontech.ch/ProtonMail/Slim-API/blob/develop/api-spec/pm_api_test.md
 
-public enum VerifyMethod: String {
+public enum VerifyMethod: String, CaseIterable {
     case captcha
     case sms
     case email
@@ -52,19 +52,6 @@ public enum VerifyMethod: String {
             return "Email"
         case .captcha:
             return "CAPTCHA"
-        default:
-            return ""
-        }
-    }
-
-    var toString: String {
-        switch self {
-        case .sms:
-            return "sms"
-        case .email:
-            return "email"
-        case .captcha:
-            return "captcha"
         default:
             return ""
         }
@@ -94,8 +81,9 @@ public class TestApiClient: Client {
         public var header: [String: Any] {
             switch self {
             case .humanverify(let destination, let type, let token, _):
-                if let dest = destination, let typ = type, let str = token {
-                    let dict = ["x-pm-human-verification-token-type": typ.toString,
+                if let typ = type, let str = token {
+                    let dest = destination ?? ""
+                    let dict = ["x-pm-human-verification-token-type": typ.rawValue,
                                 "x-pm-human-verification-token": dest == "" ? str : "\(dest):\(str)"]
                     return dict
                 }
