@@ -118,11 +118,8 @@ public class MenuViewController: UIViewController {
     private var lastViewController: UIViewController?
 
     private func updateView() {
-        guard viewModel.verifyMethods.count > 0 else {
-            // no verify methods in view model, close HV
-            delegate?.didDismissMenuViewController()
-            return
-        }
+        // no verify methods in view model
+        guard viewModel.verifyMethods.count > 0 else { return }
         let index = segmentControl.selectedSegmentIndex
         let item = viewModel.verifyMethods[index]
         if shouldRefreshVerifyMethod(method: item) {

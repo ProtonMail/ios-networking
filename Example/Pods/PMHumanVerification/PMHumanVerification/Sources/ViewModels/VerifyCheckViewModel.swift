@@ -26,10 +26,6 @@ import PMCoreTranslation
 
 class VerifyCheckViewModel: BaseTokenViewModel {
 
-    override init(api: APIService, startToken: String?) {
-        super.init(api: api, startToken: startToken)
-    }
-
     func getTitle() -> String {
         switch method {
         case .sms:
