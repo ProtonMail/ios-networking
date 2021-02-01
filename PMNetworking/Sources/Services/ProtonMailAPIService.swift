@@ -194,6 +194,12 @@ final class UserAgent {
 
 public let APIServiceErrorDomain = NSError.protonMailErrorDomain("APIService")
 
+extension APIService {
+    public func getSession() -> AFHTTPSessionManager? {
+        return nil
+    }
+}
+
 // Protonmail api serivce. all the network requestion must go with this.
 public class PMAPIService: APIService {
 
@@ -231,9 +237,14 @@ public class PMAPIService: APIService {
 
     /// api session manager
     private var sessionManager: AFHTTPSessionManager
-
+    
+    // get session
+    public func getSession() -> AFHTTPSessionManager? {
+        return sessionManager
+    }
+    
     /// refresh token failed count
-    private var refreshTokenFailedCount = 0
+    //public var refreshTokenFailedCount = 0
 
     private var isHumanVerifyUIPresented = false
 
@@ -255,6 +266,7 @@ public class PMAPIService: APIService {
             self.tokenExpired = false
         }
     }
+    
 
     //    var network : NetworkLayer
     //    var vpn : VPNInterface
