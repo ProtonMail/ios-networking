@@ -244,7 +244,7 @@ class HumanVerificationAPITests: XCTestCase {
         api.humanDelegate = testHumanVerifyDelegate
         
         let client = TestApiClient(api: api)
-        client.triggerHumanVerify(destination: nil, type: nil, token: nil) { (_, response) in
+        client.triggerHumanVerify() { (_, response) in
             XCTAssertEqual(response.code, 9001)
             XCTAssert(response.error != nil)
             XCTAssert(response.error?.localizedDescription == "Human verification required")
@@ -283,7 +283,7 @@ class HumanVerificationAPITests: XCTestCase {
         api.humanDelegate = testHumanVerifyDelegate
         
         let client = TestApiClient(api: api)
-        client.triggerHumanVerify(destination: nil, type: nil, token: nil) { (_, response) in
+        client.triggerHumanVerify() { (_, response) in
             XCTAssertEqual(response.code, 1000)
             XCTAssert(response.error == nil)
             expectation.fulfill()
@@ -331,7 +331,7 @@ class HumanVerificationAPITests: XCTestCase {
         api.humanDelegate = testHumanVerifyDelegate
         
         let client = TestApiClient(api: api)
-        client.triggerHumanVerify(destination: nil, type: nil, token: nil) { (_, response) in
+        client.triggerHumanVerify() { (_, response) in
             XCTAssertEqual(response.code, 1000)
             XCTAssert(response.error == nil)
             expectation2.fulfill()
@@ -378,7 +378,7 @@ class HumanVerificationAPITests: XCTestCase {
         api.humanDelegate = testHumanVerifyDelegate
 
         let client = TestApiClient(api: api)
-        client.triggerHumanVerify(destination: nil, type: nil, token: nil) { (_, response) in
+        client.triggerHumanVerify() { (_, response) in
             XCTAssertEqual(response.code, 1000)
             XCTAssert(response.error == nil)
             expectation2.fulfill()
@@ -436,7 +436,7 @@ class HumanVerificationAPITests: XCTestCase {
         api.humanDelegate = testHumanVerifyDelegate
 
         let client = TestApiClient(api: api)
-        client.triggerHumanVerify(destination: nil, type: nil, token: nil) { (_, response) in
+        client.triggerHumanVerify() { (_, response) in
             XCTAssertEqual(response.code, 1000)
             XCTAssert(response.error == nil)
             expectation2.fulfill()
@@ -501,32 +501,32 @@ class HumanVerificationAPITests: XCTestCase {
         api.humanDelegate = testHumanVerifyDelegateVerify
         let client = TestApiClient(api: api)
 
-        client.triggerHumanVerify(destination: nil, type: nil, token: nil) { (_, response) in
+        client.triggerHumanVerify() { (_, response) in
             XCTAssertEqual(response.code, 1000)
             XCTAssert(response.error == nil)
             expectation1.fulfill()
         }
-        client.triggerHumanVerify(destination: nil, type: nil, token: nil) { (_, response) in
+        client.triggerHumanVerify() { (_, response) in
             XCTAssertEqual(response.code, 1000)
             XCTAssert(response.error == nil)
             expectation2.fulfill()
         }
-        client.triggerHumanVerify(destination: nil, type: nil, token: nil) { (_, response) in
+        client.triggerHumanVerify() { (_, response) in
             XCTAssertEqual(response.code, 1000)
             XCTAssert(response.error == nil)
             expectation3.fulfill()
         }
-        client.triggerHumanVerify(destination: nil, type: nil, token: nil) { (_, response) in
+        client.triggerHumanVerify() { (_, response) in
             XCTAssertEqual(response.code, 1000)
             XCTAssert(response.error == nil)
             expectation4.fulfill()
         }
-        client.triggerHumanVerify(destination: nil, type: nil, token: nil) { (_, response) in
+        client.triggerHumanVerify() { (_, response) in
             XCTAssertEqual(response.code, 1000)
             XCTAssert(response.error == nil)
             expectation5.fulfill()
         }
-        client.triggerHumanVerify(destination: nil, type: nil, token: nil) { (_, response) in
+        client.triggerHumanVerify() { (_, response) in
             XCTAssertEqual(response.code, 1000)
             XCTAssert(response.error == nil)
             expectation6.fulfill()
@@ -594,37 +594,37 @@ class HumanVerificationAPITests: XCTestCase {
         api.humanDelegate = testHumanVerifyDelegateVerify
         let client = TestApiClient(api: api)
 
-        client.triggerHumanVerify(destination: nil, type: nil, token: nil) { (_, response) in
+        client.triggerHumanVerify() { (_, response) in
             XCTAssertEqual(response.code, 1000)
             XCTAssert(response.error == nil)
             isHumanVerificationRequired = false
             expectation1.fulfill()
         }
-        client.triggerHumanVerify(destination: nil, type: nil, token: nil) { (_, response) in
+        client.triggerHumanVerify() { (_, response) in
             XCTAssertEqual(response.code, 1000)
             XCTAssert(response.error == nil)
             isHumanVerificationRequired = false
             expectation2.fulfill()
         }
-        client.triggerHumanVerify(destination: nil, type: nil, token: nil) { (_, response) in
+        client.triggerHumanVerify() { (_, response) in
             XCTAssertEqual(response.code, 1000)
             XCTAssert(response.error == nil)
             isHumanVerificationRequired = false
             expectation3.fulfill()
         }
-        client.triggerHumanVerify(destination: nil, type: nil, token: nil) { (_, response) in
+        client.triggerHumanVerify() { (_, response) in
             XCTAssertEqual(response.code, 1000)
             XCTAssert(response.error == nil)
             isHumanVerificationRequired = false
             expectation4.fulfill()
         }
-        client.triggerHumanVerify(destination: nil, type: nil, token: nil) { (_, response) in
+        client.triggerHumanVerify() { (_, response) in
             XCTAssertEqual(response.code, 1000)
             XCTAssert(response.error == nil)
             isHumanVerificationRequired = false
             expectation5.fulfill()
         }
-        client.triggerHumanVerify(destination: nil, type: nil, token: nil) { (_, response) in
+        client.triggerHumanVerify() { (_, response) in
             XCTAssertEqual(response.code, 1000)
             XCTAssert(response.error == nil)
             isHumanVerificationRequired = false

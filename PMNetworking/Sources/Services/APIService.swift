@@ -169,6 +169,16 @@ public protocol HumanVerifyResponseDelegate: class {
     func onHumanVerifyEnd(result: HumanVerifyEndResult)
 }
 
+public enum PaymentTokenStatus {
+    case success
+    case fail
+}
+
+public protocol HumanVerifyPaymentDelegate: class {
+    var paymentToken: String? { get }
+    func paymentTokenStatusChanged(status: PaymentTokenStatus)
+}
+
 public protocol ForceUpgradeDelegate: class {
     func onForceUpgrade(message: String)
 }

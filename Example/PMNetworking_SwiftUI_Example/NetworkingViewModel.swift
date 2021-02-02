@@ -153,10 +153,10 @@ class NetworkingViewModel: ObservableObject {
         testApi.humanDelegate = humanVerificationDelegate
     }
 
-    private func processHumanVerifyTest(dest: String? = nil, type: VerifyMethod? = nil, token: String? = nil) {
+    private func processHumanVerifyTest() {
         // Human Verify request with empty token just to provoke human verification error
         let client = TestApiClient(api: self.testApi)
-        client.triggerHumanVerify(destination: dest, type: type, token: token, isAuth: getToken(bySessionUID: "") != nil) { (_, response) in
+        client.triggerHumanVerify(isAuth: getToken(bySessionUID: "") != nil) { (_, response) in
             print("Human verify test result: \(response.error?.description as Any)")
         }
     }

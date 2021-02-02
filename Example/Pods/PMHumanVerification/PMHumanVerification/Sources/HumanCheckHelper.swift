@@ -27,20 +27,41 @@ import PMCommon
 public class HumanCheckHelper: HumanVerifyDelegate {
     private let rootViewController: UIViewController?
     private weak var responseDelegate: HumanVerifyResponseDelegate?
+    private weak var paymentDelegate: HumanVerifyPaymentDelegate?
     private let apiService: APIService
     private let supportURL: URL
     private var verificationCompletion: ((HumanVerifyHeader, HumanVerifyIsClosed, SendVerificationCodeBlock?) -> Void)?
     var coordinator: HumanCheckMenuCoordinator?
 
-    public init(apiService: APIService, supportURL: URL, viewController: UIViewController? = nil, responseDelegate: HumanVerifyResponseDelegate? = nil) {
+    public init(apiService: APIService, supportURL: URL, viewController: UIViewController? = nil, responseDelegate: HumanVerifyResponseDelegate? = nil, paymentDelegate: HumanVerifyPaymentDelegate? = nil) {
         self.apiService = apiService
         self.supportURL = supportURL
         self.rootViewController = viewController
         self.responseDelegate = responseDelegate
+        self.paymentDelegate = paymentDelegate
     }
 
     public func onHumanVerify(methods: [VerifyMethod], startToken: String?, completion: (@escaping (HumanVerifyHeader, HumanVerifyIsClosed, SendVerificationCodeBlock?) -> Void)) {
 
+        // check if payment token exists
+        if let paymentToken = paymentDelegate?.paymentToken {
+            let client = TestApiClient(api: self.apiService)
+            let route = client.createHumanVerifyRoute(destination: nil, type: VerifyMethod.payment, token: paymentToken)
+            // retrigger request and use header with payment token
+            completion(route.header, false, { result, _ in
+                self.paymentDelegate?.paymentTokenStatusChanged(status: result == true ? .success : .fail)
+                if !result {
+                    // if request still has an error, start human verification UI
+                    self.startMenuCoordinator(methods: methods, startToken: startToken, completion: completion)
+                }
+            })
+        } else {
+            // start human verification UI
+            startMenuCoordinator(methods: methods, startToken: startToken, completion: completion)
+        }
+    }
+
+    private func startMenuCoordinator(methods: [VerifyMethod], startToken: String?, completion: (@escaping (HumanVerifyHeader, HumanVerifyIsClosed, SendVerificationCodeBlock?) -> Void)) {
         coordinator = HumanCheckMenuCoordinator(rootViewController: rootViewController, apiService: apiService, methods: methods, startToken: startToken)
         coordinator?.delegate = self
         coordinator?.start()
@@ -56,7 +77,7 @@ public class HumanCheckHelper: HumanVerifyDelegate {
 extension HumanCheckHelper: HumanCheckMenuCoordinatorDelegate {
     func verificationCode(tokenType: TokenType, verificationCodeBlock: @escaping (SendVerificationCodeBlock)) {
         let client = TestApiClient(api: self.apiService)
-        let route = client.triggerHumanVerifyRoute(destination: tokenType.destination, type: tokenType.verifyMethod, token: tokenType.token)
+        let route = client.createHumanVerifyRoute(destination: tokenType.destination, type: tokenType.verifyMethod, token: tokenType.token)
         verificationCompletion?(route.header, false, { result, error in
             verificationCodeBlock(result, error)
             if result {

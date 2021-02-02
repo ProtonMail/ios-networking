@@ -65,7 +65,7 @@ public class TestApiClient: Client {
     }
     static let route: String = "/internal/tests"
     public enum Router: Request {
-        case humanverify(destination: String?, type: VerifyMethod?, token: String?, isAuth: Bool)
+        case humanverify(destination: String? = nil, type: VerifyMethod? = nil, token: String? = nil, isAuth: Bool)
         public var path: String {
             switch self {
             case .humanverify:
@@ -117,13 +117,12 @@ extension TestApiClient {
     //  1. primise kit
     //  2. delaget
     //  3. combin
-    public func triggerHumanVerify(destination: String?, type: VerifyMethod?, token: String?, isAuth: Bool = true,
-                                   complete: @escaping  (_ task: URLSessionDataTask?, _ response: HumanVerificationResponse) -> Void) {
-        let route = Router.humanverify(destination: destination, type: type, token: token, isAuth: isAuth)
+    public func triggerHumanVerify(isAuth: Bool = true, complete: @escaping  (_ task: URLSessionDataTask?, _ response: HumanVerificationResponse) -> Void) {
+        let route = createHumanVerifyRoute(isAuth: isAuth)
         self.apiService.exec(route: route, complete: complete)
     }
 
-    public func triggerHumanVerifyRoute(destination: String?, type: VerifyMethod?, token: String?, isAuth: Bool = true) -> Router {
+    public func createHumanVerifyRoute(destination: String? = nil, type: VerifyMethod? = nil, token: String? = nil, isAuth: Bool = true) -> Router {
         return Router.humanverify(destination: destination, type: type, token: token, isAuth: isAuth)
     }
 }

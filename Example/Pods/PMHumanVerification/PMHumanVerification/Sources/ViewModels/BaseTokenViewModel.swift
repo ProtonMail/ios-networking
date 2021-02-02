@@ -39,14 +39,12 @@ class BaseTokenViewModel {
     // MARK: - Public properties and methods
 
     let apiService: APIService
-    let startToken: String?
     var method: VerifyMethod = .captcha
     var destination: String = ""
     var onVerificationCodeBlock: ((@escaping SendVerificationCodeBlock) -> Void)?
 
-    init(api: APIService, startToken: String?) {
+    init(api: APIService) {
         self.apiService = api
-        self.startToken = startToken
     }
 
     func finalToken(token: String, complete: @escaping SendVerificationCodeBlock) {

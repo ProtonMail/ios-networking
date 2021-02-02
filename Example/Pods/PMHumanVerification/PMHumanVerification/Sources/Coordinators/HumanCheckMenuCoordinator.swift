@@ -34,13 +34,13 @@ class HumanCheckMenuCoordinator {
     // MARK: - Private properties
 
     private let apiService: APIService
-    private let startToken: String?
     private var method: VerifyMethod = .captcha
     private var destination: String = ""
 
     /// View controllers
     private let rootViewController: UIViewController?
-    private var viewController: MenuViewController?
+    private var initialMenuViewController: MenuViewController?
+    private var initialHelpViewController: HelpViewController?
     private var phoneVerifyViewController: PhoneVerifyViewController?
 
     /// View models
@@ -55,14 +55,13 @@ class HumanCheckMenuCoordinator {
 
     // MARK: - Public methods
 
-    init?(rootViewController: UIViewController?, apiService: APIService, methods: [VerifyMethod], startToken: String?) {
+    init(rootViewController: UIViewController?, apiService: APIService, methods: [VerifyMethod], startToken: String?) {
         self.rootViewController = rootViewController
         self.apiService = apiService
-        self.startToken = startToken
 
-        self.recaptchaViewModel = RecaptchaViewModel(api: self.apiService, startToken: self.startToken)
+        self.recaptchaViewModel = RecaptchaViewModel(api: self.apiService, startToken: startToken)
         self.verifyViewModel = VerifyViewModel(api: self.apiService)
-        self.verifyCheckViewModel = VerifyCheckViewModel(api: apiService, startToken: startToken)
+        self.verifyCheckViewModel = VerifyCheckViewModel(api: apiService)
         self.recaptchaViewModel.onVerificationCodeBlock = { verificationCodeBlock in
             self.delegate?.verificationCode(tokenType: self.recaptchaViewModel.getToken(), verificationCodeBlock: verificationCodeBlock)
         }
@@ -71,9 +70,15 @@ class HumanCheckMenuCoordinator {
         }
 
         if NSClassFromString("XCTest") == nil {
-            self.viewController = instatntiateVC(method: MenuViewController.self, identifier: "HumanCheckMenuViewController")
-            self.viewController?.delegate = self
-            self.viewController?.viewModel = MenuViewModel(methods: methods)
+            if methods.count == 0 {
+                // special case, no verify methods - show only help view controller
+                self.initialHelpViewController = getHelpViewController
+            } else {
+                // regular case - show HV with verification methods
+                self.initialMenuViewController = instatntiateVC(method: MenuViewController.self, identifier: "HumanCheckMenuViewController")
+                self.initialMenuViewController?.delegate = self
+                self.initialMenuViewController?.viewModel = MenuViewModel(methods: methods)
+            }
         }
     }
 
@@ -84,7 +89,7 @@ class HumanCheckMenuCoordinator {
     // MARK: - Private methods
 
     private func showHumanVerification() {
-        guard let viewController = viewController else { return }
+        guard let viewController = self.initialHelpViewController ?? self.initialMenuViewController else { return }
         if let rootViewController = rootViewController {
             let nav = UINavigationController()
             nav.modalPresentationStyle = .fullScreen
@@ -105,12 +110,16 @@ class HumanCheckMenuCoordinator {
             topViewController?.present(nav, animated: true)
         }
     }
-
-    private func showHelp() {
+    
+    private var getHelpViewController: HelpViewController {
         let helpViewController = instatntiateVC(method: HelpViewController.self, identifier: "HumanCheckHelpViewController")
         helpViewController.delegate = self
         helpViewController.viewModel = HelpViewModel(url: apiService.humanDelegate?.getSupportURL())
-        viewController?.navigationController?.pushViewController(helpViewController, animated: true)
+        return helpViewController
+    }
+
+    private func showHelp() {
+        initialMenuViewController?.navigationController?.pushViewController(getHelpViewController, animated: true)
     }
 
     private func showVerify() {
@@ -121,7 +130,7 @@ class HumanCheckMenuCoordinator {
         // update destination and method in verifyCheckViewModel
         verifyCheckViewModel.destination = destination
         verifyCheckViewModel.method = method
-        viewController?.navigationController?.pushViewController(verifyViewController, animated: true)
+        initialMenuViewController?.navigationController?.pushViewController(verifyViewController, animated: true)
     }
 }
 
@@ -141,19 +150,19 @@ extension HumanCheckMenuCoordinator: MenuViewControllerDelegate {
         case .captcha:
             let customViewController = instatntiateVC(method: RecaptchaViewController.self, identifier: "RecaptchaViewController")
             customViewController.viewModel = recaptchaViewModel
-            viewController?.capchaViewController = customViewController
+            initialMenuViewController?.capchaViewController = customViewController
         case .email:
             let customViewController = instatntiateVC(method: EmailVerifyViewController.self, identifier: "EmailVerifyViewController")
             customViewController.viewModel = verifyViewModel
             customViewController.delegate = self
-            viewController?.emailViewController = customViewController
+            initialMenuViewController?.emailViewController = customViewController
         case .sms:
             phoneVerifyViewController = instatntiateVC(method: PhoneVerifyViewController.self, identifier: "PhoneVerifyViewController")
             phoneVerifyViewController?.viewModel = verifyViewModel
             phoneVerifyViewController?.delegate = self
             countryCodeViewModel = CountryCodeViewModel()
             phoneVerifyViewController?.countryCodeViewModel = countryCodeViewModel
-            viewController?.smsViewController = phoneVerifyViewController
+            initialMenuViewController?.smsViewController = phoneVerifyViewController
         default: break
         }
     }
@@ -163,7 +172,7 @@ extension HumanCheckMenuCoordinator: MenuViewControllerDelegate {
     }
 
     func didDismissMenuViewController() {
-        viewController?.navigationController?.dismiss(animated: true, completion: nil)
+        initialMenuViewController?.navigationController?.dismiss(animated: true, completion: nil)
         delegate?.close()
     }
 }
@@ -172,7 +181,12 @@ extension HumanCheckMenuCoordinator: MenuViewControllerDelegate {
 
 extension HumanCheckMenuCoordinator: HelpViewControllerDelegate {
     func didDismissHelpViewController() {
-        viewController?.navigationController?.popViewController(animated: true)
+        if self.initialHelpViewController != nil {
+            initialHelpViewController?.dismiss(animated: true)
+            delegate?.close()
+        } else {
+            initialMenuViewController?.navigationController?.popViewController(animated: true)
+        }
     }
 }
 
@@ -199,7 +213,7 @@ extension HumanCheckMenuCoordinator: PhoneVerifyViewControllerDelegate {
         let countryPickerViewController = instatntiateVC(method: CountryPickerViewController.self, identifier: "CountryPickerViewController")
         countryPickerViewController.delegate = self
         countryPickerViewController.viewModel = countryCodeViewModel
-        viewController?.present(countryPickerViewController, animated: true)
+        initialMenuViewController?.present(countryPickerViewController, animated: true)
     }
 }
 
@@ -207,7 +221,7 @@ extension HumanCheckMenuCoordinator: PhoneVerifyViewControllerDelegate {
 
 extension HumanCheckMenuCoordinator: CountryPickerViewControllerDelegate {
     func didCountryPickerClose() {
-        viewController?.dismiss(animated: true)
+        initialMenuViewController?.dismiss(animated: true)
     }
 
     func didSelectCountryCode(countryCode: CountryCode) {
@@ -219,8 +233,8 @@ extension HumanCheckMenuCoordinator: CountryPickerViewControllerDelegate {
 
 extension HumanCheckMenuCoordinator: VerifyCodeViewControllerDelegate {
     func didPressAnotherVerifyMethod() {
-        viewController?.navigationController?.popViewController(animated: true)
-        viewController?.resetUI()
+        initialMenuViewController?.navigationController?.popViewController(animated: true)
+        initialMenuViewController?.resetUI()
     }
 
     func didShowVerifyHelpViewController() {

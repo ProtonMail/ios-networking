@@ -152,7 +152,7 @@ class MainViewController: UIViewController {
         
         //set the human verification delegation
         let url = URL(string: "https://protonmail.com/support/knowledge-base/human-verification/")!
-        humanVerificationDelegate = HumanCheckHelper(apiService: testApi, supportURL: url, viewController: self, responseDelegate: self)
+        humanVerificationDelegate = HumanCheckHelper(apiService: testApi, supportURL: url, viewController: self, responseDelegate: self, paymentDelegate: self)
         testApi.humanDelegate = humanVerificationDelegate
     }
     
@@ -195,10 +195,10 @@ class MainViewController: UIViewController {
         processHumanVerifyTest()
     }
 
-    func processHumanVerifyTest(dest: String? = nil, type: VerifyMethod? = nil, token: String? = nil) {
+    func processHumanVerifyTest() {
         // Human Verify request with empty token just to provoke human verification error
         let client = TestApiClient(api: self.testApi)
-        client.triggerHumanVerify(destination: dest, type: type, token: token, isAuth: getToken(bySessionUID: "") != nil) { (_, response) in
+        client.triggerHumanVerify(isAuth: getToken(bySessionUID: "") != nil) { (_, response) in
             print("Human verify test result: \(response.error?.description as Any)")
         }
     }
@@ -331,6 +331,16 @@ extension MainViewController: ForceUpgradeResponseDelegate {
     
     func onUpdateButtonPressed() {
         // on update button pressed
+    }
+}
+
+extension MainViewController: HumanVerifyPaymentDelegate {
+    func paymentTokenStatusChanged(status: PaymentTokenStatus) {
+        print("Payment token status: \(status)")
+    }
+    
+    var paymentToken: String? {
+        return "BrokenToken"
     }
 }
 

@@ -25,10 +25,15 @@ import PMCommon
 
 class RecaptchaViewModel: BaseTokenViewModel {
 
+    // MARK: - Private properties
+
+    var startToken: String?
+
     // MARK: - Public properties and methods
 
-    override init(api: APIService, startToken: String?) {
-        super.init(api: api, startToken: startToken)
+    init(api: APIService, startToken: String?) {
+        super.init(api: api)
+        self.startToken = startToken
         self.method = .captcha
         self.destination = ""
     }
