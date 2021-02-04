@@ -765,7 +765,7 @@ public class PMAPIService: APIService {
         }
     }
 
-    internal func download(byUrl url: String,
+    public func download(byUrl url: String,
                            destinationDirectoryURL: URL,
                            headers: [String: Any]?,
                            authenticated: Bool = true,

@@ -126,11 +126,20 @@ public enum Server: APIServerConfig {
 public typealias CompletionBlock = (_ task: URLSessionDataTask?, _ response: [String: Any]?, _ error: NSError?) -> Void
 
 public protocol API {
+    
     func request(method: HTTPMethod, path: String,
                  parameters: Any?, headers: [String: Any]?,
                  authenticated: Bool, autoRetry: Bool,
                  customAuthCredential: AuthCredential?,
                  completion: CompletionBlock?)
+    
+    
+    func download(byUrl url: String, destinationDirectoryURL: URL,
+                  headers: [String: Any]?,
+                  authenticated: Bool,
+                  customAuthCredential: AuthCredential?,
+                  downloadTask: ((URLSessionDownloadTask) -> Void)?,
+                  completion: @escaping ((URLResponse?, URL?, NSError?) -> Void))
 }
 
 /// this is auth UI related
