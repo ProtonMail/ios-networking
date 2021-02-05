@@ -601,7 +601,10 @@ public class PMAPIService: APIService {
                     }
 
                     // move to delegte
-                    let appversion = self.serviceDelegate?.appVersion ?? "iOS_\(Bundle.main.majorVersion)"
+                    var appversion = "iOS_\(Bundle.main.majorVersion)"
+                    if let delegateAppVersion = self.serviceDelegate?.appVersion, !delegateAppVersion.isEmpty {
+                        appversion = delegateAppVersion
+                    }
                     request.setValue("application/vnd.protonmail.v1+json", forHTTPHeaderField: "Accept")
                     request.setValue(appversion, forHTTPHeaderField: "x-pm-appversion")
 
@@ -609,10 +612,13 @@ public class PMAPIService: APIService {
                     // let clanguage = LanguageManager.currentLanguageEnum()
                     // request.setValue(clanguage.localeString, forHTTPHeaderField: "x-pm-locale")
 
-                    if let ua = self.serviceDelegate?.userAgent ?? UserAgent.default.ua {
-                        request.setValue(ua, forHTTPHeaderField: "User-Agent")
+                    // move to delegte
+                    var ua = UserAgent.default.ua
+                    if let delegateAgent = self.serviceDelegate?.userAgent, !delegateAgent.isEmpty {
+                        ua = delegateAgent
                     }
-
+                    request.setValue(ua, forHTTPHeaderField: "User-Agent")
+                    
                     var task: URLSessionDataTask?
                     task = self.sessionManager.dataTask(with: request as URLRequest, uploadProgress: { (_) in
                         // TODO::add later
