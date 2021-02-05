@@ -140,6 +140,16 @@ public protocol API {
                   customAuthCredential: AuthCredential?,
                   downloadTask: ((URLSessionDownloadTask) -> Void)?,
                   completion: @escaping ((URLResponse?, URL?, NSError?) -> Void))
+    
+    func upload (byPath path: String,
+                 parameters: [String: String],
+                 keyPackets: Data,
+                 dataPacket: Data,
+                 signature: Data?,
+                 headers: [String: Any]?,
+                 authenticated: Bool,
+                 customAuthCredential: AuthCredential?,
+                 completion: @escaping CompletionBlock)
 }
 
 /// this is auth UI related

@@ -669,15 +669,15 @@ public class PMAPIService: APIService {
         }
     }
 
-    func upload (byPath path: String,
-                 parameters: [String: String],
-                 keyPackets: Data,
-                 dataPacket: Data,
-                 signature: Data?,
-                 headers: [String: Any]?,
-                 authenticated: Bool = true,
-                 customAuthCredential: AuthCredential? = nil,
-                 completion: @escaping CompletionBlock) {
+    public func upload (byPath path: String,
+                        parameters: [String: String],
+                        keyPackets: Data,
+                        dataPacket: Data,
+                        signature: Data?,
+                        headers: [String: Any]?,
+                        authenticated: Bool = true,
+                        customAuthCredential: AuthCredential? = nil,
+                        completion: @escaping CompletionBlock) {
 
         let url = self.doh.getHostUrl() + path
         let authBlock: AuthTokenBlock = { token, userID, error in
