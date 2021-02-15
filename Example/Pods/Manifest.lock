@@ -136,7 +136,7 @@ CHECKOUT OPTIONS:
     :git: "git@gitlab.protontech.ch:apple/shared/pmcrypto.git"
     :tag: 2.1.3
   PMForceUpgrade:
-    :commit: e4fb67d068aa84f714aed885234c5369ba97ec2e
+    :commit: 195a901dfb498b1456480278148e4dbb8dce141e
     :git: "git@gitlab.protontech.ch:apple/shared/pmforceupgrade.git"
   PMHumanVerification:
     :commit: 5ebe3e4837c92408a8ad5ed1b770a842bee2dc9b

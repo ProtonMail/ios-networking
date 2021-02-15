@@ -37,7 +37,7 @@ import PMUICommon
 class MainViewController: UIViewController {
     @IBOutlet weak var envSegmentedControl: UISegmentedControl!
     
-    var testApi = PMAPIService(doh: DevDoHMail.default, sessionUID: "testSessionUID")
+    var testApi = PMAPIService(doh: BlackDoHMail.default, sessionUID: "testSessionUID")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,10 +55,10 @@ class MainViewController: UIViewController {
     
     var currentEnv: DoH {
         switch envSegmentedControl.selectedSegmentIndex {
-        case 0: return DevDoHMail.default
-        case 1: return BlueDoHMail.default
+        case 0: return BlackDoHMail.default
+        case 1: return DevDoHMail.default
         case 2: return ProdDoHMail.default
-        default: return DevDoHMail.default
+        default: return BlackDoHMail.default
         }
     }
     
