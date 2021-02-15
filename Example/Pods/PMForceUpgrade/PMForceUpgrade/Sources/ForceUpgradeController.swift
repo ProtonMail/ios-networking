@@ -58,9 +58,7 @@ class ForceUpgradeController {
         func secondaryButtonAction() {
             if case .mobile = config {
                 guard let url = URL(string: "https://protonmail.com/support/knowledge-base/update-required") else { return }
-                if UIApplication.shared.canOpenURL(url) {
-                    UIApplication.shared.open(url)
-                }
+                UIApplication.shared.open(url)
             } else if case .desktop = config {
                 responseDelegate?.onQuitButtonPressed()
             }

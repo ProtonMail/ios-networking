@@ -30,7 +30,7 @@ import PMHumanVerification
 
 class NetworkingViewModel: ObservableObject {
 
-    private var testApi = PMAPIService(doh: DevDoHMail.default, sessionUID: "testSessionUID")
+    private var testApi = PMAPIService(doh: BlackDoHMail.default, sessionUID: "testSessionUID")
     private var testAuthCredential : AuthCredential? = nil
     private var humanVerificationDelegate: HumanVerifyDelegate?
 
@@ -39,7 +39,7 @@ class NetworkingViewModel: ObservableObject {
         setupEnv()
     }
     
-    var env = ["Dev env.", "Blue env.", "Prod env."]
+    var env = ["Black env.", "Dev env.", "Prod env."]
     var selectedIndex: Int = 0 { didSet { setupEnv() } }
     @Published var showingLoginError = false
     
@@ -51,10 +51,10 @@ class NetworkingViewModel: ObservableObject {
     
     private var currentEnv: DoH {
         switch selectedIndex {
-        case 0: return DevDoHMail.default
-        case 1: return BlueDoHMail.default
+        case 0: return BlackDoHMail.default
+        case 1: return DevDoHMail.default
         case 2: return ProdDoHMail.default
-        default: return DevDoHMail.default
+        default: return BlackDoHMail.default
         }
     }
 

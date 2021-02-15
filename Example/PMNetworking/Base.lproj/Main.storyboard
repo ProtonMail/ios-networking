@@ -21,10 +21,10 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="m9S-qF-Gny">
-                                <rect key="frame" x="72.5" y="52" width="230" height="32"/>
+                                <rect key="frame" x="65" y="52" width="245" height="32"/>
                                 <segments>
+                                    <segment title="Black env."/>
                                     <segment title="Dev env."/>
-                                    <segment title="Blue env."/>
                                     <segment title="Prod env."/>
                                 </segments>
                                 <connections>
