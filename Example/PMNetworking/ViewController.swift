@@ -56,8 +56,9 @@ class MainViewController: UIViewController {
     var currentEnv: DoH {
         switch envSegmentedControl.selectedSegmentIndex {
         case 0: return BlackDoHMail.default
-        case 1: return DevDoHMail.default
-        case 2: return ProdDoHMail.default
+        case 1: return DaltonBlackDoHMail.default
+        case 2: return DevDoHMail.default
+        case 3: return ProdDoHMail.default
         default: return BlackDoHMail.default
         }
     }
@@ -90,10 +91,7 @@ class MainViewController: UIViewController {
     var testAuthCredential : AuthCredential? = nil
     
     func testFramework(userName: String, password: String) {
-        if self.testAuthCredential != nil {
-            self.testAccessToken(userName: userName)
-            return
-        }
+        setupHumanVerification()
         let authApi: Authenticator = Authenticator(api: testApi)
         authApi.authenticate(username: userName, password: password) { result in
             switch result {
