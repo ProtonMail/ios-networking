@@ -284,8 +284,7 @@ public class PMAPIService: APIService {
         // init lock
         pthread_mutex_init(&mutex, nil)
         self.doh = doh
-        doh.status = .off // userCachedStatus.isDohOn ? .on : .off
-
+        
         // human verification lock
         pthread_mutex_init(&humanVerificationMutex, nil)
 
@@ -573,7 +572,6 @@ public class PMAPIService: APIService {
                         }
                     }
                 }
-                // let url = self.doh.getHostUrl() + path
                 let url = self.doh.getHostUrl() + path
 
                 do {
