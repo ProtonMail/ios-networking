@@ -33,6 +33,15 @@ class BlackDoHMail: DoH, ServerConfig {
     static let `default` = try! BlackDoHMail()
 }
 
+class DaltonBlackDoHMail: DoH, ServerConfig {
+    var signupDomain: String = ObfuscatedConstants.daltonBlackSignupDomain
+    var defaultHost: String = ObfuscatedConstants.daltonBlackDefaultHost
+    var captchaHost: String = ObfuscatedConstants.daltonBlackCaptchaHost
+    var apiHost: String = ObfuscatedConstants.daltonBlackApiHost
+    var defaultPath: String = ObfuscatedConstants.daltonBlackDefaultPath
+    static let `default` = try! DaltonBlackDoHMail()
+}
+
 class DevDoHMail: DoH, ServerConfig {
     var signupDomain: String = ObfuscatedConstants.devSignupDomain
     var defaultHost: String = ObfuscatedConstants.devDefaultHost

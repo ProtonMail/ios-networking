@@ -32,6 +32,12 @@ class ObfuscatedConstantsBase {
     static let blackCaptchaHost: String = ""
     static let blackApiHost: String = ""
     static let blackDefaultPath: String = ""
+    
+    static let daltonBlackSignupDomain: String = ""
+    static let daltonBlackDefaultHost: String = ""
+    static let daltonBlackCaptchaHost: String = ""
+    static let daltonBlackApiHost: String = ""
+    static let daltonBlackDefaultPath: String = ""
 
     static let devSignupDomain: String = ""
     static let devDefaultHost: String = ""
