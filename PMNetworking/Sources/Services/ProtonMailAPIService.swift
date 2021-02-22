@@ -26,6 +26,10 @@ import Foundation
 // REMOVE the networking ref
 import AFNetworking
 
+#if canImport(TrustKit)
+import TrustKit
+#endif
+
 public class APIErrorCode {
     static public let responseOK = 1000
 
@@ -214,6 +218,9 @@ public class PMAPIService: APIService {
 
     ///
     public weak var serviceDelegate: APIServiceDelegate?
+    
+    
+    static public var trustKit: TrustKit?
 
     /// synchronize locks
     private var mutex = pthread_mutex_t()
@@ -292,7 +299,6 @@ public class PMAPIService: APIService {
         // self.serverConfig = config
         self.sessionUID = sessionUID
 
-        //
         // clear all response cache
         URLCache.shared.removeAllCachedResponses()
 
@@ -309,7 +315,9 @@ public class PMAPIService: APIService {
         #if DEBUG
         sessionManager.securityPolicy.allowInvalidCertificates = true
         #endif
-
+        
+        
+        #if NO_TRUSTKIT
         sessionManager.setSessionDidReceiveAuthenticationChallenge { _, challenge, credential -> URLSession.AuthChallengeDisposition in
             let dispositionToReturn: URLSession.AuthChallengeDisposition = .performDefaultHandling
             if let dis = self.serviceDelegate?.onChallenge(challenge: challenge, credential: credential) {
@@ -317,6 +325,20 @@ public class PMAPIService: APIService {
             }
             return dispositionToReturn
         }
+        #else
+        sessionManager.setSessionDidReceiveAuthenticationChallenge { session, challenge, credential -> URLSession.AuthChallengeDisposition in
+            var dispositionToReturn: URLSession.AuthChallengeDisposition = .performDefaultHandling
+            if let validator = PMAPIService.trustKit?.pinningValidator {
+                validator.handle(challenge, completionHandler: { (disposition, credentialOut) in
+                    credential?.pointee = credentialOut
+                    dispositionToReturn = disposition
+                })
+            } else {
+                assert(false, "TrustKit not initialized correctly")
+            }
+            return dispositionToReturn
+        }
+        #endif
     }
 
     private func enableDoH() {
