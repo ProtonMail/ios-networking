@@ -31,9 +31,6 @@ import TrustKit
 #endif
 
 
-let NO_TRUSTKIT : Bool = true
-
-
 public class APIErrorCode {
     static public let responseOK = 1000
 
@@ -223,7 +220,7 @@ public class PMAPIService: APIService {
     ///
     public weak var serviceDelegate: APIServiceDelegate?
     
-    
+    static public var noTrustKit : Bool = false
     static public var trustKit: TrustKit?
 
     /// synchronize locks
@@ -321,7 +318,7 @@ public class PMAPIService: APIService {
         #endif
         
         
-        if NO_TRUSTKIT {
+        if PMAPIService.noTrustKit {
             sessionManager.setSessionDidReceiveAuthenticationChallenge { _, challenge, credential -> URLSession.AuthChallengeDisposition in
                 var dispositionToReturn: URLSession.AuthChallengeDisposition = .performDefaultHandling
                 //Hard force to pass all connections -- this only for testing and with charles
