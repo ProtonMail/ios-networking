@@ -30,6 +30,10 @@ import AFNetworking
 import TrustKit
 #endif
 
+
+let NO_TRUSTKIT : Bool = true
+
+
 public class APIErrorCode {
     static public let responseOK = 1000
 
@@ -317,28 +321,31 @@ public class PMAPIService: APIService {
         #endif
         
         
-        #if NO_TRUSTKIT
-        sessionManager.setSessionDidReceiveAuthenticationChallenge { _, challenge, credential -> URLSession.AuthChallengeDisposition in
-            let dispositionToReturn: URLSession.AuthChallengeDisposition = .performDefaultHandling
-            if let dis = self.serviceDelegate?.onChallenge(challenge: challenge, credential: credential) {
-                return dis
+        if NO_TRUSTKIT {
+            sessionManager.setSessionDidReceiveAuthenticationChallenge { _, challenge, credential -> URLSession.AuthChallengeDisposition in
+                var dispositionToReturn: URLSession.AuthChallengeDisposition = .performDefaultHandling
+                //Hard force to pass all connections -- this only for testing and with charles
+                let credentialOut = URLCredential(trust: challenge.protectionSpace.serverTrust!)
+                credential?.pointee = credentialOut
+                dispositionToReturn = .useCredential
+
+                return dispositionToReturn
             }
-            return dispositionToReturn
         }
-        #else
-        sessionManager.setSessionDidReceiveAuthenticationChallenge { session, challenge, credential -> URLSession.AuthChallengeDisposition in
-            var dispositionToReturn: URLSession.AuthChallengeDisposition = .performDefaultHandling
-            if let validator = PMAPIService.trustKit?.pinningValidator {
-                validator.handle(challenge, completionHandler: { (disposition, credentialOut) in
-                    credential?.pointee = credentialOut
-                    dispositionToReturn = disposition
-                })
-            } else {
-                assert(false, "TrustKit not initialized correctly")
+        else {
+            sessionManager.setSessionDidReceiveAuthenticationChallenge { session, challenge, credential -> URLSession.AuthChallengeDisposition in
+                var dispositionToReturn: URLSession.AuthChallengeDisposition = .performDefaultHandling
+                if let validator = PMAPIService.trustKit?.pinningValidator {
+                    validator.handle(challenge, completionHandler: { (disposition, credentialOut) in
+                        credential?.pointee = credentialOut
+                        dispositionToReturn = disposition
+                    })
+                } else {
+                    assert(false, "TrustKit not initialized correctly")
+                }
+                return dispositionToReturn
             }
-            return dispositionToReturn
         }
-        #endif
     }
 
     private func enableDoH() {
