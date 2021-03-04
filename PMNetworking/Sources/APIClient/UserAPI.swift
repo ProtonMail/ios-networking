@@ -503,6 +503,16 @@ public final class UserInfo: NSObject {
         let addr = userAddresses.indexOfAddress(address_id) ?? userAddresses.defaultSendAddress()
         return addr?.keys.first
     }
+    
+    /// Get all keys that belong to the given address id
+    /// - Parameter address_id: Address id
+    /// - Returns: Keys of the given address id. nil means can't find the address
+    public func getAllAddressKey(address_id: String) -> [Key]? {
+        guard let addr = userAddresses.indexOfAddress(address_id) else {
+            return nil
+        }
+        return addr.keys
+    }
 }
 
 extension UserInfo {
