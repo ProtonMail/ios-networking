@@ -67,34 +67,6 @@ public struct HumanVerificationToken {
     }
 }
 
-public struct UserProperties {
-
-    public let email: String
-    public let username: String
-    public let modulusID: String
-    public let salt: String
-    public let verifier: String
-    public let appleToken: Data?
-
-    public var description: String {
-        return
-            "Username: \(username)\n" +
-            "ModulusID: \(modulusID)\n" +
-            "Salt: \(salt)\n" +
-            "Verifier: \(verifier)\n" +
-            "HasAppleToken: \(appleToken == nil ? "No" : "Yes")\n"
-    }
-
-    public init(email: String, username: String, modulusID: String, salt: String, verifier: String, appleToken: Data?) {
-        self.email = email
-        self.username = username
-        self.modulusID = modulusID
-        self.salt = salt
-        self.verifier = verifier
-        self.appleToken = appleToken
-    }
-}
-
 // Users API
 // Doc: https://github.com/ProtonMail/Slim-API/blob/develop/api-spec/pm_api_users.md
 
@@ -112,7 +84,6 @@ public class UserAPI: APIClient {
         case code(type: HumanVerificationToken.TokenType, receiver: String)
         case check(token: HumanVerificationToken)
         case checkUsername(String)
-        case createUser(UserProperties)
         case userInfo
 
         public var path: String {
@@ -123,8 +94,6 @@ public class UserAPI: APIClient {
                 return route + "/check"
             case .checkUsername(let username):
                 return route + "/available?Name=" + username.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
-            case .createUser:
-                return route
             case .userInfo:
                 return route
             }
@@ -132,9 +101,9 @@ public class UserAPI: APIClient {
 
         public var isAuth: Bool {
             switch self {
-            case .check, .userInfo:
+            case .userInfo:
                 return true
-            case .code:
+            case .code, .check:
                 return false
             default:
                 return false
@@ -147,7 +116,7 @@ public class UserAPI: APIClient {
 
         public var apiVersion: Int {
             switch self {
-            case .code, .check, .checkUsername, .createUser, .userInfo:
+            case .code, .check, .checkUsername, .userInfo:
                 return v_user_default
             }
         }
@@ -156,7 +125,7 @@ public class UserAPI: APIClient {
             switch self {
             case .checkUsername, .userInfo:
                 return .get
-            case  .code, .createUser:
+            case  .code:
                 return .post
             case .check:
                 return .put
@@ -188,24 +157,6 @@ public class UserAPI: APIClient {
                     "TokenType": token.type.rawValue,
                     "Type": vpnType
                 ]
-            case .createUser(let userProperties):
-                var params: [String: Any] = [
-                    "Email": userProperties.email,
-                    "Username": userProperties.username,
-                    "Type": vpnType,
-                    "Auth": [
-                        "Version": 4,
-                        "ModulusID": userProperties.modulusID,
-                        "Salt": userProperties.salt,
-                        "Verifier": userProperties.verifier
-                    ]
-                ]
-                if let token = userProperties.appleToken {
-                    params["Payload"] = [
-                        "higgs-boson": token.base64EncodedString()
-                    ]
-                }
-                return params
             default:
                 return [:]
             }
