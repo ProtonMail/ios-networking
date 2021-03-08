@@ -35,7 +35,6 @@ public class HumanVerifyAPI: APIClient {
         case code(type: HumanVerificationToken.TokenType, receiver: String)
         case check(token: HumanVerificationToken)
         case checkUsername(String)
-        case createUser(UserProperties)
         case userInfo
 
         public var path: String {
@@ -46,8 +45,6 @@ public class HumanVerifyAPI: APIClient {
                 return route + "/check"
             case .checkUsername(let username):
                 return route + "/available?Name=" + username.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!
-            case .createUser:
-                return route
             case .userInfo:
                 return route
             }
@@ -68,7 +65,7 @@ public class HumanVerifyAPI: APIClient {
 
         public var apiVersion: Int {
             switch self {
-            case .code, .check, .checkUsername, .createUser, .userInfo:
+            case .code, .check, .checkUsername, .userInfo:
                 return 3
             }
         }
@@ -77,7 +74,7 @@ public class HumanVerifyAPI: APIClient {
             switch self {
             case .checkUsername, .userInfo:
                 return .get
-            case  .code, .createUser:
+            case  .code:
                 return .post
             case .check:
                 return .put
@@ -108,24 +105,6 @@ public class HumanVerifyAPI: APIClient {
                     "TokenType": token.type.rawValue,
                     "Type": "1"
                 ]
-            case .createUser(let userProperties):
-                var params: [String: Any] = [
-                    "Email": userProperties.email,
-                    "Username": userProperties.username,
-                    "Type": "1",
-                    "Auth": [
-                        "Version": 4,
-                        "ModulusID": userProperties.modulusID,
-                        "Salt": userProperties.salt,
-                        "Verifier": userProperties.verifier
-                    ]
-                ]
-                if let token = userProperties.appleToken {
-                    params["Payload"] = [
-                        "higgs-boson": token.base64EncodedString()
-                    ]
-                }
-                return params
             default:
                 return [:]
             }
