@@ -700,7 +700,6 @@ final public class Key: NSObject {
         self.activation = activation
     }
 
-
     public var newSchema: Bool {
         return signature != nil
     }
@@ -755,19 +754,19 @@ extension Array where Element: Key {
         return NSKeyedArchiver.archivedData(withRootObject: self)
     }
 
-    var binPrivKeys: Data {
-//        var out = Data()
-//        var error: NSError?
-//        for key in self {
-//            if let privK = ArmorUnarmor(key.private_key, &error) {
-//                out.append(privK)
-//            }
-//        }
-//        return out
-        return Data()
-    }
+//    var binPrivKeys: Data {
+////        var out = Data()
+////        var error: NSError?
+////        for key in self {
+////            if let privK = ArmorUnarmor(key.private_key, &error) {
+////                out.append(privK)
+////            }
+////        }
+////        return out
+//        return Data()
+//    }
 
-    var newSchema: Bool {
+    public var newSchema: Bool {
         for key in self where key.newSchema {
             return true
         }
