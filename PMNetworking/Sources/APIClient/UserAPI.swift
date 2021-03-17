@@ -503,6 +503,16 @@ public final class UserInfo: NSObject {
         let addr = userAddresses.indexOfAddress(address_id) ?? userAddresses.defaultSendAddress()
         return addr?.keys.first
     }
+    
+    /// Get all keys that belong to the given address id
+    /// - Parameter address_id: Address id
+    /// - Returns: Keys of the given address id. nil means can't find the address
+    public func getAllAddressKey(address_id: String) -> [Key]? {
+        guard let addr = userAddresses.indexOfAddress(address_id) else {
+            return nil
+        }
+        return addr.keys
+    }
 }
 
 extension UserInfo {
@@ -690,7 +700,6 @@ final public class Key: NSObject {
         self.activation = activation
     }
 
-
     public var newSchema: Bool {
         return signature != nil
     }
@@ -745,19 +754,19 @@ extension Array where Element: Key {
         return NSKeyedArchiver.archivedData(withRootObject: self)
     }
 
-    var binPrivKeys: Data {
-//        var out = Data()
-//        var error: NSError?
-//        for key in self {
-//            if let privK = ArmorUnarmor(key.private_key, &error) {
-//                out.append(privK)
-//            }
-//        }
-//        return out
-        return Data()
-    }
+//    var binPrivKeys: Data {
+////        var out = Data()
+////        var error: NSError?
+////        for key in self {
+////            if let privK = ArmorUnarmor(key.private_key, &error) {
+////                out.append(privK)
+////            }
+////        }
+////        return out
+//        return Data()
+//    }
 
-    var newSchema: Bool {
+    public var newSchema: Bool {
         for key in self where key.newSchema {
             return true
         }
