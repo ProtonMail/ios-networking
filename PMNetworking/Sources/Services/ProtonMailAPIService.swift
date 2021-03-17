@@ -26,6 +26,11 @@ import Foundation
 // REMOVE the networking ref
 import AFNetworking
 
+#if canImport(TrustKit)
+import TrustKit
+#endif
+
+
 public class APIErrorCode {
     static public let responseOK = 1000
 
@@ -194,6 +199,12 @@ final class UserAgent {
 
 public let APIServiceErrorDomain = NSError.protonMailErrorDomain("APIService")
 
+extension APIService {
+    public func getSession() -> AFHTTPSessionManager? {
+        return nil
+    }
+}
+
 // Protonmail api serivce. all the network requestion must go with this.
 public class PMAPIService: APIService {
 
@@ -208,6 +219,9 @@ public class PMAPIService: APIService {
 
     ///
     public weak var serviceDelegate: APIServiceDelegate?
+    
+    static public var noTrustKit : Bool = false
+    static public var trustKit: TrustKit?
 
     /// synchronize locks
     private var mutex = pthread_mutex_t()
@@ -231,9 +245,14 @@ public class PMAPIService: APIService {
 
     /// api session manager
     private var sessionManager: AFHTTPSessionManager
-
+    
+    // get session
+    public func getSession() -> AFHTTPSessionManager? {
+        return sessionManager
+    }
+    
     /// refresh token failed count
-    private var refreshTokenFailedCount = 0
+    //public var refreshTokenFailedCount = 0
 
     private var isHumanVerifyUIPresented = false
 
@@ -255,6 +274,7 @@ public class PMAPIService: APIService {
             self.tokenExpired = false
         }
     }
+    
 
     //    var network : NetworkLayer
     //    var vpn : VPNInterface
@@ -272,8 +292,7 @@ public class PMAPIService: APIService {
         // init lock
         pthread_mutex_init(&mutex, nil)
         self.doh = doh
-        doh.status = .off // userCachedStatus.isDohOn ? .on : .off
-
+        
         // human verification lock
         pthread_mutex_init(&humanVerificationMutex, nil)
 
@@ -281,7 +300,6 @@ public class PMAPIService: APIService {
         // self.serverConfig = config
         self.sessionUID = sessionUID
 
-        //
         // clear all response cache
         URLCache.shared.removeAllCachedResponses()
 
@@ -298,13 +316,32 @@ public class PMAPIService: APIService {
         #if DEBUG
         sessionManager.securityPolicy.allowInvalidCertificates = true
         #endif
+        
+        
+        if PMAPIService.noTrustKit {
+            sessionManager.setSessionDidReceiveAuthenticationChallenge { _, challenge, credential -> URLSession.AuthChallengeDisposition in
+                var dispositionToReturn: URLSession.AuthChallengeDisposition = .performDefaultHandling
+                //Hard force to pass all connections -- this only for testing and with charles
+                let credentialOut = URLCredential(trust: challenge.protectionSpace.serverTrust!)
+                credential?.pointee = credentialOut
+                dispositionToReturn = .useCredential
 
-        sessionManager.setSessionDidReceiveAuthenticationChallenge { _, challenge, credential -> URLSession.AuthChallengeDisposition in
-            let dispositionToReturn: URLSession.AuthChallengeDisposition = .performDefaultHandling
-            if let dis = self.serviceDelegate?.onChallenge(challenge: challenge, credential: credential) {
-                return dis
+                return dispositionToReturn
             }
-            return dispositionToReturn
+        }
+        else {
+            sessionManager.setSessionDidReceiveAuthenticationChallenge { session, challenge, credential -> URLSession.AuthChallengeDisposition in
+                var dispositionToReturn: URLSession.AuthChallengeDisposition = .performDefaultHandling
+                if let validator = PMAPIService.trustKit?.pinningValidator {
+                    validator.handle(challenge, completionHandler: { (disposition, credentialOut) in
+                        credential?.pointee = credentialOut
+                        dispositionToReturn = disposition
+                    })
+                } else {
+                    assert(false, "TrustKit not initialized correctly")
+                }
+                return dispositionToReturn
+            }
         }
     }
 
@@ -561,7 +598,6 @@ public class PMAPIService: APIService {
                         }
                     }
                 }
-                // let url = self.doh.getHostUrl() + path
                 let url = self.doh.getHostUrl() + path
 
                 do {
@@ -589,7 +625,10 @@ public class PMAPIService: APIService {
                     }
 
                     // move to delegte
-                    let appversion = self.serviceDelegate?.appVersion ?? "iOS_\(Bundle.main.majorVersion)"
+                    var appversion = "iOS_\(Bundle.main.majorVersion)"
+                    if let delegateAppVersion = self.serviceDelegate?.appVersion, !delegateAppVersion.isEmpty {
+                        appversion = delegateAppVersion
+                    }
                     request.setValue("application/vnd.protonmail.v1+json", forHTTPHeaderField: "Accept")
                     request.setValue(appversion, forHTTPHeaderField: "x-pm-appversion")
 
@@ -597,10 +636,13 @@ public class PMAPIService: APIService {
                     // let clanguage = LanguageManager.currentLanguageEnum()
                     // request.setValue(clanguage.localeString, forHTTPHeaderField: "x-pm-locale")
 
-                    if let ua = self.serviceDelegate?.userAgent ?? UserAgent.default.ua {
-                        request.setValue(ua, forHTTPHeaderField: "User-Agent")
+                    // move to delegte
+                    var ua = UserAgent.default.ua
+                    if let delegateAgent = self.serviceDelegate?.userAgent, !delegateAgent.isEmpty {
+                        ua = delegateAgent
                     }
-
+                    request.setValue(ua, forHTTPHeaderField: "User-Agent")
+                    
                     var task: URLSessionDataTask?
                     task = self.sessionManager.dataTask(with: request as URLRequest, uploadProgress: { (_) in
                         // TODO::add later
@@ -657,15 +699,15 @@ public class PMAPIService: APIService {
         }
     }
 
-    func upload (byPath path: String,
-                 parameters: [String: String],
-                 keyPackets: Data,
-                 dataPacket: Data,
-                 signature: Data?,
-                 headers: [String: Any]?,
-                 authenticated: Bool = true,
-                 customAuthCredential: AuthCredential? = nil,
-                 completion: @escaping CompletionBlock) {
+    public func upload (byPath path: String,
+                        parameters: [String: String],
+                        keyPackets: Data,
+                        dataPacket: Data,
+                        signature: Data?,
+                        headers: [String: Any]?,
+                        authenticated: Bool = true,
+                        customAuthCredential: AuthCredential? = nil,
+                        completion: @escaping CompletionBlock) {
 
         let url = self.doh.getHostUrl() + path
         let authBlock: AuthTokenBlock = { token, userID, error in
@@ -753,7 +795,7 @@ public class PMAPIService: APIService {
         }
     }
 
-    internal func download(byUrl url: String,
+    public func download(byUrl url: String,
                            destinationDirectoryURL: URL,
                            headers: [String: Any]?,
                            authenticated: Bool = true,

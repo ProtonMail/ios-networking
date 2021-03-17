@@ -126,11 +126,30 @@ public enum Server: APIServerConfig {
 public typealias CompletionBlock = (_ task: URLSessionDataTask?, _ response: [String: Any]?, _ error: NSError?) -> Void
 
 public protocol API {
+    
     func request(method: HTTPMethod, path: String,
                  parameters: Any?, headers: [String: Any]?,
                  authenticated: Bool, autoRetry: Bool,
                  customAuthCredential: AuthCredential?,
                  completion: CompletionBlock?)
+    
+    
+    func download(byUrl url: String, destinationDirectoryURL: URL,
+                  headers: [String: Any]?,
+                  authenticated: Bool,
+                  customAuthCredential: AuthCredential?,
+                  downloadTask: ((URLSessionDownloadTask) -> Void)?,
+                  completion: @escaping ((URLResponse?, URL?, NSError?) -> Void))
+    
+    func upload (byPath path: String,
+                 parameters: [String: String],
+                 keyPackets: Data,
+                 dataPacket: Data,
+                 signature: Data?,
+                 headers: [String: Any]?,
+                 authenticated: Bool,
+                 customAuthCredential: AuthCredential?,
+                 completion: @escaping CompletionBlock)
 }
 
 /// this is auth UI related
@@ -204,7 +223,6 @@ public protocol APIService: API {
     // var vpn : VPNInterface {get}
     // var doh:  DoH  {get}//depends on NetworkLayer. {get}
     // var queue : [Request] {get}
-
     func setSessionUID(uid: String)
 
     var serviceDelegate: APIServiceDelegate? {get set}
@@ -462,4 +480,46 @@ public extension APIService {
     //
     //           // a lot of error handling here and will trigger delegates
     //       }
+    
+    
+    
+    
+//    func run(route: Request) -> Promise<T> {
+//        // 1 make a request , 2 wait for the respons async 3. valid response 4. parse data into response 5. some data need save into database.
+//        let deferred = Promise<T>.pending()
+//        let completionWrapper: CompletionBlock = { _, res, error in
+//            let realType = T.self
+//            let apiRes = realType.init()
+//
+//            if error != nil {
+//                apiRes.ParseHttpError(error!)
+//                deferred.resolver.reject(error!)
+//                return
+//            }
+//
+//            if res == nil {
+//                // TODO check res
+//                deferred.resolver.reject(NSError.badResponse())
+//                return
+//            }
+//
+//            var hasError = apiRes.ParseResponseError(res!)
+//            if !hasError {
+//                hasError = !apiRes.ParseResponse(res!)
+//            }
+//            if hasError {
+//                deferred.resolver.reject(apiRes.error!)
+//            } else {
+//                deferred.resolver.fulfill(apiRes)
+//            }
+//        }
+//
+//        // TODO:: missing auth
+//        self.request(method: self.method(), path: self.path(),
+//                     parameters: self.toDictionary(), headers: [HTTPHeader.apiVersion: self.apiVersion()],
+//                     authenticated: self.getIsAuthFunction(), autoRetry: self.authRetry(), customAuthCredential: self.authCredential, completion: completionWrapper)
+//
+//        return deferred.promise
+//
+//    }
 }

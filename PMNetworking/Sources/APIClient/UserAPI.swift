@@ -176,71 +176,84 @@ public final class GetUserInfoResponse: Response {
     }
 }
 
-struct ShowImages: OptionSet {
-    let rawValue: Int
+public struct ShowImages: OptionSet {
+    public init(rawValue: Int) {
+        self.rawValue = rawValue
+    }
+    
+    public let rawValue: Int
     // 0 for none, 1 for remote, 2 for embedded, 3 for remote and embedded (
-    static let none     = ShowImages([])
-    static let remote   = ShowImages(rawValue: 1 << 0) // auto load remote images
-    static let embedded = ShowImages(rawValue: 1 << 1) // auto load embedded images
+    
+    public static let none     = ShowImages([])
+    public static let remote   = ShowImages(rawValue: 1 << 0) // auto load remote images
+    public static let embedded = ShowImages(rawValue: 1 << 1) // auto load embedded images
 }
+
+public enum LinkOpeningMode: String {
+    case confirmationAlert, openAtWill
+}
+
 
 @objc(UserInfo)
 public final class UserInfo: NSObject {
 
     // 1.9.0 phone local cache
-    var language: String
+    public var language: String
 
     // 1.9.1 user object
-    var delinquent: Int
-    var role: Int
-    var maxSpace: Int64
-    var usedSpace: Int64
-    var maxUpload: Int64
+    public var delinquent: Int
+    public var role: Int
+    public var maxSpace: Int64
+    public var usedSpace: Int64
+    public var maxUpload: Int64
     public var userId: String
 
-    var userKeys: [Key] // user key
+    public var userKeys: [Key] // user key
 
     // 1.11.12 user object
-    var credit: Int
-    var currency: String
+    public var credit: Int
+    public var currency: String
 
     // 1.9.1 mail settings
-    var displayName: String = ""
-    var defaultSignature: String = ""
-    var autoSaveContact: Int = 0
-    var showImages: ShowImages = .none
-    var autoShowRemote: Bool {
+    public var displayName: String = ""
+    public var defaultSignature: String = ""
+    public var autoSaveContact: Int = 0
+    public var showImages: ShowImages = .none
+    public var autoShowRemote: Bool {
         return self.showImages.contains(.remote)
     }
-    var swipeLeft: Int = 3
-    var swipeRight: Int = 0
-    var attachPublicKey: Int = 0
-    var sign: Int = 0
+    public var swipeLeft: Int = 3
+    public var swipeRight: Int = 0
+    
+    public var linkConfirmation: LinkOpeningMode = .confirmationAlert
+    
+    public var attachPublicKey: Int = 0
+    public var sign: Int = 0
 
     // 1.9.1 user settings
-    var notificationEmail: String = ""
-    var notify: Int = 0
+    public var notificationEmail: String = ""
+    public var notify: Int = 0
 
     // 1.9.0 get from addresses route
-    var userAddresses: [Address] = [Address]()
+    public var userAddresses: [Address] = [Address]()
 
     // 1.12.0
-    var passwordMode: Int = 1
-    var twoFactor: Int = 0
+    public var passwordMode: Int = 1
+    public var twoFactor: Int = 0
 
-    static func getDefault() -> UserInfo {
+    public static func getDefault() -> UserInfo {
         return .init(maxSpace: 0, usedSpace: 0, language: "",
                      maxUpload: 0, role: 0, delinquent: 0,
                      keys: nil, userId: "", linkConfirmation: 0,
                      credit: 0, currency: "")
     }
 
-    var isPaid: Bool {
+    public var isPaid: Bool {
         return self.role > 0 ? true : false
     }
 
     // init from cache
-    required init(
+    public required init(
         displayName: String?, maxSpace: Int64?, notificationEmail: String?, signature: String?,
         usedSpace: Int64?, userAddresses: [Address]?,
         autoSC: Int?, language: String?, maxUpload: Int64?, notify: Int?, showImage: Int?,  // v1.0.8
@@ -291,7 +304,7 @@ public final class UserInfo: NSObject {
     }
 
     // init from api
-    required init(maxSpace: Int64?, usedSpace: Int64?,
+    public required init(maxSpace: Int64?, usedSpace: Int64?,
                   language: String?, maxUpload: Int64?,
                   role: Int?,
                   delinquent: Int?,
@@ -308,7 +321,7 @@ public final class UserInfo: NSObject {
         self.delinquent = delinquent ?? 0
         self.userId = userId ?? ""
         self.userKeys = keys ?? [Key]()
-//        self.linkConfirmation = linkConfirmation == 0 ? .openAtWill : .confirmationAlert
+        self.linkConfirmation = linkConfirmation == 0 ? .openAtWill : .confirmationAlert
         self.credit = credit ?? 0
         self.currency = currency ?? "USD"
     }
@@ -316,14 +329,14 @@ public final class UserInfo: NSObject {
     /// Update user addresses
     ///
     /// - Parameter addresses: new addresses
-    func set(addresses: [Address]) {
+    public func set(addresses: [Address]) {
         self.userAddresses = addresses
     }
 
     /// set User, copy the data from input user object
     ///
     /// - Parameter userinfo: New user info
-    func set(userinfo: UserInfo) {
+    public func set(userinfo: UserInfo) {
         self.maxSpace = userinfo.maxSpace
         self.usedSpace = userinfo.usedSpace
         self.language = userinfo.language
@@ -331,11 +344,11 @@ public final class UserInfo: NSObject {
         self.role = userinfo.role
         self.delinquent = userinfo.delinquent
         self.userId = userinfo.userId
-//        self.linkConfirmation = userinfo.linkConfirmation
+        self.linkConfirmation = userinfo.linkConfirmation
         self.userKeys = userinfo.userKeys
     }
 
-    func parse(userSettings: [String: Any]?) {
+    public func parse(userSettings: [String: Any]?) {
         if let settings = userSettings {
             if let email = settings["Email"] as? [String: Any] {
                 self.notificationEmail = email["Value"] as? String ?? ""
@@ -358,7 +371,7 @@ public final class UserInfo: NSObject {
         }
     }
 
-    func parse(mailSettings: [String: Any]?) {
+    public func parse(mailSettings: [String: Any]?) {
         if let settings = mailSettings {
             self.displayName = settings["DisplayName"] as? String ?? "'"
             self.defaultSignature = settings["Signature"] as? String ?? ""
@@ -366,21 +379,21 @@ public final class UserInfo: NSObject {
             self.showImages = ShowImages(rawValue: settings["ShowImages"] as? Int ?? 0)
             self.swipeLeft = settings["SwipeLeft"] as? Int ?? 3
             self.swipeRight = settings["SwipeRight"] as? Int ?? 0
-//            self.linkConfirmation = settings["ConfirmLink"] as? Int == 0 ? .openAtWill : .confirmationAlert
+            self.linkConfirmation = settings["ConfirmLink"] as? Int == 0 ? .openAtWill : .confirmationAlert
 
             self.attachPublicKey = settings["AttachPublicKey"] as? Int ?? 0
             self.sign = settings["Sign"] as? Int ?? 0
         }
     }
 
-    func firstUserKey() -> Key? {
+    public func firstUserKey() -> Key? {
         if self.userKeys.count > 0 {
             return self.userKeys[0]
         }
         return nil
     }
 
-    func getPrivateKey(by keyID: String?) -> String? {
+    public func getPrivateKey(by keyID: String?) -> String? {
         if let keyID = keyID {
             for userkey in self.userKeys where userkey.key_id == keyID {
                 return userkey.private_key
@@ -389,52 +402,73 @@ public final class UserInfo: NSObject {
         return firstUserKey()?.private_key
     }
 
-    var newSchema: Bool {
-//        for k in addressKeys {
-//            if k.newSchema {
-//                return true
-//            }
-//        }
-        return false
-    }
-
-    var addressPrivateKeys: Data {
-//        var out = Data()
-//        var error: NSError?
-//        for addr in userAddresses {
-//            for key in addr.keys {
-//                if let privK = ArmorUnarmor(key.private_key, &error) {
-//                    out.append(privK)
-//                }
-//            }
-//        }
-//        return out
-        return Data()
-    }
-
-    var firstUserPublicKey: String? {
-        if userKeys.count > 0 {
-            for k in userKeys {
-                return k.publicKey
+    public var newSchema: Bool {
+        for k in addressKeys {
+            if k.newSchema {
+                return true
             }
         }
-        return nil
+        return false
+    }
+    
+    
+    public var addressKeys : [Key] {
+        var out = [PMCommon.Key]()
+        for addr in userAddresses {
+            for key in addr.keys {
+                out.append(key)
+            }
+        }
+        return out
     }
 
-    func getAddressPrivKey(address_id: String) -> String {
+//    var addressPrivateKeys: Data {
+////        var out = Data()
+////        var error: NSError?
+////        for addr in userAddresses {
+////            for key in addr.keys {
+////                if let privK = ArmorUnarmor(key.private_key, &error) {
+////                    out.append(privK)
+////                }
+////            }
+////        }
+////        return out
+//        return Data()
+//    }
+
+//    var firstUserPublicKey: String? {
+//        if userKeys.count > 0 {
+//            for k in userKeys {
+//                return k.publicKey
+//            }
+//        }
+//        return nil
+//    }
+
+    public func getAddressPrivKey(address_id: String) -> String {
         let addr = userAddresses.indexOfAddress(address_id) ?? userAddresses.defaultSendAddress()
         return addr?.keys.first?.private_key ?? ""
     }
 
-    func getAddressKey(address_id: String) -> Key? {
+    public func getAddressKey(address_id: String) -> Key? {
         let addr = userAddresses.indexOfAddress(address_id) ?? userAddresses.defaultSendAddress()
         return addr?.keys.first
+    }
+    
+    /// Get all keys that belong to the given address id
+    /// - Parameter address_id: Address id
+    /// - Returns: Keys of the given address id. nil means can't find the address
+    public func getAllAddressKey(address_id: String) -> [Key]? {
+        guard let addr = userAddresses.indexOfAddress(address_id) else {
+            return nil
+        }
+        return addr.keys
     }
 }
 
 extension UserInfo {
     /// Initializes the UserInfo with the response data
-    convenience init(response: [String: Any]) {
+    public convenience init(response: [String: Any]) {
         var uKeys: [Key] = [Key]()
         if let user_keys = response["Keys"] as? [[String: Any]] {
             for key_res in user_keys {
@@ -508,11 +542,11 @@ extension UserInfo: NSCoding {
         static let twoFA = "2faStatus"
     }
 
-    func archive() -> Data {
+    public func archive() -> Data {
         return NSKeyedArchiver.archivedData(withRootObject: self)
     }
 
-    static func unarchive(_ data: Data?) -> UserInfo? {
+    static public func unarchive(_ data: Data?) -> UserInfo? {
         guard let data = data else { return nil }
         return NSKeyedUnarchiver.unarchiveObject(with: data) as? UserInfo
     }
@@ -580,7 +614,7 @@ extension UserInfo: NSCoding {
         aCoder.encode(sign, forKey: CoderKey.sign)
         aCoder.encode(attachPublicKey, forKey: CoderKey.attachPublicKey)
 
-//        aCoder.encode(linkConfirmation.rawValue, forKey: CoderKey.linkConfirmation)
+        aCoder.encode(linkConfirmation.rawValue, forKey: CoderKey.linkConfirmation)
 
         aCoder.encode(credit, forKey: CoderKey.credit)
         aCoder.encode(currency, forKey: CoderKey.currency)
@@ -591,20 +625,20 @@ extension UserInfo: NSCoding {
 }
 
 @objc(Key)
-final class Key: NSObject {
-    let key_id: String
-    var private_key: String
-    var is_updated: Bool = false
-    var keyflags: Int = 0
+final public class Key: NSObject {
+    public let key_id: String
+    public var private_key: String
+    public var is_updated: Bool = false
+    public var keyflags: Int = 0
 
     // key migration step 1 08/01/2019
-    var token: String?
-    var signature: String?
+    public var token: String?
+    public var signature: String?
 
     // old activetion flow
-    var activation: String? // armed pgp msg, token encrypted by user's public key and
+    public var activation: String? // armed pgp msg, token encrypted by user's public key and
 
-    required init(key_id: String?, private_key: String?,
+    public required init(key_id: String?, private_key: String?,
                   token: String?, signature: String?, activation: String?,
                   isupdated: Bool) {
         self.key_id = key_id ?? ""
@@ -617,25 +651,7 @@ final class Key: NSObject {
         self.activation = activation
     }
 
-    var publicKey: String {
-        return ""
-//        return self.private_key.publicKey
-    }
-
-    var fingerprint: String {
-        return ""
-//        return self.private_key.fingerprint
-    }
-//
-    var shortFingerpritn: String {
-        let fignerprint = self.fingerprint
-        if fignerprint.count > 8 {
-            return String(fignerprint.prefix(8))
-        }
-        return fignerprint
-    }
-
-    var newSchema: Bool {
+    public var newSchema: Bool {
         return signature != nil
     }
 }
@@ -658,7 +674,7 @@ extension Key: NSCoding {
         return NSKeyedUnarchiver.unarchiveObject(with: data) as? [Key]
     }
 
-    convenience init(coder aDecoder: NSCoder) {
+    public convenience init(coder aDecoder: NSCoder) {
         self.init(
             key_id: aDecoder.decodeStringForKey(CoderKey.keyID),
             private_key: aDecoder.decodeStringForKey(CoderKey.privateKey),
@@ -668,7 +684,7 @@ extension Key: NSCoding {
             isupdated: false)
     }
 
-    func encode(with aCoder: NSCoder) {
+    public func encode(with aCoder: NSCoder) {
         aCoder.encode(key_id, forKey: CoderKey.keyID)
         aCoder.encode(private_key, forKey: CoderKey.privateKey)
 
@@ -689,19 +705,19 @@ extension Array where Element: Key {
         return NSKeyedArchiver.archivedData(withRootObject: self)
     }
 
-    var binPrivKeys: Data {
-//        var out = Data()
-//        var error: NSError?
-//        for key in self {
-//            if let privK = ArmorUnarmor(key.private_key, &error) {
-//                out.append(privK)
-//            }
-//        }
-//        return out
-        return Data()
-    }
+//    var binPrivKeys: Data {
+////        var out = Data()
+////        var error: NSError?
+////        for key in self {
+////            if let privK = ArmorUnarmor(key.private_key, &error) {
+////                out.append(privK)
+////            }
+////        }
+////        return out
+//        return Data()
+//    }
 
-    var newSchema: Bool {
+    public var newSchema: Bool {
         for key in self where key.newSchema {
             return true
         }
@@ -711,20 +727,20 @@ extension Array where Element: Key {
 }
 
 @objc(Address)
-final class Address: NSObject {
-    let address_id: String
-    let email: String   // email address name
-    let status: Int    // 0 is disabled, 1 is enabled, can be set by user
-    let type: Int      // 1 is original PM, 2 is PM alias, 3 is custom domain address
-    let receive: Int    // 1 is active address (Status =1 and has key), 0 is inactive (cannot send or receive)
-    var order: Int      // address order
+final public class Address: NSObject {
+    public let address_id: String
+    public let email: String   // email address name
+    public let status: Int    // 0 is disabled, 1 is enabled, can be set by user
+    public let type: Int      // 1 is original PM, 2 is PM alias, 3 is custom domain address
+    public let receive: Int    // 1 is active address (Status =1 and has key), 0 is inactive (cannot send or receive)
+    public var order: Int      // address order
     // 0 means you can’t send with it 1 means you can pm.me addresses have Send 0 for free users, for instance so do addresses without keys
-    var send: Int
-    let keys: [Key]
-    var display_name: String
-    var signature: String
+    public var send: Int
+    public let keys: [Key]
+    public var display_name: String
+    public var signature: String
 
-    required init(addressid: String?,
+    public required init(addressid: String?,
                   email: String?,
                   order: Int?,
                   receive: Int?,
@@ -752,11 +768,11 @@ final class Address: NSObject {
 
 // MARK: - TODO:: we'd better move to Codable or at least NSSecureCoding when will happen to refactor this part of app from Anatoly
 extension Address: NSCoding {
-    func archive() -> Data {
+    public func archive() -> Data {
         return NSKeyedArchiver.archivedData(withRootObject: self)
     }
 
-    static func unarchive(_ data: Data?) -> Address? {
+    static public func unarchive(_ data: Data?) -> Address? {
         guard let data = data else { return nil }
         return NSKeyedUnarchiver.unarchiveObject(with: data) as? Address
     }
@@ -777,7 +793,7 @@ extension Address: NSCoding {
         static let addressSend   = "addressSendStatus"
     }
 
-    convenience init(coder aDecoder: NSCoder) {
+    public convenience init(coder aDecoder: NSCoder) {
         self.init(
             addressid: aDecoder.decodeStringForKey(CoderKey.addressID),
             email: aDecoder.decodeStringForKey(CoderKey.email),
@@ -793,7 +809,7 @@ extension Address: NSCoding {
         )
     }
 
-    func encode(with aCoder: NSCoder) {
+    public func encode(with aCoder: NSCoder) {
         aCoder.encode(address_id, forKey: CoderKey.addressID)
         aCoder.encode(email, forKey: CoderKey.email)
         aCoder.encode(order, forKey: CoderKey.order)
@@ -810,7 +826,7 @@ extension Address: NSCoding {
 }
 
 extension Array where Element: Address {
-    func defaultAddress() -> Address? {
+    public func defaultAddress() -> Address? {
         for addr in self {
             if addr.status == 1 && addr.receive == 1 {
                 return addr
@@ -819,7 +835,7 @@ extension Array where Element: Address {
         return nil
     }
 
-    func defaultSendAddress() -> Address? {
+    public func defaultSendAddress() -> Address? {
         for addr in self {
             if addr.status == 1 && addr.receive == 1 && addr.send == 1 {
                 return addr
@@ -828,7 +844,7 @@ extension Array where Element: Address {
         return nil
     }
 
-    func indexOfAddress(_ addressid: String) -> Address? {
+    public func indexOfAddress(_ addressid: String) -> Address? {
         for addr in self {
             if addr.status == 1 && addr.receive == 1 && addr.address_id == addressid {
                 return addr
@@ -837,7 +853,7 @@ extension Array where Element: Address {
         return nil
     }
 
-    func getAddressOrder() -> [String] {
+    public func getAddressOrder() -> [String] {
         let ids = self.map { $0.address_id }
         return ids
     }
@@ -847,7 +863,7 @@ extension Array where Element: Address {
         return ids
     }
 
-    func toKeys() -> [Key] {
+    public func toKeys() -> [Key] {
         var out_array = [Key]()
         for i in 0 ..< self.count {
             let addr = self[i]

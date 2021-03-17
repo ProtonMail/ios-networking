@@ -51,7 +51,7 @@ final public class AuthCredential: NSObject, NSCoding {
         static let userName      = "AuthCredential.UserName"
     }
 
-//    static var none: AuthCredential = AuthCredential.init(res: AuthResponse() )
+    public static var none: AuthCredential = AuthCredential.init(res: AuthResponse() )
 
     // user session id, this change in every login
     public var sessionID: String
@@ -63,9 +63,9 @@ final public class AuthCredential: NSObject, NSCoding {
     public var expiration: Date
 
     // the login private key, ususally it is first userkey
-    private(set) var privateKey: String?
-    private(set) var passwordKeySalt: String?
-    private(set) var mailboxpassword: String = ""
+    public var privateKey: String?
+    public var passwordKeySalt: String?
+    public var mailboxpassword: String = ""
 
     public override var description: String {
         return """

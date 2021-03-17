@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'PMCommon'
-  s.version          = '1.1.2'
+  s.version          = '1.2.0'
   s.summary          = 'A short description of PMNetworking.'
 
 # This description is used to generate tags and improve search results.
@@ -59,6 +59,7 @@ TODO: Add long description of the pod here.
   
   s.subspec 'Services' do |services|
     services.dependency 'PMCommon/APIClient'
+    services.dependency 'TrustKit'
     services.source_files = 'PMNetworking/Sources/Services/**/*'
   end
   
@@ -83,5 +84,6 @@ TODO: Add long description of the pod here.
   s.test_spec 'Tests' do |test_spec|
     test_spec.source_files = 'PMNetworking/Tests/**/*'
     test_spec.dependency 'OHHTTPStubs/Swift' # This dependency will only be linked with your tests.
+    test_spec.dependency 'TrustKit'
   end
 end

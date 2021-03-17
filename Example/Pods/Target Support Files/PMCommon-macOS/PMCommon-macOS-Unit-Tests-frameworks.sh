@@ -179,6 +179,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/AFNetworking-c94d3492/AFNetworking.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/PromiseKit.root-CorePromise-Foundation/PromiseKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/AwaitKit-macOS/AwaitKit.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/TrustKit-macOS/TrustKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/OHHTTPStubs-macOS/OHHTTPStubs.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
@@ -186,6 +187,7 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/AFNetworking-c94d3492/AFNetworking.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/PromiseKit.root-CorePromise-Foundation/PromiseKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/AwaitKit-macOS/AwaitKit.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/TrustKit-macOS/TrustKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/OHHTTPStubs-macOS/OHHTTPStubs.framework"
 fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then
