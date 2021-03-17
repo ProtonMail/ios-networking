@@ -54,7 +54,7 @@ public protocol ServerConfig {
     /// api host, the Doh query host  -- if you don't want to use doh, set this value to empty or set enableDoh = faluse
     var apiHost: String { get }
     
-    /// enable doh or not. if set to false will ignore apiHost value only use default host  -- if you don't want to use doh, set this value to faluse or set  or apiHost to empty
+    /// enable doh or not default is True. if set to false will ignore apiHost value only use default host  -- if you don't want to use doh, set this value to faluse or set  or apiHost to empty
     var enableDoh : Bool { get }
     
     /// default host -- protonmail server url
