@@ -22,7 +22,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonMail.  If not, see <https://www.gnu.org/licenses/>.
 
-// swiftlint:disable identifier_name todo function_parameter_count
+// swiftlint:disable todo
 
 import Foundation
 
@@ -30,7 +30,6 @@ import Foundation
 
 import PromiseKit
 import AwaitKit
-
 
 public extension APIService {
 //    // init
@@ -245,26 +244,26 @@ public extension APIService {
 //                     customAuthCredential: route.authCredential,
 //                     completion: completionWrapper)
 //    }
-    
+
     func run<T>(route: Request) -> Promise<T> where T: Response {
         // 1 make a request , 2 wait for the respons async 3. valid response 4. parse data into response 5. some data need save into database.
         let deferred = Promise<T>.pending()
         let completionWrapper: CompletionBlock = { _, res, error in
             let realType = T.self
             let apiRes = realType.init()
-            
+
             if error != nil {
                 apiRes.ParseHttpError(error!)
                 deferred.resolver.reject(error!)
                 return
             }
-            
+
             if res == nil {
                 // TODO check res
                 deferred.resolver.reject(NSError.badResponse())
                 return
             }
-            
+
             var hasError = apiRes.ParseResponseError(res!)
             if !hasError {
                 hasError = !apiRes.ParseResponse(res!)
@@ -275,7 +274,7 @@ public extension APIService {
                 deferred.resolver.fulfill(apiRes)
             }
         }
-        
+
         var header = route.header
         header[HTTPHeader.apiVersion] = route.version
         self.request(method: route.method,
@@ -286,10 +285,9 @@ public extension APIService {
                      autoRetry: route.autoRetry,
                      customAuthCredential: route.authCredential,
                      completion: completionWrapper)
-        
+
         return deferred.promise
     }
 }
-
 
 #endif
