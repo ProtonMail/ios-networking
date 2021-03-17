@@ -32,24 +32,26 @@ PODS:
   - PMAuthentication (1.3.2):
     - PMCommon (>= 1.1.2)
     - PMCrypto
-  - PMCommon (1.1.2):
-    - PMCommon/Default (= 1.1.2)
-  - PMCommon/APIClient (1.1.2):
+  - PMCommon (1.2.0):
+    - PMCommon/Default (= 1.2.0)
+  - PMCommon/APIClient (1.2.0):
     - PMCommon/Networking
-  - PMCommon/Default (1.1.2):
+  - PMCommon/Default (1.2.0):
     - PMCommon/APIClient
     - PMCommon/Networking
     - PMCommon/Services
     - PMCommon/SRP
-  - PMCommon/Networking (1.1.2):
+  - PMCommon/Networking (1.2.0):
     - AFNetworking (~> 4.0)
     - AwaitKit (~> 5.0.0)
     - PromiseKit (~> 6.0)
-  - PMCommon/Services (1.1.2):
+  - PMCommon/Services (1.2.0):
     - PMCommon/APIClient
-  - PMCommon/SRP (1.1.2)
-  - PMCommon/Tests (1.1.2):
+    - TrustKit
+  - PMCommon/SRP (1.2.0)
+  - PMCommon/Tests (1.2.0):
     - OHHTTPStubs/Swift
+    - TrustKit
   - PMCoreTranslation (1.0.0)
   - PMCrypto (2.1.3)
   - PMForceUpgrade (1.0.0):
@@ -156,7 +158,7 @@ SPEC CHECKSUMS:
   AwaitKit: a6d0b0b6d603cedda8ef1c1c249b8d6730359917
   OHHTTPStubs: 90eac6d8f2c18317baeca36698523dc67c513831
   PMAuthentication: 4e1a422232304311f34a7651a5b348a7782c99bf
-  PMCommon: 293fabb461efffdcaa8f99d68f195484abfdaa53
+  PMCommon: f816f55710a806755ba44149436f9b15313598f4
   PMCoreTranslation: 221df023e0a50c73bdadd07ce8917e053f69a859
   PMCrypto: d5b645c61f6247125000838efe4419ec47915f14
   PMForceUpgrade: f494aa7192a45e642ef190a1c8d58ab746eaa515
