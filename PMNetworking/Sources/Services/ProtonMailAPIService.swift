@@ -317,7 +317,6 @@ public class PMAPIService: APIService {
         sessionManager.securityPolicy.allowInvalidCertificates = true
         #endif
         
-        
         if PMAPIService.noTrustKit {
             sessionManager.setSessionDidReceiveAuthenticationChallenge { _, challenge, credential -> URLSession.AuthChallengeDisposition in
                 var dispositionToReturn: URLSession.AuthChallengeDisposition = .performDefaultHandling
@@ -328,8 +327,7 @@ public class PMAPIService: APIService {
 
                 return dispositionToReturn
             }
-        }
-        else {
+        } else {
             sessionManager.setSessionDidReceiveAuthenticationChallenge { session, challenge, credential -> URLSession.AuthChallengeDisposition in
                 var dispositionToReturn: URLSession.AuthChallengeDisposition = .performDefaultHandling
                 if let validator = PMAPIService.trustKit?.pinningValidator {

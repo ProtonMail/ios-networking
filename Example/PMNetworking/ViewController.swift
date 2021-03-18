@@ -282,25 +282,8 @@ extension MainViewController : APIServiceDelegate {
         return true
     }
     
-    
     var appVersion: String {
         return "iOS_\(Bundle.main.majorVersion)"
-    }
-    
-    func onChallenge(challenge: URLAuthenticationChallenge,
-                     credential: AutoreleasingUnsafeMutablePointer<URLCredential?>?) -> URLSession.AuthChallengeDisposition {
-        
-        var dispositionToReturn: URLSession.AuthChallengeDisposition = .performDefaultHandling
-        if let validator = TrustKitWrapper.current?.pinningValidator {
-            validator.handle(challenge, completionHandler: { (disposition, credentialOut) in
-                credential?.pointee = credentialOut
-                dispositionToReturn = disposition
-            })
-        } else {
-            assert(false, "TrustKit not initialized correctly")
-        }
-        
-        return dispositionToReturn
     }
     
     func onUpdate(serverTime: Int64) {
