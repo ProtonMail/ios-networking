@@ -165,9 +165,6 @@ public protocol APIServiceDelegate: class {
     var userAgent: String? { get }
 
     func onDohTroubleshot()
-
-    func onChallenge(challenge: URLAuthenticationChallenge,
-                     credential: AutoreleasingUnsafeMutablePointer<URLCredential?>?) -> URLSession.AuthChallengeDisposition
 }
 
 public protocol HumanVerifyDelegate: class {
