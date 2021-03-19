@@ -63,7 +63,7 @@ public final class PMActionSheetHeaderView: UIView {
 // MARK: UI Relative
 extension PMActionSheetHeaderView {
     private func setup(hasSeparator: Bool=false) {
-        guard let _ = self.title else {return}
+        guard self.title != nil else {return}
         self.backgroundColor = BackgroundColors._Main
         let titleView = self.createTitleView()
         self.setupTitlViewConstraint(titleView)

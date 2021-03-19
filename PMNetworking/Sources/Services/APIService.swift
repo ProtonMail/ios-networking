@@ -126,21 +126,20 @@ public enum Server: APIServerConfig {
 public typealias CompletionBlock = (_ task: URLSessionDataTask?, _ response: [String: Any]?, _ error: NSError?) -> Void
 
 public protocol API {
-    
+
     func request(method: HTTPMethod, path: String,
                  parameters: Any?, headers: [String: Any]?,
                  authenticated: Bool, autoRetry: Bool,
                  customAuthCredential: AuthCredential?,
                  completion: CompletionBlock?)
-    
-    
+
     func download(byUrl url: String, destinationDirectoryURL: URL,
                   headers: [String: Any]?,
                   authenticated: Bool,
                   customAuthCredential: AuthCredential?,
                   downloadTask: ((URLSessionDownloadTask) -> Void)?,
                   completion: @escaping ((URLResponse?, URL?, NSError?) -> Void))
-    
+
     func upload (byPath path: String,
                  parameters: [String: String],
                  keyPackets: Data,
@@ -477,10 +476,7 @@ public extension APIService {
     //
     //           // a lot of error handling here and will trigger delegates
     //       }
-    
-    
-    
-    
+
 //    func run(route: Request) -> Promise<T> {
 //        // 1 make a request , 2 wait for the respons async 3. valid response 4. parse data into response 5. some data need save into database.
 //        let deferred = Promise<T>.pending()

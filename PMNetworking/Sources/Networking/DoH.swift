@@ -47,25 +47,24 @@ public enum DoHStatus {
     case auto // mix don't know yet
 }
 
-
 /// server configuation
 public protocol ServerConfig {
-    
+
     /// api host, the Doh query host  -- if you don't want to use doh, set this value to empty or set enableDoh = faluse
     var apiHost: String { get }
-    
+
     /// enable doh or not default is True. if set to false will ignore apiHost value only use default host  -- if you don't want to use doh, set this value to faluse or set  or apiHost to empty
-    var enableDoh : Bool { get }
-    
+    var enableDoh: Bool { get }
+
     /// default host -- protonmail server url
     var defaultHost: String { get }
-    
+
     /// default host path -- server url path for example: /api
     var defaultPath: String { get }
-    
+
     /// captcha response host
     var captchaHost: String { get }
-    
+
     // default signup domain for this server url
     var signupDomain: String { get }
 
@@ -86,8 +85,8 @@ public extension ServerConfig {
     var blockList: [String: Int] {
         return [String: Int]()
     }
-    
-    var enableDoh : Bool {
+
+    var enableDoh: Bool {
         return true
     }
 }
@@ -118,15 +117,15 @@ open class DoH: DoHInterface {
         }
         let config = self as! ServerConfig
         let defaultUrl = config.defaultHost + config.defaultPath
-        
+
         guard config.enableDoh else {
             return defaultUrl
         }
-        
+
         guard !config.apiHost.isEmpty else {
             return defaultUrl
         }
-        
+
         switch status {
         case .on, .auto:
             if let found = self.cache(get: config.apiHost) {

@@ -397,9 +397,9 @@ extension PMBanner {
         }
         UIView.animate(withDuration: self.ANIMATE_DURATION, animations: {
             self.superview?.layoutIfNeeded()
-        }) { (_) in
+        }, completion: { (_) in
             self.removeFromSuperview()
-        }
+        })
     }
 
     private func handlePanGesChanged(ges: UIPanGestureRecognizer) {

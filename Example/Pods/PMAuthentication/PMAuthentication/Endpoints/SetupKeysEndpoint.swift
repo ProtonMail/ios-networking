@@ -15,9 +15,8 @@ extension AuthService {
     }
 
     struct SetupKeysEndpoint: Request {
-        let addressID: String
+        let addresses: [[String: Any]]
         let privateKey: String
-        let signedKeyList: [String: Any]
         let keySalt: String //base64 encoded need random value
         let passwordAuth: PasswordAuth
 
@@ -38,16 +37,10 @@ extension AuthService {
         }
 
         var parameters: [String: Any]? {
-            let address: [String: Any] = [
-                "AddressID": self.addressID,
-                "PrivateKey": self.privateKey,
-                "SignedKeyList": self.signedKeyList
-            ]
-
             let out: [String: Any] = [
                 "KeySalt": keySalt,
                 "PrimaryKey": privateKey,
-                "AddressKeys": [address],
+                "AddressKeys": addresses,
                 "Auth": passwordAuth.toDictionary()!
             ]
 

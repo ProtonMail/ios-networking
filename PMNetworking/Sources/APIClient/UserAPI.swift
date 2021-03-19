@@ -180,10 +180,10 @@ public struct ShowImages: OptionSet {
     public init(rawValue: Int) {
         self.rawValue = rawValue
     }
-    
+
     public let rawValue: Int
     // 0 for none, 1 for remote, 2 for embedded, 3 for remote and embedded (
-    
+
     public static let none     = ShowImages([])
     public static let remote   = ShowImages(rawValue: 1 << 0) // auto load remote images
     public static let embedded = ShowImages(rawValue: 1 << 1) // auto load embedded images
@@ -192,7 +192,6 @@ public struct ShowImages: OptionSet {
 public enum LinkOpeningMode: String {
     case confirmationAlert, openAtWill
 }
-
 
 @objc(UserInfo)
 public final class UserInfo: NSObject {
@@ -224,9 +223,9 @@ public final class UserInfo: NSObject {
     }
     public var swipeLeft: Int = 3
     public var swipeRight: Int = 0
-    
+
     public var linkConfirmation: LinkOpeningMode = .confirmationAlert
-    
+
     public var attachPublicKey: Int = 0
     public var sign: Int = 0
 
@@ -305,14 +304,14 @@ public final class UserInfo: NSObject {
 
     // init from api
     public required init(maxSpace: Int64?, usedSpace: Int64?,
-                  language: String?, maxUpload: Int64?,
-                  role: Int?,
-                  delinquent: Int?,
-                  keys: [Key]?,
-                  userId: String?,
-                  linkConfirmation: Int?,
-                  credit: Int?,
-                  currency: String?) {
+                         language: String?, maxUpload: Int64?,
+                         role: Int?,
+                         delinquent: Int?,
+                         keys: [Key]?,
+                         userId: String?,
+                         linkConfirmation: Int?,
+                         credit: Int?,
+                         currency: String?) {
         self.maxSpace = maxSpace ?? 0
         self.usedSpace = usedSpace ?? 0
         self.language = language ?? "en_US"
@@ -403,16 +402,13 @@ public final class UserInfo: NSObject {
     }
 
     public var newSchema: Bool {
-        for k in addressKeys {
-            if k.newSchema {
-                return true
-            }
+        for key in addressKeys where key.newSchema {
+            return true
         }
         return false
     }
-    
-    
-    public var addressKeys : [Key] {
+
+    public var addressKeys: [Key] {
         var out = [PMCommon.Key]()
         for addr in userAddresses {
             for key in addr.keys {
@@ -454,7 +450,7 @@ public final class UserInfo: NSObject {
         let addr = userAddresses.indexOfAddress(address_id) ?? userAddresses.defaultSendAddress()
         return addr?.keys.first
     }
-    
+
     /// Get all keys that belong to the given address id
     /// - Parameter address_id: Address id
     /// - Returns: Keys of the given address id. nil means can't find the address
@@ -639,8 +635,8 @@ final public class Key: NSObject {
     public var activation: String? // armed pgp msg, token encrypted by user's public key and
 
     public required init(key_id: String?, private_key: String?,
-                  token: String?, signature: String?, activation: String?,
-                  isupdated: Bool) {
+                         token: String?, signature: String?, activation: String?,
+                         isupdated: Bool) {
         self.key_id = key_id ?? ""
         self.private_key = private_key ?? ""
         self.is_updated = isupdated
@@ -741,15 +737,15 @@ final public class Address: NSObject {
     public var signature: String
 
     public required init(addressid: String?,
-                  email: String?,
-                  order: Int?,
-                  receive: Int?,
-                  display_name: String?,
-                  signature: String?,
-                  keys: [Key]?,
-                  status: Int?,
-                  type: Int?,
-                  send: Int?) {
+                         email: String?,
+                         order: Int?,
+                         receive: Int?,
+                         display_name: String?,
+                         signature: String?,
+                         keys: [Key]?,
+                         status: Int?,
+                         type: Int?,
+                         send: Int?) {
         self.address_id = addressid ?? ""
         self.email = email ?? ""
         self.receive = receive ?? 0

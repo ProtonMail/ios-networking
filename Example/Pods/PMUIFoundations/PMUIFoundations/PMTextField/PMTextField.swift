@@ -178,6 +178,11 @@ public class PMTextField: UIView {
     }
 
     /**
+     Clears error when textField gets focus
+     */
+    @IBInspectable public var clearErrorWhenBeginEditing: Bool = true
+
+    /**
      The keyboard style associated with the text object.
 
      Text objects can be targeted for specific types of input, such as plain text, email, numeric entry, and so on. The keyboard style identifies what keys are available on the keyboard and which ones appear by default. The default value for this property is `UIKeyboardType.default`.
@@ -312,6 +317,9 @@ extension PMTextField: UITextFieldDelegate {
     }
 
     public func textFieldDidBeginEditing(_ textField: UITextField) {
+        if clearErrorWhenBeginEditing {
+            isError = false
+        }
         self.textField.setBorder()
     }
 

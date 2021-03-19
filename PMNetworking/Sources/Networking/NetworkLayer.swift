@@ -23,7 +23,7 @@
 //  along with ProtonMail.  If not, see <https://www.gnu.org/licenses/>.
 
 //////////
-/////predefind input funcs for callbacks, for example
+///// predefind input funcs for callbacks, for example
 // typealias CallBackBlocks = (() -> Void)
 protocol NetworkLayer {
     // generci interfaces to support Http requests

@@ -30,7 +30,6 @@ import AFNetworking
 import TrustKit
 #endif
 
-
 public class APIErrorCode {
     static public let responseOK = 1000
 
@@ -219,8 +218,8 @@ public class PMAPIService: APIService {
 
     ///
     public weak var serviceDelegate: APIServiceDelegate?
-    
-    static public var noTrustKit : Bool = false
+
+    static public var noTrustKit: Bool = false
     static public var trustKit: TrustKit?
 
     /// synchronize locks
@@ -245,14 +244,14 @@ public class PMAPIService: APIService {
 
     /// api session manager
     private var sessionManager: AFHTTPSessionManager
-    
+
     // get session
     public func getSession() -> AFHTTPSessionManager? {
         return sessionManager
     }
-    
+
     /// refresh token failed count
-    //public var refreshTokenFailedCount = 0
+    // public var refreshTokenFailedCount = 0
 
     private var isHumanVerifyUIPresented = false
 
@@ -274,7 +273,6 @@ public class PMAPIService: APIService {
             self.tokenExpired = false
         }
     }
-    
 
     //    var network : NetworkLayer
     //    var vpn : VPNInterface
@@ -292,7 +290,7 @@ public class PMAPIService: APIService {
         // init lock
         pthread_mutex_init(&mutex, nil)
         self.doh = doh
-        
+
         // human verification lock
         pthread_mutex_init(&humanVerificationMutex, nil)
 
@@ -316,11 +314,11 @@ public class PMAPIService: APIService {
         #if DEBUG
         sessionManager.securityPolicy.allowInvalidCertificates = true
         #endif
-        
+
         if PMAPIService.noTrustKit {
             sessionManager.setSessionDidReceiveAuthenticationChallenge { _, challenge, credential -> URLSession.AuthChallengeDisposition in
                 var dispositionToReturn: URLSession.AuthChallengeDisposition = .performDefaultHandling
-                //Hard force to pass all connections -- this only for testing and with charles
+                // Hard force to pass all connections -- this only for testing and with charles
                 let credentialOut = URLCredential(trust: challenge.protectionSpace.serverTrust!)
                 credential?.pointee = credentialOut
                 dispositionToReturn = .useCredential
@@ -328,7 +326,7 @@ public class PMAPIService: APIService {
                 return dispositionToReturn
             }
         } else {
-            sessionManager.setSessionDidReceiveAuthenticationChallenge { session, challenge, credential -> URLSession.AuthChallengeDisposition in
+            sessionManager.setSessionDidReceiveAuthenticationChallenge { _, challenge, credential -> URLSession.AuthChallengeDisposition in
                 var dispositionToReturn: URLSession.AuthChallengeDisposition = .performDefaultHandling
                 if let validator = PMAPIService.trustKit?.pinningValidator {
                     validator.handle(challenge, completionHandler: { (disposition, credentialOut) in
@@ -640,7 +638,7 @@ public class PMAPIService: APIService {
                         ua = delegateAgent
                     }
                     request.setValue(ua, forHTTPHeaderField: "User-Agent")
-                    
+
                     var task: URLSessionDataTask?
                     task = self.sessionManager.dataTask(with: request as URLRequest, uploadProgress: { (_) in
                         // TODO::add later
@@ -794,12 +792,12 @@ public class PMAPIService: APIService {
     }
 
     public func download(byUrl url: String,
-                           destinationDirectoryURL: URL,
-                           headers: [String: Any]?,
-                           authenticated: Bool = true,
-                           customAuthCredential: AuthCredential? = nil,
-                           downloadTask: ((URLSessionDownloadTask) -> Void)?,
-                           completion: @escaping ((URLResponse?, URL?, NSError?) -> Void)) {
+                         destinationDirectoryURL: URL,
+                         headers: [String: Any]?,
+                         authenticated: Bool = true,
+                         customAuthCredential: AuthCredential? = nil,
+                         downloadTask: ((URLSessionDownloadTask) -> Void)?,
+                         completion: @escaping ((URLResponse?, URL?, NSError?) -> Void)) {
         let authBlock: AuthTokenBlock = { token, userID, error in
             if let error = error {
                 self.debugError(error)
