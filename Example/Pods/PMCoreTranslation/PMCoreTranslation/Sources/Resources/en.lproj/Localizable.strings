@@ -99,7 +99,7 @@
  */
 
 "Create ProtonMail address" = "Create ProtonMail address";
-"Your Proton Account is associated with %@. To use ProtonMail, please create an address." = "Your Proton Account is associated with %@. To use ProtonMail, please create an address.";
+"Your Proton Account is associated with %@. To use %@, please create an address." = "Your Proton Account is associated with %@. To use %@, please create an address.";
 "Username" = "Username";
 "Next" = "Next";
 "Please enter a username." = "Please enter a username.";
@@ -143,7 +143,7 @@
 "Error occured" = "Error occured";
 "OK" = "OK";
 "Warning" = "Warning";
-"Do you want to activate the purchased service plan for " = "Do you want to activate the purchased service plan for ";
+"Do you want to activate the purchase for %@ address?" = "Do you want to activate the purchase for %@ address?";
 "Yes, activate it for " = "Yes, activate it for ";
 "No, for another ProtonMail account" = "No, for another ProtonMail account";
 "payment failed" = "payment failed";
@@ -152,11 +152,12 @@
 "Contact customer support" = "Contact customer support";
 "Unknown error" = "Unknown error";
 "Failed to get list of available products from AppStore." = "Failed to get list of available products from AppStore.";
+"Purchase is not possible." = "Purchase is not possible.";
 "Apple informed us you've upgraded the service plan, but some technical data was missing. Please fill in the bug report and our customer support team will contact you." = "Apple informed us you've upgraded the service plan, but some technical data was missing. Please fill in the bug report and our customer support team will contact you.";
 "Apple informed us you've upgraded the service plan, but we detected you have logged out of the account since then." = "Apple informed us you've upgraded the service plan, but we detected you have logged out of the account since then.";
 "It wasn't possible to match your purchased App Store product to any products on our server. Please fill in the bug report and our customer support team will contact you." = "It wasn't possible to match your purchased App Store product to any products on our server. Please fill in the bug report and our customer support team will contact you.";
 "Sorry, we cannot process purchases in the beta version of the iOS app. Thank you for participating in our public beta!" = "Sorry, we cannot process purchases in the beta version of the iOS app. Thank you for participating in our public beta!";
-"Apple informed us you've upgraded the service plan, but did not say which of your ProtonMail accounts to upgrade in case you have more than one." = "Apple informed us you've upgraded the service plan, but did not say which of your ProtonMail accounts to upgrade in case you have more than one.";
+"We have been notified of an App Store purchase but cannot match the purchase with an account of yours." = "We have been notified of an App Store purchase but cannot match the purchase with an account of yours.";
 "Please log in to the ProtonMail account you're upgrading the service plan for so we can complete the purchase." = "Please log in to the ProtonMail account you're upgrading the service plan for so we can complete the purchase.";
 "Apple informed us they could not process the purchase." = "Apple informed us they could not process the purchase.";
 "We have successfully activated your subscription. Please relaunch the app to start using your new service plan." = "We have successfully activated your subscription. Please relaunch the app to start using your new service plan.";

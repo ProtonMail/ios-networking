@@ -125,6 +125,7 @@ class VerifyCodeViewController: BaseUIViewController {
         let code = verifyCodeTextFieldView.value.trim()
         guard viewModel.isValidCodeFormat(code: code) else { return }
 
+        _ = verifyCodeTextFieldView.resignFirstResponder()
         continueButton.isSelected = true
         verifyCodeTextFieldView.isError = false
         continueButton.setTitle(CoreString._hv_verification_verifying_button, for: .normal)

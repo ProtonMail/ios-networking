@@ -188,6 +188,28 @@ public class Authenticator: NSObject {
         }
     }
     
+    public func createUser(userParameters: UserParameters, completion: @escaping (Result<(), Error>) -> Void) {
+        let route = AuthService.CreateUserEndpoint(userParameters: userParameters)
+        self.apiService.exec(route: route) { (_, response) in
+            if let error = response.error {
+                completion(.failure(error))
+            } else {
+                completion(.success(()))
+            }
+        }
+    }
+
+    public func createExternalUser(externalUserParameters: ExternalUserParameters, completion: @escaping (Result<(), Error>) -> Void) {
+        let route = AuthService.CreateExternalUserEndpoint(externalUserParameters: externalUserParameters)
+        self.apiService.exec(route: route) { (_, response) in
+            if let error = response.error {
+                completion(.failure(error))
+            } else {
+                completion(.success(()))
+            }
+        }
+    }
+
     public func getUserInfo(_ credential: Credential? = nil, completion: @escaping (Result<User, Error>) -> Void) {
         var route = AuthService.UserInfoEndpoint()
         if let auth = credential {
@@ -243,13 +265,13 @@ public class Authenticator: NSObject {
         self.apiService.exec(route: route, complete: completion)
     }
 
-    public func createAddressKey(_ credential: Credential? = nil, address: Address, password: String, primary: Bool, completion: @escaping (Result<AddressKey, Error>) -> Void) {
+    public func createAddressKey(_ credential: Credential? = nil, address: Address, password: String, salt: Data, primary: Bool, completion: @escaping (Result<AddressKey, Error>) -> Void) {
         getRandomSRPModulus { result in
             switch result {
             case let .success(data):
                 let keySetup = AddressKeySetup()
                 do {
-                    let key = try keySetup.generateAddressKey(keyName: address.email, email: address.email, password: password)
+                    let key = try keySetup.generateAddressKey(keyName: address.email, email: address.email, password: password, salt: salt)
                     var route = try keySetup.setupCreateAddressKeyRoute(key: key, modulus: data.modulus, modulusId: data.modulusID, addressId: address.ID, primary: primary)
                     if let auth = credential {
                         route.auth = AuthCredential(auth)
@@ -271,7 +293,7 @@ public class Authenticator: NSObject {
         }
     }
 
-    public func setupAccountKeys(_ credential: Credential? = nil, address: Address, password: String, completion: @escaping (Result<(), Error>) -> Void) {
+    public func setupAccountKeys(_ credential: Credential? = nil, addresses: [Address], password: String, completion: @escaping (Result<(), Error>) -> Void) {
         getRandomSRPModulus { result in
             switch result {
             case let .success(data):
@@ -279,8 +301,8 @@ public class Authenticator: NSObject {
                 DispatchQueue.global(qos: .background).async {
                     let keySetup = AccountKeySetup()
                     do {
-                        let key = try keySetup.generateAccountKey(keyName: address.email, email: address.email, password: password)
-                        var route = try keySetup.setupSetupKeysRoute(password: password, key: key, modulus: data.modulus, modulusId: data.modulusID, addressId: address.ID)
+                        let key = try keySetup.generateAccountKey(addresses: addresses, password: password)
+                        var route = try keySetup.setupSetupKeysRoute(password: password, key: key, modulus: data.modulus, modulusId: data.modulusID)
                         if let auth = credential {
                             route.auth = AuthCredential(auth)
                         }

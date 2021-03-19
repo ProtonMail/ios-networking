@@ -23,7 +23,7 @@
 import UIKit
 
 /// When needing customization, this typealias can make life easier to access the attributes.
-public typealias PMFontAttributes = [NSAttributedString.Key:Any]
+public typealias PMFontAttributes = [NSAttributedString.Key: Any]
 
 /// Sample usage:
 /// `let str = NSAttributedString(string: "your string", attributes: .Headline )`
@@ -36,13 +36,13 @@ public typealias PMFontAttributes = [NSAttributedString.Key:Any]
 ///
 /// Then, `label.attributedText = str`
 extension Dictionary where Key == NSAttributedString.Key, Value: Any {
-    
+
     // MARK: Headline
     public static var Headline: [NSAttributedString.Key: Any] {
         let font = UIFont.boldSystemFont(ofSize: 22)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 1.07
-        
+
         let attributes: [NSAttributedString.Key: Any] = [
             .kern: 0.35,
             .font: font,
@@ -51,12 +51,12 @@ extension Dictionary where Key == NSAttributedString.Key, Value: Any {
         ]
         return attributes
     }
-    
+
     public static var HeadlineHint: [NSAttributedString.Key: Any] {
         let font = UIFont.boldSystemFont(ofSize: 22)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 1.07
-        
+
         let attributes: [NSAttributedString.Key: Any] = [
             .kern: 0.35,
             .font: font,
@@ -65,12 +65,12 @@ extension Dictionary where Key == NSAttributedString.Key, Value: Any {
         ]
         return attributes
     }
-    
+
     public static var HeadlineSmall: [NSAttributedString.Key: Any] {
         let font = UIFont.systemFont(ofSize: 17, weight: .semibold)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 1.18
-        
+
         let attributes: [NSAttributedString.Key: Any] = [
             .kern: -0.41,
             .font: font,
@@ -79,14 +79,14 @@ extension Dictionary where Key == NSAttributedString.Key, Value: Any {
         ]
         return attributes
     }
-    
+
     // MARK: Default
-    
+
     public static var DefaultStrong: [NSAttributedString.Key: Any] {
         let font = UIFont.systemFont(ofSize: 17, weight: .semibold)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 1.18
-        
+
         let attributes: [NSAttributedString.Key: Any] = [
             .kern: -0.41,
             .font: font,
@@ -95,12 +95,12 @@ extension Dictionary where Key == NSAttributedString.Key, Value: Any {
         ]
         return attributes
     }
-    
+
     public static var Default: [NSAttributedString.Key: Any] {
         let font = UIFont.systemFont(ofSize: 17)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 1.18
-        
+
         let attributes: [NSAttributedString.Key: Any] = [
             .kern: -0.41,
             .font: font,
@@ -109,12 +109,12 @@ extension Dictionary where Key == NSAttributedString.Key, Value: Any {
         ]
         return attributes
     }
-    
+
     public static var DefaultWeak: [NSAttributedString.Key: Any] {
         let font = UIFont.systemFont(ofSize: 17)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 1.18
-        
+
         let attributes: [NSAttributedString.Key: Any] = [
             .kern: -0.41,
             .font: font,
@@ -123,12 +123,12 @@ extension Dictionary where Key == NSAttributedString.Key, Value: Any {
         ]
         return attributes
     }
-    
+
     public static var DefaultHint: [NSAttributedString.Key: Any] {
         let font = UIFont.systemFont(ofSize: 17)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 1.18
-        
+
         let attributes: [NSAttributedString.Key: Any] = [
             .kern: -0.41,
             .font: font,
@@ -137,12 +137,12 @@ extension Dictionary where Key == NSAttributedString.Key, Value: Any {
         ]
         return attributes
     }
-    
+
     public static var DefaultDisabled: [NSAttributedString.Key: Any] {
         let font = UIFont.systemFont(ofSize: 17)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 1.18
-        
+
         let attributes: [NSAttributedString.Key: Any] = [
             .kern: -0.41,
             .font: font,
@@ -151,12 +151,12 @@ extension Dictionary where Key == NSAttributedString.Key, Value: Any {
         ]
         return attributes
     }
-    
+
     public static var DefaultInverted: [NSAttributedString.Key: Any] {
         let font = UIFont.systemFont(ofSize: 17)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 1.18
-        
+
         let attributes: [NSAttributedString.Key: Any] = [
             .kern: -0.41,
             .font: font,
@@ -165,14 +165,14 @@ extension Dictionary where Key == NSAttributedString.Key, Value: Any {
         ]
         return attributes
     }
-    
+
     // MARK: DefaultSmall
-    
+
     public static var DefaultSmallStrong: [NSAttributedString.Key: Any] {
         let font = UIFont.systemFont(ofSize: 15, weight: .semibold)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 1.12
-        
+
         let attributes: [NSAttributedString.Key: Any] = [
             .kern: -0.24,
             .font: font,
@@ -181,12 +181,12 @@ extension Dictionary where Key == NSAttributedString.Key, Value: Any {
         ]
         return attributes
     }
-    
+
     public static var DefaultSmall: [NSAttributedString.Key: Any] {
         let font = UIFont.systemFont(ofSize: 15)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 1.12
-        
+
         let attributes: [NSAttributedString.Key: Any] = [
             .kern: -0.24,
             .font: font,
@@ -195,12 +195,12 @@ extension Dictionary where Key == NSAttributedString.Key, Value: Any {
         ]
         return attributes
     }
-    
+
     public static var DefaultSmallWeek: [NSAttributedString.Key: Any] {
         let font = UIFont.systemFont(ofSize: 15)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 1.12
-        
+
         let attributes: [NSAttributedString.Key: Any] = [
             .kern: -0.24,
             .font: font,
@@ -209,12 +209,12 @@ extension Dictionary where Key == NSAttributedString.Key, Value: Any {
         ]
         return attributes
     }
-    
+
     public static var DefaultSmallDisabled: [NSAttributedString.Key: Any] {
         let font = UIFont.systemFont(ofSize: 15)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 1.12
-        
+
         let attributes: [NSAttributedString.Key: Any] = [
             .kern: -0.24,
             .font: font,
@@ -223,12 +223,12 @@ extension Dictionary where Key == NSAttributedString.Key, Value: Any {
         ]
         return attributes
     }
-    
+
     public static var DefaultSmallInverted: [NSAttributedString.Key: Any] {
         let font = UIFont.systemFont(ofSize: 15)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 1.12
-        
+
         let attributes: [NSAttributedString.Key: Any] = [
             .kern: -0.24,
             .font: font,
@@ -237,14 +237,14 @@ extension Dictionary where Key == NSAttributedString.Key, Value: Any {
         ]
         return attributes
     }
-    
+
     // MARK: Caption
-    
+
     public static var CaptionStrong: [NSAttributedString.Key: Any] {
         let font = UIFont.systemFont(ofSize: 13, weight: .semibold)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 1.03
-        
+
         let attributes: [NSAttributedString.Key: Any] = [
             .kern: -0.08,
             .font: font,
@@ -253,12 +253,12 @@ extension Dictionary where Key == NSAttributedString.Key, Value: Any {
         ]
         return attributes
     }
-    
+
     public static var Caption: [NSAttributedString.Key: Any] {
         let font = UIFont(name: "SFProDisplay-Regular", size: 13)!
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 1.03
-        
+
         let attributes: [NSAttributedString.Key: Any] = [
             .kern: -0.08,
             .font: font,
@@ -267,12 +267,12 @@ extension Dictionary where Key == NSAttributedString.Key, Value: Any {
         ]
         return attributes
     }
-    
+
     public static var CaptionWeak: [NSAttributedString.Key: Any] {
         let font = UIFont.systemFont(ofSize: 13)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 1.03
-        
+
         let attributes: [NSAttributedString.Key: Any] = [
             .kern: -0.08,
             .font: font,
@@ -281,12 +281,12 @@ extension Dictionary where Key == NSAttributedString.Key, Value: Any {
         ]
         return attributes
     }
-    
+
     public static var CaptionHint: [NSAttributedString.Key: Any] {
         let font = UIFont.systemFont(ofSize: 13)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 1.03
-        
+
         let attributes: [NSAttributedString.Key: Any] = [
             .kern: -0.08,
             .font: font,
@@ -295,17 +295,17 @@ extension Dictionary where Key == NSAttributedString.Key, Value: Any {
         ]
         return attributes
     }
-    
+
     // MARK: Helper
-    
+
     public var paragraphStyle: NSParagraphStyle? {
         self[.paragraphStyle] as? NSParagraphStyle
     }
-    
+
     public var mutableParagraphStyle: NSMutableParagraphStyle? {
         paragraphStyle?.mutableCopy() as? NSMutableParagraphStyle
     }
-    
+
     public var alignment: NSTextAlignment? {
         get { paragraphStyle?.alignment }
         set( value ) {
@@ -314,7 +314,7 @@ extension Dictionary where Key == NSAttributedString.Key, Value: Any {
             self[.paragraphStyle] = paragraphStyle as? Value
         }
     }
-    
+
     public var lineHeightMultiple: CGFloat? {
         get { paragraphStyle?.lineHeightMultiple }
         set( value ) {
@@ -323,11 +323,9 @@ extension Dictionary where Key == NSAttributedString.Key, Value: Any {
             self[.paragraphStyle] = paragraphStyle as? Value
         }
     }
-    
+
     public var foregroundColor: UIColor? {
         get { self[.foregroundColor] as? UIColor }
         set( color ) { self[.foregroundColor] = color as? Value }
     }
 }
-
-

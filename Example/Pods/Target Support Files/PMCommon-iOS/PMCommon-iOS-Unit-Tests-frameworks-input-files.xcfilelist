@@ -1,0 +1,7 @@
+${PODS_ROOT}/Target Support Files/PMCommon-iOS/PMCommon-iOS-Unit-Tests-frameworks.sh
+${BUILT_PRODUCTS_DIR}/PMCommon-iOS/PMCommon.framework
+${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework
+${BUILT_PRODUCTS_DIR}/PromiseKit/PromiseKit.framework
+${BUILT_PRODUCTS_DIR}/AwaitKit-iOS/AwaitKit.framework
+${BUILT_PRODUCTS_DIR}/TrustKit-iOS/TrustKit.framework
+${BUILT_PRODUCTS_DIR}/OHHTTPStubs-iOS/OHHTTPStubs.framework

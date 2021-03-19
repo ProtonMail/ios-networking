@@ -38,7 +38,7 @@ public protocol PMActionSheetItem {
 }
 
 public struct PMActionSheetItemGroup {
-    public enum Style {
+    public enum Style: Equatable {
         /// Items in grid style will be laid out as grid and action sheet will dismiss automatically after one of the items clicked, only support `PMActionSheetPlainItem`
         case grid
         /// Items in toggle style will be laid out as a list, only support `PMActionSheetToggleItem`
@@ -50,9 +50,9 @@ public struct PMActionSheetItemGroup {
         /// Items in multiSelection style will be laid out as a list, the checkmark will be shown when items are selected, only support `PMActionSheetPlainItem`
         case multiSelection
     }
-    let title: String?
-    var items: [PMActionSheetItem]
-    let style: Style
+    public let title: String?
+    public internal(set) var items: [PMActionSheetItem]
+    public let style: Style
 
     public init(title: String? = nil, items: [PMActionSheetItem], style: Style) {
         self.title = title
@@ -70,6 +70,10 @@ public struct PMActionSheetPlainItem: PMActionSheetItem {
     /// A Boolean value that determines if the item is selected
     public var isOn: Bool = false
     public let userInfo: [String: Any]?
+    /// The indentation level of the cell’s content. starts from 0
+    let indentationLevel: Int
+    /// The width for each level of indentation of a cell's content.
+    let indentationWidth: CGFloat
     /// A block to execute when the user selects the action.
     let handler: ((PMActionSheetPlainItem) -> Void)?
     /// Alignment of title, default is `.left`
@@ -87,8 +91,10 @@ public struct PMActionSheetPlainItem: PMActionSheetItem {
     ///   - alignment: Alignemnt of title
     ///   - hasSeparator: Does the cell have bottom spearator?
     ///   - userInfo: Optional information about the the item.
+    ///   - indentationLevel: The indentation level of the cell’s content. starts from 0
+    ///   - indentationWidth:The width for each level of indentation of a cell's content.
     ///   - handler: A block to execute when the user selects the action.
-    public init(title: String?, icon: UIImage?, textColor: UIColor?=nil, iconColor: UIColor?=nil, isOn: Bool = false, alignment: NSTextAlignment = .left, hasSeparator: Bool = true, userInfo: [String: Any]?=nil, handler: ((PMActionSheetPlainItem) -> Void)?) {
+    public init(title: String?, icon: UIImage?, textColor: UIColor?=nil, iconColor: UIColor?=nil, isOn: Bool = false, alignment: NSTextAlignment = .left, hasSeparator: Bool = true, userInfo: [String: Any]?=nil, indentationLevel: Int=0, indentationWidth: CGFloat=24, handler: ((PMActionSheetPlainItem) -> Void)?) {
         self.title = title
         self.icon = icon
         self.textColor = textColor ?? AdaptiveTextColors._N5
@@ -97,6 +103,8 @@ public struct PMActionSheetPlainItem: PMActionSheetItem {
         self.alignment = alignment
         self.hasSeparator = hasSeparator
         self.userInfo = userInfo
+        self.indentationLevel = indentationLevel
+        self.indentationWidth = indentationWidth
         self.handler = handler
     }
 }
@@ -122,7 +130,7 @@ public struct PMActionSheetToggleItem: PMActionSheetItem {
     ///   - toggleColor: Color of toggle color on `on` status, default is system value.
     ///   - isOn: A Boolean value that determines the on/off status of switch
     ///   - userInfo: Closure will excuted after item click
-    public init(title: String?, icon: UIImage?, textColor: UIColor?=nil, iconColor: UIColor?=nil, toggleColor: UIColor?=nil, isOn: Bool=false, userInfo: [String: Any]?=nil) {
+    public init(title: String?, icon: UIImage?, textColor: UIColor?=nil, iconColor: UIColor?=nil, toggleColor: UIColor?=nil, isOn: Bool=false, userInfo: [String: Any]?=nil, indentationLevel: Int=2, indentationWidth: CGFloat=24) {
         self.title = title
         self.icon = icon
         self.textColor = textColor ?? AdaptiveTextColors._N5

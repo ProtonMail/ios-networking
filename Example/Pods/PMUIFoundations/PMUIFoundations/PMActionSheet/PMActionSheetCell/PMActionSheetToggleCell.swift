@@ -65,7 +65,7 @@ extension PMActionSheetToggleCell {
 extension PMActionSheetToggleCell {
     private func setup() {
         self.setupToggle()
-        self.addSeparator()
+        self.addSeparator(leftRef: self.textLabel!, constant: -16)
     }
 
     private func setupToggle() {

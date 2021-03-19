@@ -23,6 +23,7 @@
 import UIKit
 public protocol LineSeparatable {
     func addSeparator(padding: CGFloat) -> UIView
+    func addSeparator(leftRef: UIView, constant: CGFloat) -> UIView
 }
 
 public extension LineSeparatable where Self: UIView {
@@ -35,6 +36,22 @@ public extension LineSeparatable where Self: UIView {
         NSLayoutConstraint.activate([
             line.leadingAnchor.constraint(equalTo: leadingAnchor, constant: padding),
             line.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding),
+            line.bottomAnchor.constraint(equalTo: bottomAnchor),
+            line.heightAnchor.constraint(equalToConstant: 1)
+        ])
+        line.backgroundColor = AdaptiveColors._N2
+        return line
+    }
+
+    /// Add separator at bottom of view cell
+    @discardableResult
+    func addSeparator(leftRef: UIView, constant: CGFloat) -> UIView {
+        let line = UIView()
+        addSubview(line)
+        line.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            line.leadingAnchor.constraint(equalTo: leftRef.leadingAnchor, constant: constant),
+            line.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0),
             line.bottomAnchor.constraint(equalTo: bottomAnchor),
             line.heightAnchor.constraint(equalToConstant: 1)
         ])

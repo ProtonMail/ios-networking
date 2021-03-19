@@ -63,7 +63,7 @@ PODS:
     - PMUIFoundations
   - PMUICommon (1.0.0):
     - PMCommon
-  - PMUIFoundations (1.2.2)
+  - PMUIFoundations (1.2.5)
   - PromiseKit (6.13.1):
     - PromiseKit/CorePromise (= 6.13.1)
     - PromiseKit/Foundation (= 6.13.1)
@@ -73,7 +73,7 @@ PODS:
     - PromiseKit/CorePromise
   - PromiseKit/UIKit (6.13.1):
     - PromiseKit/CorePromise
-  - SwiftLint (0.42.0)
+  - SwiftLint (0.43.1)
   - TrustKit (1.7.0)
 
 DEPENDENCIES:
@@ -129,10 +129,10 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   PMAuthentication:
-    :commit: bb24249cf3ce4e9c02b69c39bb37ccfd53aecb5f
+    :commit: cbae36e2a2135c296377dd4dd261dba195d0cce8
     :git: "git@gitlab.protontech.ch:apple/shared/pmauthentication.git"
   PMCoreTranslation:
-    :commit: 7e64c74f20d7c2592dfe958e9399443be942d02f
+    :commit: 1a3e98b6b0748676625fec70f942067b974138fe
     :git: "git@gitlab.protontech.ch:apple/shared/pmcoretranslation.git"
   PMCrypto:
     :git: "git@gitlab.protontech.ch:apple/shared/pmcrypto.git"
@@ -141,13 +141,13 @@ CHECKOUT OPTIONS:
     :commit: 195a901dfb498b1456480278148e4dbb8dce141e
     :git: "git@gitlab.protontech.ch:apple/shared/pmforceupgrade.git"
   PMHumanVerification:
-    :commit: 5ebe3e4837c92408a8ad5ed1b770a842bee2dc9b
+    :commit: 8b51c1cc6540fd5c2327ef6f2e8c343e67832beb
     :git: "git@gitlab.protontech.ch:apple/shared/pmhumanverification.git"
   PMUICommon:
     :commit: eddb6ce3da4438c6686e74c70f83f8c82558ab34
     :git: "git@gitlab.protontech.ch:apple/shared/pmuicommon.git"
   PMUIFoundations:
-    :commit: 6d9b03230279147bf618bd307fb58ac5e8360d1c
+    :commit: 12c6be6fe0fa076552c199688a88c2fabe89d32f
     :git: "git@gitlab.protontech.ch:apple/shared/PMUIFoundations.git"
   TrustKit:
     :commit: 838fba789e01c9cabff77acea3fb7135f71a220f
@@ -164,11 +164,11 @@ SPEC CHECKSUMS:
   PMForceUpgrade: f494aa7192a45e642ef190a1c8d58ab746eaa515
   PMHumanVerification: ba7ccf6a4045285a417e6c08971efe3714a4ed09
   PMUICommon: a55d8aad94373e3939f7cf618ac98366ff86585e
-  PMUIFoundations: 741e3317f3658cb01b9964109527c09600c1af95
+  PMUIFoundations: 9b9001fdb4d4ee82ce6341c8e397b007543b8957
   PromiseKit: 28fda91c973cc377875d8c0ea4f973013c05b6db
-  SwiftLint: 4fa9579c63416865179bc416f0a92d55f009600d
+  SwiftLint: 99f82d07b837b942dd563c668de129a03fc3fb52
   TrustKit: 3fb011102271b79f7e3742bc2cfc54bb7193ca74
 
 PODFILE CHECKSUM: befe40d29e1137ff8b694d9640aa6efe2f612f2f
 
-COCOAPODS: 1.10.0
+COCOAPODS: 1.10.1

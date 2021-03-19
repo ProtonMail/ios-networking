@@ -130,7 +130,7 @@ extension PMActionSheetVM {
     }
 
     private func handleSingleSelectionEventAt(_ indexPath: IndexPath) {
-        guard let _ = self.itemGroups else {return}
+        guard self.itemGroups != nil else {return}
 
         let count = self.itemGroups![indexPath.section].items.count
         for i in 0..<count {
@@ -145,7 +145,7 @@ extension PMActionSheetVM {
     }
 
     private func handleMultiSelectionEventAt(_ indexPath: IndexPath) {
-        guard let _ = self.itemGroups else {return}
+        guard self.itemGroups != nil else {return}
 
         let section = indexPath.section
         let row = indexPath.row

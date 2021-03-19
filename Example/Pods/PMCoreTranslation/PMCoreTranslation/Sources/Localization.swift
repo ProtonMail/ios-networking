@@ -218,7 +218,7 @@ public class LocalizedString {
     public lazy var _ls_username_screen_title = NSLocalizedString("Create ProtonMail address", bundle: Common.bundle, comment: "Screen title for creating ProtonMail address")
 
     /// Info about existing external ProtonMail address
-    public lazy var _ls_username_screen_info = NSLocalizedString("Your Proton Account is associated with %@. To use ProtonMail, please create an address.", bundle: Common.bundle, comment: "Info about existing external ProtonMail address")
+    public lazy var _ls_username_screen_info = NSLocalizedString("Your Proton Account is associated with %@. To use %@, please create an address.", bundle: Common.bundle, comment: "Info about existing external ProtonMail address")
 
     /// Username field title
     public lazy var _ls_username_username_title = NSLocalizedString("Username", bundle: Common.bundle, comment: "Username field title")
@@ -300,7 +300,7 @@ public class LocalizedString {
     public lazy var _warning = NSLocalizedString("Warning", bundle: Common.bundle, comment: "Title")
 
     /// UIAlerts
-    public lazy var _do_you_want_to_bypass_validation = NSLocalizedString("Do you want to activate the purchased service plan for ", bundle: Common.bundle, comment: "Question is user wants to bypass username validation and activate plan for current username")
+    public lazy var _do_you_want_to_bypass_validation = NSLocalizedString("Do you want to activate the purchase for %@ address?", bundle: Common.bundle, comment: "Question is user wants to bypass username validation and activate plan for current username")
 
     public lazy var _yes_bypass_validation = NSLocalizedString("Yes, activate it for ", bundle: Common.bundle, comment: "Warning message option to bypass validation and activate plan for current username")
 
@@ -319,6 +319,8 @@ public class LocalizedString {
     /// Errors
     public lazy var _error_unavailable_product = NSLocalizedString("Failed to get list of available products from AppStore.", bundle: Common.bundle, comment: "Error message")
 
+    public lazy var _error_invalid_purchase = NSLocalizedString("Purchase is not possible.", bundle: Common.bundle, comment: "Error message")
+
     public lazy var _error_reciept_lost = NSLocalizedString("Apple informed us you've upgraded the service plan, but some technical data was missing. Please fill in the bug report and our customer support team will contact you.", bundle: Common.bundle, comment: "Error message")
 
     public lazy var _error_another_user_transaction = NSLocalizedString("Apple informed us you've upgraded the service plan, but we detected you have logged out of the account since then.", bundle: Common.bundle, comment: "Error message")
@@ -327,7 +329,7 @@ public class LocalizedString {
 
     public lazy var _error_sandbox_receipt = NSLocalizedString("Sorry, we cannot process purchases in the beta version of the iOS app. Thank you for participating in our public beta!", bundle: Common.bundle, comment: "Error message for beta users")
 
-    public lazy var _error_no_hashed_username_arrived_in_transaction = NSLocalizedString("Apple informed us you've upgraded the service plan, but did not say which of your ProtonMail accounts to upgrade in case you have more than one.", bundle: Common.bundle, comment: "Error message")
+    public lazy var _error_no_hashed_username_arrived_in_transaction = NSLocalizedString("We have been notified of an App Store purchase but cannot match the purchase with an account of yours.", bundle: Common.bundle, comment: "Error message")
 
     public lazy var _error_no_active_username_in_user_data_service = NSLocalizedString("Please log in to the ProtonMail account you're upgrading the service plan for so we can complete the purchase.", bundle: Common.bundle, comment: "Error message")
 
