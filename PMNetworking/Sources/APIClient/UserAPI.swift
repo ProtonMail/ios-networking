@@ -239,6 +239,10 @@ public final class UserInfo: NSObject {
     // 1.12.0
     public var passwordMode: Int = 1
     public var twoFactor: Int = 0
+    
+    // 2.0.0
+    public var enableFolderColor: Int = 0
+    public var inheritParentFolderColor: Int = 0
 
     public static func getDefault() -> UserInfo {
         return .init(maxSpace: 0, usedSpace: 0, language: "",
@@ -267,7 +271,9 @@ public final class UserInfo: NSObject {
         credit: Int?,
         currency: String?,
         pwdMode: Int?,
-        twoFA: Int?) {
+        twoFA: Int?,
+        enableFolderColor: Int?,
+        inheritParentFolderColor: Int?) {
         self.maxSpace = maxSpace ?? 0
         self.usedSpace = usedSpace ?? 0
         self.language = language ?? "en_US"
@@ -300,6 +306,9 @@ public final class UserInfo: NSObject {
 
         self.passwordMode = pwdMode ?? 1
         self.twoFactor = twoFA ?? 0
+        
+        self.enableFolderColor = enableFolderColor ?? 0
+        self.inheritParentFolderColor = inheritParentFolderColor ?? 0
     }
 
     // init from api
@@ -382,6 +391,8 @@ public final class UserInfo: NSObject {
 
             self.attachPublicKey = settings["AttachPublicKey"] as? Int ?? 0
             self.sign = settings["Sign"] as? Int ?? 0
+            self.enableFolderColor = settings["EnableFolderColor"] as? Int ?? 0
+            self.inheritParentFolderColor = settings["InheritParentFolderColor"] as? Int ?? 0
         }
     }
 
@@ -536,6 +547,9 @@ extension UserInfo: NSCoding {
 
         static let pwdMode = "passwordMode"
         static let twoFA = "2faStatus"
+        
+        static let enableFolderColor = "enableFolderColor"
+        static let inheritParentFolderColor = "inheritParentFolderColor"
     }
 
     public func archive() -> Data {
@@ -580,7 +594,9 @@ extension UserInfo: NSCoding {
             currency: aDecoder.decodeStringForKey(CoderKey.currency),
 
             pwdMode: aDecoder.decodeInteger(forKey: CoderKey.pwdMode),
-            twoFA: aDecoder.decodeInteger(forKey: CoderKey.twoFA)
+            twoFA: aDecoder.decodeInteger(forKey: CoderKey.twoFA),
+            enableFolderColor: aDecoder.decodeInteger(forKey: CoderKey.enableFolderColor),
+            inheritParentFolderColor: aDecoder.decodeInteger(forKey: CoderKey.inheritParentFolderColor)
         )
     }
 
@@ -606,6 +622,8 @@ extension UserInfo: NSCoding {
         aCoder.encode(swipeLeft, forKey: CoderKey.swipeLeft)
         aCoder.encode(swipeRight, forKey: CoderKey.swipeRight)
         aCoder.encode(userId, forKey: CoderKey.userId)
+        aCoder.encode(enableFolderColor, forKey: CoderKey.enableFolderColor)
+        aCoder.encode(inheritParentFolderColor, forKey: CoderKey.inheritParentFolderColor)
 
         aCoder.encode(sign, forKey: CoderKey.sign)
         aCoder.encode(attachPublicKey, forKey: CoderKey.attachPublicKey)
