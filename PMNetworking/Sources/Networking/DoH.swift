@@ -129,7 +129,6 @@ open class DoH: DoHInterface {
         switch status {
         case .on, .auto:
             if let found = self.cache(get: config.apiHost) {
-                print("Found from cache")
                 let newurl = URL(string: config.defaultHost)!
                 let host = newurl.host
                 let hostUrl = newurl.absoluteString.replacingOccurrences(of: host!, with: found.dns.url)
@@ -139,7 +138,6 @@ open class DoH: DoHInterface {
             fetchAll(host: config.apiHost) // this is sync call
 
             if let found = self.cache(get: config.apiHost) {
-                print("Found from cache")
                 let newurl = URL(string: config.defaultHost)!
                 let host = newurl.host
                 let hostUrl = newurl.absoluteString.replacingOccurrences(of: host!, with: found.dns.url)
