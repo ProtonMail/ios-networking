@@ -22,6 +22,10 @@ public protocol PMTextFieldDelegate: AnyObject {
      Asks the delegate if the text field should process the pressing of the return button.
      */
     func textFieldShouldReturn(_ textField: PMTextField) -> Bool
+    /**
+     Tells the delegate that editing started for the specified text field.
+     */
+    func didBeginEditing(textField: PMTextField)
 }
 
 /**
@@ -321,6 +325,7 @@ extension PMTextField: UITextFieldDelegate {
             isError = false
         }
         self.textField.setBorder()
+        delegate?.didBeginEditing(textField: self)
     }
 
     public func textFieldDidEndEditing(_ textField: UITextField) {

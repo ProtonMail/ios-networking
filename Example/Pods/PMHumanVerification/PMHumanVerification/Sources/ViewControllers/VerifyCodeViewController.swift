@@ -233,6 +233,10 @@ extension VerifyCodeViewController: PMTextFieldDelegate {
     func didEndEditing(textField: PMTextField) {
         updateButtonStatus()
     }
+
+    func didBeginEditing(textField: PMTextField) {
+
+    }
 }
 
 #endif

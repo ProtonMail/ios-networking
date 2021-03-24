@@ -40,7 +40,7 @@ class EmailVerifyViewController: BaseUIViewController {
     @IBOutlet weak var scrollBottomPaddingConstraint: NSLayoutConstraint!
 
     private var isBannerShown = false { didSet { updateButtonStatus() } }
-    
+
     weak var delegate: EmailVerifyViewControllerDelegate?
     var viewModel: VerifyViewModel!
 
@@ -153,6 +153,10 @@ extension EmailVerifyViewController: PMTextFieldDelegate {
 
     func didEndEditing(textField: PMTextField) {
         updateButtonStatus()
+    }
+
+    func didBeginEditing(textField: PMTextField) {
+
     }
 }
 
