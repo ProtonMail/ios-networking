@@ -39,7 +39,7 @@ class NetworkingViewModel: ObservableObject {
         setupEnv()
     }
     
-    var env = ["Black env.", "Dev env.", "Prod env."]
+    var env = ["Black env.", "Dalton env.", "Lysenko", "Prod env."]
     var selectedIndex: Int = 0 { didSet { setupEnv() } }
     @Published var showingLoginError = false
     
@@ -52,8 +52,9 @@ class NetworkingViewModel: ObservableObject {
     private var currentEnv: DoH {
         switch selectedIndex {
         case 0: return BlackDoHMail.default
-        case 1: return DevDoHMail.default
-        case 2: return ProdDoHMail.default
+        case 1: return DaltonBlackDoHMail.default
+        case 2: return LysenkoBlackDoHMail.default
+        case 3: return ProdDoHMail.default
         default: return BlackDoHMail.default
         }
     }
@@ -206,22 +207,6 @@ extension NetworkingViewModel: APIServiceDelegate {
 
     var appVersion: String {
         return "iOS_\(Bundle.main.majorVersion)"
-    }
-
-    func onChallenge(challenge: URLAuthenticationChallenge,
-                     credential: AutoreleasingUnsafeMutablePointer<URLCredential?>?) -> URLSession.AuthChallengeDisposition {
-
-        var dispositionToReturn: URLSession.AuthChallengeDisposition = .performDefaultHandling
-        if let validator = TrustKitWrapper.current?.pinningValidator {
-            validator.handle(challenge, completionHandler: { (disposition, credentialOut) in
-                credential?.pointee = credentialOut
-                dispositionToReturn = disposition
-            })
-        } else {
-            assert(false, "TrustKit not initialized correctly")
-        }
-
-        return dispositionToReturn
     }
 
     func onUpdate(serverTime: Int64) {

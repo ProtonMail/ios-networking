@@ -42,13 +42,13 @@ class DaltonBlackDoHMail: DoH, ServerConfig {
     static let `default` = try! DaltonBlackDoHMail()
 }
 
-class DevDoHMail: DoH, ServerConfig {
-    var signupDomain: String = ObfuscatedConstants.devSignupDomain
-    var defaultHost: String = ObfuscatedConstants.devDefaultHost
-    var captchaHost: String = ObfuscatedConstants.devCaptchaHost
-    var apiHost: String = ObfuscatedConstants.devApiHost
-    var defaultPath: String = ObfuscatedConstants.devDefaultPath
-    static let `default` = try! DevDoHMail()
+class LysenkoBlackDoHMail: DoH, ServerConfig {
+    var signupDomain: String = ObfuscatedConstants.lysenkoBlackSignupDomain
+    var defaultHost: String = ObfuscatedConstants.lysenkoBlackDefaultHost
+    var captchaHost: String = ObfuscatedConstants.lysenkoBlackCaptchaHost
+    var apiHost: String = ObfuscatedConstants.lysenkoBlackApiHost
+    var defaultPath: String = ObfuscatedConstants.lysenkoBlackDefaultPath
+    static let `default` = try! LysenkoBlackDoHMail()
 }
 
 class ProdDoHMail: DoH, ServerConfig {

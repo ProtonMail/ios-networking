@@ -21,6 +21,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dlP-lx-EdD">
+                                <rect key="frame" x="15" y="24" width="345" height="643"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="345" id="OpU-h3-2qd"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="delegate" destination="XYV-2Y-X0C" id="LJa-r6-xeN"/>
+                                </connections>
+                            </webView>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="i4x-cs-f9F">
                                 <rect key="frame" x="140" y="323.5" width="95" height="20.5"/>
                                 <subviews>
@@ -38,50 +48,14 @@
                                     <constraint firstAttribute="height" constant="20.5" id="d8v-SQ-vhj"/>
                                 </constraints>
                             </stackView>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UaR-Wn-XvY">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x5O-eb-fcJ" userLabel="Content View">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="117"/>
-                                        <subviews>
-                                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dlP-lx-EdD">
-                                                <rect key="frame" x="15" y="24" width="345" height="85"/>
-                                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="345" id="KZD-4A-ynw"/>
-                                                    <constraint firstAttribute="height" constant="85" id="aU3-Hx-VhC"/>
-                                                </constraints>
-                                                <connections>
-                                                    <outlet property="delegate" destination="XYV-2Y-X0C" id="LJa-r6-xeN"/>
-                                                </connections>
-                                            </webView>
-                                        </subviews>
-                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="centerX" secondItem="dlP-lx-EdD" secondAttribute="centerX" priority="500" id="VV7-xs-gob"/>
-                                            <constraint firstAttribute="bottom" secondItem="dlP-lx-EdD" secondAttribute="bottom" constant="8" id="fOU-sR-qqg"/>
-                                            <constraint firstItem="dlP-lx-EdD" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="x5O-eb-fcJ" secondAttribute="leading" priority="750" constant="3" id="k2v-UB-gCC"/>
-                                        </constraints>
-                                    </view>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstItem="x5O-eb-fcJ" firstAttribute="leading" secondItem="UaR-Wn-XvY" secondAttribute="leading" id="59s-sM-45S"/>
-                                    <constraint firstAttribute="bottom" secondItem="x5O-eb-fcJ" secondAttribute="bottom" id="79a-HU-b7P"/>
-                                    <constraint firstItem="x5O-eb-fcJ" firstAttribute="top" secondItem="UaR-Wn-XvY" secondAttribute="top" id="A23-Ln-MVe"/>
-                                    <constraint firstAttribute="trailing" secondItem="x5O-eb-fcJ" secondAttribute="trailing" id="Nkz-hI-PL6"/>
-                                    <constraint firstItem="x5O-eb-fcJ" firstAttribute="width" secondItem="UaR-Wn-XvY" secondAttribute="width" id="Vw7-Da-qry"/>
-                                </constraints>
-                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="UaR-Wn-XvY" secondAttribute="bottom" id="Hzc-bI-3wt"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="UaR-Wn-XvY" secondAttribute="trailing" constant="-16" id="IT5-yw-6F5"/>
-                            <constraint firstItem="dlP-lx-EdD" firstAttribute="top" secondItem="x5O-eb-fcJ" secondAttribute="top" constant="24" id="L5W-Ur-BrC"/>
                             <constraint firstItem="i4x-cs-f9F" firstAttribute="centerY" secondItem="q2W-eQ-QT3" secondAttribute="centerY" id="Nsa-mi-kER"/>
-                            <constraint firstItem="UaR-Wn-XvY" firstAttribute="leading" secondItem="q2W-eQ-QT3" secondAttribute="leadingMargin" constant="-16" id="SUa-kH-wPY"/>
+                            <constraint firstItem="dlP-lx-EdD" firstAttribute="centerX" secondItem="q2W-eQ-QT3" secondAttribute="centerX" id="X2T-yC-YKI"/>
+                            <constraint firstItem="dlP-lx-EdD" firstAttribute="top" secondItem="feB-ed-vnj" secondAttribute="bottom" constant="24" id="bQq-e2-uwc"/>
                             <constraint firstItem="i4x-cs-f9F" firstAttribute="centerX" secondItem="q2W-eQ-QT3" secondAttribute="centerX" id="ktT-4J-BQh"/>
-                            <constraint firstItem="UaR-Wn-XvY" firstAttribute="top" secondItem="feB-ed-vnj" secondAttribute="bottom" id="sKh-qO-BRf"/>
+                            <constraint firstItem="mrD-f4-jir" firstAttribute="top" secondItem="dlP-lx-EdD" secondAttribute="bottom" id="sgM-ZK-rxY"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="d2z-wT-p3r"/>
@@ -89,7 +63,6 @@
                         <outlet property="stackView" destination="i4x-cs-f9F" id="y9y-J2-3XV"/>
                         <outlet property="verifyingLabel" destination="sN9-iU-eCL" id="xgD-8G-M8b"/>
                         <outlet property="webView" destination="dlP-lx-EdD" id="uo2-Ps-qhc"/>
-                        <outlet property="webViewHeightConstraint" destination="aU3-Hx-VhC" id="IAB-C0-Vzi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BUS-HR-nC2" userLabel="First Responder" sceneMemberID="firstResponder"/>

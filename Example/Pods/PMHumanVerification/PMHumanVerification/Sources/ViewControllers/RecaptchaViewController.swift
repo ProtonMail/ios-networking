@@ -33,7 +33,6 @@ class RecaptchaViewController: UIViewController {
     @IBOutlet weak var webView: UIWebView!
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var verifyingLabel: UILabel!
-    @IBOutlet weak var webViewHeightConstraint: NSLayoutConstraint!
 
     private var startVerify: Bool = false
     private var finalToken: String?
@@ -45,10 +44,7 @@ class RecaptchaViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = UIColorManager.BackgroundNorm
-        webView.scrollView.isScrollEnabled = false
-        stackView.isHidden = true
-        loadNewCaptcha()
+        configureUI()
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -56,6 +52,14 @@ class RecaptchaViewController: UIViewController {
     }
 
     // MARK: Private interface
+
+    private func configureUI() {
+        view.backgroundColor = UIColorManager.BackgroundNorm
+        webView.scrollView.isScrollEnabled = UIDevice.current.isSmallIphone
+        stackView.isHidden = true
+        loadNewCaptcha()
+        verifyingLabel.text = CoreString._hv_verification_verifying_button
+    }
 
     private func loadNewCaptcha() {
         URLCache.shared.removeAllCachedResponses()
@@ -102,33 +106,14 @@ extension RecaptchaViewController: UIWebViewDelegate {
         }
 
         if viewModel.isExpiredRecaptchaRes(urlString: urlString) {
-            resetWebviewHeight()
             webView.reload()
             return false
         } else if viewModel.isRecaptchaRes(urlString: urlString) {
             self.finalToken = viewModel.getFinalToken(urlString: urlString)
-            resetWebviewHeight()
             checkCaptcha()
             return false
         }
         return true
-    }
-
-    func webViewDidFinishLoad(_ webView: UIWebView) {
-        if startVerify {
-            if viewModel.isDocHeight(webView: webView) {
-                let height = CGFloat(500)
-                webViewHeightConstraint.constant = height
-            }
-            startVerify = false
-        }
-    }
-
-    private func resetWebviewHeight() {
-        if viewModel.isDocHeight(webView: webView) {
-            let height = CGFloat(85)
-            webViewHeightConstraint.constant = height
-        }
     }
 }
 
