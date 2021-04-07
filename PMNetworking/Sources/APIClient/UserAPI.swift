@@ -239,16 +239,17 @@ public final class UserInfo: NSObject {
     // 1.12.0
     public var passwordMode: Int = 1
     public var twoFactor: Int = 0
-    
+
     // 2.0.0
     public var enableFolderColor: Int = 0
     public var inheritParentFolderColor: Int = 0
+    public var subscribed: Int = 0
 
     public static func getDefault() -> UserInfo {
         return .init(maxSpace: 0, usedSpace: 0, language: "",
                      maxUpload: 0, role: 0, delinquent: 0,
                      keys: nil, userId: "", linkConfirmation: 0,
-                     credit: 0, currency: "")
+                     credit: 0, currency: "", subscribed: 0)
     }
 
     public var isPaid: Bool {
@@ -273,7 +274,8 @@ public final class UserInfo: NSObject {
         pwdMode: Int?,
         twoFA: Int?,
         enableFolderColor: Int?,
-        inheritParentFolderColor: Int?) {
+        inheritParentFolderColor: Int?,
+        subscribed: Int?) {
         self.maxSpace = maxSpace ?? 0
         self.usedSpace = usedSpace ?? 0
         self.language = language ?? "en_US"
@@ -306,9 +308,10 @@ public final class UserInfo: NSObject {
 
         self.passwordMode = pwdMode ?? 1
         self.twoFactor = twoFA ?? 0
-        
+
         self.enableFolderColor = enableFolderColor ?? 0
         self.inheritParentFolderColor = inheritParentFolderColor ?? 0
+        self.subscribed = subscribed ?? 0
     }
 
     // init from api
@@ -320,7 +323,8 @@ public final class UserInfo: NSObject {
                          userId: String?,
                          linkConfirmation: Int?,
                          credit: Int?,
-                         currency: String?) {
+                         currency: String?,
+                         subscribed: Int?) {
         self.maxSpace = maxSpace ?? 0
         self.usedSpace = usedSpace ?? 0
         self.language = language ?? "en_US"
@@ -332,6 +336,7 @@ public final class UserInfo: NSObject {
         self.linkConfirmation = linkConfirmation == 0 ? .openAtWill : .confirmationAlert
         self.credit = credit ?? 0
         self.currency = currency ?? "USD"
+        self.subscribed = subscribed ?? 0
     }
 
     /// Update user addresses
@@ -493,6 +498,7 @@ extension UserInfo {
         let maxS = response["MaxSpace"] as? NSNumber
         let credit = response["Credit"] as? NSNumber
         let currency = response["Currency"] as? String
+        let subscribed = response["Subscribed"] as? Int
         self.init(
             maxSpace: maxS?.int64Value,
             usedSpace: usedS?.int64Value,
@@ -504,7 +510,8 @@ extension UserInfo {
             userId: userId,
             linkConfirmation: response["ConfirmLink"] as? Int,
             credit: credit?.intValue,
-            currency: currency
+            currency: currency,
+            subscribed: subscribed
         )
     }
 }
@@ -544,10 +551,11 @@ extension UserInfo: NSCoding {
 
         static let credit = "credit"
         static let currency = "currency"
+        static let subscribed = "subscribed"
 
         static let pwdMode = "passwordMode"
         static let twoFA = "2faStatus"
-        
+
         static let enableFolderColor = "enableFolderColor"
         static let inheritParentFolderColor = "inheritParentFolderColor"
     }
@@ -596,7 +604,8 @@ extension UserInfo: NSCoding {
             pwdMode: aDecoder.decodeInteger(forKey: CoderKey.pwdMode),
             twoFA: aDecoder.decodeInteger(forKey: CoderKey.twoFA),
             enableFolderColor: aDecoder.decodeInteger(forKey: CoderKey.enableFolderColor),
-            inheritParentFolderColor: aDecoder.decodeInteger(forKey: CoderKey.inheritParentFolderColor)
+            inheritParentFolderColor: aDecoder.decodeInteger(forKey: CoderKey.inheritParentFolderColor),
+            subscribed: aDecoder.decodeInteger(forKey: CoderKey.subscribed)
         )
     }
 
@@ -632,6 +641,7 @@ extension UserInfo: NSCoding {
 
         aCoder.encode(credit, forKey: CoderKey.credit)
         aCoder.encode(currency, forKey: CoderKey.currency)
+        aCoder.encode(subscribed, forKey: CoderKey.subscribed)
 
         aCoder.encode(passwordMode, forKey: CoderKey.pwdMode)
         aCoder.encode(twoFactor, forKey: CoderKey.twoFA)
