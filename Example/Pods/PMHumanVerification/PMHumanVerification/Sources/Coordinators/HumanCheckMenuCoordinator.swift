@@ -110,7 +110,7 @@ class HumanCheckMenuCoordinator {
             topViewController?.present(nav, animated: true)
         }
     }
-    
+
     private var getHelpViewController: HelpViewController {
         let helpViewController = instatntiateVC(method: HelpViewController.self, identifier: "HumanCheckHelpViewController")
         helpViewController.delegate = self
