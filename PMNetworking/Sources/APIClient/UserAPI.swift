@@ -243,6 +243,7 @@ public final class UserInfo: NSObject {
     // 2.0.0
     public var enableFolderColor: Int = 0
     public var inheritParentFolderColor: Int = 0
+    /// 0: free user, > 0: paid user
     public var subscribed: Int = 0
 
     public static func getDefault() -> UserInfo {
