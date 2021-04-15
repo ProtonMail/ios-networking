@@ -313,6 +313,9 @@ public final class UserInfo: NSObject {
         self.enableFolderColor = enableFolderColor ?? 0
         self.inheritParentFolderColor = inheritParentFolderColor ?? 0
         self.subscribed = subscribed ?? 0
+        if let value = linkConfirmation, let mode = LinkOpeningMode(rawValue: value) {
+            self.linkConfirmation = mode
+        }
     }
 
     // init from api
