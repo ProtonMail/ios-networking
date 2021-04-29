@@ -39,7 +39,7 @@ class NetworkingViewModel: ObservableObject {
         setupEnv()
     }
     
-    var env = ["Black env.", "Dalton env.", "Lysenko", "Prod env."]
+    var env = ["Black env.", "Dalton env.", "Salam", "Prod env."]
     var selectedIndex: Int = 0 { didSet { setupEnv() } }
     @Published var showingLoginError = false
     
@@ -53,7 +53,7 @@ class NetworkingViewModel: ObservableObject {
         switch selectedIndex {
         case 0: return BlackDoHMail.default
         case 1: return DaltonBlackDoHMail.default
-        case 2: return LysenkoBlackDoHMail.default
+        case 2: return SalamBlackDoHMail.default
         case 3: return ProdDoHMail.default
         default: return BlackDoHMail.default
         }

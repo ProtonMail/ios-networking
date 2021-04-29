@@ -57,7 +57,7 @@ class MainViewController: UIViewController {
         switch envSegmentedControl.selectedSegmentIndex {
         case 0: return BlackDoHMail.default
         case 1: return DaltonBlackDoHMail.default
-        case 2: return LysenkoBlackDoHMail.default
+        case 2: return SalamBlackDoHMail.default
         case 3: return ProdDoHMail.default
         default: return BlackDoHMail.default
         }
