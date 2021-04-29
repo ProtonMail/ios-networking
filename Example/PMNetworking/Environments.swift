@@ -42,19 +42,19 @@ class DaltonBlackDoHMail: DoH, ServerConfig {
     static let `default` = try! DaltonBlackDoHMail()
 }
 
-class LysenkoBlackDoHMail: DoH, ServerConfig {
-    var signupDomain: String = ObfuscatedConstants.lysenkoBlackSignupDomain
-    var defaultHost: String = ObfuscatedConstants.lysenkoBlackDefaultHost
-    var captchaHost: String = ObfuscatedConstants.lysenkoBlackCaptchaHost
-    var apiHost: String = ObfuscatedConstants.lysenkoBlackApiHost
-    var defaultPath: String = ObfuscatedConstants.lysenkoBlackDefaultPath
-    static let `default` = try! LysenkoBlackDoHMail()
+class SalamBlackDoHMail: DoH, ServerConfig {
+    var signupDomain: String = ObfuscatedConstants.salamBlackSignupDomain
+    var defaultHost: String = ObfuscatedConstants.salamBlackDefaultHost
+    var captchaHost: String = ObfuscatedConstants.salamBlackCaptchaHost
+    var apiHost: String = ObfuscatedConstants.salamBlackApiHost
+    var defaultPath: String = ObfuscatedConstants.salamBlackDefaultPath
+    static let `default` = try! SalamBlackDoHMail()
 }
 
 class ProdDoHMail: DoH, ServerConfig {
     var signupDomain: String = "protonmail.com"
     var defaultHost: String = "https://api.protonmail.ch"
-    var captchaHost: String = "https://api.protonmail.ch"
+    var captchaHost: String = "https://mail-api.protonmail.com"
     var apiHost: String = "dmfygsltqojxxi33onvqws3bomnua.protonpro.xyz"
     static let `default` = try! ProdDoHMail()
 }

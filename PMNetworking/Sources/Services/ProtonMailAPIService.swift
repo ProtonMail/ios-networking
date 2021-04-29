@@ -73,6 +73,8 @@ public class APIErrorCode {
     static public let badAppVersion = 5003
     static public let badApiVersion = 5005
     static public let humanVerificationRequired = 9001
+    static public let invalidVerificationCode = 12087
+    static public let tooManyVerificationCodes = 12214
 }
 
 // This need move to a common framwork
@@ -964,9 +966,9 @@ public class PMAPIService: APIService {
 
                     // human verification completion
                     let hvCompletion: CompletionBlock = { task, response, error in
-                        if let error = error {
+                        if let error = error, self.invalidHVCodes.first(where: { error.code == $0 }) != nil {
                             verificationCodeBlock?(false, error)
-                        } else if let responseCode = response?["Code"] as? Int, responseCode == APIErrorCode.responseOK {
+                        } else {
                             verificationCodeBlock?(true, nil)
                             // finish request with new completion block
                             completion?(task, response, error)
@@ -992,6 +994,11 @@ public class PMAPIService: APIService {
                 }
             }
         }
+    }
+
+    var invalidHVCodes: [Int] {
+        return [APIErrorCode.invalidVerificationCode,
+                APIErrorCode.tooManyVerificationCodes]
     }
 
     func forceUpgradeHandler(responseDictionary: [String: Any]) {

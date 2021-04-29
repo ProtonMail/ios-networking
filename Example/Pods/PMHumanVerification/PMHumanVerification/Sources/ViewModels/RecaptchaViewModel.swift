@@ -39,8 +39,8 @@ class RecaptchaViewModel: BaseTokenViewModel {
     }
 
     func getCaptchaURL() -> URL {
-        let host = apiService.doh.getCaptchaHostUrl()
-        return URL(string: "https://secure.protonmail.com/captcha/captcha.html?token=\(startToken ?? "")&client=ios&host=\(host)")!
+        let captchaHost = apiService.doh.getCaptchaHostUrl()
+        return URL(string: "\(captchaHost)/core/v4/captcha?Token=\(startToken ?? "")&client=ios")!
     }
 
     func isStartVerifyPattern(urlString: String) -> Bool {
@@ -82,9 +82,15 @@ class RecaptchaViewModel: BaseTokenViewModel {
                 "https://www.google.com/intl/en/policies/terms"]
     }
 
-    private var expiredRecaptchaRes = "https://secure.protonmail.com/expired_recaptcha_response://"
+    private var expiredRecaptchaRes: String {
+        let captchaHost = apiService.doh.getCaptchaHostUrl()
+        return "\(captchaHost)/core/v4/expired_recaptcha_response://"
+    }
 
-    private var recaptchaRes = "https://secure.protonmail.com/captcha/recaptcha_response://"
+    private var recaptchaRes: String {
+        let captchaHost = apiService.doh.getCaptchaHostUrl()
+        return "\(captchaHost)/core/v4/recaptcha_response://"
+    }
 
     private var docHeight = "document.body.scrollHeight;"
 }
