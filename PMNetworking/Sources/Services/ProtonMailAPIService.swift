@@ -971,8 +971,10 @@ public class PMAPIService: APIService {
                         } else {
                             verificationCodeBlock?(true, nil)
                             // finish request with new completion block
-                            completion?(task, response, error)
-                            self.isHumanVerifyUIPresented = false
+                            DispatchQueue.main.async {
+                                completion?(task, response, error)
+                                self.isHumanVerifyUIPresented = false
+                            }
                             pthread_mutex_unlock(&self.humanVerificationMutex)
                         }
                     }
