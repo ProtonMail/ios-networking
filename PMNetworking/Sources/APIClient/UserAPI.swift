@@ -246,6 +246,9 @@ public final class UserInfo: NSObject {
     /// 0: free user, > 0: paid user
     public var subscribed: Int = 0
 
+    // 0 - threading, 1 - single message
+    public var groupingMode: Int = 1
+
     public static func getDefault() -> UserInfo {
         return .init(maxSpace: 0, usedSpace: 0, language: "",
                      maxUpload: 0, role: 0, delinquent: 0,
@@ -402,6 +405,7 @@ public final class UserInfo: NSObject {
             self.sign = settings["Sign"] as? Int ?? 0
             self.enableFolderColor = settings["EnableFolderColor"] as? Int ?? 0
             self.inheritParentFolderColor = settings["InheritParentFolderColor"] as? Int ?? 0
+            self.groupingMode = settings["ViewMode"] as? Int ?? 1
         }
     }
 
