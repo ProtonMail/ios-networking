@@ -75,6 +75,7 @@ public class APIErrorCode {
     static public let humanVerificationRequired = 9001
     static public let invalidVerificationCode = 12087
     static public let tooManyVerificationCodes = 12214
+    static public let tooManyFailedVerificationAttempts = 85131
 }
 
 // This need move to a common framwork
@@ -226,7 +227,7 @@ public class PMAPIService: APIService {
 
     /// synchronize locks
     private var mutex = pthread_mutex_t()
-    private var humanVerificationMutex = pthread_mutex_t()
+    private let hvDispatchGroup = DispatchGroup()
 
     //    /// the user id
     //    public var userID : String = ""
@@ -292,9 +293,6 @@ public class PMAPIService: APIService {
         // init lock
         pthread_mutex_init(&mutex, nil)
         self.doh = doh
-
-        // human verification lock
-        pthread_mutex_init(&humanVerificationMutex, nil)
 
         // set config
         // self.serverConfig = config
@@ -894,7 +892,7 @@ public class PMAPIService: APIService {
         if self.isHumanVerifyUIPresented == true {
             // wait until ongoing human verification is finished
             DispatchQueue.global(qos: .default).async {
-                pthread_mutex_lock(&self.humanVerificationMutex)
+                self.hvDispatchGroup.wait()
                 // recall request again
                 self.request(method: method,
                              path: path,
@@ -904,7 +902,6 @@ public class PMAPIService: APIService {
                              authRetryRemains: authRetryRemains - 1,
                              customAuthCredential: customAuthCredential,
                              completion: completion)
-                pthread_mutex_unlock(&self.humanVerificationMutex)
             }
         } else {
             // human verification UI
@@ -951,7 +948,7 @@ public class PMAPIService: APIService {
 
         // human verification required delegate
         DispatchQueue.global(qos: .default).async {
-            pthread_mutex_lock(&self.humanVerificationMutex)
+            self.hvDispatchGroup.enter()
             DispatchQueue.main.async {
                 self.humanDelegate?.onHumanVerify(methods: hvResponse.supported, startToken: hvResponse.startToken) { header, isClosed, verificationCodeBlock in
 
@@ -960,22 +957,21 @@ public class PMAPIService: APIService {
                         // finish request with existing completion block
                         completion?(task, responseDict, error)
                         self.isHumanVerifyUIPresented = false
-                        pthread_mutex_unlock(&self.humanVerificationMutex)
+                        self.hvDispatchGroup.leave()
                         return
                     }
 
                     // human verification completion
                     let hvCompletion: CompletionBlock = { task, response, error in
                         if let error = error, self.invalidHVCodes.first(where: { error.code == $0 }) != nil {
-                            verificationCodeBlock?(false, error)
+                            verificationCodeBlock?(false, error, nil)
                         } else {
-                            verificationCodeBlock?(true, nil)
-                            // finish request with new completion block
-                            DispatchQueue.main.async {
+                            verificationCodeBlock?(true, nil) {
+                                // finish request with new completion block
                                 completion?(task, response, error)
-                                self.isHumanVerifyUIPresented = false
+                                    self.isHumanVerifyUIPresented = false
+                                self.hvDispatchGroup.leave()
                             }
-                            pthread_mutex_unlock(&self.humanVerificationMutex)
                         }
                     }
 
@@ -1000,7 +996,8 @@ public class PMAPIService: APIService {
 
     var invalidHVCodes: [Int] {
         return [APIErrorCode.invalidVerificationCode,
-                APIErrorCode.tooManyVerificationCodes]
+                APIErrorCode.tooManyVerificationCodes,
+                APIErrorCode.tooManyFailedVerificationAttempts]
     }
 
     func forceUpgradeHandler(responseDictionary: [String: Any]) {
