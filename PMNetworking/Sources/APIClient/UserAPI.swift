@@ -26,7 +26,10 @@
 
 import Foundation
 
-public typealias SendVerificationCodeBlock = (Bool, NSError?) -> Void
+public typealias SendVerificationCodeBlock = (Bool, NSError?, VerificationCodeBlockFinish?) -> Void
+public typealias SendResultCodeBlock = (Bool, NSError?) -> Void
+public typealias VerificationCodeBlockFinish = () -> Void
+
 
 public struct HumanVerificationToken {
     let type: TokenType

@@ -38,8 +38,8 @@ public class HumanCheckHelperMock: HumanVerifyDelegate {
     }
 
     public func onHumanVerify(methods: [VerifyMethod], startToken: String?, completion: (@escaping (HumanVerifyHeader, HumanVerifyIsClosed, SendVerificationCodeBlock?) -> (Void))) {
-        let verificationBlock: SendVerificationCodeBlock = { (res, error)  in
-           
+        let verificationBlock: SendVerificationCodeBlock = { (res, error, finish) in
+           finish?()
         }
         
         func execute() {

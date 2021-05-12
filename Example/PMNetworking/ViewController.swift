@@ -143,6 +143,7 @@ class MainViewController: UIViewController {
     var humanVerificationDelegate: HumanVerifyDelegate?
     
     func setupHumanVerification() {
+        guard humanVerificationDelegate == nil else { return }
         testAuthCredential = nil
         currentEnv.status = .off
         testApi.serviceDelegate = self
@@ -321,7 +322,7 @@ extension MainViewController: HumanVerifyPaymentDelegate {
     }
     
     var paymentToken: String? {
-        return "BrokenToken"
+        return nil
     }
 }
 
