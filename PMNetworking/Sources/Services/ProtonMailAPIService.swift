@@ -373,7 +373,7 @@ public class PMAPIService: APIService {
             guard !credential.isExpired else {
                 self.authDelegate?.onRefresh(bySessionUID: self.sessionUID) { newCredential, error in
                     self.debugError(error)
-                    if let err = error, err.domain == APIServiceErrorDomain && err.code == APIErrorCode.AuthErrorCode.invalidGrant {
+                    if let err = error, err.code == 422 {
                         pthread_mutex_unlock(&self.mutex)
                         DispatchQueue.main.async {
                             // NSError.alertBadTokenToast()
@@ -381,7 +381,7 @@ public class PMAPIService: APIService {
                             self.authDelegate?.onLogout(sessionUID: self.sessionUID)
                             // NotificationCenter.default.post(name: .didReovke, object: nil, userInfo: ["uid": self.sessionUID ])error
                         }
-                    } else if let err = error, err.domain == APIServiceErrorDomain && err.code == APIErrorCode.AuthErrorCode.localCacheBad {
+                    } else if let err = error, err.code == APIErrorCode.AuthErrorCode.localCacheBad {
                         pthread_mutex_unlock(&self.mutex)
                         DispatchQueue.main.async {
                             // NSError.alertBadTokenToast()
@@ -460,16 +460,18 @@ public class PMAPIService: APIService {
                         self.debugError(error)
                         // PMLog.D(api: error)
                         var httpCode: Int = 200
-                        if let detail = error.userInfo["com.alamofire.serialization.response.error.response"] as? HTTPURLResponse {
+                        if let detail = task?.response as? HTTPURLResponse {
                             httpCode = detail.statusCode
                         } else {
                             httpCode = error.code
                         }
 
                         if authenticated && httpCode == 401 && authRetry {
-                            self.expireCredential()
+                            if customAuthCredential == nil {
+                                self.expireCredential()
+                            }
                             if path.isRefreshPath { // tempery no need later
-                                completion?(nil, nil, error)
+                                completion?(task, nil, error)
                                 self.authDelegate?.onLogout(sessionUID: self.sessionUID)
                             } else {
                                 if authRetryRemains > 0 {
@@ -482,13 +484,13 @@ public class PMAPIService: APIService {
                                                  customAuthCredential: customAuthCredential,
                                                  completion: completion)
                                 } else {
-                                    completion?(nil, nil, error)
+                                    completion?(task, nil, error)
                                     self.authDelegate?.onLogout(sessionUID: self.sessionUID)
                                     // NotificationCenter.default.post(name: .didReovke, object: nil, userInfo: ["uid": userID ?? ""])
                                 }
                             }
                         } else if authenticated && httpCode == 422 && authRetry && path.isRefreshPath {
-                            completion?(nil, nil, error)
+                            completion?(task, nil, error)
                             self.authDelegate?.onLogout(sessionUID: self.sessionUID)
                         } else if let responseDict = response as? [String: Any], let responseCode = responseDict["Code"] as? Int {
                             let errorMessage = responseDict["Error"] as? String ?? ""
@@ -543,9 +545,11 @@ public class PMAPIService: APIService {
 //                                        "Path": path
 //                                    ])
                                 }
-                                self.expireCredential()
+                                if customAuthCredential == nil {
+                                    self.expireCredential()
+                                }
                                 if path.contains("https://api.protonmail.ch/refresh") { // tempery no need later
-                                    completion?(nil, nil, error)
+                                    completion?(task, nil, error)
                                     self.authDelegate?.onLogout(sessionUID: self.sessionUID)
                                 } else {
                                     if authRetryRemains > 0 {
@@ -558,7 +562,7 @@ public class PMAPIService: APIService {
                                                      customAuthCredential: customAuthCredential,
                                                      completion: completion)
                                     } else {
-                                        completion?(nil, nil, error)
+                                        completion?(task, nil, error)
                                         self.authDelegate?.onLogout(sessionUID: self.sessionUID)
                                         // NotificationCenter.default.post(name: .didReovke, object: nil, userInfo: ["uid": userID ?? ""])
                                     }
@@ -594,6 +598,7 @@ public class PMAPIService: APIService {
                         }
                     }
                 }
+
                 let url = self.doh.getHostUrl() + path
 
                 do {
