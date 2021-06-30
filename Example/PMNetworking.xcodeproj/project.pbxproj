@@ -3,11 +3,34 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0A44E58B41A8DF362567C877 /* Pods_PMNetworking_Mac_ExampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EEC5A8E1D462CE3DA9C8407 /* Pods_PMNetworking_Mac_ExampleTests.framework */; };
+		370675A825D52FBD003AAF9D /* prepare_obfuscated_constants.sh in Resources */ = {isa = PBXBuildFile; fileRef = 370675A525D52FBD003AAF9D /* prepare_obfuscated_constants.sh */; };
+		370675A925D52FBD003AAF9D /* prepare_obfuscated_constants.sh in Resources */ = {isa = PBXBuildFile; fileRef = 370675A525D52FBD003AAF9D /* prepare_obfuscated_constants.sh */; };
+		370675AA25D52FBD003AAF9D /* ObfuscatedConstants.Base.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370675A625D52FBD003AAF9D /* ObfuscatedConstants.Base.swift */; };
+		370675AB25D52FBD003AAF9D /* ObfuscatedConstants.Base.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370675A625D52FBD003AAF9D /* ObfuscatedConstants.Base.swift */; };
+		370675AC25D52FBD003AAF9D /* ObfuscatedConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370675A725D52FBD003AAF9D /* ObfuscatedConstants.swift */; };
+		370675AD25D52FBD003AAF9D /* ObfuscatedConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370675A725D52FBD003AAF9D /* ObfuscatedConstants.swift */; };
+		375CB554254C45A8005455CE /* NetworkTroubleShootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375CB54F254C45A7005455CE /* NetworkTroubleShootViewController.swift */; };
+		375CB555254C45A8005455CE /* NetworkTroubleShootViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375CB550254C45A7005455CE /* NetworkTroubleShootViewModel.swift */; };
+		375CB556254C45A8005455CE /* SwitchTwolineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375CB551254C45A7005455CE /* SwitchTwolineCell.swift */; };
+		375CB557254C45A8005455CE /* IBDesignableLabeled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375CB552254C45A7005455CE /* IBDesignableLabeled.swift */; };
+		375CB558254C45A8005455CE /* NetworkTroubleShootCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375CB553254C45A7005455CE /* NetworkTroubleShootCoordinator.swift */; };
+		375CB5BF254C4A38005455CE /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 375CB5BC254C4A38005455CE /* .gitkeep */; };
+		375CB5C0254C4A38005455CE /* Alerts.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 375CB5BE254C4A38005455CE /* Alerts.storyboard */; };
+		37BE4D6525BB04FC00F3F8F6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BE4D6425BB04FC00F3F8F6 /* AppDelegate.swift */; };
+		37BE4D6725BB04FC00F3F8F6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BE4D6625BB04FC00F3F8F6 /* SceneDelegate.swift */; };
+		37BE4D6925BB04FC00F3F8F6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BE4D6825BB04FC00F3F8F6 /* ContentView.swift */; };
+		37BE4D6B25BB04FD00F3F8F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 37BE4D6A25BB04FD00F3F8F6 /* Assets.xcassets */; };
+		37BE4D6E25BB04FD00F3F8F6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 37BE4D6D25BB04FD00F3F8F6 /* Preview Assets.xcassets */; };
+		37BE4D7125BB04FD00F3F8F6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 37BE4D6F25BB04FD00F3F8F6 /* LaunchScreen.storyboard */; };
+		37BE4D8125BB052300F3F8F6 /* NetworkingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BE4D8025BB052300F3F8F6 /* NetworkingViewModel.swift */; };
+		37BE4F9B25BB20BE00F3F8F6 /* TrustKitConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752CC08924AB554800537C44 /* TrustKitConfiguration.swift */; };
+		37BE4FB325BB405000F3F8F6 /* Environments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BE4FB225BB405000F3F8F6 /* Environments.swift */; };
+		37BE4FB925BB40A200F3F8F6 /* Environments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BE4FB225BB405000F3F8F6 /* Environments.swift */; };
+		37BE506425BC6A8C00F3F8F6 /* LoginAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BE506325BC6A8C00F3F8F6 /* LoginAlertView.swift */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
@@ -19,11 +42,15 @@
 		751B8AE5245AB30B006A9195 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 751B8AE4245AB30B006A9195 /* ViewController.swift */; };
 		751B8AE8245AB30B006A9195 /* PMNetworking_Mac_Example.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 751B8AE6245AB30B006A9195 /* PMNetworking_Mac_Example.xcdatamodeld */; };
 		751B8AEA245AB30E006A9195 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 751B8AE9245AB30E006A9195 /* Assets.xcassets */; };
-		751B8AED245AB30E006A9195 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 751B8AEB245AB30E006A9195 /* Main.storyboard */; };
 		751B8AF9245AB30F006A9195 /* PMNetworking_Mac_ExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 751B8AF8245AB30F006A9195 /* PMNetworking_Mac_ExampleTests.swift */; };
 		751B8B04245AB30F006A9195 /* PMNetworking_Mac_ExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 751B8B03245AB30F006A9195 /* PMNetworking_Mac_ExampleUITests.swift */; };
+		752CC08A24AB554800537C44 /* TrustKitConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752CC08924AB554800537C44 /* TrustKitConfiguration.swift */; };
+		75B21C2424E6512D00D3E4D3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 751B8AEB245AB30E006A9195 /* Main.storyboard */; };
+		75B21C2524E6519900D3E4D3 /* Pods_PMNetworking_Mac_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 234AADC52CCA6701130DB864 /* Pods_PMNetworking_Mac_Example.framework */; };
+		75B21C2924E6526C00D3E4D3 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75B21C2824E6526C00D3E4D3 /* AppKit.framework */; };
 		9947DFE42B957B0253B53876 /* Pods_PMNetworking_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20E5036CD6416E37BA34CD3C /* Pods_PMNetworking_Example.framework */; };
-		B33D5E8EB8AB117FF6C83FE6 /* Pods_PMNetworking_Mac_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 234AADC52CCA6701130DB864 /* Pods_PMNetworking_Mac_Example.framework */; };
+		A4CD296897B800C92E1DE33F /* Pods_PMNetworking_Mac_ExampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EEC5A8E1D462CE3DA9C8407 /* Pods_PMNetworking_Mac_ExampleTests.framework */; };
+		DBEA2053482594E287E0FE36 /* Pods_PMNetworking_SwiftUI_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19C13040E853A7A55ED81FD4 /* Pods_PMNetworking_SwiftUI_Example.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,17 +77,53 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		75E196EA249396CB00A31655 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		10303C87F33BA30EB19FBBE6 /* Pods-PMNetworking_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PMNetworking_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-PMNetworking_Example/Pods-PMNetworking_Example.release.xcconfig"; sourceTree = "<group>"; };
 		189AB33FE018BA2765C5CDBB /* Pods-PMNetworking_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PMNetworking_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PMNetworking_Tests/Pods-PMNetworking_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		19C13040E853A7A55ED81FD4 /* Pods_PMNetworking_SwiftUI_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PMNetworking_SwiftUI_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		20E5036CD6416E37BA34CD3C /* Pods_PMNetworking_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PMNetworking_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		22CD846A7055D42D598E499D /* Pods-PMNetworking_SwiftUI_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PMNetworking_SwiftUI_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-PMNetworking_SwiftUI_Example/Pods-PMNetworking_SwiftUI_Example.release.xcconfig"; sourceTree = "<group>"; };
 		234AADC52CCA6701130DB864 /* Pods_PMNetworking_Mac_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PMNetworking_Mac_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2EEC5A8E1D462CE3DA9C8407 /* Pods_PMNetworking_Mac_ExampleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PMNetworking_Mac_ExampleTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		305C7A02011F3D0F5D57BB43 /* PMNetworking.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = PMNetworking.podspec; path = ../PMNetworking.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		32BC38CA33955F31D4A7EAEB /* Pods-PMNetworking_Mac_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PMNetworking_Mac_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PMNetworking_Mac_Example/Pods-PMNetworking_Mac_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		370675A525D52FBD003AAF9D /* prepare_obfuscated_constants.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = prepare_obfuscated_constants.sh; sourceTree = "<group>"; };
+		370675A625D52FBD003AAF9D /* ObfuscatedConstants.Base.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObfuscatedConstants.Base.swift; sourceTree = "<group>"; };
+		370675A725D52FBD003AAF9D /* ObfuscatedConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObfuscatedConstants.swift; sourceTree = "<group>"; };
+		375CB54F254C45A7005455CE /* NetworkTroubleShootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkTroubleShootViewController.swift; sourceTree = "<group>"; };
+		375CB550254C45A7005455CE /* NetworkTroubleShootViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkTroubleShootViewModel.swift; sourceTree = "<group>"; };
+		375CB551254C45A7005455CE /* SwitchTwolineCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchTwolineCell.swift; sourceTree = "<group>"; };
+		375CB552254C45A7005455CE /* IBDesignableLabeled.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IBDesignableLabeled.swift; sourceTree = "<group>"; };
+		375CB553254C45A7005455CE /* NetworkTroubleShootCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkTroubleShootCoordinator.swift; sourceTree = "<group>"; };
+		375CB5BC254C4A38005455CE /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		375CB5BE254C4A38005455CE /* Alerts.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Alerts.storyboard; sourceTree = "<group>"; };
+		379A4C4051A8E78ED16B4511 /* Pods-PMNetworking_SwiftUI_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PMNetworking_SwiftUI_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PMNetworking_SwiftUI_Example/Pods-PMNetworking_SwiftUI_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		37BE4D6225BB04FB00F3F8F6 /* PMNetworking_SwiftUI_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PMNetworking_SwiftUI_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		37BE4D6425BB04FC00F3F8F6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		37BE4D6625BB04FC00F3F8F6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		37BE4D6825BB04FC00F3F8F6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		37BE4D6A25BB04FD00F3F8F6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		37BE4D6D25BB04FD00F3F8F6 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		37BE4D7025BB04FD00F3F8F6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		37BE4D7225BB04FD00F3F8F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		37BE4D8025BB052300F3F8F6 /* NetworkingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingViewModel.swift; sourceTree = "<group>"; };
+		37BE4FB225BB405000F3F8F6 /* Environments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environments.swift; sourceTree = "<group>"; };
+		37BE506325BC6A8C00F3F8F6 /* LoginAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginAlertView.swift; sourceTree = "<group>"; };
+		40AC8A21773C51C77BD1BFD3 /* Pods-PMNetworking_Mac_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PMNetworking_Mac_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-PMNetworking_Mac_Example/Pods-PMNetworking_Mac_Example.release.xcconfig"; sourceTree = "<group>"; };
 		4DF16153C174C8E7C3352EA4 /* Pods_PMNetworking_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PMNetworking_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		550C7FA671F41D6229D5562C /* Pods-PMNetworking_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PMNetworking_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PMNetworking_Example/Pods-PMNetworking_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		5A1E4150006CB1BB488D8FA2 /* Pods-PMNetworking_Mac_ExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PMNetworking_Mac_ExampleTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PMNetworking_Mac_ExampleTests/Pods-PMNetworking_Mac_ExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* PMNetworking_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PMNetworking_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -72,7 +135,7 @@
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		62A2C11CE8EB7108DF10E98B /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
-		735C5859CAADC801A7FFE8A5 /* Pods-PMNetworking_Mac_ExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PMNetworking_Mac_ExampleTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PMNetworking_Mac_ExampleTests/Pods-PMNetworking_Mac_ExampleTests.release.xcconfig"; sourceTree = "<group>"; };
+		711511D25F5D00DADB48C650 /* Pods-PMNetworking_Mac_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PMNetworking_Mac_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PMNetworking_Mac_Example/Pods-PMNetworking_Mac_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		751B8AE0245AB30B006A9195 /* PMNetworking_Mac_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PMNetworking_Mac_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		751B8AE2245AB30B006A9195 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		751B8AE4245AB30B006A9195 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -87,12 +150,24 @@
 		751B8AFF245AB30F006A9195 /* PMNetworking_Mac_ExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PMNetworking_Mac_ExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		751B8B03245AB30F006A9195 /* PMNetworking_Mac_ExampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PMNetworking_Mac_ExampleUITests.swift; sourceTree = "<group>"; };
 		751B8B05245AB30F006A9195 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		752CC08924AB554800537C44 /* TrustKitConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrustKitConfiguration.swift; sourceTree = "<group>"; };
+		75B21C2824E6526C00D3E4D3 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.0.sdk/System/Library/Frameworks/AppKit.framework; sourceTree = DEVELOPER_DIR; };
+		75E196E12493273900A31655 /* PMCommon.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = PMCommon.podspec; path = ../PMCommon.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9CDB3D914026AC9F67D1C5BD /* Pods-PMNetworking_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PMNetworking_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PMNetworking_Tests/Pods-PMNetworking_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		B987F72DF665314742E0A6B8 /* Pods-PMNetworking_Mac_ExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PMNetworking_Mac_ExampleTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PMNetworking_Mac_ExampleTests/Pods-PMNetworking_Mac_ExampleTests.release.xcconfig"; sourceTree = "<group>"; };
+		BC9940508C02DF6236B158D3 /* Pods-PMNetworking_Mac_ExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PMNetworking_Mac_ExampleTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PMNetworking_Mac_ExampleTests/Pods-PMNetworking_Mac_ExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
 		BE824EBAF58160ED226A89FF /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
-		F4430F1ACEF17117F0F95A14 /* Pods-PMNetworking_Mac_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PMNetworking_Mac_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-PMNetworking_Mac_Example/Pods-PMNetworking_Mac_Example.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		37BE4D5F25BB04FB00F3F8F6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DBEA2053482594E287E0FE36 /* Pods_PMNetworking_SwiftUI_Example.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		607FACCD1AFB9204008FA782 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -113,7 +188,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B33D5E8EB8AB117FF6C83FE6 /* Pods_PMNetworking_Mac_Example.framework in Frameworks */,
+				75B21C2524E6519900D3E4D3 /* Pods_PMNetworking_Mac_Example.framework in Frameworks */,
+				75B21C2924E6526C00D3E4D3 /* AppKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -121,7 +197,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0A44E58B41A8DF362567C877 /* Pods_PMNetworking_Mac_ExampleTests.framework in Frameworks */,
+				A4CD296897B800C92E1DE33F /* Pods_PMNetworking_Mac_ExampleTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -135,6 +211,69 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		370675A425D52FBD003AAF9D /* Scripts */ = {
+			isa = PBXGroup;
+			children = (
+				370675A725D52FBD003AAF9D /* ObfuscatedConstants.swift */,
+				370675A625D52FBD003AAF9D /* ObfuscatedConstants.Base.swift */,
+				370675A525D52FBD003AAF9D /* prepare_obfuscated_constants.sh */,
+			);
+			path = Scripts;
+			sourceTree = "<group>";
+		};
+		375CB54E254C45A7005455CE /* DohUI */ = {
+			isa = PBXGroup;
+			children = (
+				375CB54F254C45A7005455CE /* NetworkTroubleShootViewController.swift */,
+				375CB550254C45A7005455CE /* NetworkTroubleShootViewModel.swift */,
+				375CB551254C45A7005455CE /* SwitchTwolineCell.swift */,
+				375CB552254C45A7005455CE /* IBDesignableLabeled.swift */,
+				375CB553254C45A7005455CE /* NetworkTroubleShootCoordinator.swift */,
+			);
+			path = DohUI;
+			sourceTree = "<group>";
+		};
+		375CB5BB254C4A38005455CE /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				375CB5BC254C4A38005455CE /* .gitkeep */,
+				375CB5BD254C4A38005455CE /* DohUI */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		375CB5BD254C4A38005455CE /* DohUI */ = {
+			isa = PBXGroup;
+			children = (
+				375CB5BE254C4A38005455CE /* Alerts.storyboard */,
+			);
+			path = DohUI;
+			sourceTree = "<group>";
+		};
+		37BE4D6325BB04FC00F3F8F6 /* PMNetworking_SwiftUI_Example */ = {
+			isa = PBXGroup;
+			children = (
+				37BE4D6425BB04FC00F3F8F6 /* AppDelegate.swift */,
+				37BE4D6625BB04FC00F3F8F6 /* SceneDelegate.swift */,
+				37BE4D6825BB04FC00F3F8F6 /* ContentView.swift */,
+				37BE506325BC6A8C00F3F8F6 /* LoginAlertView.swift */,
+				37BE4D8025BB052300F3F8F6 /* NetworkingViewModel.swift */,
+				37BE4D6A25BB04FD00F3F8F6 /* Assets.xcassets */,
+				37BE4D6F25BB04FD00F3F8F6 /* LaunchScreen.storyboard */,
+				37BE4D7225BB04FD00F3F8F6 /* Info.plist */,
+				37BE4D6C25BB04FD00F3F8F6 /* Preview Content */,
+			);
+			path = PMNetworking_SwiftUI_Example;
+			sourceTree = "<group>";
+		};
+		37BE4D6C25BB04FD00F3F8F6 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				37BE4D6D25BB04FD00F3F8F6 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
 		39B487A6593A977C49DAA37F /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -142,10 +281,12 @@
 				10303C87F33BA30EB19FBBE6 /* Pods-PMNetworking_Example.release.xcconfig */,
 				189AB33FE018BA2765C5CDBB /* Pods-PMNetworking_Tests.debug.xcconfig */,
 				9CDB3D914026AC9F67D1C5BD /* Pods-PMNetworking_Tests.release.xcconfig */,
-				32BC38CA33955F31D4A7EAEB /* Pods-PMNetworking_Mac_Example.debug.xcconfig */,
-				F4430F1ACEF17117F0F95A14 /* Pods-PMNetworking_Mac_Example.release.xcconfig */,
-				5A1E4150006CB1BB488D8FA2 /* Pods-PMNetworking_Mac_ExampleTests.debug.xcconfig */,
-				735C5859CAADC801A7FFE8A5 /* Pods-PMNetworking_Mac_ExampleTests.release.xcconfig */,
+				711511D25F5D00DADB48C650 /* Pods-PMNetworking_Mac_Example.debug.xcconfig */,
+				40AC8A21773C51C77BD1BFD3 /* Pods-PMNetworking_Mac_Example.release.xcconfig */,
+				BC9940508C02DF6236B158D3 /* Pods-PMNetworking_Mac_ExampleTests.debug.xcconfig */,
+				B987F72DF665314742E0A6B8 /* Pods-PMNetworking_Mac_ExampleTests.release.xcconfig */,
+				379A4C4051A8E78ED16B4511 /* Pods-PMNetworking_SwiftUI_Example.debug.xcconfig */,
+				22CD846A7055D42D598E499D /* Pods-PMNetworking_SwiftUI_Example.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -155,6 +296,7 @@
 			children = (
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				607FACD21AFB9204008FA782 /* Example for PMNetworking */,
+				37BE4D6325BB04FC00F3F8F6 /* PMNetworking_SwiftUI_Example */,
 				607FACE81AFB9204008FA782 /* Tests */,
 				751B8AE1245AB30B006A9195 /* PMNetworking_Mac_Example */,
 				751B8AF7245AB30F006A9195 /* PMNetworking_Mac_ExampleTests */,
@@ -173,6 +315,7 @@
 				751B8AE0245AB30B006A9195 /* PMNetworking_Mac_Example.app */,
 				751B8AF4245AB30F006A9195 /* PMNetworking_Mac_ExampleTests.xctest */,
 				751B8AFF245AB30F006A9195 /* PMNetworking_Mac_ExampleUITests.xctest */,
+				37BE4D6225BB04FB00F3F8F6 /* PMNetworking_SwiftUI_Example.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -185,7 +328,12 @@
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
+				375CB54E254C45A7005455CE /* DohUI */,
+				375CB5BB254C4A38005455CE /* Assets */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
+				752CC08924AB554800537C44 /* TrustKitConfiguration.swift */,
+				37BE4FB225BB405000F3F8F6 /* Environments.swift */,
+				370675A425D52FBD003AAF9D /* Scripts */,
 			);
 			name = "Example for PMNetworking";
 			path = PMNetworking;
@@ -219,6 +367,7 @@
 		607FACF51AFB993E008FA782 /* Podspec Metadata */ = {
 			isa = PBXGroup;
 			children = (
+				75E196E12493273900A31655 /* PMCommon.podspec */,
 				305C7A02011F3D0F5D57BB43 /* PMNetworking.podspec */,
 				BE824EBAF58160ED226A89FF /* README.md */,
 				62A2C11CE8EB7108DF10E98B /* LICENSE */,
@@ -261,10 +410,12 @@
 		8ED30BF9051827CABD9A96F4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				75B21C2824E6526C00D3E4D3 /* AppKit.framework */,
 				20E5036CD6416E37BA34CD3C /* Pods_PMNetworking_Example.framework */,
 				4DF16153C174C8E7C3352EA4 /* Pods_PMNetworking_Tests.framework */,
 				234AADC52CCA6701130DB864 /* Pods_PMNetworking_Mac_Example.framework */,
 				2EEC5A8E1D462CE3DA9C8407 /* Pods_PMNetworking_Mac_ExampleTests.framework */,
+				19C13040E853A7A55ED81FD4 /* Pods_PMNetworking_SwiftUI_Example.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -272,15 +423,38 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		37BE4D6125BB04FB00F3F8F6 /* PMNetworking_SwiftUI_Example */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 37BE4D7525BB04FD00F3F8F6 /* Build configuration list for PBXNativeTarget "PMNetworking_SwiftUI_Example" */;
+			buildPhases = (
+				95B80A5F139626FC3511B1F3 /* [CP] Check Pods Manifest.lock */,
+				370675CD25D5337C003AAF9D /* Obfuscation */,
+				37BE4D5E25BB04FB00F3F8F6 /* Sources */,
+				37BE4D5F25BB04FB00F3F8F6 /* Frameworks */,
+				37BE4D6025BB04FB00F3F8F6 /* Resources */,
+				32E75B86655342C5ECFBE6A2 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PMNetworking_SwiftUI_Example;
+			productName = PMNetworking_SwiftUI_Example;
+			productReference = 37BE4D6225BB04FB00F3F8F6 /* PMNetworking_SwiftUI_Example.app */;
+			productType = "com.apple.product-type.application";
+		};
 		607FACCF1AFB9204008FA782 /* PMNetworking_Example */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "PMNetworking_Example" */;
 			buildPhases = (
 				E9FED9F3D124AF99FED080EA /* [CP] Check Pods Manifest.lock */,
+				370675C225D5309F003AAF9D /* Obfuscation */,
 				607FACCC1AFB9204008FA782 /* Sources */,
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
 				1A38A049E57E46ECB6635180 /* [CP] Embed Pods Frameworks */,
+				75E196EA249396CB00A31655 /* Embed Frameworks */,
+				37FA5E3E25835F47000400AD /* SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -314,11 +488,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 751B8B06245AB30F006A9195 /* Build configuration list for PBXNativeTarget "PMNetworking_Mac_Example" */;
 			buildPhases = (
-				89994891569C3D4D842BA252 /* [CP] Check Pods Manifest.lock */,
+				D76FE2AAEB040171E521C376 /* [CP] Check Pods Manifest.lock */,
 				751B8ADC245AB30B006A9195 /* Sources */,
 				751B8ADD245AB30B006A9195 /* Frameworks */,
 				751B8ADE245AB30B006A9195 /* Resources */,
-				EBA4A1B143C7B4621404A3D5 /* [CP] Embed Pods Frameworks */,
+				7DC181885E6AEF8B4CA51D30 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -333,7 +507,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 751B8B09245AB30F006A9195 /* Build configuration list for PBXNativeTarget "PMNetworking_Mac_ExampleTests" */;
 			buildPhases = (
-				A1DE9D4F9CED021F57ACA630 /* [CP] Check Pods Manifest.lock */,
+				AFBD0B82D002C2EDB1FEEE8E /* [CP] Check Pods Manifest.lock */,
 				751B8AF0245AB30F006A9195 /* Sources */,
 				751B8AF1245AB30F006A9195 /* Frameworks */,
 				751B8AF2245AB30F006A9195 /* Resources */,
@@ -372,12 +546,18 @@
 		607FACC81AFB9204008FA782 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1140;
-				LastUpgradeCheck = 1130;
+				LastSwiftUpdateCheck = 1230;
+				LastUpgradeCheck = 1150;
 				ORGANIZATIONNAME = CocoaPods;
 				TargetAttributes = {
+					37BE4D6125BB04FB00F3F8F6 = {
+						CreatedOnToolsVersion = 12.3;
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+					};
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = "";
 						LastSwiftMigration = 1130;
 					};
 					607FACE41AFB9204008FA782 = {
@@ -387,18 +567,18 @@
 					};
 					751B8ADF245AB30B006A9195 = {
 						CreatedOnToolsVersion = 11.4.1;
-						DevelopmentTeam = 5XTT5SKHJ4;
+						DevelopmentTeam = "";
 						ProvisioningStyle = Automatic;
 					};
 					751B8AF3245AB30F006A9195 = {
 						CreatedOnToolsVersion = 11.4.1;
-						DevelopmentTeam = 5XTT5SKHJ4;
+						DevelopmentTeam = "";
 						ProvisioningStyle = Automatic;
 						TestTargetID = 751B8ADF245AB30B006A9195;
 					};
 					751B8AFE245AB30F006A9195 = {
 						CreatedOnToolsVersion = 11.4.1;
-						DevelopmentTeam = 5XTT5SKHJ4;
+						DevelopmentTeam = "";
 						ProvisioningStyle = Automatic;
 						TestTargetID = 751B8ADF245AB30B006A9195;
 					};
@@ -418,6 +598,7 @@
 			projectRoot = "";
 			targets = (
 				607FACCF1AFB9204008FA782 /* PMNetworking_Example */,
+				37BE4D6125BB04FB00F3F8F6 /* PMNetworking_SwiftUI_Example */,
 				607FACE41AFB9204008FA782 /* PMNetworking_Tests */,
 				751B8ADF245AB30B006A9195 /* PMNetworking_Mac_Example */,
 				751B8AF3245AB30F006A9195 /* PMNetworking_Mac_ExampleTests */,
@@ -427,13 +608,27 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		37BE4D6025BB04FB00F3F8F6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				37BE4D7125BB04FD00F3F8F6 /* LaunchScreen.storyboard in Resources */,
+				37BE4D6E25BB04FD00F3F8F6 /* Preview Assets.xcassets in Resources */,
+				370675A925D52FBD003AAF9D /* prepare_obfuscated_constants.sh in Resources */,
+				37BE4D6B25BB04FD00F3F8F6 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		607FACCE1AFB9204008FA782 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				370675A825D52FBD003AAF9D /* prepare_obfuscated_constants.sh in Resources */,
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
+				375CB5C0254C4A38005455CE /* Alerts.storyboard in Resources */,
+				375CB5BF254C4A38005455CE /* .gitkeep in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -448,8 +643,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75B21C2424E6512D00D3E4D3 /* Main.storyboard in Resources */,
 				751B8AEA245AB30E006A9195 /* Assets.xcassets in Resources */,
-				751B8AED245AB30E006A9195 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -477,18 +672,156 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-PMNetworking_Example/Pods-PMNetworking_Example-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/PMNetworking-iOS/PMNetworking.framework",
+				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
+				"${BUILT_PRODUCTS_DIR}/AwaitKit-iOS/AwaitKit.framework",
+				"${BUILT_PRODUCTS_DIR}/PMCommon-iOS/PMCommon.framework",
+				"${BUILT_PRODUCTS_DIR}/PMCoreTranslation/PMCoreTranslation.framework",
+				"${BUILT_PRODUCTS_DIR}/PMForceUpgrade/PMForceUpgrade.framework",
+				"${BUILT_PRODUCTS_DIR}/PMHumanVerification/PMHumanVerification.framework",
+				"${BUILT_PRODUCTS_DIR}/PMUICommon/PMUICommon.framework",
+				"${BUILT_PRODUCTS_DIR}/PMUIFoundations/PMUIFoundations.framework",
+				"${BUILT_PRODUCTS_DIR}/PromiseKit/PromiseKit.framework",
+				"${BUILT_PRODUCTS_DIR}/TrustKit-iOS/TrustKit.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PMNetworking.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AwaitKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PMCommon.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PMCoreTranslation.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PMForceUpgrade.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PMHumanVerification.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PMUICommon.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PMUIFoundations.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PromiseKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TrustKit.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PMNetworking_Example/Pods-PMNetworking_Example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		89994891569C3D4D842BA252 /* [CP] Check Pods Manifest.lock */ = {
+		32E75B86655342C5ECFBE6A2 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PMNetworking_SwiftUI_Example/Pods-PMNetworking_SwiftUI_Example-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
+				"${BUILT_PRODUCTS_DIR}/AwaitKit-iOS/AwaitKit.framework",
+				"${BUILT_PRODUCTS_DIR}/PMCommon-iOS/PMCommon.framework",
+				"${BUILT_PRODUCTS_DIR}/PMCoreTranslation/PMCoreTranslation.framework",
+				"${BUILT_PRODUCTS_DIR}/PMForceUpgrade/PMForceUpgrade.framework",
+				"${BUILT_PRODUCTS_DIR}/PMHumanVerification/PMHumanVerification.framework",
+				"${BUILT_PRODUCTS_DIR}/PMUICommon/PMUICommon.framework",
+				"${BUILT_PRODUCTS_DIR}/PMUIFoundations/PMUIFoundations.framework",
+				"${BUILT_PRODUCTS_DIR}/PromiseKit/PromiseKit.framework",
+				"${BUILT_PRODUCTS_DIR}/TrustKit-iOS/TrustKit.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AwaitKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PMCommon.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PMCoreTranslation.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PMForceUpgrade.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PMHumanVerification.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PMUICommon.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PMUIFoundations.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PromiseKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TrustKit.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PMNetworking_SwiftUI_Example/Pods-PMNetworking_SwiftUI_Example-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		370675C225D5309F003AAF9D /* Obfuscation */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = Obfuscation;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				$SRCROOT/PMNetworking/Scripts/ObfuscatedConstants.swift,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "$SRCROOT/PMNetworking/Scripts/prepare_obfuscated_constants.sh\n\n";
+		};
+		370675CD25D5337C003AAF9D /* Obfuscation */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = Obfuscation;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				$SRCROOT/PMNetworking/Scripts/ObfuscatedConstants.swift,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "$SRCROOT/PMNetworking/Scripts/prepare_obfuscated_constants.sh\n";
+		};
+		37FA5E3E25835F47000400AD /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint\n";
+		};
+		7DC181885E6AEF8B4CA51D30 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PMNetworking_Mac_Example/Pods-PMNetworking_Mac_Example-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AFNetworking-c94d3492/AFNetworking.framework",
+				"${BUILT_PRODUCTS_DIR}/AwaitKit-macOS/AwaitKit.framework",
+				"${BUILT_PRODUCTS_DIR}/PMCommon-macOS/PMCommon.framework",
+				"${BUILT_PRODUCTS_DIR}/PromiseKit.root-CorePromise-Foundation/PromiseKit.framework",
+				"${BUILT_PRODUCTS_DIR}/TrustKit-macOS/TrustKit.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AwaitKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PMCommon.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PromiseKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TrustKit.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PMNetworking_Mac_Example/Pods-PMNetworking_Mac_Example-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		95B80A5F139626FC3511B1F3 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -503,14 +836,14 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-PMNetworking_Mac_Example-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-PMNetworking_SwiftUI_Example-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A1DE9D4F9CED021F57ACA630 /* [CP] Check Pods Manifest.lock */ = {
+		AFBD0B82D002C2EDB1FEEE8E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -554,6 +887,28 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		D76FE2AAEB040171E521C376 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-PMNetworking_Mac_Example-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		E9FED9F3D124AF99FED080EA /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -576,33 +931,40 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		EBA4A1B143C7B4621404A3D5 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PMNetworking_Mac_Example/Pods-PMNetworking_Mac_Example-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/PMNetworking-macOS/PMNetworking.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PMNetworking.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PMNetworking_Mac_Example/Pods-PMNetworking_Mac_Example-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		37BE4D5E25BB04FB00F3F8F6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				37BE4D8125BB052300F3F8F6 /* NetworkingViewModel.swift in Sources */,
+				37BE4FB925BB40A200F3F8F6 /* Environments.swift in Sources */,
+				37BE4F9B25BB20BE00F3F8F6 /* TrustKitConfiguration.swift in Sources */,
+				37BE4D6525BB04FC00F3F8F6 /* AppDelegate.swift in Sources */,
+				37BE4D6725BB04FC00F3F8F6 /* SceneDelegate.swift in Sources */,
+				37BE506425BC6A8C00F3F8F6 /* LoginAlertView.swift in Sources */,
+				370675AD25D52FBD003AAF9D /* ObfuscatedConstants.swift in Sources */,
+				37BE4D6925BB04FC00F3F8F6 /* ContentView.swift in Sources */,
+				370675AB25D52FBD003AAF9D /* ObfuscatedConstants.Base.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		607FACCC1AFB9204008FA782 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				375CB556254C45A8005455CE /* SwitchTwolineCell.swift in Sources */,
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
+				375CB557254C45A8005455CE /* IBDesignableLabeled.swift in Sources */,
+				375CB554254C45A8005455CE /* NetworkTroubleShootViewController.swift in Sources */,
+				37BE4FB325BB405000F3F8F6 /* Environments.swift in Sources */,
+				370675AC25D52FBD003AAF9D /* ObfuscatedConstants.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+				375CB555254C45A8005455CE /* NetworkTroubleShootViewModel.swift in Sources */,
+				370675AA25D52FBD003AAF9D /* ObfuscatedConstants.Base.swift in Sources */,
+				752CC08A24AB554800537C44 /* TrustKitConfiguration.swift in Sources */,
+				375CB558254C45A8005455CE /* NetworkTroubleShootCoordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -661,6 +1023,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		37BE4D6F25BB04FD00F3F8F6 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				37BE4D7025BB04FD00F3F8F6 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
 		607FACD91AFB9204008FA782 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -688,6 +1058,75 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		37BE4D7325BB04FD00F3F8F6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 379A4C4051A8E78ED16B4511 /* Pods-PMNetworking_SwiftUI_Example.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_ASSET_PATHS = "\"PMNetworking_SwiftUI_Example/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = PMNetworking_SwiftUI_Example/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.12.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "test.test.swiftui.PMNetworking-SwiftUI-Example";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		37BE4D7425BB04FD00F3F8F6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 22CD846A7055D42D598E499D /* Pods-PMNetworking_SwiftUI_Example.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"PMNetworking_SwiftUI_Example/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = PMNetworking_SwiftUI_Example/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.12.0;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "test.test.swiftui.PMNetworking-SwiftUI-Example";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		607FACED1AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -736,11 +1175,12 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -785,10 +1225,12 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -798,8 +1240,13 @@
 			baseConfigurationReference = 550C7FA671F41D6229D5562C /* Pods-PMNetworking_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = PMNetworking/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.12.0;
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -814,8 +1261,13 @@
 			baseConfigurationReference = 10303C87F33BA30EB19FBBE6 /* Pods-PMNetworking_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = PMNetworking/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.12.0;
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -829,6 +1281,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 189AB33FE018BA2765C5CDBB /* Pods-PMNetworking_Tests.debug.xcconfig */;
 			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -838,7 +1291,11 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
@@ -851,12 +1308,17 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 9CDB3D914026AC9F67D1C5BD /* Pods-PMNetworking_Tests.release.xcconfig */;
 			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = Tests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
@@ -867,7 +1329,7 @@
 		};
 		751B8B07245AB30F006A9195 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 32BC38CA33955F31D4A7EAEB /* Pods-PMNetworking_Mac_Example.debug.xcconfig */;
+			baseConfigurationReference = 711511D25F5D00DADB48C650 /* Pods-PMNetworking_Mac_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -877,18 +1339,22 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = PMNetworking_Mac_Example/PMNetworking_Mac_Example.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = 5XTT5SKHJ4;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = PMNetworking_Mac_Example/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.feng.tests.PMNetworking-Mac-Example";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.PMNetworking-Mac-Example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -898,7 +1364,7 @@
 		};
 		751B8B08245AB30F006A9195 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F4430F1ACEF17117F0F95A14 /* Pods-PMNetworking_Mac_Example.release.xcconfig */;
+			baseConfigurationReference = 40AC8A21773C51C77BD1BFD3 /* Pods-PMNetworking_Mac_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -908,16 +1374,20 @@
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = PMNetworking_Mac_Example/PMNetworking_Mac_Example.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 5XTT5SKHJ4;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = PMNetworking_Mac_Example/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.feng.tests.PMNetworking-Mac-Example";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.PMNetworking-Mac-Example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SWIFT_VERSION = 5.0;
@@ -926,7 +1396,7 @@
 		};
 		751B8B0A245AB30F006A9195 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5A1E4150006CB1BB488D8FA2 /* Pods-PMNetworking_Mac_ExampleTests.debug.xcconfig */;
+			baseConfigurationReference = BC9940508C02DF6236B158D3 /* Pods-PMNetworking_Mac_ExampleTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -936,13 +1406,18 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = 5XTT5SKHJ4;
+				DEVELOPMENT_TEAM = "";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = PMNetworking_Mac_ExampleTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -957,7 +1432,7 @@
 		};
 		751B8B0B245AB30F006A9195 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 735C5859CAADC801A7FFE8A5 /* Pods-PMNetworking_Mac_ExampleTests.release.xcconfig */;
+			baseConfigurationReference = B987F72DF665314742E0A6B8 /* Pods-PMNetworking_Mac_ExampleTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -967,12 +1442,17 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 5XTT5SKHJ4;
+				DEVELOPMENT_TEAM = "";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = PMNetworking_Mac_ExampleTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.feng.tests.PMNetworking-Mac-ExampleTests";
@@ -996,10 +1476,14 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = 5XTT5SKHJ4;
+				DEVELOPMENT_TEAM = "";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = PMNetworking_Mac_ExampleUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -1024,10 +1508,14 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 5XTT5SKHJ4;
+				DEVELOPMENT_TEAM = "";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = PMNetworking_Mac_ExampleUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.feng.tests.PMNetworking-Mac-ExampleUITests";
@@ -1041,6 +1529,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		37BE4D7525BB04FD00F3F8F6 /* Build configuration list for PBXNativeTarget "PMNetworking_SwiftUI_Example" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				37BE4D7325BB04FD00F3F8F6 /* Debug */,
+				37BE4D7425BB04FD00F3F8F6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "PMNetworking" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

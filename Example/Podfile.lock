@@ -1,16 +1,174 @@
 PODS:
-  - PMNetworking (1.0.0)
+  - AFNetworking (4.0.1):
+    - AFNetworking/NSURLSession (= 4.0.1)
+    - AFNetworking/Reachability (= 4.0.1)
+    - AFNetworking/Security (= 4.0.1)
+    - AFNetworking/Serialization (= 4.0.1)
+    - AFNetworking/UIKit (= 4.0.1)
+  - AFNetworking/NSURLSession (4.0.1):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (4.0.1)
+  - AFNetworking/Security (4.0.1)
+  - AFNetworking/Serialization (4.0.1)
+  - AFNetworking/UIKit (4.0.1):
+    - AFNetworking/NSURLSession
+  - AwaitKit (5.0.1):
+    - PromiseKit (~> 6)
+  - OHHTTPStubs/Core (9.1.0)
+  - OHHTTPStubs/Default (9.1.0):
+    - OHHTTPStubs/Core
+    - OHHTTPStubs/JSON
+    - OHHTTPStubs/NSURLSession
+    - OHHTTPStubs/OHPathHelpers
+  - OHHTTPStubs/JSON (9.1.0):
+    - OHHTTPStubs/Core
+  - OHHTTPStubs/NSURLSession (9.1.0):
+    - OHHTTPStubs/Core
+  - OHHTTPStubs/OHPathHelpers (9.1.0)
+  - OHHTTPStubs/Swift (9.1.0):
+    - OHHTTPStubs/Default
+  - PMAuthentication (1.3.2):
+    - PMCommon (>= 1.1.2)
+    - PMCrypto
+  - PMCommon (1.2.0):
+    - PMCommon/Default (= 1.2.0)
+  - PMCommon/APIClient (1.2.0):
+    - PMCommon/Networking
+  - PMCommon/Default (1.2.0):
+    - PMCommon/APIClient
+    - PMCommon/Networking
+    - PMCommon/Services
+    - PMCommon/SRP
+  - PMCommon/Networking (1.2.0):
+    - AFNetworking (~> 4.0)
+    - AwaitKit (~> 5.0.0)
+    - PromiseKit (~> 6.0)
+  - PMCommon/Services (1.2.0):
+    - PMCommon/APIClient
+    - TrustKit
+  - PMCommon/SRP (1.2.0)
+  - PMCommon/Tests (1.2.0):
+    - OHHTTPStubs/Swift
+    - TrustKit
+  - PMCoreTranslation (1.0.0)
+  - PMCrypto (2.1.3)
+  - PMForceUpgrade (1.0.0):
+    - PMCommon
+    - PMCoreTranslation
+  - PMHumanVerification (1.0.0):
+    - PMCommon
+    - PMCoreTranslation
+    - PMUIFoundations
+  - PMUICommon (1.0.0):
+    - PMCommon
+  - PMUIFoundations (1.2.5)
+  - PromiseKit (6.13.1):
+    - PromiseKit/CorePromise (= 6.13.1)
+    - PromiseKit/Foundation (= 6.13.1)
+    - PromiseKit/UIKit (= 6.13.1)
+  - PromiseKit/CorePromise (6.13.1)
+  - PromiseKit/Foundation (6.13.1):
+    - PromiseKit/CorePromise
+  - PromiseKit/UIKit (6.13.1):
+    - PromiseKit/CorePromise
+  - SwiftLint (0.43.1)
+  - TrustKit (1.7.0)
 
 DEPENDENCIES:
-  - PMNetworking (from `../`)
+  - AwaitKit (~> 5.0.0)
+  - "PMAuthentication (from `git@gitlab.protontech.ch:apple/shared/pmauthentication.git`, branch `develop`)"
+  - PMCommon (from `../`)
+  - PMCommon/Tests (from `../`)
+  - "PMCoreTranslation (from `git@gitlab.protontech.ch:apple/shared/pmcoretranslation.git`, branch `develop`)"
+  - "PMCrypto (from `git@gitlab.protontech.ch:apple/shared/pmcrypto.git`, tag `2.1.3`)"
+  - "PMForceUpgrade (from `git@gitlab.protontech.ch:apple/shared/pmforceupgrade.git`, branch `develop`)"
+  - "PMHumanVerification (from `git@gitlab.protontech.ch:apple/shared/pmhumanverification.git`, branch `Develop`)"
+  - "PMUICommon (from `git@gitlab.protontech.ch:apple/shared/pmuicommon.git`, branch `develop`)"
+  - "PMUIFoundations (from `git@gitlab.protontech.ch:apple/shared/PMUIFoundations.git`, branch `master`)"
+  - PromiseKit (~> 6.0)
+  - SwiftLint
+  - TrustKit (from `https://github.com/ProtonMail/TrustKit.git`, branch `master`)
+
+SPEC REPOS:
+  trunk:
+    - AFNetworking
+    - AwaitKit
+    - OHHTTPStubs
+    - PromiseKit
+    - SwiftLint
 
 EXTERNAL SOURCES:
-  PMNetworking:
+  PMAuthentication:
+    :branch: develop
+    :git: "git@gitlab.protontech.ch:apple/shared/pmauthentication.git"
+  PMCommon:
     :path: "../"
+  PMCoreTranslation:
+    :branch: develop
+    :git: "git@gitlab.protontech.ch:apple/shared/pmcoretranslation.git"
+  PMCrypto:
+    :git: "git@gitlab.protontech.ch:apple/shared/pmcrypto.git"
+    :tag: 2.1.3
+  PMForceUpgrade:
+    :branch: develop
+    :git: "git@gitlab.protontech.ch:apple/shared/pmforceupgrade.git"
+  PMHumanVerification:
+    :branch: Develop
+    :git: "git@gitlab.protontech.ch:apple/shared/pmhumanverification.git"
+  PMUICommon:
+    :branch: develop
+    :git: "git@gitlab.protontech.ch:apple/shared/pmuicommon.git"
+  PMUIFoundations:
+    :branch: master
+    :git: "git@gitlab.protontech.ch:apple/shared/PMUIFoundations.git"
+  TrustKit:
+    :branch: master
+    :git: https://github.com/ProtonMail/TrustKit.git
+
+CHECKOUT OPTIONS:
+  PMAuthentication:
+    :commit: cbae36e2a2135c296377dd4dd261dba195d0cce8
+    :git: "git@gitlab.protontech.ch:apple/shared/pmauthentication.git"
+  PMCoreTranslation:
+    :commit: 1a3e98b6b0748676625fec70f942067b974138fe
+    :git: "git@gitlab.protontech.ch:apple/shared/pmcoretranslation.git"
+  PMCrypto:
+    :git: "git@gitlab.protontech.ch:apple/shared/pmcrypto.git"
+    :tag: 2.1.3
+  PMForceUpgrade:
+    :commit: 195a901dfb498b1456480278148e4dbb8dce141e
+    :git: "git@gitlab.protontech.ch:apple/shared/pmforceupgrade.git"
+  PMHumanVerification:
+    :commit: 4979ab017e770e5ff389da9cf034dece10cb7bfd
+    :git: "git@gitlab.protontech.ch:apple/shared/pmhumanverification.git"
+  PMUICommon:
+    :commit: eddb6ce3da4438c6686e74c70f83f8c82558ab34
+    :git: "git@gitlab.protontech.ch:apple/shared/pmuicommon.git"
+  PMUIFoundations:
+    :commit: 3937cadbdccdf939c9dbf06319fd715099c52a8d
+    :git: "git@gitlab.protontech.ch:apple/shared/PMUIFoundations.git"
+  TrustKit:
+    :commit: 838fba789e01c9cabff77acea3fb7135f71a220f
+    :git: https://github.com/ProtonMail/TrustKit.git
 
 SPEC CHECKSUMS:
-  PMNetworking: 54696647ab1a6cac500bab624733d5e08b7e7098
+  AFNetworking: 7864c38297c79aaca1500c33288e429c3451fdce
+  AwaitKit: a6d0b0b6d603cedda8ef1c1c249b8d6730359917
+  OHHTTPStubs: 90eac6d8f2c18317baeca36698523dc67c513831
+  PMAuthentication: 4e1a422232304311f34a7651a5b348a7782c99bf
+  PMCommon: f816f55710a806755ba44149436f9b15313598f4
+  PMCoreTranslation: 221df023e0a50c73bdadd07ce8917e053f69a859
+  PMCrypto: d5b645c61f6247125000838efe4419ec47915f14
+  PMForceUpgrade: f494aa7192a45e642ef190a1c8d58ab746eaa515
+  PMHumanVerification: ba7ccf6a4045285a417e6c08971efe3714a4ed09
+  PMUICommon: a55d8aad94373e3939f7cf618ac98366ff86585e
+  PMUIFoundations: 9b9001fdb4d4ee82ce6341c8e397b007543b8957
+  PromiseKit: 28fda91c973cc377875d8c0ea4f973013c05b6db
+  SwiftLint: 99f82d07b837b942dd563c668de129a03fc3fb52
+  TrustKit: 3fb011102271b79f7e3742bc2cfc54bb7193ca74
 
-PODFILE CHECKSUM: c30b4db1d15acadd6623a9e6712c5c35b5c9190c
+PODFILE CHECKSUM: befe40d29e1137ff8b694d9640aa6efe2f612f2f
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.10.1

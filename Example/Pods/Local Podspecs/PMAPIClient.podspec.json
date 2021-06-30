@@ -1,0 +1,39 @@
+{
+  "name": "PMAPIClient",
+  "version": "1.0.0",
+  "summary": "A short description of PMAPIClient.",
+  "description": "api clients. comunicate layer with backend api",
+  "homepage": "https://github.com/ProtonMail/ios-networking",
+  "license": {
+    "type": "GPLv3",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "zhj4478": "feng@pm.me"
+  },
+  "source": {
+    "git": "https://github.com/ProtonMail/ios-networking.git",
+    "tag": "1.0.0"
+  },
+  "platforms": {
+    "ios": "9.0",
+    "osx": "10.10"
+  },
+  "source_files": "PMNetworking/Sources/APIClient/**/*",
+  "swift_versions": [
+    "5.0"
+  ],
+  "testspecs": [
+    {
+      "name": "Tests",
+      "test_type": "unit",
+      "source_files": "PMNetworking/Tests/*",
+      "dependencies": {
+        "OHHTTPStubs/Swift": [
+
+        ]
+      }
+    }
+  ],
+  "swift_version": "5.0"
+}

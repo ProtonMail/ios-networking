@@ -1,0 +1,7 @@
+${PODS_ROOT}/Target Support Files/PMCommon-macOS/PMCommon-macOS-Unit-Tests-frameworks.sh
+${BUILT_PRODUCTS_DIR}/PMCommon-macOS/PMCommon.framework
+${BUILT_PRODUCTS_DIR}/AFNetworking-c94d3492/AFNetworking.framework
+${BUILT_PRODUCTS_DIR}/PromiseKit.root-CorePromise-Foundation/PromiseKit.framework
+${BUILT_PRODUCTS_DIR}/AwaitKit-macOS/AwaitKit.framework
+${BUILT_PRODUCTS_DIR}/TrustKit-macOS/TrustKit.framework
+${BUILT_PRODUCTS_DIR}/OHHTTPStubs-macOS/OHHTTPStubs.framework

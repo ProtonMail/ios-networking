@@ -1,12 +1,14 @@
 ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES
-FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/PMNetworking-iOS"
+CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO
+FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/AFNetworking" "${PODS_CONFIGURATION_BUILD_DIR}/AwaitKit-iOS" "${PODS_CONFIGURATION_BUILD_DIR}/PMAuthentication-iOS" "${PODS_CONFIGURATION_BUILD_DIR}/PMCommon-iOS" "${PODS_CONFIGURATION_BUILD_DIR}/PMCoreTranslation" "${PODS_CONFIGURATION_BUILD_DIR}/PMForceUpgrade" "${PODS_CONFIGURATION_BUILD_DIR}/PMHumanVerification" "${PODS_CONFIGURATION_BUILD_DIR}/PMUICommon" "${PODS_CONFIGURATION_BUILD_DIR}/PMUIFoundations" "${PODS_CONFIGURATION_BUILD_DIR}/PromiseKit" "${PODS_CONFIGURATION_BUILD_DIR}/TrustKit-iOS" "${PODS_ROOT}/PMCrypto" "${PODS_XCFRAMEWORKS_BUILD_DIR}/Crypto"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/PMNetworking-iOS/PMNetworking.framework/Headers"
+HEADER_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/AFNetworking/AFNetworking.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/AwaitKit-iOS/AwaitKit.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/PMAuthentication-iOS/PMAuthentication.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/PMCommon-iOS/PMCommon.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/PMCoreTranslation/PMCoreTranslation.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/PMForceUpgrade/PMForceUpgrade.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/PMHumanVerification/PMHumanVerification.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/PMUICommon/PMUICommon.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/PMUIFoundations/PMUIFoundations.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/PromiseKit/PromiseKit.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/TrustKit-iOS/TrustKit.framework/Headers"
 LD_RUNPATH_SEARCH_PATHS = $(inherited) '@executable_path/Frameworks' '@loader_path/Frameworks'
-OTHER_LDFLAGS = $(inherited) -framework "PMNetworking"
+OTHER_LDFLAGS = $(inherited) -ObjC -framework "AFNetworking" -framework "AwaitKit" -framework "Crypto" -framework "Foundation" -framework "PMAuthentication" -framework "PMCommon" -framework "PMCoreTranslation" -framework "PMForceUpgrade" -framework "PMHumanVerification" -framework "PMUICommon" -framework "PMUIFoundations" -framework "PromiseKit" -framework "Security" -framework "TrustKit" -framework "UIKit"
 OTHER_SWIFT_FLAGS = $(inherited) -D COCOAPODS
 PODS_BUILD_DIR = ${BUILD_DIR}
 PODS_CONFIGURATION_BUILD_DIR = ${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
 PODS_PODFILE_DIR_PATH = ${SRCROOT}/.
 PODS_ROOT = ${SRCROOT}/Pods
+PODS_XCFRAMEWORKS_BUILD_DIR = $(PODS_CONFIGURATION_BUILD_DIR)/XCFrameworkIntermediates
 USE_RECURSIVE_SCRIPT_INPUTS_IN_SCRIPT_PHASES = YES
