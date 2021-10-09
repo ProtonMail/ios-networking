@@ -47,18 +47,44 @@ protocol DoHProviderInternal: DoHProviderPublic {
 }
 
 extension DoHProviderInternal {
-    public func fetch(sync host: String) -> [DNS]? {
+    public func fetch(sync host: String, timeout: TimeInterval) -> [DNS]? {
         let urlStr = self.query(host: host)
         let url = URL(string: urlStr)!
-        guard let resData = try? Data.init(contentsOf: url) else {
+        
+        let request = NSMutableURLRequest.init(url: url, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData, timeoutInterval: timeout)
+    
+        guard let resData = self.fetchSynchronous(request: request) else {
             return nil
         }
+        
         guard let dns = self.parse(data: resData) else {
             return nil
         }
         return dns
     }
-
+    
+    public func fetch(sync host: String) -> [DNS]? {
+        self.fetch(sync: host, timeout: 5)
+    }
+    
+    /// Return data from synchronous URL request
+    private func fetchSynchronous(request: NSURLRequest) -> Data? {
+        var data: Data?
+        DispatchQueue.global(qos: .userInitiated).sync {
+            let semaphore = DispatchSemaphore(value: 0)
+            let task = URLSession.shared.dataTask(with: request as URLRequest) { taskData, response, error in
+                data = taskData
+                //  if data == nil, let _ = error {
+                // TODO:: log error or throw error. for now we ignore it and upper layer will use the default values
+                // }
+                semaphore.signal()
+            }
+            task.resume()
+            semaphore.wait()
+        }
+        return data
+    }
+    
     public func fetch(async host: String) {
 
     }
@@ -70,5 +96,6 @@ extension DoHProviderInternal {
         }
     }
     #endif
+
 
 }
