@@ -653,21 +653,7 @@ public class PMAPIService: APIService {
                         print("in progress")
                     }, completionHandler: { (urlresponse, res, error) in
                         self.debugError(error)
-                        if let urlres = urlresponse as? HTTPURLResponse,
-                            let allheader = urlres.allHeaderFields as? [String: Any] {
-                            // PMLog.D("\(allheader.json(prettyPrinted: true))")
-                            if let strData = allheader["Date"] as? String {
-                                // create dateFormatter with UTC time format
-                                let dateFormatter = DateFormatter()
-                                dateFormatter.calendar = .some(.init(identifier: .gregorian))
-                                dateFormatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss zzz"
-                                dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
-                                if let date = dateFormatter.date(from: strData) {
-                                    let timeInterval = date.timeIntervalSince1970
-                                    self.serviceDelegate?.onUpdate(serverTime: Int64(timeInterval))
-                                }
-                            }
-                        }
+                        self.updateServerTime(urlresponse)
 
                         if self.doh.handleError(host: url, error: error) {
                             // retry here
@@ -761,9 +747,10 @@ public class PMAPIService: APIService {
                 var uploadTask: URLSessionDataTask?
                 uploadTask = self.sessionManager.uploadTask(withStreamedRequest: request as URLRequest, progress: { (_) in
                     // nothing
-                }, completionHandler: { (_, responseObject, error) in
+                }, completionHandler: { (urlresponse, responseObject, error) in
                     self.debugError(error)
-
+                    self.updateServerTime(urlresponse)
+                    
                     // reachability temporarily failed because was switching from WiFi to Cellular
                     if (error as NSError?)?.code == -1005,
                        self.serviceDelegate?.isReachable() == true {
@@ -858,6 +845,16 @@ public class PMAPIService: APIService {
             fetchAuthCredential(authBlock)
         } else {
             authBlock(customAuthCredential?.accessToken, customAuthCredential?.sessionID, nil)
+        }
+    }
+    
+    private func updateServerTime(_ response: URLResponse) {
+        if let urlres = response as? HTTPURLResponse,
+           let allheader = urlres.allHeaderFields as? [String: Any],
+           let strData = allheader["Date"] as? String,
+           let date = DateParser.parse(time: strData) {
+            let timeInterval = date.timeIntervalSince1970
+            self.serviceDelegate?.onUpdate(serverTime: Int64(timeInterval))
         }
     }
 
@@ -1020,3 +1017,32 @@ extension String {
         return self.contains("/auth/refresh")
     }
 }
+
+enum DateParser {
+    
+    /// locale code
+    enum LocaleCode: String {
+        case en_us = "en_US_POSIX"
+    }
+    
+    /// date format
+    enum LocaleFormat: String {
+        case en_us = "EEE, dd MMM yyyy HH:mm:ss zzz"
+    }
+    
+    /// convert a string datetime to a Date object
+    ///   notes::if seeing more failure, we can try to use ISO8601DateFormatter() as a fallback
+    /// - Parameter serverDate: server response header Date field
+    /// - Returns: parsed date
+    public static func parse(time serverDate: String) -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.calendar = .some(.init(identifier: .gregorian))
+        /// default locale must be set. use en_US matches with server response time
+        dateFormatter.locale = Locale(identifier: LocaleCode.en_us.rawValue)
+        /// dataformat is depends on server response. it shoude always like: "EEE, dd MMM yyyy HH:mm:ss zzz"
+        dateFormatter.dateFormat = LocaleFormat.en_us.rawValue
+        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+        return dateFormatter.date(from: serverDate)
+    }
+}
+
